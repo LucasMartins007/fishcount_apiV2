@@ -1,0 +1,88 @@
+app:
+  name: FishCount-api
+  version: "1.0.0"
+  base-path: /api
+
+api:
+  prefix.v1: ${app.base-path}/v1
+  url: fishcount.belezaintime.com.br
+
+desenv:
+  sql_console: true
+
+database-data:
+  server: localhost
+  port: 5432
+  name: fish_count
+  username: admin
+  password: admin
+
+jwt.secret: FGj2herA5v2ZUaTt
+
+spring:
+  profiles:
+    active: development
+
+  application:
+    name: ${app.name}
+
+  data:
+    rest:
+      base-path: ${app.base-path}
+
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: ${desenv.sql_console}
+        dialect: ${spring.jpa.database-platform}
+        temp.use_jdbc_metadata_defaults: false
+        enable_lazy_load_no_trans: true
+      query:
+        in_clause_parameter_padding: true
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://${database-data.server}:${database-data.port}/${database-data.name}
+    username: ${database-data.username}
+    password: ${database-data.password}
+
+    hikari:
+      maximum-pool-size: 1
+      connection-test-query: SELECT 1
+      data-source-properties:
+              "[v$session.program]": ${spring.application.name}
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  http2:
+    enabled: true
+  compression:
+    enabled: true
+    min-response-size: 1
+    mime-types: text/html,
+                text/xml,
+                text/plain,
+                text/css,
+                text/javascript,
+                application/javascript,
+                application/json,
+                application/xml,
+                application/pdf,
+                image/png,
+                image/jpeg,
+                image/svg+xml
+
+
+
+
+
+
