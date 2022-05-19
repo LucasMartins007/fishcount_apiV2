@@ -41,6 +41,9 @@ public class Usuario extends AbstractEntity<Integer> {
     
     @Column(name = "senha")
     private String senha;
+    
+    @Column(name = "ativo")
+    private boolean ativo;
 
     @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)

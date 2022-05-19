@@ -2,22 +2,20 @@ package com.fishcount.api.repository;
 
 import com.fishcount.common.model.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import com.fishcount.api.repository.custom.CustomUsuarioRepository;
 
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
  *
  * @author lucas
  */
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-
-    @Query("select u "
-            + "  from Usuario u "
-            + "    join u.emails e"
-            + "  where e.descricao = :email")
-    Optional<Usuario> findByEmail(@Param("email") String email);
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaSpecificationExecutor<Usuario>, CustomUsuarioRepository {
+    
+    @Override
+    Usuario findByEmail(String email);
+    
+    
 }

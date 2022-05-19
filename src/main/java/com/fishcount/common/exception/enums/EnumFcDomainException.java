@@ -9,6 +9,7 @@ import com.fishcount.common.exception.IFcException;
 public enum EnumFcDomainException implements IFcException {
  
     USUARIO_NAO_ENCONTRADO("Usuário com o email {0} não foi encontrado."),
+    CREDENCIAIS_INVALIDAS("Email ou senha incorretos, por favor, tente novamente."),
     
     CAMPOS_OBRIGATORIOS("Os seguintes campos são de preenchimento obrigatório:"),
     CAMPO_MAIOR_QUE("O campo {0} deve conter um valor maior que {1}."),

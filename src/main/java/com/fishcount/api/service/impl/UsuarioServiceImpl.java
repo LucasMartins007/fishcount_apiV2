@@ -14,6 +14,7 @@ import com.fishcount.common.model.dto.UsuarioDTO;
 import com.fishcount.common.model.entity.*;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.ListUtil;
+import com.fishcount.common.utils.optional.OptionalUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,7 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
         salvarLotes(usuario);
 
         usuario.setSenha(passwordEnconder.encode(usuario.getSenha()));
+        usuario.setAtivo(true);
         usuario.setDataInclusao(DateUtil.getDate());
         usuario.setDataAlteracao(DateUtil.getDate());
     }
@@ -90,17 +92,14 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
         });
     }
 
-    public Usuario encontrarPorId(Integer id){
+    public Usuario encontrarPorId(Integer id) {
         return findAndValidate(id);
     }
 
     @Override
     public Usuario findByEmail(String email) {
-        return getRepository(UsuarioRepository.class)
-                .findByEmail(email)
-                .orElseThrow(()
-                        -> new FcRuntimeException(EnumFcDomainException.USUARIO_NAO_ENCONTRADO, email)
-                );
-    }    
+        return OptionalUtil.ofFallible(() -> getRepository(UsuarioRepository.class).findByEmail(email))
+                .orElseThrow(() -> new FcRuntimeException(EnumFcDomainException.USUARIO_NAO_ENCONTRADO, email));
+    }
 
 }
