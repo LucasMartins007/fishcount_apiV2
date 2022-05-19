@@ -23,10 +23,10 @@ public class UsuarioDTO extends AbstractDTO<Integer>{
     
     private String nome;
 
-    @OnlyField({"id", "descricao"})
+    @OnlyField({"id", "descricao", "tipoTelefone"})
     private List<TelefoneDTO> telefones;
     
-    @OnlyField({"id", "descricao"})
+    @OnlyField({"id", "descricao", "tipoEmail"})
     private List<EmailDTO> emails;
     
     private List<LoteDTO> lotes;

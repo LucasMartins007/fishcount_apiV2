@@ -19,7 +19,7 @@ public class EmailDTO extends AbstractDTO<Integer> {
 
     private String descricao;
 
-    private String ativo;
+    private boolean ativo;
 
     private EnumTipoEmail tipoEmail;
 
