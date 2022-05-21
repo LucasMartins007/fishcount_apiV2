@@ -7,6 +7,7 @@ import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.utils.Utils;
+import com.fishcount.common.utils.optional.OptionalUtil;
 
 /**
  *
@@ -31,16 +32,12 @@ public class LoteValidator extends AbstractValidatorImpl<Lote> {
 
     public void validateDuplicidadeLote(Lote lote) {
         if (Utils.isEmpty(lote.getId())) {
-            getService(LoteService.class).findByDescricao(lote)
-                    .ifPresent(l -> {
-                        throw new FcRuntimeException(EnumFcDomainException.LOTE_DUPLICADO, l.getDescricao());
-                    });
+            OptionalUtil.of(getService(LoteService.class).findByDescricao(lote))
+                    .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.LOTE_DUPLICADO, lote.getDescricao()));
         }
-        getService(LoteService.class).findByDescricao(lote)
+        OptionalUtil.of(getService(LoteService.class).findByDescricao(lote))
                 .filter(managedLote -> !managedLote.getId().equals(lote.getId()))
-                .ifPresent(l -> {
-                    throw new FcRuntimeException(EnumFcDomainException.LOTE_DUPLICADO, l.getDescricao());
-                });
+                .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.LOTE_DUPLICADO, lote.getDescricao()));
     }
 
 }

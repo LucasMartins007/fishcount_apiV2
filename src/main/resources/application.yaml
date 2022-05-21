@@ -1,3 +1,6 @@
+
+
+################################# PROFILE DEVELOPMENT ##################################
 app:
   name: FishCount-api
   version: "1.0.0"
@@ -19,6 +22,8 @@ database-data:
 
 jwt.secret: FGj2herA5v2ZUaTt
 
+
+## Spring config
 spring:    
   profiles:
     active: development
@@ -45,7 +50,7 @@ spring:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties: 
       hibernate:
         format_sql: ${desenv.sql_console}

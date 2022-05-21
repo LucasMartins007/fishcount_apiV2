@@ -207,6 +207,10 @@
             <version>5.3.16</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
