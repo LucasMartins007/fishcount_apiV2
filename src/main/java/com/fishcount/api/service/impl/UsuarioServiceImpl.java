@@ -79,7 +79,7 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
         emails.forEach(email -> {
             email.setUsuario(usuario);
             email.setAtivo(true);
-            emailValidator.validateInsert(email);
+            emailValidator.validateInsertOrUpdate(email);
         });
     }
 
@@ -98,7 +98,7 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
 
     @Override
     public Usuario findByEmail(String email) {
-        return OptionalUtil.ofFallible(() -> getRepository(UsuarioRepository.class).findByEmail(email))
+        return OptionalUtil.ofFallible(() -> getRepository(UsuarioRepository.class).findByEmailPrincipal(email))
                 .orElseThrow(() -> new FcRuntimeException(EnumFcDomainException.USUARIO_NAO_ENCONTRADO, email));
     }
 

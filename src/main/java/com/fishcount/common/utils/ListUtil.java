@@ -1,9 +1,12 @@
 package com.fishcount.common.utils;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *
@@ -71,4 +74,52 @@ public class ListUtil {
         Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
+    
+     public static <T> Stream<T> stream(Collection<T> lista) {
+        return isNullOrEmpty(lista)
+                ? Stream.empty()
+                : lista.stream();
+    }
+
+    public static <T, U> void removeDuplicates(List<T> lista, Function<T, U> mapper) {
+        HashSet<U> existing = new HashSet<>(lista.size());
+        lista.removeIf(item -> !existing.add(mapper.apply(item)));
+    }
+
+    public static <T, U> boolean hasDuplicates(List<T> lista, Function<T, U> mapper) {
+        HashSet<U> existing = new HashSet<>(lista.size());
+        return stream(lista)
+                .anyMatch(item -> !existing.add(mapper.apply(item)));
+    }
+
+    public static <T, U> boolean hasValue(List<T> lista, Function<T, U> mapper, Object value) {
+        return stream(lista)
+                .anyMatch(item -> mapper.apply(item).equals(value));
+    }
+
+    public static <T, U> T getDuplicate(List<T> lista, Function<T, U> mapper) {
+        HashSet<U> existing = new HashSet<>(lista.size());
+        return first(stream(lista)
+                .filter(item -> !existing.add(mapper.apply(item)))
+                .collect(Collectors.toList()));
+    }
+
+    public static <T> T getDistinct(List<T> lista1, List<T> lista2) {
+        return stream(lista1)
+                .filter(lista2::contains)
+                .findFirst()
+                .orElse(null);
+    }
+
+    /**
+     * @return Null se lista for nula ou vazia
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T[] toArray(List<T> list) {
+        if (isNotNullOrNotEmpty(list)) {
+            return list.toArray((T[]) Array.newInstance(list.iterator().next().getClass(), 0));
+        }
+        return null;
+    }
+
 }

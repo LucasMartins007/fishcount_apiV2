@@ -28,4 +28,7 @@ public interface IEmailController {
 
     @GetMapping(OperationsPath.ID)
     EmailDTO encontrar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsParam.ID) Integer idEmail);
+    
+    @DeleteMapping(OperationsPath.ID)
+    void inativar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsParam.ID) Integer idEmail);
 }

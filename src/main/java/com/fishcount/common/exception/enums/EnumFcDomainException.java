@@ -30,6 +30,8 @@ public enum EnumFcDomainException implements IFcException {
     
     EMAIL_INVALIDO("O endereço de e-mail {0} é inválido."),
     EMAIL_DUPLICADO("O endereço de e-mail {0} já esta cadastrado no sistema, tente fazer o login."),
+    EMAIL_PRINCIPAL_NAO_PODE_SER_INATIVADO("O email {0} é o seu email de login, você não pode inativa-lo."),
+    EMAIL_PRINCIPAL_DUPLICADO("Você não pode ter mais de um email principal, esse é o seu email de login. "),
     
     TELEFONE_INVALIDO("O campo {0} está com o formato incorreto."),
     

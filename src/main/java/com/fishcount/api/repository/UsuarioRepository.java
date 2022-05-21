@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaSpecificationExecutor<Usuario>, CustomUsuarioRepository {
     
     @Override
-    Usuario findByEmail(String email);
+    Usuario findByEmailPrincipal(String email);
     
     
 }

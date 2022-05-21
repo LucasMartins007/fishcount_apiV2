@@ -8,6 +8,7 @@ import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.NumericUtil;
 import com.fishcount.common.utils.Utils;
 import java.text.ParseException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.text.MaskFormatter;
@@ -26,7 +27,7 @@ public class TelefoneServiceImpl extends AbstractServiceImpl<Telefone, Integer, 
     private final TelefoneValidator telefoneValidator = new TelefoneValidator();
     
     @Override
-    public Telefone incluir(Telefone telefone) {
+    public Telefone incluir(Integer idUsuario, Telefone telefone) {
         telefoneValidator.validateInsert(telefone);
         
         onPrepareInsert(telefone);
@@ -38,6 +39,21 @@ public class TelefoneServiceImpl extends AbstractServiceImpl<Telefone, Integer, 
         telefone.setAtivo(true);
         telefone.setDataAtualizacao(DateUtil.getDate());
         telefone.setDataInclusao(DateUtil.getDate());
+    }
+
+    @Override
+    public void editar(Integer idUsuario, Telefone telefone) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Telefone> listar(Integer idUsuario) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void inativar(Integer idUsuario, Telefone telefone) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

@@ -1,17 +1,25 @@
 package com.fishcount.api.repository;
 
+import com.fishcount.api.repository.custom.CustomEmailRepository;
 import com.fishcount.common.model.entity.Email;
+import com.fishcount.common.model.entity.Usuario;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
  *
  * @author lucas
  */
 @Repository
-public interface EmailRepository extends JpaRepository<Email, Integer> {
+public interface EmailRepository extends JpaRepository<Email, Integer>, JpaSpecificationExecutor<Email>, CustomEmailRepository {
 
-    Optional<Email> findByDescricaoAndAtivoTrue(String descricao);
+    @Override
+    public Email findAtivoByDescricao(String descricao);
+
+    @Override
+    public List<Email> findAllByUsuario(Usuario usuario);
+    
 }

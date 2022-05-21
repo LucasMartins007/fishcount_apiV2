@@ -1,30 +1,43 @@
 package com.fishcount.api.controller;
 
 import com.fishcount.api.controller.interfaces.IEmailController;
+import com.fishcount.api.service.EmailService;
 import com.fishcount.common.model.dto.EmailDTO;
+import com.fishcount.common.model.entity.Email;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
 
-public class EmailController implements IEmailController {
+@RestController
+public class EmailController extends AbstractController<EmailService> implements IEmailController {
 
     @Override
     public EmailDTO incluir(Integer idUsuario, EmailDTO emailDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Email email = converterDTOParaEntity(emailDTO, Email.class);
+        
+        return converterEntityParaDTO(getService().incluir(idUsuario, email), EmailDTO.class);
     }
 
     @Override
     public void editar(Integer idUsuario, Integer idEmail, EmailDTO emailDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Email email = converterDTOParaEntity(emailDTO, Email.class);
+        
+        getService().editar(idEmail, email);
     }
 
     @Override
     public List<EmailDTO> listar(Integer idUsuario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return converterEntityParaDTO(getService().listar(idUsuario), EmailDTO.class);
     }
 
     @Override
     public EmailDTO encontrar(Integer idUsuario, Integer idEmail) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return converterEntityParaDTO(getService().findAndValidate(idEmail), EmailDTO.class);
+    }
+
+    @Override
+    public void inativar(Integer idUsuario, Integer idEmail) {
+        getService().inativar(idUsuario, idEmail);
     }
 
 }

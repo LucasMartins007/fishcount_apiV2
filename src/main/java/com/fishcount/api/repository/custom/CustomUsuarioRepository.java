@@ -8,5 +8,5 @@ import com.fishcount.common.model.entity.Usuario;
  */
 public interface CustomUsuarioRepository {
     
-    Usuario findByEmail(String email);
+    Usuario findByEmailPrincipal(String email);
 }

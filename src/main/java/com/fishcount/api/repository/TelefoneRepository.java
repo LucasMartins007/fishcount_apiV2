@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * @author lucas
  */
 @Repository
-public interface TelefoneRepository extends JpaRepository<Telefone, Integer>{
-    
+public interface TelefoneRepository extends JpaRepository<Telefone, Integer> {
+
 }

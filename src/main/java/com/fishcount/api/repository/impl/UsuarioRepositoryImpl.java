@@ -4,7 +4,7 @@ import com.fishcount.api.repository.custom.CustomUsuarioRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
 import com.fishcount.api.repository.spec.UsuarioSpec;
 import com.fishcount.common.model.entity.Usuario;
-import lombok.RequiredArgsConstructor;
+import com.fishcount.common.model.enums.EnumTipoEmail;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,14 +12,14 @@ import org.springframework.stereotype.Repository;
  * @author Lucas Martins
  */
 @Repository
-@RequiredArgsConstructor
 public class UsuarioRepositoryImpl extends GenericImpl<Usuario, Integer> implements CustomUsuarioRepository {
 
     @Override
-    public Usuario findByEmail(String email) {
+    public Usuario findByEmailPrincipal(String email) {
         return getSpecRepository()
-                .findOne(UsuarioSpec.usuarioAtivo()
-                        .and(UsuarioSpec.usuarioByEmail(email)))
+                .findOne(
+                        UsuarioSpec.usuarioAtivo()
+                                .and(UsuarioSpec.usuarioByEmailAndTipo(email, EnumTipoEmail.PRINCIPAL)))
                 .orElse(null);
     }
 }

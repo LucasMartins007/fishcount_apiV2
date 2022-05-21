@@ -13,13 +13,13 @@ desenv:
 database-data:
   server: localhost
   port: 5432
-  name: fish_count
+  name: fishcount
   username: admin
   password: admin
 
 jwt.secret: FGj2herA5v2ZUaTt
 
-spring:
+spring:    
   profiles:
     active: development
 
@@ -30,6 +30,15 @@ spring:
     rest:
       base-path: ${app.base-path}
 
+  flyway:
+    locations: "classpath:/db/migration"
+    url: jdbc:postgresql://${database-data.server}:${database-data.port}/${database-data.name}
+    user: ${database-data.username}
+    password: ${database-data.password}
+    schemas: migration
+    validate-on-migrate: true
+    
+    
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
@@ -37,7 +46,7 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: create
-    properties:
+    properties: 
       hibernate:
         format_sql: ${desenv.sql_console}
         dialect: ${spring.jpa.database-platform}

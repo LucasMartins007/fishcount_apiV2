@@ -12,21 +12,21 @@ import java.util.List;
  * @author lucas
  */
 @RestController
-@RequestMapping(ITelefoneController.PATH)
+@RequestMapping(value = ITelefoneController.PATH)
 public interface ITelefoneController {
 
-    String PATH = IUsuarioController.PATH + OperationsParam.PARENT_ID + "/telefone";
+    String PATH = IUsuarioController.PATH + OperationsPath.PARENT_ID + "/telefone";
 
     @PostMapping
-    TelefoneDTO incluir(@PathVariable(OperationsPath.PARENT_ID) Integer idUsuario, @RequestBody TelefoneDTO telefoneDTO);
+    TelefoneDTO incluir(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @RequestBody TelefoneDTO telefoneDTO);
 
     @PutMapping(OperationsParam.ID)
-    void editar(@PathVariable(OperationsPath.PARENT_ID) Integer idUsuario, @PathVariable(OperationsPath.ID) Integer idTelefone, @RequestBody TelefoneDTO telefoneDTO);
+    void editar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsPath.ID) Integer idTelefone, @RequestBody TelefoneDTO telefoneDTO);
 
     @GetMapping
-    List<TelefoneDTO> listar(@PathVariable(OperationsPath.PARENT_ID) Integer idUsuario);
+    List<TelefoneDTO> listar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario);
 
     @GetMapping(OperationsParam.ID)
-    TelefoneDTO encontrar(@PathVariable(OperationsPath.PARENT_ID) Integer idUsuario, @PathVariable(OperationsPath.ID) Integer idTelefone);
+    TelefoneDTO encontrar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsPath.ID) Integer idTelefone);
 
 }

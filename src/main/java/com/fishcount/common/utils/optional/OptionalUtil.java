@@ -1,4 +1,3 @@
-
 package com.fishcount.common.utils.optional;
 
 import java.util.NoSuchElementException;
@@ -80,7 +79,6 @@ public final class OptionalUtil<T> {
 //    public T orElseGet(Supplier<? extends T> fallback) {
 //        return isPresent() ? value : fallback.get();
 //    }
-
     public <X extends Throwable> T orElseThrow(Supplier<? extends X> exceptionSupplier) throws X {
         if (isPresent()) {
             return value;
@@ -95,10 +93,24 @@ public final class OptionalUtil<T> {
         }
     }
 
+    public <X extends Throwable> T ifPresentThrow(Supplier<? extends X> exceptionSupplier) throws X {
+        if (isPresent()) {
+            throw exceptionSupplier.get();
+        }
+        return null;
+    }
+
     public void ifAbsent(Runnable action) {
         if (!isPresent()) {
             action.run();
         }
+    }
+    
+    public <X extends Throwable> T ifAbsentThrow(Supplier<? extends X> exceptionSupplier) throws X {
+        if (!isPresent()){
+            throw exceptionSupplier.get();
+        }
+        return null;
     }
 
     public void consume(Consumer<? super T> ifPresent, Runnable ifAbsent) {
