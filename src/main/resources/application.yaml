@@ -16,7 +16,7 @@ desenv:
 database-data:
   server: localhost
   port: 5432
-  name: fishcount
+  name: fish_count
   username: admin
   password: admin
 
