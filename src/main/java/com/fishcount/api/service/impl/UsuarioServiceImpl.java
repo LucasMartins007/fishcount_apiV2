@@ -92,6 +92,7 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
         });
     }
 
+    @Override
     public Usuario encontrarPorId(Integer id) {
         return findAndValidate(id);
     }

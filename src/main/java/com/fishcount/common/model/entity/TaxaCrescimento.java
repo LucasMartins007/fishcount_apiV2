@@ -30,9 +30,6 @@ public class TaxaCrescimento extends AbstractEntity<Integer> {
     @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_taxa_crescimento_to_especie"))
     private Especie especie;
 
-    @Column(name = "periodo_analise")
-    private Integer periodoAnalise;
-
     @Column(name = "qtde_aumento")
     private BigDecimal qtdeAumento;
 
@@ -43,9 +40,9 @@ public class TaxaCrescimento extends AbstractEntity<Integer> {
     @Column(name = "intervalo")
     private Integer intervalo;
 
-    @Column(name = "unidade_itempo")
+    @Column(name = "unidade_intervalo")
     @Convert(converter = EnumUnidadeTempo.EnumConverter.class)
-    private EnumUnidadeTempo unidadeTempo;
+    private EnumUnidadeTempo unidadeIntervalo;
 
     @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)
