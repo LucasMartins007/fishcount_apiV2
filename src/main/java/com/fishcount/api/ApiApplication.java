@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @EntityScan(basePackages = {"com.fishcount.common.model.entity"})
 public class ApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ApiApplication.class, args);
+    }
 
 }
