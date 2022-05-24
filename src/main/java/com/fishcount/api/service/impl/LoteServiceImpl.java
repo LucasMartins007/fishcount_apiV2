@@ -46,19 +46,10 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     }
 
     @Override
-    public Lote findByDescricao(Lote lote) {
-        return getRepository(LoteRepository.class).findByDescricao(lote.getDescricao());
-    }
-
-    @Override
     public List<Lote> listarFromUsuario(Integer idUsuario) {
         Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
 
-        List<Lote> lotes = getRepository(LoteRepository.class).findAllByUsuario(usuario);
-        
-        return lotes.stream()
-                .sorted(Comparator.comparing(Lote::getDescricao))
-                .collect(Collectors.toList());
+        return getRepository(LoteRepository.class).findAllByUsuario(usuario);
     }
 
     private void onPrepareInsertOrUpdate(Integer idUsuario, Lote lote) {

@@ -240,3 +240,16 @@
        add constraint fk_titulo_parcela_to_titulo 
        foreign key (id_titulo) 
        references titulo;
+
+
+
+INSERT INTO public.taxa_crescimento
+(id, data_atualizacao, data_inclusao, intervalo, periodo_analise, qtde_aumento, unidade_aumento, unidade_itempo, id_especie, unidade_intervalo)
+VALUES(51, '2022-05-23 00:00:00.000', '2022-05-23 00:00:00.000', 250, 0, 2.00, 'CM', 'DIA', 1, 'DIA');
+
+
+
+INSERT INTO public.especie
+(id, data_atualizacao, data_inclusao, descricao, peso_medio, qtde_media_racao, tamanho_medio, unidade_peso_medio, unidade_peso_racao, unidade_tamanho, id_taxa_crescimento)
+VALUES(1, '2022-05-23 00:00:00.000', '2022-05-23 00:00:00.000', 'especie teste', 300.00, 20, 10.00, 'GR', 'GR', 'CM', 51);
+

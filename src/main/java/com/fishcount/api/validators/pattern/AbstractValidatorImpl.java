@@ -31,7 +31,7 @@ public abstract class AbstractValidatorImpl<T extends AbstractEntity<?>> impleme
         return getContext().getRepositoryFromClass(entityClass);
     }
 
-    public <R extends Repository> R getRepository(Class<R> classRespository) {
+    public <R extends JpaRepository> R getRepository(Class<R> classRespository) {
         return getContext().getBean(classRespository);
     }
 

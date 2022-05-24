@@ -4,6 +4,7 @@ import com.fishcount.api.repository.TanqueRepository;
 import com.fishcount.api.service.EspecieService;
 import com.fishcount.api.service.LoteService;
 import com.fishcount.api.service.TanqueService;
+import com.fishcount.api.validators.EspecieValidator;
 import com.fishcount.api.validators.TanqueValidator;
 import com.fishcount.common.model.dto.TanqueDTO;
 import com.fishcount.common.model.entity.Especie;
@@ -19,6 +20,8 @@ import java.util.List;
 public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, TanqueDTO> implements TanqueService {
 
     private final TanqueValidator tanqueValidator = new TanqueValidator();
+    
+    private final EspecieValidator especieValidator = new EspecieValidator();
 
     @Override
     public Tanque incluir(Integer loteId, Tanque tanque) {
@@ -41,9 +44,12 @@ public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, Tanq
         tanque.setLote(lote);
 
         if (Utils.isNotEmpty(tanque.getEspecie())) {
-            Especie especie = getService(EspecieService.class).incluir(tanque.getEspecie());
+            Especie especie = tanque.getEspecie();
+            especieValidator.validateInsert(especie);
+            especie = getService(EspecieService.class).findAndValidate(especie.getId());
+            getService(EspecieService.class).onPrepareInsert(especie);
+            
             tanque.setEspecie(especie);
-
         }
         tanque.setQtdUltimaAnalise(0);
         tanque.setDataProximaAnalise(DateUtil.getDate());

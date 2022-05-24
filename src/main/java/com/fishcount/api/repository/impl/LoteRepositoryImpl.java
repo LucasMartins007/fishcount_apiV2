@@ -6,11 +6,13 @@ import com.fishcount.api.repository.spec.LoteSpec;
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.model.entity.Usuario;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Lucas Martins
  */
+@Repository
 public class LoteRepositoryImpl extends GenericImpl<Lote, Integer> implements CustomLoteRepository {
 
     @Override
@@ -24,7 +26,9 @@ public class LoteRepositoryImpl extends GenericImpl<Lote, Integer> implements Cu
     @Override
     public List<Lote> findAllByUsuario(Usuario usuario) {
         return getSpecRepository()
-                .findAll(LoteSpec.loteByUsuario(usuario));
+                .findAll(
+                        LoteSpec.loteByUsuario(usuario)
+                                .and(LoteSpec.orderBy(true, "descricao")));
     }
 
 }

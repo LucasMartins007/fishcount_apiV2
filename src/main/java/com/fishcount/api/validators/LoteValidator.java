@@ -1,6 +1,6 @@
 package com.fishcount.api.validators;
 
-import com.fishcount.api.service.LoteService;
+import com.fishcount.api.repository.LoteRepository;
 import com.fishcount.api.validators.pattern.AbstractValidatorImpl;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
 import com.fishcount.common.exception.FcRuntimeException;
@@ -32,10 +32,11 @@ public class LoteValidator extends AbstractValidatorImpl<Lote> {
 
     public void validateDuplicidadeLote(Lote lote) {
         if (Utils.isEmpty(lote.getId())) {
-            OptionalUtil.of(getService(LoteService.class).findByDescricao(lote))
+            OptionalUtil.ofNullable(getRepository(LoteRepository.class).findByDescricao(lote.getDescricao()))
                     .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.LOTE_DUPLICADO, lote.getDescricao()));
+            return;
         }
-        OptionalUtil.of(getService(LoteService.class).findByDescricao(lote))
+        OptionalUtil.ofNullable(getRepository(LoteRepository.class).findByDescricao(lote.getDescricao()))
                 .filter(managedLote -> !managedLote.getId().equals(lote.getId()))
                 .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.LOTE_DUPLICADO, lote.getDescricao()));
     }

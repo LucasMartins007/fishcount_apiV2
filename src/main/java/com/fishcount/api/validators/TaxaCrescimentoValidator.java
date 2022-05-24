@@ -19,8 +19,9 @@ public class TaxaCrescimentoValidator extends AbstractValidatorImpl<TaxaCrescime
         ValidateMandatoryFields validate = new ValidateMandatoryFields();
         
         validate.add(taxaCrescimento.getIntervalo(), "Intervalo");
+        validate.add(taxaCrescimento.getUnidadeIntervalo(), "Unidade de Intervalo");
         validate.add(taxaCrescimento.getQtdeAumento(), "Quantidade aumento");
-        validate.add(taxaCrescimento.getUnidadeAumento(), "Unidade aumento");
+        validate.add(taxaCrescimento.getUnidadeAumento(), "Unidade de aumento");
         
         validate.validate();
     }

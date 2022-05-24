@@ -5,13 +5,7 @@ import com.fishcount.api.validators.TelefoneValidator;
 import com.fishcount.common.model.dto.TelefoneDTO;
 import com.fishcount.common.model.entity.Telefone;
 import com.fishcount.common.utils.DateUtil;
-import com.fishcount.common.utils.NumericUtil;
-import com.fishcount.common.utils.Utils;
-import java.text.ParseException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.text.MaskFormatter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

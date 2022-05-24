@@ -13,7 +13,6 @@ import java.util.List;
  */
 @Repository
 public interface TanqueRepository extends JpaRepository<Tanque, Integer> {
-
     
     List<Tanque> findAllByLote(Lote lote);
 }
