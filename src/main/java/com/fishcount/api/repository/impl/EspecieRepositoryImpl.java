@@ -21,4 +21,10 @@ public class EspecieRepositoryImpl extends GenericImpl<Especie, Integer> impleme
                 .findAll(EspecieSpec.orderBy(true, "descricao"));
     }
 
+    @Override
+    public Especie findByDescricao(String descricao) {
+        return getSpecRepository()
+                .findOne(EspecieSpec.findByDescricao(descricao))
+                .orElse(null);
+    }
 }

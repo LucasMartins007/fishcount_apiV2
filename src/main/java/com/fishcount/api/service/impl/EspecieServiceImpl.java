@@ -46,4 +46,9 @@ public class EspecieServiceImpl extends AbstractServiceImpl<Especie, Integer, Es
         return getRepository(EspecieRepository.class).findAll();
     }
 
+    @Override
+    public Especie findByDescricao(String descricao) {
+        return getRepository(EspecieRepository.class).findByDescricao(descricao);
+    }
+
 }

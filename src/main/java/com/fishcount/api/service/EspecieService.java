@@ -18,5 +18,7 @@ public interface EspecieService extends IAbstractService<Especie, Integer, Espec
     
     List<Especie> listarTodos();
     
+    Especie findByDescricao(String descricao);
+    
     void onPrepareInsert(Especie especie);
 }

@@ -1,4 +1,3 @@
-
 package com.fishcount.api.controller;
 
 import com.fishcount.api.controller.interfaces.IEspecieController;
@@ -18,5 +17,10 @@ public class EspecieController extends AbstractController<EspecieService> implem
     public List<EspecieDTO> listarEspecies() {
         return getService().findAll();
     }
-    
+
+    @Override
+    public EspecieDTO findByDescricao(String descricao) {
+        return converterEntityParaDTO(getService().findByDescricao(descricao), EspecieDTO.class);
+    }
+
 }

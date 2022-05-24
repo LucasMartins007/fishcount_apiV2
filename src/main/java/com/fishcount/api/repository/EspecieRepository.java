@@ -12,6 +12,9 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface EspecieRepository extends JpaRepository<Especie, Integer>, JpaSpecificationExecutor<Especie>, CustomEspecieRepository {
 
     @Override
-    public List<Especie> findAll();
-    
+    List<Especie> findAll();
+
+    @Override
+    Especie findByDescricao(String descricao);
+
 }

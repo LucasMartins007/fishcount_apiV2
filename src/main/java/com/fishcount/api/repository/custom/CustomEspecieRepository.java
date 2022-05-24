@@ -10,4 +10,6 @@ import java.util.List;
 public interface CustomEspecieRepository {
 
     List<Especie> findAll();
+    
+    Especie findByDescricao(String descricao);
 }

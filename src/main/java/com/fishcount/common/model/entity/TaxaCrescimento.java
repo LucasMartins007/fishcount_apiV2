@@ -26,10 +26,6 @@ public class TaxaCrescimento extends AbstractEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_taxa_crescimento")
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_taxa_crescimento_to_especie"))
-    private Especie especie;
-
     @Column(name = "qtde_aumento")
     private BigDecimal qtdeAumento;
 
@@ -43,6 +39,10 @@ public class TaxaCrescimento extends AbstractEntity<Integer> {
     @Column(name = "unidade_intervalo")
     @Convert(converter = EnumUnidadeTempo.EnumConverter.class)
     private EnumUnidadeTempo unidadeIntervalo;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_taxa_crescimento_to_especie"))
+    private Especie especie;
 
     @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)
