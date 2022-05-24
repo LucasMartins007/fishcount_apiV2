@@ -31,8 +31,8 @@ public class TaxaCrescimentoServiceImpl extends AbstractServiceImpl<TaxaCrescime
     }
 
     @Override
-    public TaxaCrescimento findByEspecie(Integer idEspecie) {
-       Especie especie = getService(EspecieService.class).findAndValidate(idEspecie);
+    public TaxaCrescimento findByEspecie(String descricaoEspecie) {
+       Especie especie = getService(EspecieService.class).findByDescricao(descricaoEspecie);
        
        return getRepository(TaxaCrescimentoRepository.class).findByEspecie(especie);
     }

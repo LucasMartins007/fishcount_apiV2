@@ -12,6 +12,6 @@ public interface TaxaCrescimentoService extends IAbstractService<TaxaCrescimento
     
     TaxaCrescimento incluir(TaxaCrescimento taxaCrescimento);
     
-    TaxaCrescimento findByEspecie(Integer idEspecie);
+    TaxaCrescimento findByEspecie(String especie);
 
 }

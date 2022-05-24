@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaxaCrescimentoController extends AbstractController<TaxaCrescimentoService> implements ITaxaCrescimentoController {
 
     @Override
-    public TaxaCrescimentoDTO findByEspecie(Integer idEspecie) {
-        return converterEntityParaDTO(getService().findByEspecie(idEspecie), TaxaCrescimentoDTO.class);
+    public TaxaCrescimentoDTO findByEspecie(String especie) {
+        return converterEntityParaDTO(getService().findByEspecie(especie), TaxaCrescimentoDTO.class);
     }
 
 }
