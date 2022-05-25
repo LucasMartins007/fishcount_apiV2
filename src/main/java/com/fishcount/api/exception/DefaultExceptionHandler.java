@@ -1,7 +1,7 @@
 package com.fishcount.api.exception;
 
+import com.fishcount.common.exception.CommonExceptionResponse;
 import com.fishcount.common.exception.FcRuntimeException;
-import com.fishcount.common.exception.RespostaException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.utils.LoggerUtil;
 import com.fishcount.common.utils.StackTraceUtil;
@@ -24,12 +24,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<RespostaException> handleException(Exception ex) {
+    public ResponseEntity<CommonExceptionResponse> handleException(Exception ex) {
         final String stackTrace = StackTraceUtil.getStackTrace(ex);
 
         LoggerUtil.getLogger(DefaultExceptionHandler.class).error(stackTrace);
 
-        final RespostaException respostaException = new RespostaException(EnumFcInfraException.NULL_POINTER_EXCEPTION.getMessage());
+        final CommonExceptionResponse respostaException = new CommonExceptionResponse(EnumFcInfraException.NULL_POINTER_EXCEPTION.getMessage());
         respostaException.setTrace(stackTrace);
 
         return exception(respostaException, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -58,7 +58,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity exception(Throwable e) {
         return ResponseEntity.badRequest()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new RespostaException(e));
+                .body(new CommonExceptionResponse(e));
     }
 
     private ResponseEntity exception(String e) {
@@ -70,10 +70,10 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity exception(Throwable e, HttpStatus httpStatus) {
         return ResponseEntity.status(httpStatus)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new RespostaException(e));
+                .body(new CommonExceptionResponse(e));
     }
 
-    private ResponseEntity exception(RespostaException respostaError, HttpStatus httpStatus) {
+    private ResponseEntity exception(CommonExceptionResponse respostaError, HttpStatus httpStatus) {
         return ResponseEntity.status(httpStatus)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(respostaError);

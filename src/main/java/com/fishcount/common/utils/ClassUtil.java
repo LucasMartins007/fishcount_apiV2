@@ -1,26 +1,33 @@
 package com.fishcount.common.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Stream;
+
+import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.model.dto.pattern.IEnum;
 import com.fishcount.common.model.pattern.enums.EnumDateFormat;
-import org.apache.commons.lang3.StringUtils;
+
 import org.springframework.util.ClassUtils;
 import org.springframework.web.method.HandlerMethod;
-
-import java.io.IOException;
-import java.lang.reflect.*;
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.util.*;
-import java.util.stream.Stream;
 
 /**
  *
  * @author lucas
  */
+
 public class ClassUtil {
 
-    private static final Map<Class, Class> CLASSES = new HashMap<>();
+    ClassUtil() {
+    }
+
+    private static final Map<Class<?>, Class<?>> CLASSES = new HashMap<>();
 
     private static final Map<String, Boolean> BOOLEAN_VALUES = new LinkedHashMap<>();
 
@@ -63,12 +70,11 @@ public class ClassUtil {
         BOOLEAN_VALUES.put("false", false);
     }
 
-
-    public static Class getClassParameterizedType(Class clazz) {
-        return ((Class) ((ParameterizedType) clazz.getGenericSuperclass()).getActualTypeArguments()[0]);
+    public static Class<?> getClassParameterizedType(Class<?> clazz) {
+        return ((Class<?>) ((ParameterizedType) clazz.getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 
-    public static Class getClassParameterizedTypeField(Field field) {
+    public static Class<?> getClassParameterizedTypeField(Field field) {
         return (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
     }
 
@@ -78,16 +84,14 @@ public class ClassUtil {
         return createInstance(clazz);
     }
 
-    @SuppressWarnings("unchecked")
     public static final Class<?> createClass(String className, ClassLoader classLoader) {
         try {
             return ClassUtils.forName(className, classLoader);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new FcRuntimeException(e);
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static final <C> C createInstance(Class<C> clazz) {
         try {
             final Constructor<C> constructorIfAvailable = ClassUtils.getConstructorIfAvailable(clazz);
@@ -95,19 +99,19 @@ public class ClassUtil {
             if (constructorIfAvailable != null) {
                 return constructorIfAvailable.newInstance();
             } else {
-                throw new RuntimeException("All Args Constructor");
+                throw new FcRuntimeException("All Args Constructor");
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new FcRuntimeException(e);
         }
     }
 
-    public static boolean isType(Class type, Class aClass) {
+    public static boolean isType(Class<?> type, Class<?> aClass) {
         if (type != null && aClass != null) {
             if (!type.isPrimitive() && !aClass.isPrimitive()) {
                 return aClass.isAssignableFrom(type);
             }
-            Map<Class, Class> decode = new LinkedHashMap<>();
+            Map<Class<?>, Class<?>> decode = new LinkedHashMap<>();
 
             decode.put(boolean.class, Boolean.class);
             decode.put(double.class, Double.class);
@@ -117,10 +121,10 @@ public class ClassUtil {
             decode.put(long.class, Long.class);
 
             if (type.isPrimitive()) {
-                Class decoded = decode.get(type);
+                Class<?> decoded = decode.get(type);
                 return aClass.isAssignableFrom(decoded);
             } else if (aClass.isPrimitive()) {
-                Class decoded = decode.get(aClass);
+                Class<?> decoded = decode.get(aClass);
                 return type.isAssignableFrom(decoded);
             }
         }
@@ -140,7 +144,7 @@ public class ClassUtil {
                 && (method.getName().equalsIgnoreCase("get" + name) || method.getName().equalsIgnoreCase("is" + name));
     }
 
-    public static Method getMethod(Class aClass, String method) {
+    public static Method getMethod(Class<?> aClass, String method) {
         for (Method m : aClass.getMethods()) {
             if (m.getName().equalsIgnoreCase(method)) {
                 return m;
@@ -155,184 +159,15 @@ public class ClassUtil {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> T cast(Class<T> clzz, Object valor) {
-        try {
-            if (clzz.equals(Object.class)) {
-                return (T) valor;
-            }
-
-            if (valor != null) {
-                if (clzz.isAssignableFrom(valor.getClass())) {
-                    return (T) valor;
-                }
-
-                String valString = valor.toString();
-
-                if (isType(clzz, BigDecimal.class)) {
-                    return (T) BigDecimalUtil.valueOf(valString);
-                } else if (isType(clzz, Boolean.class)) {
-                    String key = (valString + "").trim().toLowerCase();
-                    return (T) BOOLEAN_VALUES.get(key);
-                } else if (clzz.equals(String.class)) {
-                    if (Date.class.isAssignableFrom(valor.getClass())) {
-                        return (T) DateUtil.formatDDMMYYYY((Date) valor);
-                    }
-                    return (T) (valor + "");
-                } else if (!clzz.isPrimitive()) {
-                    if (valor.getClass().equals(clzz)) {
-                        return (T) valor;
-                    } else if (valor instanceof BigDecimal) {
-                        try {
-                            BigDecimal big = (BigDecimal) valor;
-
-                            if (clzz.equals(Integer.class)) {
-                                valor = big.intValue();
-                            } else if (clzz.equals(Double.class)) {
-                                valor = big.doubleValue();
-                            } else if (clzz.equals(Long.class)) {
-                                valor = big.longValue();
-                            }
-                            return (T) valor;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else if (clzz.equals(valor.getClass())) {
-                        return (T) valor;
-                    } else if (valor instanceof Enum) {
-                        return (T) valor;
-                    } else if (valor instanceof Number) {
-                        if (clzz.equals(Integer.class)) {
-                            Integer v = ((Number) valor).intValue();
-                            return (T) v;
-                        } else if (clzz.equals(Double.class)) {
-                            Double v = ((Number) valor).doubleValue();
-                            return (T) v;
-                        } else if (clzz.equals(Long.class)) {
-                            Long v = ((Number) valor).longValue();
-                            return (T) v;
-                        } else if (clzz.equals(Number.class)) {
-                            Constructor constructor = clzz.getConstructor(String.class);
-                            return (T) constructor.newInstance(valor + "");
-                        }
-                    } else if (valor instanceof String) {
-                        String token = "|";
-
-                        if (valString.contains("|")) {
-                            token = "|";
-                        } else if (valString.contains("&")) {
-                            token = "&";
-                        } else if (valString.contains(",")) {
-                            token = ",";
-                        }
-                        String regex = "[" + token + "]";
-
-                        if (isType(clzz, Date.class)) {
-                            if (valString.equals("null")) {
-                                return null;
-                            }
-
-                            String value = valString.trim().toUpperCase();
-
-                            for (Map.Entry<EnumDateFormat, String> entry : DATE_VALUES.entrySet()) {
-                                regex = entry.getValue();
-
-                                if (value.matches(regex)) {
-                                    try {
-                                        return (T) entry.getKey().parse(value);
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                            return null;
-                        } else if (clzz.equals(List.class)) {
-                            List lista = new ArrayList();
-                            String[] split = Utils.nvl(valString, "").split(regex);
-
-                            for (String s : split) {
-                                lista.add(s.trim());
-                            }
-                            return (T) lista;
-                        } else if (clzz.isArray()) {
-                            return (T) StringUtils.splitPreserveAllTokens(valString, token);
-                        } else if (clzz.equals(Map.class)) {
-                            Map<String, String> mapa = new LinkedHashMap();
-
-                            if (valString.startsWith("{") && valString.endsWith("}")) {
-                                mapa = new ObjectMapper().readValue(valString, LinkedHashMap.class);
-                            } else {
-                                List<String> lista = new ArrayList(Arrays.asList(valString.split(regex)));
-                                String[] split;
-
-                                for (String str : lista) {
-                                    try {
-                                        split = str.split("[=]");
-                                        if (!Utils.isEmpty(split[0])) {
-                                            String v = null;
-
-                                            if (!Utils.isEmpty(split[1])) {
-                                                v = split[1].trim();
-                                            }
-                                            mapa.put(split[0].trim(), v);
-                                        }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                            return (T) mapa;
-                        }
-
-                        if (Number.class.isAssignableFrom(clzz)) {
-                            if (valString.contains(",")) {
-                                valString = valString.replace(".", "");
-                                valString = valString.replace(",", ".");
-                                valor = valString;
-                            }
-
-                            if (Utils.isEmpty(valString) || !NumericUtil.isNumeric(valString)) {
-                                return null;
-                            }
-                        }
-
-                        Constructor constructor = clzz.getConstructor(String.class);
-                        return (T) constructor.newInstance(valor);
-
-                    } else if (List.class.isAssignableFrom(clzz) && valor instanceof Object[]) {
-                        return (T) new ArrayList(Arrays.asList((Object[]) valor));
-                    } else {
-                        try {
-                            Method method = clzz.getDeclaredMethod("valueOf", String.class);
-                            return (T) method.invoke(null, valor + "");
-                        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                            return (T) valor;
-                        }
-                    }
-                } else if (CLASSES.containsKey(clzz)) {
-                    clzz = CLASSES.get(clzz);
-                    Constructor<T> constructor = clzz.getConstructor(String.class);
-                    return (T) constructor.newInstance(valor + "");
-                } else {
-                    return (T) valor;
-                }
-            } else if (isType(clzz, Boolean.class) && valor == null) {
-                return (T) Boolean.FALSE;
-            }
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | IOException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
     public static Method parseHandlerToMethod(Object handler) {
-        return handler != null && handler instanceof HandlerMethod ? ((HandlerMethod) handler).getMethod() : null;
+        return handler instanceof HandlerMethod ? ((HandlerMethod) handler).getMethod() : null;
     }
 
-    public static <T> T getEnumValue(Class enumClass, String valor) {
+    @SuppressWarnings("unchecked")
+    public static <T> T getEnumValue(Class<T> enumClass, String valor) {
         for (Object enumered : enumClass.getEnumConstants()) {
             if (enumered instanceof IEnum) {
-                IEnum ienum = ((IEnum) enumered);
+                IEnum<T> ienum = ((IEnum<T>) enumered);
 
                 if (ienum.getKey().equals(valor) ||
                         ienum.getValue().equals(valor) ||
@@ -342,7 +177,7 @@ public class ClassUtil {
             }
 
             if (enumered instanceof Enum) {
-                Enum typeEnum = ((Enum) enumered);
+                Enum<?> typeEnum = ((Enum<?>) enumered);
 
                 if (typeEnum.name().equals(valor) ||
                         typeEnum.toString().equals(valor)) {

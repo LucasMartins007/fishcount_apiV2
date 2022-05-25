@@ -5,14 +5,18 @@
 package com.fishcount.common.utils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  *
  * @author lucas
  */
-class BigDecimalUtil {
-    
-     public static BigDecimal valueOf(String value) {
+public class BigDecimalUtil {
+
+    BigDecimalUtil() {
+    }
+
+    public static BigDecimal valueOf(String value) {
         if (value != null) {
             Double doubleValue = Double.valueOf(value);
             return BigDecimal.valueOf(doubleValue);
@@ -21,7 +25,7 @@ class BigDecimalUtil {
     }
 
     public static BigDecimal truncBig(BigDecimal value, Integer decimais) {
-        value = value.setScale(decimais, BigDecimal.ROUND_FLOOR);
+        value = value.setScale(decimais, RoundingMode.FLOOR);
         return value;
     }
 }
