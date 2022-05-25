@@ -1,9 +1,9 @@
-
 package com.fishcount.api.controller;
 
 import com.fishcount.api.controller.interfaces.ITelefoneController;
 import com.fishcount.api.service.TelefoneService;
 import com.fishcount.common.model.dto.TelefoneDTO;
+import com.fishcount.common.model.entity.Telefone;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,27 +13,33 @@ public class TelefoneController extends AbstractController<TelefoneService> impl
 
     @Override
     public TelefoneDTO incluir(Integer idUsuario, TelefoneDTO telefoneDTO) {
-        return telefoneDTO;
+        Telefone telefone = getService().incluir(idUsuario, converterDTOParaEntity(telefoneDTO, Telefone.class));
+
+        return converterEntityParaDTO(telefone, TelefoneDTO.class);
     }
 
     @Override
     public void editar(Integer idUsuario, Integer idTelefone, TelefoneDTO telefoneDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Telefone telefone = converterDTOParaEntity(telefoneDTO, Telefone.class);
+
+        getService().editar(idUsuario, idTelefone, telefone);
     }
 
     @Override
     public List<TelefoneDTO> listar(Integer idUsuario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Telefone> telefones = getService().listarAtivos(idUsuario);
+
+        return converterEntityParaDTO(telefones, TelefoneDTO.class);
     }
 
     @Override
     public TelefoneDTO encontrar(Integer idUsuario, Integer idTelefone) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return converterEntityParaDTO(getService().findAndValidate(idUsuario), TelefoneDTO.class);
     }
 
     @Override
     public void inativar(Integer idUsuario, Integer idTelefone) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        getService().inativar(idUsuario, idTelefone);
     }
 
 }
