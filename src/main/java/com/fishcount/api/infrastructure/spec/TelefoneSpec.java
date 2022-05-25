@@ -1,4 +1,4 @@
-package com.fishcount.api.repository.spec;
+package com.fishcount.api.infrastructure.spec;
 
 import com.fishcount.common.model.entity.Telefone;
 import com.fishcount.common.model.entity.Usuario;

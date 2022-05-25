@@ -2,7 +2,7 @@ package com.fishcount.api.repository.impl;
 
 import com.fishcount.api.repository.custom.CustomUsuarioRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
-import com.fishcount.api.repository.spec.UsuarioSpec;
+import com.fishcount.api.infrastructure.spec.UsuarioSpec;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoEmail;
 import org.springframework.stereotype.Repository;
