@@ -1,9 +1,16 @@
 package com.fishcount.api.validators;
 
+import com.fishcount.api.repository.TelefoneRepository;
 import com.fishcount.api.validators.pattern.AbstractValidatorImpl;
 import com.fishcount.api.validators.pattern.ValidateEntity;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
+import com.fishcount.common.exception.FcRuntimeException;
+import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.entity.Telefone;
+import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.enums.EnumTipoTelefone;
+import com.fishcount.common.utils.Utils;
+import com.fishcount.common.utils.optional.OptionalUtil;
 
 /**
  *
@@ -23,10 +30,17 @@ public class TelefoneValidator extends AbstractValidatorImpl<Telefone> {
     }
 
     @Override
-    public void validateInsert(Telefone telefone) {
+    public void validateInsertOrUpdate(Telefone telefone) {
         validateRequiredFields(telefone);
         validateSizeFields(telefone);
         validateFormatoTelefone(telefone);
+        validateDuplicidade(telefone);
+        validateTelefonePrincipalDuplicado(telefone);
+    }
+
+    @Override
+    public void validateDelete(Telefone telefone) {
+        validateTipoTelefone(telefone);
     }
 
     @Override
@@ -35,8 +49,33 @@ public class TelefoneValidator extends AbstractValidatorImpl<Telefone> {
     }
 
     public void validateFormatoTelefone(Telefone telefone) {
-        String descricao = telefone.getDescricao();
+        final String descricao = telefone.getDescricao();
         ValidateEntity.validateRegex(descricao, "^\\+[1-9]{2} \\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", Telefone.class.getSimpleName());
+    }
+
+    private void validateDuplicidade(Telefone telefone) {
+        final String descricao = telefone.getDescricao();
+
+        OptionalUtil.ofNullable(getRepository(TelefoneRepository.class).findByDescricao(descricao))
+                .filter(tel -> Utils.isEmpty(telefone.getId()) || (Utils.isNotEmpty(telefone.getId()) && !telefone.getDescricao().equals(tel.getDescricao())))
+                .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.TELEFONE_DUPLICADO, descricao));
+    }
+
+    private void validateTelefonePrincipalDuplicado(Telefone telefone) {
+        final Usuario usuario = telefone.getUsuario();
+
+        if (Utils.isEmpty(usuario.getId())) {
+            return;
+        }
+
+        OptionalUtil.ofNullable(getRepository(TelefoneRepository.class).findByUsuarioAndTipo(usuario, EnumTipoTelefone.PRINCIPAL))
+                .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.TELEFONE_PRINCIPAL_DUPLICADO, telefone.getDescricao()));
+    }
+
+    private void validateTipoTelefone(Telefone telefone) {
+        if (EnumTipoTelefone.isPrincipal(telefone)) {
+            throw new FcRuntimeException(EnumFcDomainException.TELEFONE_PRINCIPAL_NAO_PODE_SER_INATIVADO, telefone.getDescricao());
+        }
     }
 
 }

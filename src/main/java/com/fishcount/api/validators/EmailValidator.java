@@ -69,7 +69,7 @@ public class EmailValidator extends AbstractValidatorImpl<Email> {
         final Usuario usuario = email.getUsuario();
         final boolean usuarioHasEmailPrincipal = ListUtil.stream(usuario.getEmails())
                 .anyMatch(e -> !e.equals(email) && EnumTipoEmail.isPrincipal(email) && EnumTipoEmail.isPrincipal(e));
-                
+
         if (usuarioHasEmailPrincipal) {
             throw new FcRuntimeException(EnumFcDomainException.EMAIL_PRINCIPAL_DUPLICADO);
         }

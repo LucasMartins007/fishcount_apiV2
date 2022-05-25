@@ -2,6 +2,7 @@ package com.fishcount.common.model.enums;
 
 import com.fishcount.common.model.dto.pattern.IEnum;
 import com.fishcount.common.model.dto.pattern.converter.AbstractEnumConverter;
+import com.fishcount.common.model.entity.Telefone;
 
 import javax.persistence.Converter;
 
@@ -21,6 +22,10 @@ public enum EnumTipoTelefone implements IEnum<Integer> {
     private EnumTipoTelefone(Integer key, String value) {
         this.key = key;
         this.value = value;
+    }
+
+    public static boolean isPrincipal(Telefone telefone) {
+        return PRINCIPAL.equals(telefone.getTipoTelefone());
     }
 
     @Override
