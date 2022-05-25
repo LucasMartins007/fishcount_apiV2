@@ -15,9 +15,9 @@ public interface TelefoneService extends IAbstractService<Telefone, Integer, Tel
     
    Telefone incluir(Integer idUsuario, Telefone telefone);
    
-   void editar(Integer idUsuario, Telefone telefone);
+   void editar(Integer idUsuario, Integer idTelefone, Telefone telefone);
    
-   List<Telefone> listar(Integer idUsuario);
+   List<Telefone> listarAtivos(Integer idUsuario);
    
-   void inativar(Integer idUsuario, Telefone telefone);
+   void inativar(Integer idUsuario, Integer idTelefone);
 }

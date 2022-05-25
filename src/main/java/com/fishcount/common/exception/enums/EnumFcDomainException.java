@@ -34,6 +34,10 @@ public enum EnumFcDomainException implements IFcException {
     EMAIL_PRINCIPAL_DUPLICADO("Você não pode ter mais de um email principal, esse é o seu email de login. "),
     
     TELEFONE_INVALIDO("O campo {0} está com o formato incorreto."),
+    TELEFONE_DUPLICADO("o telefone {0} já está cadastrado no sistema."),
+    TELEFONE_PRINCIPAL_DUPLICADO("Você não pode ter mais de um telefone principal."),
+    TELEFONE_PRINCIPAL_NAO_PODE_SER_INATIVADO("Você não pode excluir o seu telefone principal."),
+    
     
     LOTE_DUPLICADO("Lote com o nome {0} já esta cadastrado no sistema."),
     

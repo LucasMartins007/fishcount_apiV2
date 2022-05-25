@@ -89,7 +89,7 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
         telefones.forEach(telefone -> {
             telefone.setUsuario(usuario);
             telefone.setAtivo(true);
-            telefoneValidator.validateInsert(telefone);
+            telefoneValidator.validateInsertOrUpdate(telefone);
         });
     }
 
