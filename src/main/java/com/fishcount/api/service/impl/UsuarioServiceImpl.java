@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -94,7 +95,19 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
 
     @Override
     public Usuario encontrarPorId(Integer id) {
-        return findAndValidate(id);
+        Usuario usuario = findAndValidate(id);
+        
+        List<Email> emailsAtivos = ListUtil.stream(usuario.getEmails())
+                .filter(Email::isAtivo)
+                .collect(Collectors.toList());
+        usuario.setEmails(emailsAtivos);
+        
+        List<Telefone> telefonesAtivos = ListUtil.stream(usuario.getTelefones())
+                .filter(Telefone::isAtivo)
+                .collect(Collectors.toList());
+        usuario.setTelefones(telefonesAtivos);
+        
+        return usuario;
     }
 
     @Override

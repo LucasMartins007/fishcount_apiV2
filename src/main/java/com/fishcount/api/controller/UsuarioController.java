@@ -23,7 +23,7 @@ public class UsuarioController extends AbstractController<UsuarioService> implem
 
     @Override
     public UsuarioDTO findById(Integer id) {
-        Usuario usuario = getService().findAndValidate(id);
+        Usuario usuario = getService().encontrarPorId(id);
         
         return converterEntityParaDTO(usuario, UsuarioDTO.class);
     }
