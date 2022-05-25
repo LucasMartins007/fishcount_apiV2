@@ -1,9 +1,8 @@
 package com.fishcount.common.model.dto.pattern;
 
 import com.fishcount.common.model.pattern.IIdentifier;
-import lombok.Data;
 
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  *
@@ -11,6 +10,6 @@ import java.io.Serializable;
  * @param <T>
  */
 @Data
-public abstract class AbstractDTO<T extends Number> implements IIdentifier<T>, Serializable {
+public abstract class AbstractDTO<T extends Number> implements IIdentifier<T> {
     
 }

@@ -1,5 +1,7 @@
 package com.fishcount.api.service.impl;
 
+import java.util.List;
+
 import com.fishcount.api.repository.LoteRepository;
 import com.fishcount.api.service.LoteService;
 import com.fishcount.api.service.UsuarioService;
@@ -9,13 +11,10 @@ import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.Utils;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 /**
  *

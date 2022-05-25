@@ -1,9 +1,11 @@
 package com.fishcount.api.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fishcount.api.repository.UsuarioRepository;
 import com.fishcount.api.service.EnderecoService;
 import com.fishcount.api.service.LoteService;
-import com.fishcount.api.service.TelefoneService;
 import com.fishcount.api.service.UsuarioService;
 import com.fishcount.api.validators.EmailValidator;
 import com.fishcount.api.validators.TelefoneValidator;
@@ -11,16 +13,19 @@ import com.fishcount.api.validators.UsuarioValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.dto.UsuarioDTO;
-import com.fishcount.common.model.entity.*;
+import com.fishcount.common.model.entity.Email;
+import com.fishcount.common.model.entity.Endereco;
+import com.fishcount.common.model.entity.Lote;
+import com.fishcount.common.model.entity.Telefone;
+import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.optional.OptionalUtil;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
@@ -96,17 +101,17 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
     @Override
     public Usuario encontrarPorId(Integer id) {
         Usuario usuario = findAndValidate(id);
-        
+
         List<Email> emailsAtivos = ListUtil.stream(usuario.getEmails())
                 .filter(Email::isAtivo)
                 .collect(Collectors.toList());
         usuario.setEmails(emailsAtivos);
-        
+
         List<Telefone> telefonesAtivos = ListUtil.stream(usuario.getTelefones())
                 .filter(Telefone::isAtivo)
                 .collect(Collectors.toList());
         usuario.setTelefones(telefonesAtivos);
-        
+
         return usuario;
     }
 

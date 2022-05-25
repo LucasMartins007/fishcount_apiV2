@@ -1,12 +1,12 @@
 package com.fishcount.api.service;
 
+import java.util.List;
+
 import com.fishcount.api.service.impl.interfaces.IAbstractService;
 import com.fishcount.common.model.dto.LoteDTO;
 import com.fishcount.common.model.entity.Lote;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 /**
  *

@@ -5,6 +5,7 @@ import com.fishcount.common.exception.RespostaException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.utils.LoggerUtil;
 import com.fishcount.common.utils.StackTraceUtil;
+
 import org.hibernate.exception.DataException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

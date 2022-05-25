@@ -1,16 +1,16 @@
 package com.fishcount.api.controller.interfaces;
 
-import com.fishcount.common.model.dto.EspecieDTO;
-import com.fishcount.common.model.pattern.OperationsParam;
-import com.fishcount.common.model.pattern.OperationsPath;
-import io.swagger.annotations.Api;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+
+import com.fishcount.common.model.dto.EspecieDTO;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  *

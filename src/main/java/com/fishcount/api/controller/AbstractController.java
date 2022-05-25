@@ -21,14 +21,14 @@ import java.util.List;
  * @author lucas
  * @param <E>
  */
-public abstract class AbstractController<E extends IAbstractService> {
+public abstract class AbstractController<E extends IAbstractService<?, ?, ?>> {
 
     @Autowired
     private HttpServletRequest request;
     
     private Class<E> serviceClass;
 
-    public AbstractController() {
+    protected AbstractController() {
         this.serviceClass = resolverServiceClass(this.getClass());
     }
 
@@ -36,15 +36,15 @@ public abstract class AbstractController<E extends IAbstractService> {
         return getContext().getBean(serviceClass);
     }
 
-    protected ResponseEntity okResponse() {
+    protected ResponseEntity<?> okResponse() {
         return ResponseEntity.ok().build();
     }
 
-    protected ResponseEntity okResponse(Object body) {
+    protected ResponseEntity<?> okResponse(Object body) {
         return ResponseEntity.ok(body);
     }
 
-    protected <E extends AbstractEntity, DTO extends AbstractDTO> ResponseEntity okResponsePage(Page<E> bodyPageCollection, Class<DTO> classDTO) {
+    protected <E extends AbstractEntity<?>, DTO extends AbstractDTO<?>> ResponseEntity<?> okResponsePage(Page<E> bodyPageCollection, Class<DTO> classDTO) {
         if (!bodyPageCollection.isEmpty()) {
             return ResponseEntity.ok(bodyPageCollection.map(item -> converterEntityParaDTO(item, classDTO)));
         }

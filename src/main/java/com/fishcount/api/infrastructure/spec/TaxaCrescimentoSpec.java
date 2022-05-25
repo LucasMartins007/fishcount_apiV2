@@ -10,8 +10,12 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class TaxaCrescimentoSpec {
 
-    static public Specification<TaxaCrescimento> taxaByEspecie(Especie especie) {
-        return (root, query, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get("especie"), especie);
+    private static final String FIELD_ESPECIE = "especie";
+
+    TaxaCrescimentoSpec() {
+    }
+
+    public static Specification<TaxaCrescimento> taxaByEspecie(Especie especie) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(FIELD_ESPECIE), especie);
     }
 }
