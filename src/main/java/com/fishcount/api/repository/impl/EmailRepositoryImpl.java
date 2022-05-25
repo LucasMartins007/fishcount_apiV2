@@ -2,7 +2,7 @@ package com.fishcount.api.repository.impl;
 
 import com.fishcount.api.repository.custom.CustomEmailRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
-import com.fishcount.api.repository.spec.EmailSpec;
+import com.fishcount.api.infrastructure.spec.EmailSpec;
 import com.fishcount.common.model.entity.Email;
 import com.fishcount.common.model.entity.Usuario;
 import java.util.List;
