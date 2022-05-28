@@ -15,13 +15,13 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "usuario")
+@Table(name = "fish_usuario")
 public class Usuario extends AbstractEntity<Integer> {
     
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_usuario", sequenceName = "gen_id_usuario")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_usuario")
+    @SequenceGenerator(name = "id_fish_usuario", sequenceName = "gen_id_fish_usuario")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_usuario")
     private Integer Id;
 
     @Column(name = "nome")
@@ -41,6 +41,9 @@ public class Usuario extends AbstractEntity<Integer> {
     
     @Column(name = "senha")
     private String senha;
+    
+    @Column(name = "cpf")
+    private String cpf;
     
     @Column(name = "ativo")
     private boolean ativo;

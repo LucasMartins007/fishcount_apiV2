@@ -8,12 +8,13 @@ import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author lucas
  */
-public class StringUtil {
+public class StringUtil extends StringUtils {
 
     public static boolean isNullOrEmpty(String str) {
         return str == null || str.trim().isEmpty() || str.equalsIgnoreCase("null");

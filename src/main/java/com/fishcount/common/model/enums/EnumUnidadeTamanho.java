@@ -19,6 +19,7 @@ public enum EnumUnidadeTamanho implements IEnum<String> {
     METROS("M", "Metros"),
     ;
     
+    
     private final String key;
             
     private final String value;

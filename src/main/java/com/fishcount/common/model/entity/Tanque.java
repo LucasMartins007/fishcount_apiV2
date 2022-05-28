@@ -15,20 +15,20 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "tanque")
+@Table(name = "fish_tanque")
 public class Tanque extends AbstractEntity<Integer> {
   
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_tank", sequenceName = "gen_id_tank")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_tank")
+    @SequenceGenerator(name = "id_fish_tanque", sequenceName = "gen_id_fish_tanque")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_tanque")
     private Integer id;
     
     @Column(name = "descricao")
     private String descricao;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_specie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_tank_id_specie"))
+    @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_tanque_id_fish_especie"))
     private Especie especie;
     
     @Column(name = "qtde_ultima_analise")
@@ -47,7 +47,7 @@ public class Tanque extends AbstractEntity<Integer> {
     private Date dataUltimoTratamento;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_lote", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_tanque_to_lote"))
+    @JoinColumn(name = "id_lote", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_tanque_to_fish_lote"))
     private Lote lote;
     
     @Column(name = "analise")

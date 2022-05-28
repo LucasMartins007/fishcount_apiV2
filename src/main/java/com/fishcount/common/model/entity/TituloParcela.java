@@ -1,13 +1,31 @@
 package com.fishcount.common.model.entity;
 
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import com.fishcount.common.model.enums.EnumTipoTitulo;
 import com.fishcount.common.model.pattern.AbstractEntity;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.Date;
 
 /**
  *
@@ -16,13 +34,13 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "titulo_parcela")
+@Table(name = "fish_titulo_parcela")
 public class TituloParcela extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_titulo_parcela", sequenceName = "gen_id_titulo_parcela")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_titulo_parcela")
+    @SequenceGenerator(name = "id_fish_titulo_parcela", sequenceName = "gen_id_fish_titulo_parcela")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_titulo_parcela")
     private Integer id;
 
     @Column(name = "valor")
@@ -58,6 +76,9 @@ public class TituloParcela extends AbstractEntity<Integer> {
     private Date dataAlteracao;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_titulo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_titulo_parcela_to_titulo"))
+    @JoinColumn(name = "id_titulo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_titulo_parcela_to_fish_titulo"))
     private Titulo titulo;
+
+    @OneToMany(mappedBy = "tituloParcela", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pagamento> pagamento;
 }

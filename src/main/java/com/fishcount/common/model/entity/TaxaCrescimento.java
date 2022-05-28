@@ -17,13 +17,13 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "taxa_crescimento")
+@Table(name = "fish_taxa_crescimento")
 public class TaxaCrescimento extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_taxa_crescimento", sequenceName = "gen_id_taxa_crescimento")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_taxa_crescimento")
+    @SequenceGenerator(name = "id_fish_taxa_crescimento", sequenceName = "gen_id_fish_taxa_crescimento")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_taxa_crescimento")
     private Integer id;
 
     @Column(name = "qtde_aumento")
@@ -41,7 +41,7 @@ public class TaxaCrescimento extends AbstractEntity<Integer> {
     private EnumUnidadeTempo unidadeIntervalo;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_taxa_crescimento_to_especie"))
+    @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_taxa_crescimento_to_fish_especie"))
     private Especie especie;
 
     @Column(name = "data_inclusao")

@@ -35,13 +35,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "especie")
+@Table(name = "fish_especie")
 public class Especie extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_especie", sequenceName = "gen_id_especie")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_especie")
+    @SequenceGenerator(name = "id_fish_especie", sequenceName = "gen_id_fish_especie")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_especie")
     private Integer id;
 
     @Column(name = "descricao")
@@ -62,7 +62,7 @@ public class Especie extends AbstractEntity<Integer> {
     private EnumUnidadeTamanho unidadeTamanho;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_taxa_crescimento", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_especie_to_taxa_crescimento"))
+    @JoinColumn(name = "id_taxa_crescimento", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_especie_to_fish_taxa_crescimento"))
     private TaxaCrescimento taxaCrescimento;
 
     @Column(name = "qtde_media_racao")

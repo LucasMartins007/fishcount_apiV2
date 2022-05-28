@@ -17,13 +17,13 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "titulo")
+@Table(name = "fish_titulo")
 public class Titulo extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_titulo", sequenceName = "gen_id_titulo")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_titulo")
+    @SequenceGenerator(name = "id_fish_titulo", sequenceName = "gen_id_fish_titulo")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_titulo")
     private Integer id;
 
     @Column(name = "valor")

@@ -16,17 +16,17 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "analise")
+@Table(name = "fish_analise")
 public class Analise extends AbstractEntity<Integer>{
     
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_analise", sequenceName = "gen_id_analise")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_analise")
+    @SequenceGenerator(name = "id_fish_analise", sequenceName = "gen_id_fish_analise")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_analise")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tanque", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_analise_to_tanque"))
+    @JoinColumn(name = "id_tanque", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_analise_to_fish_tanque"))
     private Tanque tanque;
 
     @Column(name = "qtde_racao")
