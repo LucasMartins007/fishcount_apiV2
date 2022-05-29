@@ -1,5 +1,7 @@
 package com.fishcount.common.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.util.ObjectUtils;
 
 import javax.swing.text.MaskFormatter;
@@ -116,5 +118,17 @@ public class Utils {
                 .map(item -> item.replaceAll("[^a-zA-Z0-9]", ""))
                 .collect(Collectors.toList());
     }
+
+    public static String objectToJson(Object obj) {
+        final Gson gsonResponse = new GsonBuilder().create();
+        return gsonResponse.toJson(obj);
+    }
+
+    public static <T> T jsonToObject(String jsonString, Class<T> clzz) {
+        Gson g = new Gson();
+
+        return g.fromJson(jsonString, clzz);
+    }
+
 
 }

@@ -27,7 +27,7 @@ public class MessageExceptionBundle {
     }
 
     public static String getMensagem(IFcException mensagem) {
-        return getMensagem(mensagem);
+        return mensagem.getMessage();
     }
 
     private static void formatarArgumentos(Object[] argumentos) {
