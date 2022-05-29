@@ -1,4 +1,4 @@
-package com.fishcount.common.financeiro.gerenciaNet.pix.interfaces;
+package com.fishcount.api.client.gerencianet.pix.location;
 
 import com.fishcount.common.model.classes.gerencianet.PayloadLocation;
 import com.fishcount.common.model.classes.gerencianet.PayloadQRCode;
@@ -6,7 +6,7 @@ import com.fishcount.common.model.classes.gerencianet.PayloadQRCode;
 import java.util.Date;
 import java.util.List;
 
-public interface ILocationPix {
+public interface LocationPix {
 
     PayloadLocation criarLocation(String tipoCobranca);
 
@@ -17,6 +17,4 @@ public interface ILocationPix {
     PayloadQRCode gerarQRCode(Integer locationId);
 
     void desvincularTxIdDaLocation(Integer LocationId);
-
-
 }

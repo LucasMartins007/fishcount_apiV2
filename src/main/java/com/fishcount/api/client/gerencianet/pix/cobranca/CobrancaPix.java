@@ -1,16 +1,11 @@
-package com.fishcount.common.financeiro.gerenciaNet.pix.interfaces;
+package com.fishcount.api.client.gerencianet.pix.cobranca;
 
 import com.fishcount.common.model.classes.gerencianet.PayloadCobranca;
 
 import java.util.Date;
 import java.util.List;
 
-/**
- * Interface de consulta de dados das cobranças PIX da API da GerenciaNET
- *
- * @link https://dev.gerencianet.com.br/docs/api-pix-endpoints
- */
-public interface ICobrancaPix {
+public interface CobrancaPix {
 
     PayloadCobranca criarCobranca(String txId, PayloadCobranca payloadCobranca);
 
@@ -21,5 +16,4 @@ public interface ICobrancaPix {
     PayloadCobranca criarCobrancaImediata(PayloadCobranca payloadCobranca);
 
     List<PayloadCobranca> listarCobrancas(String cpf, String cnpj, Date dataInicio, Date dataFinal);
-
 }

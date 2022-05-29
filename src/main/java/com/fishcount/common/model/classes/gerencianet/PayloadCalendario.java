@@ -14,7 +14,7 @@ public class PayloadCalendario {
 
     private Date cricao;
 
-    private Date expiracao;
+    private Integer expiracao;
 
     private Date apresentacao;
 

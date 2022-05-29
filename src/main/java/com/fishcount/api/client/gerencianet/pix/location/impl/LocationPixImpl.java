@@ -1,13 +1,13 @@
-package com.fishcount.common.financeiro.gerenciaNet.pix;
+package com.fishcount.api.client.gerencianet.pix.location.impl;
 
-import com.fishcount.common.financeiro.gerenciaNet.pix.interfaces.ILocationPix;
+import com.fishcount.api.client.gerencianet.pix.location.LocationPix;
 import com.fishcount.common.model.classes.gerencianet.PayloadLocation;
 import com.fishcount.common.model.classes.gerencianet.PayloadQRCode;
 
 import java.util.Date;
 import java.util.List;
 
-public class LocationPixImpl implements ILocationPix {
+public class LocationPixImpl implements LocationPix {
 
     @Override
     public PayloadLocation criarLocation(String tipoCobranca) {

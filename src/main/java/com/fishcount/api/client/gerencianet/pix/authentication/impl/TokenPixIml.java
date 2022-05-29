@@ -1,13 +1,12 @@
-package com.fishcount.common.financeiro.gerenciaNet.pix;
+package com.fishcount.api.client.gerencianet.pix.authentication.impl;
 
-import com.fishcount.api.config.rest.RestTemplateConfiguration;
+import com.fishcount.api.client.gerencianet.pix.GenericPix;
+import com.fishcount.api.client.gerencianet.pix.authentication.TokenPix;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcHttpException;
 import com.fishcount.common.model.classes.gerencianet.authentication.PayloadToken;
 import com.fishcount.common.model.pattern.constants.HttpConstants;
 import com.fishcount.common.utils.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -17,23 +16,11 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
+public class TokenPixIml extends GenericPix implements TokenPix {
 
-public abstract class AbstractPix {
-
-    @Value("${pix-config.url-access-token}")
-    private String urlToken;
-
-    @Value("${pix-config.client_id}")
-    private String clientId;
-
-    @Value("${pix-config.client_secret}")
-    private String secretId;
-
-    @Autowired
-    private RestTemplateConfiguration restTemplate;
-
-    protected String getBearerToken() {
-        PayloadToken token = getPayloadToken();
+    @Override
+    public String getBearerToken() {
+        final PayloadToken token = getPayloadToken();
 
         return token.getAccess_token();
     }
