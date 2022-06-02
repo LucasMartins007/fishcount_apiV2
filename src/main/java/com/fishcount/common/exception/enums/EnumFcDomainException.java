@@ -40,7 +40,8 @@ public enum EnumFcDomainException implements IFcException {
     
     
     LOTE_DUPLICADO("Lote com o nome {0} já esta cadastrado no sistema."),
-    
+
+    USUARIO_POSSUI_TITULO_ABERTO("O usuario {0} possui pendências no sistema, não é possível criar novo contrato"),
     ;
     
     private final String message;

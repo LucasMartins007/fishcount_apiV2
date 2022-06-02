@@ -1,4 +1,3 @@
-
 package com.fishcount.api.repository.dao;
 
 import com.fishcount.api.infrastructure.context.IContext;
