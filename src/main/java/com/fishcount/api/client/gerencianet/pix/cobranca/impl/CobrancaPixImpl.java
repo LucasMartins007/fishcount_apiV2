@@ -5,7 +5,9 @@ import com.fishcount.common.model.classes.gerencianet.PayloadCobranca;
 
 import java.util.Date;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CobrancaPixImpl implements CobrancaPix {
 
     @Override

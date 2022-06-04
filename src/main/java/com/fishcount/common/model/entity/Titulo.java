@@ -3,6 +3,7 @@ package com.fishcount.common.model.entity;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import com.fishcount.common.model.enums.EnumTipoTitulo;
 import com.fishcount.common.model.pattern.AbstractEntity;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,16 +28,16 @@ public class Titulo extends AbstractEntity<Integer> {
     private Integer id;
 
     @Column(name = "valor")
-    private Double valor;
+    private BigDecimal valor;
 
     @Column(name = "saldo")
-    private Double saldo;
+    private BigDecimal saldo;
 
     @Column(name = "acrescimo")
-    private Double acrescimo;
+    private BigDecimal acrescimo;
 
     @Column(name = "desconto")
-    private Double desconto;
+    private BigDecimal desconto;
 
     @Column(name = "data_vencimento")
     @Temporal(TemporalType.TIMESTAMP)
@@ -57,7 +58,7 @@ public class Titulo extends AbstractEntity<Integer> {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_alteracao")
     private Date dataAlteracao;
-    
+
     @Column(name = "qtde_parcelas")
     private Integer qtdeParcelas;
 
@@ -67,7 +68,7 @@ public class Titulo extends AbstractEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_titulo_to_usuario"))
     private Usuario usuario;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_plano", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_titulo_to_plano"))
     private Plano plano;
