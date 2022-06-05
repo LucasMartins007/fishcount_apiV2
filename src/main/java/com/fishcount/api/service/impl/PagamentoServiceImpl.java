@@ -3,6 +3,10 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.client.gerencianet.pix.cobranca.CobrancaPix;
 import com.fishcount.api.service.PagamentoService;
 import com.fishcount.api.validators.PagamentoValidator;
+import com.fishcount.common.model.classes.gerencianet.PayloadCalendario;
+import com.fishcount.common.model.classes.gerencianet.PayloadCobranca;
+import com.fishcount.common.model.classes.gerencianet.PayloadDevedor;
+import com.fishcount.common.model.classes.gerencianet.PayloadValor;
 import com.fishcount.common.model.dto.PagamentoDTO;
 import com.fishcount.common.model.entity.Pagamento;
 import com.fishcount.common.model.entity.TituloParcela;
@@ -38,6 +42,21 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
         pagamento.setTipoPagamento(EnumTipoPagamento.PIX);
         pagamento.setStatusPagamento(EnumStatusPagamento.ABERTO);
         pagamento.setSaldo(tituloParcela.getSaldo());
+        
+        PayloadCobranca cobranca = new PayloadCobranca();
+        cobranca.setSolicitacaoPagador("Teste n1");
+        cobranca.setChave("Minhachave");
+        
+        PayloadCalendario calendario = new PayloadCalendario(DateUtil.getDate(), 2592);
+        cobranca.setCalendario(calendario);
+        
+        PayloadDevedor devedor = new PayloadDevedor("Teste Lucas", "10574732942", null);
+        cobranca.setDevedor(devedor);
+        
+        PayloadValor valor = new PayloadValor("1.05");
+        cobranca.setValor(valor);
+        
+        cobrancaPix.criarCobrancaImediata(cobranca);
 
         
     }

@@ -14,6 +14,9 @@ public abstract class GenericPix {
 
     @Value("${pix-config.client_secret}")
     protected  String secretId;
+    
+    @Value("${pix-config.base-url}")
+    protected  String baseUrl;
 
     @Autowired
     protected  RestTemplateConfiguration restTemplate;

@@ -1,9 +1,5 @@
 package com.fishcount.api.config.rest;
 
-/**
- * @author Lucas Martins
- */
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,6 +23,9 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * @author Lucas Martins
+ */
 @Configuration
 public class RestTemplateConfiguration {
 

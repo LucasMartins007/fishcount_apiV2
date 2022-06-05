@@ -11,6 +11,10 @@ import lombok.Setter;
 @Setter
 public class PayloadValor {
 
+    public PayloadValor(String original) {
+        this.original = original;
+    }
+
     private String original;
 
 }

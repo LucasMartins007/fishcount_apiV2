@@ -15,7 +15,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TokenPixIml extends GenericPix implements TokenPix {
 
     @Override

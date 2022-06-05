@@ -12,7 +12,12 @@ import lombok.Setter;
 @Setter
 public class PayloadCalendario {
 
-    private Date cricao;
+    public PayloadCalendario(Date criacao, Integer expiracao) {
+        this.criacao = criacao;
+        this.expiracao = expiracao;
+    }
+
+    private Date criacao;
 
     private Integer expiracao;
 
