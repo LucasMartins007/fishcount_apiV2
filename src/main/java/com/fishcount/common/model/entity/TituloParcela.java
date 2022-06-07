@@ -81,5 +81,5 @@ public class TituloParcela extends AbstractEntity<Integer> {
     private Titulo titulo;
 
     @OneToMany(mappedBy = "tituloParcela", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pagamento> pagamento;
+    private List<Pagamento> pagamentos;
 }

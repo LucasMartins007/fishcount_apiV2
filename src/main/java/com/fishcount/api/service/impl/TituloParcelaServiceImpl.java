@@ -20,7 +20,7 @@ public class TituloParcelaServiceImpl extends AbstractServiceImpl<TituloParcela,
     public TituloParcela incluir(Titulo titulo, TituloParcela parcela) {
         onPrepareInsert(titulo, parcela);
 
-        return null;
+        return getRepository().save(parcela);
     }
 
     private void onPrepareInsert(Titulo titulo, TituloParcela parcela) {
@@ -32,8 +32,7 @@ public class TituloParcelaServiceImpl extends AbstractServiceImpl<TituloParcela,
         parcela.setValor(titulo.getValor());
         parcela.setSaldo(titulo.getSaldo());
 
-        Pagamento pagamento = new Pagamento();
-        getService(PagamentoService.class).incluir(parcela, pagamento);
+        Pagamento pagamento =  getService(PagamentoService.class).incluir(parcela, new Pagamento());
     }
 
 }

@@ -1,6 +1,5 @@
 package com.fishcount.common.model.classes.gerencianet;
 
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,15 +11,10 @@ import lombok.Setter;
 @Setter
 public class PayloadCalendario {
 
-    public PayloadCalendario(Date criacao, Integer expiracao) {
-        this.criacao = criacao;
+    public PayloadCalendario(Integer expiracao) {
         this.expiracao = expiracao;
     }
 
-    private Date criacao;
-
     private Integer expiracao;
-
-    private Date apresentacao;
 
 }

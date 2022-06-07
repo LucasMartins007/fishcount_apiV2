@@ -14,7 +14,8 @@ public enum EnumFcInfraException implements IFcException {
     ENUM_NOT_FOUND("Enumerador não encontrado: {0}"),
 
     TOKEN_NAO_INFORMADO("Token não informado ou informado incorretamente."),
-    TOKEN_INVALIDO("Token inválido.")
+    TOKEN_INVALIDO("Token inválido."),
+    METODO_NAO_SUPORTADO_OU_INVALIDO("Método não suportado ou inválido para requisições Client"),
     ;
 
     private final String message;

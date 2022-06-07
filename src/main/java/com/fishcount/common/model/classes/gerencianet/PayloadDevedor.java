@@ -11,16 +11,13 @@ import lombok.Setter;
 @Setter
 public class PayloadDevedor {
 
-    public PayloadDevedor(String nome, String cpf, String cnpj) {
+    public PayloadDevedor(String nome, String cpf) {
         this.nome = nome;
         this.cpf = cpf;
-        this.cnpj = cnpj;
     }
 
     private String nome;
     
     private String cpf;
     
-    private String cnpj;
-
 }

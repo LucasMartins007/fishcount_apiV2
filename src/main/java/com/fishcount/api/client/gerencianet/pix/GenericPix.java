@@ -7,18 +7,21 @@ import org.springframework.beans.factory.annotation.Value;
 public abstract class GenericPix {
 
     @Value("${pix-config.url-access-token}")
-    protected  String urlToken;
+    protected String urlToken;
 
     @Value("${pix-config.client_id}")
-    protected  String clientId;
+    protected String clientId;
 
     @Value("${pix-config.client_secret}")
-    protected  String secretId;
-    
+    protected String secretId;
+
     @Value("${pix-config.base-url}")
-    protected  String baseUrl;
+    protected String baseUrl;
+
+    @Value("${pix-config.url-cobranca}")
+    protected String urlCobranca;
 
     @Autowired
-    protected  RestTemplateConfiguration restTemplate;
+    protected RestTemplateConfiguration restTemplate;
 
 }

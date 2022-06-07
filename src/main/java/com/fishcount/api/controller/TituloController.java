@@ -18,7 +18,7 @@ public class TituloController extends AbstractController<TituloService> implemen
     @Override
     public TituloDTO incluir(Integer idUsuario, TituloDTO tituloDTO) {
         Titulo titulo = converterDTOParaEntity(tituloDTO, Titulo.class);
-
+        
         return converterEntityParaDTO(getService().incluir(idUsuario, titulo), TituloDTO.class);
     }
 

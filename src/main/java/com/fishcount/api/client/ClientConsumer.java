@@ -1,8 +1,16 @@
 package com.fishcount.api.client;
 
+import com.fishcount.api.config.rest.RestTemplateConfiguration;
+import com.fishcount.common.exception.FcRuntimeException;
+import com.fishcount.common.exception.enums.EnumFcInfraException;
 import java.net.URI;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -10,20 +18,8 @@ import org.springframework.http.RequestEntity;
  */
 public class ClientConsumer<T> extends BaseRequest<T> {
     
-    private ClientConsumer(String url) {
-        super.url = url;
-    }
-
-    private ClientConsumer(String key, String value) {
-        super.headers.add(key, value);
-    }
-
     private ClientConsumer(HttpMethod method) {
         super.method = method;
-    }
-
-    private ClientConsumer(T body) {
-        super.body = body;
     }
 
     public RequestEntity<T> doRequest() {
@@ -34,17 +30,25 @@ public class ClientConsumer<T> extends BaseRequest<T> {
     }
 
     public ClientConsumer setUrl(String url) {
-        return new ClientConsumer(url);
+        this.url = url;
+        return this;
     }
 
     public ClientConsumer addHeaders(String key, String value) {
-        return new ClientConsumer(key, key);
+        this.headers.add(key, value);
+        return this;
     }
 
     public ClientConsumer setBody(T body) {
-        return new ClientConsumer(body);
+        this.body = body;
+        return this;
     }
-
+    
+    public ClientConsumer setResponseClass(Class<T> clazz){
+        this.responseClass = clazz;
+        return this;
+    }
+    
     public static ClientConsumer get() {
         return new ClientConsumer(HttpMethod.GET);
     }

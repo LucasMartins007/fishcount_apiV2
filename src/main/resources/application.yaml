@@ -25,9 +25,10 @@ jwt:
 
 pix-config:
   base-url: https://api-pix-h.gerencianet.com.br
-  url-access-token: ${pix-config.base-url}/oauth/token
   client_id: Client_Id_3e71852f85888c5f3817fd296e831d118de3c979
   client_secret: Client_Secret_b0e2f50a94392df2bb62fb572570345525626972
+  url-access-token: ${pix-config.base-url}/oauth/token
+  url-cobranca: ${pix-config.base-url}/v2/cob
 
 rest-template:
    key-store: "classpath:certificates/homologacao-393390-fishcount_finan.p12"

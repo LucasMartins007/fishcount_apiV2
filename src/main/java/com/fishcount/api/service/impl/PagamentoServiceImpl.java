@@ -47,17 +47,16 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
         cobranca.setSolicitacaoPagador("Teste n1");
         cobranca.setChave("Minhachave");
         
-        PayloadCalendario calendario = new PayloadCalendario(DateUtil.getDate(), 2592);
+        PayloadCalendario calendario = new PayloadCalendario(3600);
         cobranca.setCalendario(calendario);
         
-        PayloadDevedor devedor = new PayloadDevedor("Teste Lucas", "10574732942", null);
+        PayloadDevedor devedor = new PayloadDevedor("Teste Lucas", "10574732942");
         cobranca.setDevedor(devedor);
         
         PayloadValor valor = new PayloadValor("1.05");
         cobranca.setValor(valor);
         
-        cobrancaPix.criarCobrancaImediata(cobranca);
-
+       PayloadCobranca p = cobrancaPix.criarCobrancaImediata(cobranca);
         
     }
 
