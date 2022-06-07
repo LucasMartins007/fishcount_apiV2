@@ -1,5 +1,6 @@
 package com.fishcount.api.client.gerencianet.pix.authentication.impl;
 
+import com.fishcount.api.client.ClientConsumer;
 import com.fishcount.api.client.gerencianet.pix.GenericPix;
 import com.fishcount.api.client.gerencianet.pix.authentication.TokenPix;
 import com.fishcount.common.exception.FcRuntimeException;
@@ -28,32 +29,20 @@ public class TokenPixIml extends GenericPix implements TokenPix {
     }
 
     private PayloadToken getPayloadToken() {
-        final RequestEntity<?> requestConfig = getRequestTokenConfiguration();
-        final ResponseEntity<PayloadToken> response = restTemplate
-                .getRestConfig()
+        final RequestEntity<?> requestConfig = ClientConsumer.post()
+                .setUrl(urlToken)
+                .addHeaders(HttpHeaders.AUTHORIZATION, "Basic " + getEncodedBasicAuth())
+                .addHeaders(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .setBody(HttpConstants.CLIENT_CREDENTALS)
+                .getRequest();
+
+        final ResponseEntity<PayloadToken> response = restTemplate.getRestConfig()
                 .postForEntity(urlToken, requestConfig, PayloadToken.class);
 
         if (!HttpStatus.OK.equals(response.getStatusCode()) || Utils.isEmpty(response.getBody())) {
             throw new FcRuntimeException(EnumFcHttpException.NAO_FOI_POSSIVEL_CAPTURAR_TOKEN_PIX);
         }
         return response.getBody();
-    }
-
-    private RequestEntity<?> getRequestTokenConfiguration() {
-        try {
-            final URI urlAccessToken = new URI(urlToken);
-
-            final String clientCredentials = HttpConstants.CLIENT_CREDENTALS;
-            final String basicAuth = getEncodedBasicAuth();
-
-            final MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-            headers.add(HttpHeaders.AUTHORIZATION, "Basic " + basicAuth);
-            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-
-            return new RequestEntity<>(clientCredentials, headers, HttpMethod.POST, urlAccessToken);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private String getEncodedBasicAuth() {

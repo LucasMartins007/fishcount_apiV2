@@ -40,22 +40,21 @@ public class CobrancaPixImpl extends GenericPix implements CobrancaPix {
 
     @Override
     public PayloadCobranca criarCobrancaImediata(PayloadCobranca payloadCobranca) {
-        String token = tokenPix.getBearerToken();
+        final String token = tokenPix.getBearerToken();
 
-        RequestEntity<?> request = ClientConsumer.post()
+        final RequestEntity<?> request = ClientConsumer.post()
                 .setUrl(urlCobranca)
                 .setBody(payloadCobranca)
                 .addHeaders(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .addHeaders(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .doRequest();
+                .getRequest();
         
-        ResponseEntity<String> response = restTemplate.getRestConfig()
+        final ResponseEntity<String> response = restTemplate.getRestConfig()
                 .postForEntity(urlCobranca, request, String.class);
         
         if (response.hasBody() && HttpStatus.CREATED.equals(response.getStatusCode())){
             return Utils.jsonToObject(response.getBody(), PayloadCobranca.class);
         }
-
         return null;
     }
 
