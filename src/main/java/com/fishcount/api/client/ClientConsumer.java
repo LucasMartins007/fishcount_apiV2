@@ -1,6 +1,8 @@
 package com.fishcount.api.client;
 
+import com.fishcount.common.utils.Utils;
 import org.springframework.http.HttpMethod;
+import org.springframework.lang.NonNull;
 
 /**
  *
@@ -14,6 +16,20 @@ public class ClientConsumer<T> extends BaseRequest<T> {
 
     public ClientConsumer setUrl(String url) {
         this.url = url;
+        return this;
+    }
+
+    public ClientConsumer addParam(Object param) {
+        this.param = this.param + "/" + param;
+        return this;
+    }
+
+    public ClientConsumer addQueryParam(String key, Object value) {
+        if (Utils.isEmpty(value)) {
+            return this;
+        }
+        final String separator = Utils.isEmpty(this.queryParam) ? "?" : "&";
+        this.queryParam = this.queryParam + separator + key + "=" + value;
         return this;
     }
 
