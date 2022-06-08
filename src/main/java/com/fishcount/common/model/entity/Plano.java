@@ -35,8 +35,11 @@ public class Plano extends AbstractEntity<Integer> {
     @Column(name = "min_taque")
     private Integer minTanque;
 
-    @Column(name = "miax_taque")
+    @Column(name = "max_taque")
     private Integer maxTanque;
+    
+    @Column(name = "ativo")
+    private boolean ativo;
 
     @OneToMany(mappedBy = "plano", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Titulo> titulos;
