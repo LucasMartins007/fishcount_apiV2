@@ -19,7 +19,6 @@ public class PagamentoValidator extends AbstractValidatorImpl<Pagamento> {
         validate.add(pagamento.getSaldo(), "Saldo");
         validate.add(pagamento.getUsuario(), "Usuário");
         validate.add(pagamento.getTipoPagamento(), "Tipo pagamento");
-        validate.add(pagamento.getTituloParcela(), "Parcela");
         
         validate.validate();
     }

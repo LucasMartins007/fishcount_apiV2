@@ -13,5 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface PagamentoService extends IAbstractService<Pagamento, Integer, PagamentoDTO> {
 
+    Pagamento incluir(Pagamento pagamento, Integer idUsuario);
+    
     Pagamento incluir(TituloParcela tituloParcela, Pagamento pagamento);
 }

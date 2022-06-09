@@ -33,13 +33,14 @@ public class TituloValidator extends AbstractValidatorImpl<Titulo> {
     @Override
     public void validateInsert(Titulo titulo) {
         validateTituloAbertoUsuario(titulo);
+        validateTituloAbertoUsuario(titulo);
 
     }
 
     private void validateTituloAbertoUsuario(Titulo titulo) {
         Usuario usuario = titulo.getUsuario();
         OptionalUtil.ofFallibleNullable(() -> getRepository(TituloRepository.class)
-                .findByStatusAndUsuario(EnumStatusTitulo.EM_ABERTO, usuario))
+                .findByStatusAndUsuario(EnumStatusTitulo.ABERTO, usuario))
                 .ifPresentThrow(
                         () -> new FcRuntimeException(EnumFcDomainException.USUARIO_POSSUI_TITULO_ABERTO, usuario.getNome()));
     }
