@@ -1,4 +1,4 @@
-package com.fishcount.api.client;
+package com.fishcount.common.model.pattern.client;
 
 import java.net.URI;
 import org.springframework.http.HttpMethod;

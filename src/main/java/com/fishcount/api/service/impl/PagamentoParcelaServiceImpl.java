@@ -20,13 +20,11 @@ public class PagamentoParcelaServiceImpl
         implements PagamentoParcelaService {
 
     private final PagamentoParcelaValidator pagamentoParcelaValidator = new PagamentoParcelaValidator();
-    
+
     @Override
     public List<PagamentoParcela> incluirParcelas(Pagamento pagamento) {
         List<PagamentoParcela> parcelas = gerarParcelas(pagamento);
 
-        parcelas.forEach(pagamentoParcelaValidator::validateInsert);
-        
         return getRepository().saveAll(parcelas);
     }
 
@@ -39,20 +37,25 @@ public class PagamentoParcelaServiceImpl
             final PagamentoParcela parcela = new PagamentoParcela();
             final Integer aumentoMesesVencimento = i + 1;
 
-            parcela.setDataAlteracao(DateUtil.getDate());
-            parcela.setDataInclusao(DateUtil.getDate());
-            parcela.setDataVencimento(DateUtil.add(Calendar.MONTH, aumentoMesesVencimento));
             parcela.setPagamento(pagamento);
-            parcela.setValor(valorParcelas);
-            parcela.setSaldo(valorParcelas);
             parcela.setStatusPagamento(pagamento.getStatusPagamento());
             parcela.setTipoPagamento(pagamento.getTipoPagamento());
-
-            getService(TituloParcelaService.class).gerarParcelasByPagamentoParcela(parcela);
+            onPrepareInsert(parcela, valorParcelas, aumentoMesesVencimento);
 
             parcelas.add(parcela);
         }
         return parcelas;
+    }
+
+    private void onPrepareInsert(final PagamentoParcela parcela, final BigDecimal valorParcelas, final Integer aumentoMesesVencimento) {
+        parcela.setDataAlteracao(DateUtil.getDate());
+        parcela.setDataInclusao(DateUtil.getDate());
+        parcela.setDataVencimento(DateUtil.add(Calendar.MONTH, aumentoMesesVencimento));
+        parcela.setValor(valorParcelas);
+        parcela.setSaldo(valorParcelas);
+
+        pagamentoParcelaValidator.validateInsert(parcela);
+        getService(TituloParcelaService.class).gerarParcelasByPagamentoParcela(parcela);
     }
 
 }

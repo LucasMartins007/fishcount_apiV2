@@ -1,8 +1,7 @@
-package com.fishcount.api.client.gerencianet.pix.authentication.impl;
+package com.fishcount.api.service.gerencianet.pix.authentication.impl;
 
-import com.fishcount.api.client.ClientConsumer;
-import com.fishcount.api.client.gerencianet.pix.GenericPix;
-import com.fishcount.api.client.gerencianet.pix.authentication.TokenPix;
+import com.fishcount.common.model.pattern.client.ClientConsumer;
+import com.fishcount.api.service.gerencianet.pix.GenericPix;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcHttpException;
 import com.fishcount.common.model.classes.gerencianet.authentication.PayloadToken;
@@ -11,9 +10,10 @@ import org.springframework.http.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import org.springframework.stereotype.Component;
+import com.fishcount.api.service.gerencianet.pix.authentication.ClientTokenPix;
 
 @Component
-public class TokenPixIml extends GenericPix implements TokenPix {
+public class ClientTokenPixImpl extends GenericPix implements ClientTokenPix {
 
     @Override
     public String getBearerToken() {

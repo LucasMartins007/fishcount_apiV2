@@ -1,6 +1,5 @@
 package com.fishcount.api.service.impl;
 
-import com.fishcount.api.client.gerencianet.pix.cobranca.CobrancaPix;
 import com.fishcount.api.service.PagamentoParcelaService;
 import com.fishcount.api.service.PagamentoService;
 import com.fishcount.api.service.PlanoService;
@@ -19,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.fishcount.api.service.gerencianet.pix.cobranca.ClientCobrancaPix;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +32,7 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
 
         getRepository().save(pagamento);
 
-        onAfterInsert(pagamento);
+        getService(PagamentoParcelaService.class).incluirParcelas(pagamento);
         
         return pagamento;
     }
@@ -56,6 +56,8 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
         pagamento.setSaldo(BigDecimal.ZERO);
         pagamento.setValor(plano.getValorMinimo());
         pagamento.setQtdeParcelas(plano.getNumParcelas() == null ? pagamento.getQtdeParcelas() : plano.getNumParcelas());
+        
+        pagamentoValidator.validateInsert(pagamento);
 
         getRepository().save(pagamento);
     }
@@ -65,8 +67,5 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
 
         return getRepository().save(pagamento);
     }
-
-    private void onAfterInsert(Pagamento pagamento) {
-        getService(PagamentoParcelaService.class).incluirParcelas(pagamento);
-    }
+    
 }

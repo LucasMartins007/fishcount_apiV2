@@ -1,4 +1,4 @@
-package com.fishcount.api.client.gerencianet.pix;
+package com.fishcount.api.service.gerencianet.pix;
 
 import com.fishcount.api.config.rest.RestTemplateConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;

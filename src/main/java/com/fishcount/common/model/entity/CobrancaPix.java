@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -50,30 +49,33 @@ public class CobrancaPix extends AbstractEntity<Integer> {
     @Column(name = "saldo")
     private BigDecimal saldo;
 
-    @Column(name = "chavDevedor")
-    private String chaveDevedor;
+    @Column(name = "chave")
+    private String chave;
 
-    @Column(name = "statusCobranca")
+    @Column(name = "status_cobranca")
     @Convert(converter = EnumStatusCobranca.EnumConverter.class)
     private EnumStatusCobranca statusCobranca;
 
-    @Column(name = "observacaoPagador")
+    @Column(name = "observacao_pagador")
     private String observacaoPagador;
-
+    
     @Column(name = "data_criacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCriacao;
+    
+    @Column(name = "data_alteracao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataAlteracao;
 
     @Column(name = "data_expiracao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataExpiracao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_cobranca_pix_to_fish_usuario"))
-    private Usuario usuario;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_titulo_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_cobranca_pix_to_fish_titulo_parcela"))
+    private TituloParcela tituloParcela;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pagamento_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_cobranca_pix_to_fish_pagamento_parcela"))
-    private PagamentoParcela pagamento;
-
+    @JoinColumn(name = "id_location", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_cobranca_pix_to_fish_location"))
+    private LocationPix location;
 }

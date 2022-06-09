@@ -1,8 +1,7 @@
-package com.fishcount.api.client;
+package com.fishcount.common.model.pattern.client;
 
 import com.fishcount.common.utils.Utils;
 import org.springframework.http.HttpMethod;
-import org.springframework.lang.NonNull;
 
 /**
  *
