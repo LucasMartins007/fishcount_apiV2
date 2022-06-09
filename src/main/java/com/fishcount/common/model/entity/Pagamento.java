@@ -68,10 +68,6 @@ public class Pagamento extends AbstractEntity<Integer> {
     @JoinColumn(name = "id_plano", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_to_fish_plano"))
     private Plano plano;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_titulo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_to_fish_titulo"))
-    private Titulo titulo;
-
     @OneToMany(mappedBy = "pagamento", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<PagamentoParcela> pagamentoParcelas;
     

@@ -6,7 +6,6 @@ import com.fishcount.api.validators.PagamentoParcelaValidator;
 import com.fishcount.common.model.dto.PagamentoParcelaDTO;
 import com.fishcount.common.model.entity.Pagamento;
 import com.fishcount.common.model.entity.PagamentoParcela;
-import com.fishcount.common.model.entity.TituloParcela;
 import com.fishcount.common.utils.BigDecimalUtil;
 import com.fishcount.common.utils.DateUtil;
 import java.math.BigDecimal;
@@ -49,8 +48,7 @@ public class PagamentoParcelaServiceImpl
             parcela.setStatusPagamento(pagamento.getStatusPagamento());
             parcela.setTipoPagamento(pagamento.getTipoPagamento());
 
-            final TituloParcela tituloParcela = getService(TituloParcelaService.class).gerarParcelasByPagamentoParcela(parcela);
-            parcela.setTituloParcela(tituloParcela);
+            getService(TituloParcelaService.class).gerarParcelasByPagamentoParcela(parcela);
 
             parcelas.add(parcela);
         }

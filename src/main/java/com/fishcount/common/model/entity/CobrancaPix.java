@@ -6,8 +6,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -75,7 +73,7 @@ public class CobrancaPix extends AbstractEntity<Integer> {
     private Usuario usuario;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pagamento", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_to_fish_cobranca_pix"))
-    private Pagamento pagamento;
+    @JoinColumn(name = "id_pagamento_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_cobranca_pix_to_fish_pagamento_parcela"))
+    private PagamentoParcela pagamento;
 
 }

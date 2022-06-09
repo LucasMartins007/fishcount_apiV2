@@ -26,8 +26,6 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
 
     private final PagamentoValidator pagamentoValidator = new PagamentoValidator();
 
-    private final CobrancaPix cobrancaPix;
-
     @Override
     public Pagamento incluir(Pagamento pagamento, Integer idUsuario) {
         onPrepareInsert(idUsuario, pagamento);

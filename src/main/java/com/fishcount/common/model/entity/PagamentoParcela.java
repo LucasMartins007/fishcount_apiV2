@@ -59,10 +59,6 @@ public class PagamentoParcela extends AbstractEntity<Integer> {
     private EnumTipoPagamento tipoPagamento;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_titulo_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_parcela_to_fish_titulo_parcela"))
-    private TituloParcela tituloParcela;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pagamento", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_parcela_to_fish_pagamento"))
     private Pagamento pagamento;
 
