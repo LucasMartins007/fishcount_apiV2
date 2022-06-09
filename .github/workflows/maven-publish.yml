@@ -8,7 +8,7 @@ on:
     types: [created]
     
   schedule:
-  - cron: "0,30 * * * *"
+  - cron: "0 08 * * *"
   
 
 jobs:
