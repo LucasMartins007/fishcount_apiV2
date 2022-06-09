@@ -21,6 +21,9 @@ import javax.persistence.TemporalType;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.model.enums.EnumTipoPagamento;
 import com.fishcount.common.model.pattern.AbstractEntity;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -42,6 +45,12 @@ public class Pagamento extends AbstractEntity<Integer> {
 
     @Column(name = "saldo")
     private BigDecimal saldo;
+    
+    @Column(name = "desconto")
+    private BigDecimal desconto;
+    
+    @Column(name = "acrescimo")
+    private BigDecimal acrescimo;
 
     @Column(name = "status_pagamento")
     @Convert(converter = EnumStatusPagamento.EnumConverter.class)
@@ -56,8 +65,18 @@ public class Pagamento extends AbstractEntity<Integer> {
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_titulo_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_to_fish_titulo_parcela"))
-    private TituloParcela tituloParcela;
+    @JoinColumn(name = "id_plano", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_to_fish_plano"))
+    private Plano plano;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_titulo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_to_fish_titulo"))
+    private Titulo titulo;
+
+    @OneToMany(mappedBy = "pagamento", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    private List<PagamentoParcela> pagamentoParcelas;
+    
+    @Column(name = "qtde_parcelas")
+    private Integer qtdeParcelas;
 
     @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)

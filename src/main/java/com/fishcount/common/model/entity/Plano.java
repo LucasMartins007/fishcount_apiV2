@@ -1,6 +1,7 @@
 package com.fishcount.common.model.entity;
 
 import com.fishcount.common.model.pattern.AbstractEntity;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,10 +28,10 @@ public class Plano extends AbstractEntity<Integer> {
     private String descricao;
 
     @Column(name = "valor_minimo")
-    private Double valorMinimo;
+    private BigDecimal valorMinimo;
 
     @Column(name = "valor_maximo")
-    private Double valorMaximo;
+    private BigDecimal valorMaximo;
 
     @Column(name = "min_taque")
     private Integer minTanque;
@@ -38,10 +39,10 @@ public class Plano extends AbstractEntity<Integer> {
     @Column(name = "max_taque")
     private Integer maxTanque;
     
+    @Column(name = "num_parcelas")
+    private Integer numParcelas;
+    
     @Column(name = "ativo")
     private boolean ativo;
-
-    @OneToMany(mappedBy = "plano", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Titulo> titulos;
 
 }

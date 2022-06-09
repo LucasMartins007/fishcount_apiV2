@@ -1,7 +1,6 @@
 package com.fishcount.common.model.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,9 +31,9 @@ import lombok.Setter;
  *
  * @author lucas
  */
+@Entity
 @Getter
 @Setter
-@Entity
 @Table(name = "fish_titulo_parcela")
 public class TituloParcela extends AbstractEntity<Integer> {
 
@@ -80,6 +79,7 @@ public class TituloParcela extends AbstractEntity<Integer> {
     @JoinColumn(name = "id_titulo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_titulo_parcela_to_fish_titulo"))
     private Titulo titulo;
 
-    @OneToMany(mappedBy = "tituloParcela", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pagamento> pagamentos;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pagamento_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_titulo_parcela_to_fish_pagamento_parcela"))
+    private PagamentoParcela pagamento;
 }
