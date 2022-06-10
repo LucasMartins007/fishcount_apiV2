@@ -12,10 +12,10 @@ public enum EnumFcInfraException implements IFcException {
     NULL_POINTER_EXCEPTION("Ocorreu um erro de execução por acessar referência à uma variável nula."),
     ENTITY_NOT_FOUND("Não foi possível localizar nenhum registro de {0} com o ID {1}."),
     ENUM_NOT_FOUND("Enumerador não encontrado: {0}"),
-
     TOKEN_NAO_INFORMADO("Token não informado ou informado incorretamente."),
-    TOKEN_INVALIDO("Token inválido.")
-    ;
+    TOKEN_INVALIDO("Token inválido."),
+    CHAMADA_HTTP_INCORRETA("Ocorreu um erro em um servidor externo a aplicação, entre em contato com o suporte."),
+    METODO_NAO_SUPORTADO_OU_INVALIDO("Método não suportado ou inválido para requisições Client"),;
 
     private final String message;
 

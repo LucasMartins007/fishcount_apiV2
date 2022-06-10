@@ -14,10 +14,11 @@ import java.util.List;
  * @param <D>
  */
 @Data
-public class DefaultDTO<D extends AbstractDTO> implements Serializable {
+public class DefaultDTO<D extends AbstractDTO<?>> implements Serializable {
 
     private List<D> content;
 
+    @SuppressWarnings("unchecked")
     public DefaultDTO(D content) {
         this.content = ListUtil.toList(content);
     }

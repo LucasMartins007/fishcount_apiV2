@@ -15,6 +15,6 @@ public interface IGeneric<T, ID> {
 
     JpaSpecificationExecutor<T> getSpecRepository();
 
-    <S extends JpaSpecificationExecutor> S getSpecRepository(Class<S> specClass);
+    <S extends JpaSpecificationExecutor<T>> S getSpecRepository(Class<S> specClass);
 
 }

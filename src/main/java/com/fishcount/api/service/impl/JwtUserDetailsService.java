@@ -1,5 +1,6 @@
-package com.fishcount.api.service;
+package com.fishcount.api.service.impl;
 
+import com.fishcount.api.service.UsuarioService;
 import com.fishcount.common.model.entity.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;

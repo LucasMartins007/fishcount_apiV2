@@ -16,13 +16,13 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "lote")
+@Table(name = "fish_lote")
 public class Lote extends AbstractEntity<Integer> {
     
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_lote", sequenceName = "gen_id_lote")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_lote")
+    @SequenceGenerator(name = "id_fish_lote", sequenceName = "gen_id_fish_lote")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_lote")
     private Integer id;
 
     @Column(name = "descritpion")
@@ -37,7 +37,7 @@ public class Lote extends AbstractEntity<Integer> {
     private Date dataAtualizacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_lote_to_usuario"))
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_lote_to_fish_usuario"))
     private Usuario usuario;
 
     @OneToMany(mappedBy = "lote", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)

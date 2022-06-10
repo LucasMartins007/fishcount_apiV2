@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
  */
 public class LoggerUtil {
 
-    public static Logger getLogger(Class aClass) {
+    LoggerUtil() {
+    }
+
+    public static Logger getLogger(Class<?> aClass) {
         return LoggerFactory.getLogger(aClass);
     }
 

@@ -14,6 +14,9 @@ import java.util.stream.Stream;
  */
 public class ListUtil {
 
+    ListUtil() {
+    }
+
     public static boolean isNullOrEmpty(Collection<?> list) {
         return list == null || list.isEmpty();
     }
@@ -47,7 +50,7 @@ public class ListUtil {
         return retorno;
     }
 
-    public static <T> List<T> toList(T... values) {
+    public static <T> List<T> toList(T values) {
         return Arrays.asList(values);
     }
 
@@ -74,8 +77,8 @@ public class ListUtil {
         Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
-    
-     public static <T> Stream<T> stream(Collection<T> lista) {
+
+    public static <T> Stream<T> stream(Collection<T> lista) {
         return isNullOrEmpty(lista)
                 ? Stream.empty()
                 : lista.stream();
@@ -111,15 +114,9 @@ public class ListUtil {
                 .orElse(null);
     }
 
-    /**
-     * @return Null se lista for nula ou vazia
-     */
     @SuppressWarnings("unchecked")
     public static <T> T[] toArray(List<T> list) {
-        if (isNotNullOrNotEmpty(list)) {
-            return list.toArray((T[]) Array.newInstance(list.iterator().next().getClass(), 0));
-        }
-        return null;
+        return list.toArray((T[]) Array.newInstance(list.iterator().next().getClass(), 0));
     }
 
 }

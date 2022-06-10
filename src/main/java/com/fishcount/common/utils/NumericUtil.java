@@ -2,13 +2,17 @@
 package com.fishcount.common.utils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  *
  * @author lucas
  */
 public class NumericUtil {
-    
+
+    NumericUtil() {
+    }
+
     public static double round(Double valor) {
         return round(valor, 2);
     }
@@ -23,7 +27,7 @@ public class NumericUtil {
         }
 
         BigDecimal big = new BigDecimal(valor.toString());
-        big = big.setScale(casas, BigDecimal.ROUND_HALF_UP);
+        big = big.setScale(casas, RoundingMode.HALF_UP);
         return big.doubleValue();
     }
 
@@ -33,81 +37,81 @@ public class NumericUtil {
 
     public static BigDecimal round(BigDecimal valor, Integer casas) {
         if (valor == null) {
-            valor = BigDecimal.ZERO.setScale(casas, BigDecimal.ROUND_HALF_UP);
+            valor = BigDecimal.ZERO.setScale(casas, RoundingMode.HALF_UP);
         }
         if (casas == null) {
             casas = 2;
         }
-        return valor.setScale(casas, BigDecimal.ROUND_HALF_UP);
+        return valor.setScale(casas, RoundingMode.HALF_UP);
     }
 
-    public synchronized static boolean isEquals(BigDecimal one, BigDecimal other) {
+    public static synchronized boolean isEquals(BigDecimal one, BigDecimal other) {
         if (one != null && other == null) {
             return false;
         } else if (one == null && other != null) {
             return false;
         } else {
-            return one.compareTo(other) == 0;
+            return one != null && one.compareTo(other) == 0;
         }
 
     }
 
-    public synchronized static boolean isGreater(Number number, Number compareTo) {
+    public static synchronized boolean isGreater(Number number, Number compareTo) {
         return number != null && number.doubleValue() > compareTo.doubleValue();
     }
 
-    public synchronized static boolean isGreaterOrEquals(Number number, Number compareTo) {
+    public static synchronized boolean isGreaterOrEquals(Number number, Number compareTo) {
         return number != null && number.doubleValue() >= compareTo.doubleValue();
     }
 
-    public synchronized static boolean isGreaterThanZero(Number number) {
+    public static synchronized boolean isGreaterThanZero(Number number) {
         return isGreater(number, 0);
     }
 
-    public synchronized static boolean isLess(Number number, Number compareTo) {
+    public static synchronized boolean isLess(Number number, Number compareTo) {
         return number != null && number.doubleValue() < compareTo.doubleValue();
     }
 
-    public synchronized static boolean isLessOrEquals(Number number, Number compareTo) {
+    public static synchronized boolean isLessOrEquals(Number number, Number compareTo) {
         return number != null && number.doubleValue() <= compareTo.doubleValue();
     }
 
-    public synchronized static boolean isLessThanZero(Number number) {
+    public static synchronized boolean isLessThanZero(Number number) {
         return isLess(number, 0);
     }
 
-    public synchronized static double getPercentage(double value, double percent) {
+    public static synchronized double getPercentage(double value, double percent) {
         value = value * (percent / 100);
 
         return value;
     }
 
-    public synchronized static BigDecimal getPercentage(BigDecimal value, BigDecimal percent) {
+    public static synchronized BigDecimal getPercentage(BigDecimal value, BigDecimal percent) {
         double percentage = getPercentage(value.doubleValue(), percent.doubleValue());
         return BigDecimal.valueOf(percentage);
     }
 
-    public synchronized static BigDecimal getNotNullOrZero(BigDecimal value) {
+    public static synchronized BigDecimal getNotNullOrZero(BigDecimal value) {
         return value != null ? value : BigDecimal.ZERO;
     }
 
-    public synchronized static Integer getNotNullOrZero(Integer value) {
+    public static synchronized Integer getNotNullOrZero(Integer value) {
         return value != null ? value : 0;
     }
 
-    public synchronized static Byte getNotNullOrZero(Byte value) {
-        return value != null ? value : new Byte("0");
+    public static synchronized Byte getNotNullOrZero(Byte value) {
+        return value != null ? value : Byte.parseByte("0");
     }
 
-    public synchronized static Long getNotNullOrZero(Long value) {
-        return value != null ? value : new Long("0");
+    public static synchronized Long getNotNullOrZero(Long value) {
+        return value != null ? value : Long.parseLong("0");
     }
 
-    public synchronized static Float getNotNullOrZero(Float value) {
-        return value != null ? value : new Float(0);
+    public static synchronized Float getNotNullOrZero(Float value) {
+        return value != null ? value : Float.valueOf(0);
     }
 
-    public synchronized static Double getNotNullOrZero(Double value) {
+    public static synchronized Double getNotNullOrZero(Double value) {
         return value != null ? value : 0.0;
     }
 
@@ -123,7 +127,7 @@ public class NumericUtil {
         return str.matches("^-?[0-9]+(\\.[0-9]+)?$");
     }
 
-    public synchronized static boolean isIntegerValue(Double value) {
+    public static synchronized boolean isIntegerValue(Double value) {
         return value != null && value % 1 == 0;
     }
 
@@ -140,6 +144,7 @@ public class NumericUtil {
                 return Integer.parseInt(strVal);
             }
         } catch (Exception ex) {
+            return null;
         }
         return null;
     }
@@ -150,7 +155,7 @@ public class NumericUtil {
         }
         return null;
     }
-    
+
     public static String somenteNumero(String s) {
 
         String sRet = "";
@@ -162,10 +167,9 @@ public class NumericUtil {
         return sRet;
     }
 
-      public static String numbers(String str) {
+    public static String numbers(String str) {
         String n = Utils.nvl(str, "");
         return n.replaceAll("[^0-9]", "");
     }
-
 
 }

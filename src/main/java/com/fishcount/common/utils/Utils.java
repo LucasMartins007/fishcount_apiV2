@@ -1,5 +1,7 @@
 package com.fishcount.common.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.util.ObjectUtils;
 
 import javax.swing.text.MaskFormatter;
@@ -10,14 +12,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 /**
  *
  * @author lucas
  */
 public class Utils {
 
+    Utils() {
+    }
 
- public static boolean isEmpty(Object obj) {
+    public static boolean isEmpty(Object obj) {
         return ObjectUtils.isEmpty(obj);
     }
 
@@ -30,9 +35,11 @@ public class Utils {
      *
      * @param <T>
      * @param originalInstance valor prioritário
-     * @param returnIfNull     valor a ser utilizado se {@code originalInstance} não existir
+     * @param returnIfNull     valor a ser utilizado se {@code originalInstance} não
+     *                         existir
      * @return um dos argumentos
      */
+    @SuppressWarnings("unchecked")
     public static <T> T nvl(Object originalInstance, T returnIfNull) {
         if (originalInstance instanceof String) {
             String a = (String) originalInstance;
@@ -81,14 +88,15 @@ public class Utils {
             return "";
         }
         CharSequence cs = new StringBuilder(s);
-        String sRet = Normalizer.normalize(cs, Normalizer.Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        String sRet = Normalizer.normalize(cs, Normalizer.Form.NFKD).replaceAll("\\p{InCombiningDiacriticalMarks}+",
+                "");
 
-        String[] caracteresEspeciais = {"\\.", ",", "-", ":", "\\(", "\\)", "ª", "\\|", "\\\\", "°", "/", "–", "|"};
+        String[] caracteresEspeciais = { "\\.", ",", "-", ":", "\\(", "\\)", "ª", "\\|", "\\\\", "°", "/", "–", "|" };
 
         for (String caracteresEspeciai : caracteresEspeciais) {
             sRet = sRet.replaceAll(caracteresEspeciai, "");
         }
-        sRet = sRet.replaceAll("&", "E");
+        sRet = sRet.replace("&", "E");
 
         return sRet;
     }
@@ -110,5 +118,17 @@ public class Utils {
                 .map(item -> item.replaceAll("[^a-zA-Z0-9]", ""))
                 .collect(Collectors.toList());
     }
-    
+
+    public static String objectToJson(Object obj) {
+        final Gson gsonResponse = new GsonBuilder().create();
+        return gsonResponse.toJson(obj);
+    }
+
+    public static <T> T jsonToObject(String jsonString, Class<T> clzz) {
+        Gson g = new Gson();
+
+        return g.fromJson(jsonString, clzz);
+    }
+
+
 }

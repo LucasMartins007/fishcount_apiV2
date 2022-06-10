@@ -1,5 +1,6 @@
 package com.fishcount.common.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import com.fishcount.common.model.pattern.annotations.converter.OnlyField;
 import com.fishcount.common.model.pattern.annotations.converter.TransientFieldDTO;
@@ -34,8 +35,10 @@ public class UsuarioDTO extends AbstractDTO<Integer>{
     @TransientFieldDTO
     private String senha;
     
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     private Date dataInclusao;
     
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     private Date dataAlteracao;
     
     

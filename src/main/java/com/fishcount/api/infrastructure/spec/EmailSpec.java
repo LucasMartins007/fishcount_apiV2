@@ -11,24 +11,28 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class EmailSpec {
 
+    private static final String FIELD_DESCRICAO = "descricao";
+    private static final String FIELD_ATIVO = "ativo";
+    private static final String FIELD_USUARIO = "usuario";
+    private static final String FIELD_TIPO_EMAIL = "tipoEmail";
+
+    EmailSpec() {
+    }
+
     public static Specification<Email> emailByDescricao(String descricao) {
-        return (root, query, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get("descricao"), descricao);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(FIELD_DESCRICAO), descricao);
     }
 
     public static Specification<Email> emailAtivo() {
-        return (root, query, criteriaBuilder)
-                -> criteriaBuilder.isTrue(root.get("ativo"));
+        return (root, query, criteriaBuilder) -> criteriaBuilder.isTrue(root.get(FIELD_ATIVO));
     }
 
     public static Specification<Email> emailFromTipo(EnumTipoEmail tipoEmail) {
-        return (root, query, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get("tipoEmail"), tipoEmail);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(FIELD_TIPO_EMAIL), tipoEmail);
     }
 
     public static Specification<Email> emailFromUsuario(Usuario usuario) {
-        return (root, query, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get("usuario"), usuario);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(FIELD_USUARIO), usuario);
     }
 
 }

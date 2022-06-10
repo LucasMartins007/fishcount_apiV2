@@ -4,6 +4,12 @@
  */
 package com.fishcount.api.service.impl;
 
+import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fishcount.api.converter.Converter;
 import com.fishcount.api.infrastructure.context.IContext;
 import com.fishcount.api.service.impl.interfaces.IAbstractService;
@@ -11,6 +17,7 @@ import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import com.fishcount.common.model.pattern.AbstractEntity;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,13 +25,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.Repository;
-
-import javax.transaction.Transactional;
-import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *

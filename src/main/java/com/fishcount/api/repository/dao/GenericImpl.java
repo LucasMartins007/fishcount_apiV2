@@ -1,4 +1,3 @@
-
 package com.fishcount.api.repository.dao;
 
 import com.fishcount.api.infrastructure.context.IContext;
@@ -22,14 +21,14 @@ import java.util.Collections;
 import java.util.Map;
 import org.springframework.data.repository.Repository;
 
-
 /**
  *
  * @author Lucas Martins
  */
 @Transactional(readOnly = true)
 @org.springframework.stereotype.Repository
-public class GenericImpl<T extends AbstractEntity<?>, ID> implements IOperations<T>, IGeneric<T, ID>, Repository<T, ID> {
+public class GenericImpl<T extends AbstractEntity<?>, ID>
+        implements IOperations<T>, IGeneric<T, ID>, Repository<T, ID> {
 
     @Lazy
     @Autowired
@@ -39,13 +38,15 @@ public class GenericImpl<T extends AbstractEntity<?>, ID> implements IOperations
     private EntityManager entityManager;
 
     private Class<T> entityClass;
-    private final Map<String, Object> mapLockNoWait = Collections.singletonMap("javax.persistence.lock.timeout", (Object) 0);
+
+    private final Map<String, Object> mapLockNoWait = Collections.singletonMap("javax.persistence.lock.timeout",
+            (Object) 0);
 
     public GenericImpl() {
         resolverClass(entityClass);
     }
 
-    public <R extends Repository> R getRepository(Class<R> classRespository) {
+    public <R extends Repository<T, ID>> R getRepository(Class<R> classRespository) {
         return getContext().getBean(classRespository);
     }
 
@@ -64,7 +65,7 @@ public class GenericImpl<T extends AbstractEntity<?>, ID> implements IOperations
     }
 
     @Override
-    public <S extends JpaSpecificationExecutor> S getSpecRepository(Class<S> specClass) {
+    public <S extends JpaSpecificationExecutor<T>> S getSpecRepository(Class<S> specClass) {
         return resolverContext().getBean(specClass);
     }
 
@@ -80,7 +81,7 @@ public class GenericImpl<T extends AbstractEntity<?>, ID> implements IOperations
         return this.entityManager;
     }
 
-    public void setClass(Class clazz) {
+    public void setClass(Class<T> clazz) {
         this.entityClass = resolverClass(clazz);
     }
 
@@ -200,7 +201,7 @@ public class GenericImpl<T extends AbstractEntity<?>, ID> implements IOperations
         return getEntityManager().createQuery(criteriaQuery);
     }
 
-    protected Query createQuery(String sqlString, Class entityClass) {
+    protected Query createQuery(String sqlString, Class<T> entityClass) {
         return getEntityManager().createQuery(sqlString, entityClass);
     }
 
@@ -224,7 +225,7 @@ public class GenericImpl<T extends AbstractEntity<?>, ID> implements IOperations
         return createNativeQuery(query.toString());
     }
 
-    protected Query createNativeQuery(StringBuilder query, Class entityClass) {
+    protected Query createNativeQuery(StringBuilder query, Class<T> entityClass) {
         return getEntityManager().createNativeQuery(query.toString(), entityClass);
     }
 
@@ -259,4 +260,3 @@ public class GenericImpl<T extends AbstractEntity<?>, ID> implements IOperations
         }
     }
 }
-

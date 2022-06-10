@@ -15,13 +15,13 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "email")
+@Table(name = "fish_email")
 public class Email extends AbstractEntity<Integer> {
     
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_email", sequenceName = "gen_id_email")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_email")
+    @SequenceGenerator(name = "id_fish_email", sequenceName = "gen_fish_id_email")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_email")
     private Integer id;
 
     @Column(name = "descricao")
@@ -43,6 +43,6 @@ public class Email extends AbstractEntity<Integer> {
     private Date dataAtualizacao;
     
     @ManyToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_email_id_usario"))
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_email_id_fish_usuario"))
     private Usuario usuario;
 }

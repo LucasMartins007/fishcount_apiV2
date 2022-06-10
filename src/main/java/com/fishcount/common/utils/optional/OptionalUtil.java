@@ -76,9 +76,7 @@ public final class OptionalUtil<T> {
         return isPresent() ? value : fallback;
     }
 
-//    public T orElseGet(Supplier<? extends T> fallback) {
-//        return isPresent() ? value : fallback.get();
-//    }
+
     public <X extends Throwable> T orElseThrow(Supplier<? extends X> exceptionSupplier) throws X {
         if (isPresent()) {
             return value;

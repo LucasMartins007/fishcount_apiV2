@@ -13,21 +13,21 @@ import java.util.List;
  */
 public class MessageExceptionBundle {
 
+    MessageExceptionBundle() {
+    }
+
     public static String getMensagem(IFcException mensagem, Object... argumentos) {
         formatarArgumentos(argumentos);
-        argumentos = formatarLista(argumentos);
         return MessageFormat.format(mensagem.getMessage(), argumentos);
     }
 
-    @Deprecated
     public static String getMensagem(String mensagem, Object... argumentos) {
         formatarArgumentos(argumentos);
-        argumentos = formatarLista(argumentos);
         return MessageFormat.format(mensagem, argumentos);
     }
 
     public static String getMensagem(IFcException mensagem) {
-        return getMensagem(mensagem, new Object[]{});
+        return mensagem.getMessage();
     }
 
     private static void formatarArgumentos(Object[] argumentos) {
@@ -42,11 +42,6 @@ public class MessageExceptionBundle {
                     argumentos[i] = DateUtil.formatDDMMYYYY((Date) argumentos[i]);
                 }
             }
-        }
-    }
-
-    private static Object[] formatarLista(Object[] argumentos) {
-        for (int i = 0; i < argumentos.length; i++) {
             if (argumentos[i] instanceof List) {
                 StringBuilder retorno = new StringBuilder();
 
@@ -56,7 +51,5 @@ public class MessageExceptionBundle {
                 argumentos[i] = retorno.toString();
             }
         }
-
-        return argumentos;
     }
 }

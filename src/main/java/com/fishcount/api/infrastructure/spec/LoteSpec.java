@@ -12,14 +12,18 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class LoteSpec {
 
+    private static final String FIELD_DESCRICAO = "descricao";
+    private static final String FIELD_USUARIO = "usuario";
+
+    LoteSpec() {
+    }
+
     public static Specification<Lote> loteByDescricao(String descricao) {
-        return (root, query, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get("descricao"), descricao);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(FIELD_DESCRICAO), descricao);
     }
 
     public static Specification<Lote> loteByUsuario(Usuario usuario) {
-        return (root, query, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get("usuario"), usuario);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(FIELD_USUARIO), usuario);
     }
 
     public static Specification<Lote> orderBy(boolean isAscending, String campo) {
@@ -33,7 +37,7 @@ public class LoteSpec {
     }
 
     public static Specification<Lote> loteLikeDescricao(String descricao) {
-        return (root, query, criteriaBuilder)
-                -> criteriaBuilder.like(root.get("descricao"), criteriaBuilder.literal("%" + descricao.toLowerCase() + "%"));
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get(FIELD_DESCRICAO),
+                criteriaBuilder.literal("%" + descricao.toLowerCase() + "%"));
     }
 }

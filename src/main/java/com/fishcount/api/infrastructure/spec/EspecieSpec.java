@@ -1,7 +1,9 @@
 package com.fishcount.api.infrastructure.spec;
 
-import com.fishcount.common.model.entity.Especie;
 import javax.persistence.criteria.Order;
+
+import com.fishcount.common.model.entity.Especie;
+
 import org.springframework.data.jpa.domain.Specification;
 
 /**
@@ -10,12 +12,16 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class EspecieSpec {
 
-    static public Specification<Especie> findByDescricao(String descricao) {
-        return (root, query, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get("descricao"), descricao);
+    private static final String FIELD_DESCRICAO = "descricao";
+
+    EspecieSpec() {
     }
 
-    static public Specification<Especie> orderBy(boolean isAscending, String campo) {
+    public static Specification<Especie> findByDescricao(String descricao) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(FIELD_DESCRICAO), descricao);
+    }
+
+    public static Specification<Especie> orderBy(boolean isAscending, String campo) {
         return (root, query, criteriaBuilder) -> {
             Order orderBy = isAscending ? criteriaBuilder.asc(root.get(campo)) : criteriaBuilder.desc(root.get(campo));
 

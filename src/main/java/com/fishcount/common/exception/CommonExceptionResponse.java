@@ -8,13 +8,14 @@ import org.springframework.http.HttpStatus;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author lucas
  */
 @Data
-public class RespostaException implements Serializable {
+public class CommonExceptionResponse implements Serializable {
 
     private String message;
 
@@ -26,12 +27,13 @@ public class RespostaException implements Serializable {
 
     private List<String> details;
 
-    public RespostaException(String message) {
+    public CommonExceptionResponse(String message) {
         this.message = replaceInvalidCaracters(message);
         this.status = HttpStatus.BAD_REQUEST.value();
     }
 
-    public RespostaException(Throwable exception) {
+    @SuppressWarnings("unchecked")
+    public CommonExceptionResponse(Throwable exception) {
         this(exception.getMessage());
 
         if (exception instanceof FcRuntimeException) {
@@ -48,8 +50,7 @@ public class RespostaException implements Serializable {
             return value;
         }
 
-        return value.replaceAll("\r\n|\r|\n", "<br/>")
-                .replaceAll("\t", "&nbsp;&nbsp;");
+        return Pattern.compile("\t").matcher(value.replaceAll("\r\n|\r|\n", "<br/>")).replaceAll("&nbsp;&nbsp;");
     }
 
 }

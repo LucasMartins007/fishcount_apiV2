@@ -1,9 +1,8 @@
 package com.fishcount.common.model.pattern;
 
-import org.hibernate.proxy.HibernateProxyHelper;
-
 import javax.persistence.MappedSuperclass;
-import java.io.Serializable;
+
+import org.hibernate.proxy.HibernateProxyHelper;
 
 /**
  *
@@ -11,21 +10,21 @@ import java.io.Serializable;
  * @param <T>
  */
 @MappedSuperclass
-public abstract class AbstractEntity<T extends Number> implements IIdentifier<T>, Serializable {
-    
-    
+public abstract class AbstractEntity<T extends Number> implements IIdentifier<T> {
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + "(id=" + getId() + ")";
     }
-    
+
+    @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
 
-        final Class objClass = HibernateProxyHelper.getClassWithoutInitializingProxy(obj);
+        final Class<?> objClass = HibernateProxyHelper.getClassWithoutInitializingProxy(obj);
         if (getClass() != objClass) {
             return false;
         }
@@ -34,7 +33,7 @@ public abstract class AbstractEntity<T extends Number> implements IIdentifier<T>
             return true;
         }
 
-        final AbstractEntity other = (AbstractEntity) obj;
+        final AbstractEntity<T> other = (AbstractEntity<T>) obj;
         if (this.getId() != null && other.getId() == null) {
             return false;
         }
@@ -56,5 +55,5 @@ public abstract class AbstractEntity<T extends Number> implements IIdentifier<T>
         hash = 71 * hash + (this.getId() != null ? this.getId().hashCode() : 0);
         return hash;
     }
-    
+
 }

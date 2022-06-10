@@ -1,14 +1,14 @@
 package com.fishcount.api.validators.pattern;
 
+import java.lang.reflect.ParameterizedType;
+
 import com.fishcount.api.infrastructure.context.IContext;
 import com.fishcount.api.service.impl.interfaces.IAbstractService;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.pattern.AbstractEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import java.lang.reflect.ParameterizedType;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
@@ -19,7 +19,7 @@ public abstract class AbstractValidatorImpl<T extends AbstractEntity<?>> impleme
 
     private Class<T> entityClass;
 
-    public AbstractValidatorImpl() {
+    protected AbstractValidatorImpl() {
         resolverClass(entityClass);
     }
 
@@ -31,11 +31,11 @@ public abstract class AbstractValidatorImpl<T extends AbstractEntity<?>> impleme
         return getContext().getRepositoryFromClass(entityClass);
     }
 
-    public <R extends JpaRepository> R getRepository(Class<R> classRespository) {
+    public <R extends JpaRepository<T, ?>> R getRepository(Class<R> classRespository) {
         return getContext().getBean(classRespository);
     }
 
-    public <R extends IAbstractService> R getService(Class<R> classService) {
+    public <R extends IAbstractService<T, ?, ?>> R getService(Class<R> classService) {
         return getContext().getBean(classService);
     }
 

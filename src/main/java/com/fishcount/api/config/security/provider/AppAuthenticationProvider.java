@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *
  * @author lucas
  */
-public class AppAuthenticationProvider extends DaoAuthenticationProvider implements AuthenticationProvider {
+public class AppAuthenticationProvider extends DaoAuthenticationProvider {
 
     public AppAuthenticationProvider(UserDetailsService detailsService) {
         super.setUserDetailsService(detailsService);

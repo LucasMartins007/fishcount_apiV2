@@ -13,7 +13,8 @@ import javax.persistence.Converter;
 @Getter
 public enum EnumStatusTitulo implements IEnum<Integer> {
 
-    EM_ABERTO(1, "Em aberto"),
+    ANALISE(0, "Em Análise"),
+    ABERTO(1, "Em aberto"),
     LIQUIDADO(2, "Liquidado"),
     LIQUIDADO_PARCIALMENTE(3, "Liquidado parcialmente"),
     CANCELADO(4, "Cancelado");
