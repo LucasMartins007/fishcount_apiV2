@@ -34,12 +34,6 @@ public interface IPagamentoController {
     @ResponseStatus(HttpStatus.CREATED)
     PagamentoDTO incluir(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @RequestBody PagamentoDTO pagamentoDTO);
 
-    @PutMapping(OperationsPath.ID)
-    @ResponseStatus(HttpStatus.OK)
-    void editar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario,
-            @PathVariable(OperationsParam.ID) Integer idPagamento,
-            @RequestBody PagamentoDTO pagamentoDTO);
-
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     List<PagamentoDTO> listarPagamentos(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario);

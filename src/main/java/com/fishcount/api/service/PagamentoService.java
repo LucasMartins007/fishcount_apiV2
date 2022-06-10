@@ -3,7 +3,7 @@ package com.fishcount.api.service;
 import com.fishcount.common.model.dto.PagamentoDTO;
 import com.fishcount.api.service.impl.interfaces.IAbstractService;
 import com.fishcount.common.model.entity.Pagamento;
-import com.fishcount.common.model.entity.TituloParcela;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 public interface PagamentoService extends IAbstractService<Pagamento, Integer, PagamentoDTO> {
 
     Pagamento incluir(Pagamento pagamento, Integer idUsuario);
-    
-    Pagamento incluir(TituloParcela tituloParcela, Pagamento pagamento);
+
+    List<Pagamento> listarPagamentos(Integer idUsuario);
+
+    Pagamento consultarCobranca(Integer idUsuario, Integer id);
 }

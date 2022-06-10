@@ -18,18 +18,17 @@ public class PagamentoController extends AbstractController<PagamentoService> im
     }
 
     @Override
-    public void editar(Integer idUsuario, Integer idPagamento, PagamentoDTO pagamentoDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public List<PagamentoDTO> listarPagamentos(Integer idUsuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Pagamento> pagamentos = getService().listarPagamentos(idUsuario);
+
+        return converterEntityParaDTO(pagamentos, PagamentoDTO.class);
     }
 
     @Override
     public PagamentoDTO consultarPagamento(Integer idUsuario, Integer idPagamento) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Pagamento pagamento = getService().consultarCobranca(idUsuario, idPagamento);
+
+        return converterEntityParaDTO(pagamento, PagamentoDTO.class);
     }
 
 }
