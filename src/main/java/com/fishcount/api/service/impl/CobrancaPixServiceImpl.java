@@ -22,6 +22,8 @@ import java.time.Duration;
 import java.util.Calendar;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,8 +31,15 @@ import org.springframework.stereotype.Service;
 public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Integer, CobrancaPixDTO> implements CobrancaPixService {
 
     private final ClientCobrancaPix clientCobrancaPix;
+    
+    @Value("${pix-config.chave-pix}")
+    private String chavePix;
+    
+    @Value("${pix-config.msg-solicitacao-padrao}")
+    private String msgPadrao;
 
     @Override
+    @Async
     public CobrancaPix gerarRegistoCobrancaPix(PagamentoParcela parcela) {
         final PayloadCobrancaResponse payload = gerarPayloadCobranca(parcela);
 
@@ -77,8 +86,8 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
         PayloadValor valor = new PayloadValor(parcela.getValor().toString());
         payload.setValor(valor);
 
-        payload.setSolicitacaoPagador("Abertura de pagamentos inicial padrão");
-        payload.setChave("10574732942");
+        payload.setSolicitacaoPagador(msgPadrao);
+        payload.setChave(chavePix);
 
         return clientCobrancaPix.criarCobrancaImediata(payload);
     }

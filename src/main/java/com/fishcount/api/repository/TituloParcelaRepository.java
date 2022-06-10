@@ -14,5 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TituloParcelaRepository extends JpaRepository<TituloParcela, Integer>, JpaSpecificationExecutor<TituloParcela>, CustomTituloParcelaRepository {
 
+    @Override
     TituloParcela findByPagamentoParcela(PagamentoParcela pagamentoParcela);
 }

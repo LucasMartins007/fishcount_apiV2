@@ -24,10 +24,13 @@ jwt:
   secret: FGj2herA5v2ZUaTt
 
 pix-config:
+  chave-pix: f3ca0e7d-93c3-41cc-8711-237ee0d2d63d
+  msg-solicitacao-padrao: Abertura de pagamentos inicial padrão.
+    
   base-url: https://api-pix-h.gerencianet.com.br
   client_id: Client_Id_3e71852f85888c5f3817fd296e831d118de3c979
   client_secret: Client_Secret_b0e2f50a94392df2bb62fb572570345525626972
-  url-access-token: https://api-pix-h.gerencianet.com.br/oauth/token
+  url-access-token: ${pix-config.base-url}/oauth/token
   url-cobranca: ${pix-config.base-url}/v2/cob
 
 rest-template:
