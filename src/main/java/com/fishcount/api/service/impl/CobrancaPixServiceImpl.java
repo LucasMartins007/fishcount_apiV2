@@ -42,15 +42,17 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
 
     private CobrancaPix gerarCobrancaPix(final PayloadCobrancaResponse payload, final PagamentoParcela parcela) {
         final CobrancaPix cobrancaPix = new CobrancaPix();
-        final TituloParcela tituloParcela = getRepository(TituloParcelaRepository.class).findByPagamento(parcela);
+        final TituloParcela tituloParcela = getRepository(TituloParcelaRepository.class).findByPagamentoParcela(parcela);
+        final BigDecimal valorCobranca = BigDecimal.valueOf(Double.parseDouble(payload.getValor().getOriginal()));
 
         cobrancaPix.setChave(payload.getChave());
         cobrancaPix.setDataCriacao(DateUtil.getDate());
         cobrancaPix.setDataAlteracao(DateUtil.getDate());
         cobrancaPix.setDataExpiracao(DateUtil.add(Calendar.SECOND, payload.getCalendario().getExpiracao()));
         cobrancaPix.setObservacaoPagador(payload.getSolicitacaoPagador());
-        cobrancaPix.setSaldo(BigDecimal.valueOf(Double.parseDouble(payload.getValor().getOriginal())));
-        cobrancaPix.setTxId(payload.getTxId());
+        cobrancaPix.setSaldo(valorCobranca);
+        cobrancaPix.setValor(valorCobranca);
+        cobrancaPix.setTxId(payload.getTxid());
         cobrancaPix.setStatusCobranca(payload.getStatus());
         cobrancaPix.setTituloParcela(tituloParcela);
 
@@ -82,9 +84,11 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
     }
 
     private Integer calcularSegundosNoMes(Date dataVencimento) {
-        return Duration
-                .between(dataVencimento.toInstant(), DateUtil.subtract(dataVencimento, Calendar.MONTH, 1)
+        final Long segundosMes = Duration
+                .between(DateUtil.getDate().toInstant(), DateUtil.add(dataVencimento, Calendar.MONTH, 1)
                         .toInstant())
-                .toSecondsPart();
+                .toSeconds();
+
+        return Integer.parseInt(Long.toString(segundosMes));
     }
 }

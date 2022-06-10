@@ -22,6 +22,10 @@ public class PagamentoDTO extends AbstractDTO<Integer> {
 
     private BigDecimal saldo;
     
+    private BigDecimal acrescimo;
+    
+    private BigDecimal desconto;
+    
     private Plano plano;
     
     private Integer qtdeParcelas;

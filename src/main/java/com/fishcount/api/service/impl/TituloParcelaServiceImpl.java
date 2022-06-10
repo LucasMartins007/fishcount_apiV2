@@ -1,5 +1,6 @@
 package com.fishcount.api.service.impl;
 
+import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.TituloParcelaService;
 import com.fishcount.common.model.dto.TituloParcelaDTO;
 import com.fishcount.common.model.entity.PagamentoParcela;
@@ -20,7 +21,7 @@ public class TituloParcelaServiceImpl
         implements TituloParcelaService {
 
     @Override
-    public TituloParcela gerarParcelasByPagamentoParcela(PagamentoParcela parcela) {
+    public TituloParcela gerarTitulosParcelasByPagamentoParcela(PagamentoParcela parcela) {
         final Titulo titulo = parcela.getPagamento().getTitulo();
         
         final TituloParcela tituloParcela = new TituloParcela();
@@ -31,6 +32,7 @@ public class TituloParcelaServiceImpl
         tituloParcela.setSaldo(parcela.getSaldo());
         tituloParcela.setStatusTitulo(EnumStatusTitulo.ANALISE);
         tituloParcela.setTipoTitulo(EnumTipoTitulo.ENTRADA);
+        tituloParcela.setPagamentoParcela(parcela);
         
         onPrepareInsert(titulo, tituloParcela);
         

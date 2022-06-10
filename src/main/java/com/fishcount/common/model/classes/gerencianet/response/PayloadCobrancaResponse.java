@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class PayloadCobrancaResponse {
 
-    private String txId;
+    private String txid;
 
     private Integer revisao;
 

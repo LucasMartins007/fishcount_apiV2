@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.fishcount.api.service.gerencianet.pix.cobranca.ClientCobrancaPix;
 
 @Service
 @RequiredArgsConstructor

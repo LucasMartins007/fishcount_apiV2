@@ -2,7 +2,6 @@ package com.fishcount.common.model.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -13,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -81,5 +79,5 @@ public class TituloParcela extends AbstractEntity<Integer> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pagamento_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_titulo_parcela_to_fish_pagamento_parcela"))
-    private PagamentoParcela pagamento;
+    private PagamentoParcela pagamentoParcela;
 }

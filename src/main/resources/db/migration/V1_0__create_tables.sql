@@ -559,3 +559,19 @@ CREATE TABLE public.flyway_schema_history (
 	CONSTRAINT flyway_schema_history_pk PRIMARY KEY (installed_rank)
 );
 CREATE INDEX flyway_schema_history_s_idx ON public.flyway_schema_history USING btree (success);
+
+
+INSERT INTO public.fish_taxa_crescimento
+(id, data_atualizacao, data_inclusao, intervalo, qtde_aumento, unidade_aumento, unidade_intervalo, id_especie)
+VALUES(51, '2022-05-23 00:00:00.000', '2022-05-23 00:00:00.000', 250, 2.00, 'CM', 'DIA', null);
+
+
+INSERT INTO public.fish_especie
+(id, data_atualizacao, data_inclusao, descricao, peso_medio, qtde_media_racao, tamanho_medio, unidade_peso_medio, unidade_peso_racao, unidade_tamanho, id_taxa_crescimento)
+VALUES(1, '2022-05-23 00:00:00.000', '2022-05-23 00:00:00.000', 'especie teste', 300.00, 20, 10.00, 'GR', 'GR', 'CM', null);
+
+
+INSERT INTO public.fish_plano
+(id, ativo, descricao, max_taque, min_taque, num_parcelas, valor_maximo, valor_minimo)
+VALUES(1, true, 'Plano teste', 20, 10, 5, 200.00, 100.00);
+

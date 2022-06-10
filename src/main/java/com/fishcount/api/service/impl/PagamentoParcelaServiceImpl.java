@@ -1,5 +1,6 @@
 package com.fishcount.api.service.impl;
 
+import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.PagamentoParcelaService;
 import com.fishcount.api.service.TituloParcelaService;
 import com.fishcount.api.validators.PagamentoParcelaValidator;
@@ -12,9 +13,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class PagamentoParcelaServiceImpl
         extends AbstractServiceImpl<PagamentoParcela, Integer, PagamentoParcelaDTO>
         implements PagamentoParcelaService {
@@ -25,7 +28,14 @@ public class PagamentoParcelaServiceImpl
     public List<PagamentoParcela> incluirParcelas(Pagamento pagamento) {
         List<PagamentoParcela> parcelas = gerarParcelas(pagamento);
 
-        return getRepository().saveAll(parcelas);
+        getRepository().saveAll(parcelas);
+
+        parcelas.forEach(parcela -> {
+            getService(TituloParcelaService.class).gerarTitulosParcelasByPagamentoParcela(parcela);
+            getService(CobrancaPixService.class).gerarRegistoCobrancaPix(parcela);
+        });
+
+        return parcelas;
     }
 
     private List<PagamentoParcela> gerarParcelas(Pagamento pagamento) {
@@ -40,6 +50,8 @@ public class PagamentoParcelaServiceImpl
             parcela.setPagamento(pagamento);
             parcela.setStatusPagamento(pagamento.getStatusPagamento());
             parcela.setTipoPagamento(pagamento.getTipoPagamento());
+            parcela.setAcrescimo(pagamento.getAcrescimo());
+            parcela.setDesconto(pagamento.getDesconto());
             onPrepareInsert(parcela, valorParcelas, aumentoMesesVencimento);
 
             parcelas.add(parcela);
@@ -55,7 +67,6 @@ public class PagamentoParcelaServiceImpl
         parcela.setSaldo(valorParcelas);
 
         pagamentoParcelaValidator.validateInsert(parcela);
-        getService(TituloParcelaService.class).gerarParcelasByPagamentoParcela(parcela);
     }
 
 }
