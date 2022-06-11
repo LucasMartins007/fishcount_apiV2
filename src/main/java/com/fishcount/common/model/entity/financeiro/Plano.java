@@ -1,12 +1,12 @@
-package com.fishcount.common.model.entity;
+package com.fishcount.common.model.entity.financeiro;
 
 import com.fishcount.common.model.pattern.AbstractEntity;
 import java.math.BigDecimal;
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  *
@@ -15,13 +15,13 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "fish_plano")
+@Table(name = "fin_plano")
 public class Plano extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_plano", sequenceName = "gen_fish_id_plano")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_plano")
+    @SequenceGenerator(name = "id_fin_plano", sequenceName = "gen_fin_id_plano")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_plano")
     private Integer id;
 
     @Column(name = "descricao")
@@ -38,11 +38,19 @@ public class Plano extends AbstractEntity<Integer> {
 
     @Column(name = "max_taque")
     private Integer maxTanque;
-    
-    @Column(name = "num_parcelas")
-    private Integer numParcelas;
-    
+
+    @Column(name = "qtde_parcela")
+    private Integer qtdeParcela;
+
     @Column(name = "ativo")
     private boolean ativo;
+
+    @Column(name = "data_inclusao", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataInclusao;
+
+    @Column(name = "data_alteracao", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataAlteracao;
 
 }

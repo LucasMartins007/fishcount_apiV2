@@ -1,6 +1,6 @@
 package com.fishcount.api.infrastructure.spec;
 
-import com.fishcount.common.model.entity.Titulo;
+import com.fishcount.common.model.entity.financeiro.Titulo;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import org.springframework.data.jpa.domain.Specification;

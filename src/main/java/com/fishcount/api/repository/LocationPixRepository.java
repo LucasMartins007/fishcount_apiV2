@@ -1,7 +1,7 @@
 package com.fishcount.api.repository;
 
 import com.fishcount.api.repository.custom.CustomLocationPixRepository;
-import com.fishcount.common.model.entity.LocationPix;
+import com.fishcount.common.model.entity.financeiro.pix.LocationPix;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -13,4 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LocationPixRepository extends JpaRepository<LocationPix, Integer>, JpaSpecificationExecutor<LocationPix>, CustomLocationPixRepository {
 
+    @Override
+    LocationPix findByIdLocation(Integer idlocation);
 }

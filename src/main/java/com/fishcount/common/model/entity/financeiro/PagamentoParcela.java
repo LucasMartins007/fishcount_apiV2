@@ -1,4 +1,4 @@
-package com.fishcount.common.model.entity;
+package com.fishcount.common.model.entity.financeiro;
 
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.model.enums.EnumTipoPagamento;
@@ -29,13 +29,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "fish_pagamento_parcela")
+@Table(name = "fin_pagamento_parcela")
 public class PagamentoParcela extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_pagamento", sequenceName = "gen_id_fish_pagamento")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_pagamento")
+    @SequenceGenerator(name = "id_fin_pagamento", sequenceName = "gen_id_fin_pagamento")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_pagamento")
     private Integer id;
 
     @Column(name = "valor")
@@ -59,7 +59,7 @@ public class PagamentoParcela extends AbstractEntity<Integer> {
     private EnumTipoPagamento tipoPagamento;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pagamento", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_parcela_to_fish_pagamento"))
+    @JoinColumn(name = "id_pagamento", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_pagamento_parcela_to_fin_pagamento"))
     private Pagamento pagamento;
 
     @Column(name = "data_inclusao")

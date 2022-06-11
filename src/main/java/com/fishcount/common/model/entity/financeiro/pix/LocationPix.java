@@ -1,5 +1,5 @@
 
-package com.fishcount.common.model.entity;
+package com.fishcount.common.model.entity.financeiro.pix;
 
 import com.fishcount.common.model.pattern.AbstractEntity;
 import java.util.Date;
@@ -22,16 +22,16 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name = "fish_location_pix")
+@Table(name = "fin_location_pix")
 public class LocationPix extends AbstractEntity<Integer> {
     
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_location_pix", sequenceName = "gen_id_fish_location_pix")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_location_pix")
+    @SequenceGenerator(name = "id_fin_location_pix", sequenceName = "gen_id_fin_location_pix")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_location_pix")
     private Integer id;
     
-    @Column(name = "idLocation")
+    @Column(name = "id_location")
     private Integer idLocation;
     
     @Column(name = "location")
@@ -40,8 +40,8 @@ public class LocationPix extends AbstractEntity<Integer> {
     @Column(name = "tipo_cobranca")
     private String tipoCob;
     
-    @Column(name = "cricao")
+    @Column(name = "data_criacao")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date criacao;
+    private Date dataCriacao;
 
 }

@@ -1,6 +1,6 @@
 package com.fishcount.api.controller.interfaces;
 
-import com.fishcount.common.model.dto.PagamentoDTO;
+import com.fishcount.common.model.dto.financeiro.PagamentoDTO;
 import com.fishcount.common.model.pattern.OperationsParam;
 import com.fishcount.common.model.pattern.OperationsPath;
 import io.swagger.annotations.Api;

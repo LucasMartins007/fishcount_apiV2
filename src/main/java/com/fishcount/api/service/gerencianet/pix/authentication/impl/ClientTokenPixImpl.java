@@ -1,5 +1,6 @@
 package com.fishcount.api.service.gerencianet.pix.authentication.impl;
 
+import com.fishcount.api.config.rest.RestTemplateConfiguration;
 import com.fishcount.api.service.gerencianet.pix.GenericPix;
 import com.fishcount.common.model.classes.gerencianet.authentication.PayloadToken;
 import com.fishcount.common.model.pattern.constants.HttpConstants;
@@ -12,11 +13,25 @@ import com.fishcount.common.exception.enums.EnumFcHttpException;
 import com.fishcount.common.utils.Utils;
 import java.net.URI;
 import java.net.URISyntaxException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 @Component
-public class ClientTokenPixImpl extends GenericPix implements ClientTokenPix {
+public class ClientTokenPixImpl implements ClientTokenPix {
+
+    @Value("${pix-config.url-access-token}")
+    private String urlToken;
+
+    @Value("${pix-config.client_id}")
+    private String clientId;
+
+    @Value("${pix-config.client_secret}")
+    private String secretId;
+
+    @Autowired
+    private RestTemplateConfiguration restTemplate;
 
     @Override
     public String getBearerToken() {

@@ -10,11 +10,11 @@ public interface ClientCobrancaPix {
 
     PayloadCobrancaResponse criarCobranca(String txId, PayloadCobranca payloadCobranca);
 
-    PayloadCobranca revisarCobranca(PayloadCobranca payloadCobranca, String txId);
+    PayloadCobrancaResponse revisarCobranca(PayloadCobranca payloadCobranca, String txId);
 
-    PayloadCobranca consultarCobranca(String txId);
+    PayloadCobrancaResponse consultarCobranca(String txId);
 
     PayloadCobrancaResponse criarCobrancaImediata(PayloadCobranca payloadCobranca);
 
-    List<PayloadCobranca> listarCobrancas(String cpf, String cnpj, Date dataInicio, Date dataFinal, String status);
+    List<PayloadCobrancaResponse> listarCobrancas(String cpf, String cnpj, Date dataInicio, Date dataFinal, String status);
 }

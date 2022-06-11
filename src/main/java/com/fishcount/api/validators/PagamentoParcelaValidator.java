@@ -2,7 +2,7 @@ package com.fishcount.api.validators;
 
 import com.fishcount.api.validators.pattern.AbstractValidatorImpl;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
-import com.fishcount.common.model.entity.PagamentoParcela;
+import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 
 /**
  *

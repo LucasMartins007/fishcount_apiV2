@@ -1,4 +1,4 @@
-package com.fishcount.common.model.entity;
+package com.fishcount.common.model.entity.financeiro;
 
 import java.util.Date;
 
@@ -32,13 +32,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "fish_titulo_parcela")
+@Table(name = "fin_titulo_parcela")
 public class TituloParcela extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_titulo_parcela", sequenceName = "gen_id_fish_titulo_parcela")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_titulo_parcela")
+    @SequenceGenerator(name = "id_fin_titulo_parcela", sequenceName = "gen_id_fin_titulo_parcela")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_titulo_parcela")
     private Integer id;
 
     @Column(name = "valor")
@@ -74,10 +74,10 @@ public class TituloParcela extends AbstractEntity<Integer> {
     private Date dataAlteracao;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_titulo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_titulo_parcela_to_fish_titulo"))
+    @JoinColumn(name = "id_titulo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_titulo_parcela_to_fin_titulo"))
     private Titulo titulo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pagamento_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_titulo_parcela_to_fish_pagamento_parcela"))
+    @JoinColumn(name = "id_pagamento_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_titulo_parcela_to_fin_pagamento_parcela"))
     private PagamentoParcela pagamentoParcela;
 }

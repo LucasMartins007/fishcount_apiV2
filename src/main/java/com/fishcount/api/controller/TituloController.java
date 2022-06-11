@@ -2,8 +2,7 @@ package com.fishcount.api.controller;
 
 import com.fishcount.api.controller.interfaces.ITituloController;
 import com.fishcount.api.service.TituloService;
-import com.fishcount.common.model.dto.TituloDTO;
-import com.fishcount.common.model.entity.Titulo;
+import com.fishcount.common.model.dto.financeiro.TituloDTO;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,9 +16,7 @@ public class TituloController extends AbstractController<TituloService> implemen
 
     @Override
     public TituloDTO incluir(Integer idUsuario, TituloDTO tituloDTO) {
-        Titulo titulo = converterDTOParaEntity(tituloDTO, Titulo.class);
-        
-        return converterEntityParaDTO(getService().incluir(idUsuario, titulo), TituloDTO.class);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

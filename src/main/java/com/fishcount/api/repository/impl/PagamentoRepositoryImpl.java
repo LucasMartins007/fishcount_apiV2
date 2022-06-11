@@ -2,7 +2,7 @@ package com.fishcount.api.repository.impl;
 
 import com.fishcount.api.infrastructure.spec.PagamentoSpec;
 import com.fishcount.api.repository.dao.GenericImpl;
-import com.fishcount.common.model.entity.Pagamento;
+import com.fishcount.common.model.entity.financeiro.Pagamento;
 import org.springframework.stereotype.Repository;
 import com.fishcount.api.repository.custom.CustomPagamentoRepository;
 import com.fishcount.common.model.entity.Usuario;

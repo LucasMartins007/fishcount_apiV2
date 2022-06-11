@@ -1,6 +1,6 @@
 package com.fishcount.api.controller.interfaces;
 
-import com.fishcount.common.model.dto.TituloParcelaDTO;
+import com.fishcount.common.model.dto.financeiro.TituloParcelaDTO;
 import com.fishcount.common.model.pattern.OperationsParam;
 import com.fishcount.common.model.pattern.OperationsPath;
 import org.springframework.web.bind.annotation.*;

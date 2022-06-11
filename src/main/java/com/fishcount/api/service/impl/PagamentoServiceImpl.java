@@ -7,10 +7,10 @@ import com.fishcount.api.service.PlanoService;
 import com.fishcount.api.service.TituloService;
 import com.fishcount.api.service.UsuarioService;
 import com.fishcount.api.validators.PagamentoValidator;
-import com.fishcount.common.model.dto.PagamentoDTO;
-import com.fishcount.common.model.entity.Pagamento;
-import com.fishcount.common.model.entity.Plano;
-import com.fishcount.common.model.entity.Titulo;
+import com.fishcount.common.model.dto.financeiro.PagamentoDTO;
+import com.fishcount.common.model.entity.financeiro.Pagamento;
+import com.fishcount.common.model.entity.financeiro.Plano;
+import com.fishcount.common.model.entity.financeiro.Titulo;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.utils.DateUtil;
@@ -69,7 +69,7 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
         pagamento.setStatusPagamento(EnumStatusPagamento.ANALISE);
         pagamento.setSaldo(BigDecimal.ZERO);
         pagamento.setValor(plano.getValorMinimo());
-        pagamento.setQtdeParcelas(plano.getNumParcelas() == null ? pagamento.getQtdeParcelas() : plano.getNumParcelas());
+        pagamento.setQtdeParcelas(plano.getQtdeParcela()== null ? pagamento.getQtdeParcelas() : plano.getQtdeParcela());
 
         pagamentoValidator.validateInsert(pagamento);
 

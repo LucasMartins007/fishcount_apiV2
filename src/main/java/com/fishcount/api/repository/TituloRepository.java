@@ -1,7 +1,7 @@
 package com.fishcount.api.repository;
 
 import com.fishcount.api.repository.custom.CustomTituloRepository;
-import com.fishcount.common.model.entity.Titulo;
+import com.fishcount.common.model.entity.financeiro.Titulo;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import org.springframework.data.jpa.repository.JpaRepository;

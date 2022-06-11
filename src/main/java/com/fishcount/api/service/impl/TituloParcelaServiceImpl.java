@@ -2,10 +2,10 @@ package com.fishcount.api.service.impl;
 
 import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.TituloParcelaService;
-import com.fishcount.common.model.dto.TituloParcelaDTO;
-import com.fishcount.common.model.entity.PagamentoParcela;
-import com.fishcount.common.model.entity.Titulo;
-import com.fishcount.common.model.entity.TituloParcela;
+import com.fishcount.common.model.dto.financeiro.TituloParcelaDTO;
+import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
+import com.fishcount.common.model.entity.financeiro.Titulo;
+import com.fishcount.common.model.entity.financeiro.TituloParcela;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import com.fishcount.common.model.enums.EnumTipoTitulo;
 import com.fishcount.common.utils.DateUtil;

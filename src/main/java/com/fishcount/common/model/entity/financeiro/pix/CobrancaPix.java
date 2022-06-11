@@ -1,5 +1,6 @@
-package com.fishcount.common.model.entity;
+package com.fishcount.common.model.entity.financeiro.pix;
 
+import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -31,13 +32,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "fish_cobranca_pix")
+@Table(name = "fin_cobranca_pix")
 public class CobrancaPix extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_cobranca_pix", sequenceName = "gen_id_fish_cobranca_pix")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_cobranca_pix")
+    @SequenceGenerator(name = "id_fin_cobranca_pix", sequenceName = "gen_id_fin_cobranca_pix")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_cobranca_pix")
     private Integer id;
 
     @Column(name = "tx_id")
@@ -72,10 +73,10 @@ public class CobrancaPix extends AbstractEntity<Integer> {
     private Date dataExpiracao;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_titulo_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_cobranca_pix_to_fish_titulo_parcela"))
-    private TituloParcela tituloParcela;
+    @JoinColumn(name = "id_pagamento_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_cobranca_pix_to_fin_pagamento_parcela"))
+    private PagamentoParcela pagamentoParcela;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_location", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_cobranca_pix_to_fish_location"))
+    @JoinColumn(name = "id_location", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_cobranca_pix_to_fin_location"))
     private LocationPix location;
 }

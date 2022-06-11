@@ -1,7 +1,8 @@
 
-package com.fishcount.common.model.dto;
+package com.fishcount.common.model.dto.financeiro;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,11 +18,13 @@ public class PlanoDTO extends AbstractDTO<Integer> {
     
     private String descricao;
     
-    private Double valorMinimo;
+    private BigDecimal valorMinimo;
     
-    private Double valorMaximo;
+    private BigDecimal valorMaximo;
     
     private Integer minTanque;
     
     private Integer maxTanque;
+    
+    private Integer qtdeParcela;
 }

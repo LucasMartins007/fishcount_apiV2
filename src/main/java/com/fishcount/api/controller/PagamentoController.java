@@ -2,8 +2,8 @@ package com.fishcount.api.controller;
 
 import com.fishcount.api.controller.interfaces.IPagamentoController;
 import com.fishcount.api.service.PagamentoService;
-import com.fishcount.common.model.dto.PagamentoDTO;
-import com.fishcount.common.model.entity.Pagamento;
+import com.fishcount.common.model.dto.financeiro.PagamentoDTO;
+import com.fishcount.common.model.entity.financeiro.Pagamento;
 import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 
