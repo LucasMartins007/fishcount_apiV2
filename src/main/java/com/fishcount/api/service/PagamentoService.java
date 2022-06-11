@@ -1,8 +1,8 @@
 package com.fishcount.api.service;
 
-import com.fishcount.common.model.dto.PagamentoDTO;
+import com.fishcount.common.model.dto.financeiro.PagamentoDTO;
 import com.fishcount.api.service.impl.interfaces.IAbstractService;
-import com.fishcount.common.model.entity.Pagamento;
+import com.fishcount.common.model.entity.financeiro.Pagamento;
 import java.util.List;
 import org.springframework.stereotype.Service;
 

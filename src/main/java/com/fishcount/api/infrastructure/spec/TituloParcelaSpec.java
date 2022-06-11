@@ -1,8 +1,8 @@
 
 package com.fishcount.api.infrastructure.spec;
 
-import com.fishcount.common.model.entity.PagamentoParcela;
-import com.fishcount.common.model.entity.TituloParcela;
+import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
+import com.fishcount.common.model.entity.financeiro.TituloParcela;
 import org.springframework.data.jpa.domain.Specification;
 
 /**

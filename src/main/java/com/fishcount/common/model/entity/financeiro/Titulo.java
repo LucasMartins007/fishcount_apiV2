@@ -1,5 +1,6 @@
-package com.fishcount.common.model.entity;
+package com.fishcount.common.model.entity.financeiro;
 
+import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import com.fishcount.common.model.enums.EnumTipoTitulo;
 import com.fishcount.common.model.pattern.AbstractEntity;
@@ -18,13 +19,13 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "fish_titulo")
+@Table(name = "fin_titulo")
 public class Titulo extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_titulo", sequenceName = "gen_id_fish_titulo")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_titulo")
+    @SequenceGenerator(name = "id_fin_titulo", sequenceName = "gen_id_fin_titulo")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_titulo")
     private Integer id;
 
     @Column(name = "valor")
@@ -66,7 +67,7 @@ public class Titulo extends AbstractEntity<Integer> {
     private List<TituloParcela> titulosParcelas;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_titulo_to_fish_usuario"))
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_titulo_to_fish_usuario"))
     private Usuario usuario;
 
 }

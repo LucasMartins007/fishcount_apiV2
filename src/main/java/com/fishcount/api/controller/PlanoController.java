@@ -2,7 +2,7 @@ package com.fishcount.api.controller;
 
 import com.fishcount.api.controller.interfaces.IPlanoController;
 import com.fishcount.api.service.PlanoService;
-import com.fishcount.common.model.dto.PlanoDTO;
+import com.fishcount.common.model.dto.financeiro.PlanoDTO;
 import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 

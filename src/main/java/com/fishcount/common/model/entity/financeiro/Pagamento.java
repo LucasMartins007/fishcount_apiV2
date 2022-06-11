@@ -1,5 +1,6 @@
-package com.fishcount.common.model.entity;
+package com.fishcount.common.model.entity.financeiro;
 
+import com.fishcount.common.model.entity.Usuario;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -31,13 +32,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "fish_pagamento")
+@Table(name = "fin_pagamento")
 public class Pagamento extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_pagamento", sequenceName = "gen_id_fish_pagamento")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_pagamento")
+    @SequenceGenerator(name = "id_fin_pagamento", sequenceName = "gen_id_fin_pagamento")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_pagamento")
     private Integer id;
 
     @Column(name = "valor")
@@ -61,15 +62,15 @@ public class Pagamento extends AbstractEntity<Integer> {
     private EnumTipoPagamento tipoPagamento;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_to_fish_usuario"))
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_pagamento_to_fish_usuario"))
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_plano", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_to_fish_plano"))
+    @JoinColumn(name = "id_plano", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_pagamento_to_fin_plano"))
     private Plano plano;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_titulo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_pagamento_to_fish_titulo"))
+    @JoinColumn(name = "id_titulo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_pagamento_to_fin_titulo"))
     private Titulo titulo;
 
     @OneToMany(mappedBy = "pagamento", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)

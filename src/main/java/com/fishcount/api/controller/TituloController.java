@@ -2,8 +2,8 @@ package com.fishcount.api.controller;
 
 import com.fishcount.api.controller.interfaces.ITituloController;
 import com.fishcount.api.service.TituloService;
-import com.fishcount.common.model.dto.TituloDTO;
-import com.fishcount.common.model.entity.Titulo;
+import com.fishcount.common.model.dto.financeiro.TituloDTO;
+import com.fishcount.common.model.entity.financeiro.Titulo;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;

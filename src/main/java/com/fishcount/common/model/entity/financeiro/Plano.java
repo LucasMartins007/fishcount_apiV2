@@ -1,4 +1,4 @@
-package com.fishcount.common.model.entity;
+package com.fishcount.common.model.entity.financeiro;
 
 import com.fishcount.common.model.pattern.AbstractEntity;
 import java.math.BigDecimal;
@@ -15,13 +15,13 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "fish_plano")
+@Table(name = "fin_plano")
 public class Plano extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_plano", sequenceName = "gen_fish_id_plano")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_plano")
+    @SequenceGenerator(name = "id_fin_plano", sequenceName = "gen_fin_id_plano")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_plano")
     private Integer id;
 
     @Column(name = "descricao")

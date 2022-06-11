@@ -1,8 +1,8 @@
-package com.fishcount.common.model.dto;
+package com.fishcount.common.model.dto.financeiro;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
-import com.fishcount.common.model.entity.Pagamento;
+import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import java.math.BigDecimal;
 import java.util.Date;

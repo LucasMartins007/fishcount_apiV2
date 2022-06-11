@@ -19,6 +19,10 @@ public class ClientConsumer<T> extends BaseRequest<T> {
     }
 
     public ClientConsumer addParam(Object param) {
+        if (Utils.isEmpty(this.param)){
+            this.param = "/" + param;
+            return this;
+        }
         this.param = this.param + "/" + param;
         return this;
     }

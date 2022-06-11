@@ -1,5 +1,4 @@
-
-package com.fishcount.common.model.dto;
+package com.fishcount.common.model.dto.financeiro.pix;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import lombok.Getter;
@@ -11,8 +10,12 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class LocationPixDTO extends AbstractDTO<Integer> {
+public class QRCodePixDTO extends AbstractDTO<Integer> {
 
     private Integer id;
+
+    private String qrCode;
     
+    private LocationPixDTO locationPix;
+
 }

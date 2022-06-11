@@ -1,6 +1,6 @@
 package com.fishcount.api.repository.custom;
 
-import com.fishcount.common.model.entity.Pagamento;
+import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.entity.Usuario;
 import java.util.List;
 

@@ -1,5 +1,5 @@
 
-package com.fishcount.common.model.dto;
+package com.fishcount.common.model.dto.financeiro.pix;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import com.fishcount.common.model.enums.EnumStatusCobranca;

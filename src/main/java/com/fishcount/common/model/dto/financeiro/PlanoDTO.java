@@ -1,5 +1,5 @@
 
-package com.fishcount.common.model.dto;
+package com.fishcount.common.model.dto.financeiro;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import lombok.Getter;

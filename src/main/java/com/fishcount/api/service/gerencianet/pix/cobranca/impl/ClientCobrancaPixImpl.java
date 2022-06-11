@@ -5,7 +5,6 @@ import com.fishcount.api.service.gerencianet.pix.GenericPix;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.classes.gerencianet.PayloadCobranca;
-import com.fishcount.common.model.pattern.constants.HttpConstants;
 import com.fishcount.common.utils.Utils;
 
 import java.util.Date;
@@ -17,7 +16,6 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import com.fishcount.api.service.gerencianet.pix.cobranca.ClientCobrancaPix;
-import com.fishcount.api.service.gerencianet.pix.authentication.ClientTokenPix;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadCobrancaResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.client.RestClientException;
@@ -25,8 +23,6 @@ import org.springframework.web.client.RestClientException;
 @Component
 @RequiredArgsConstructor
 public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implements ClientCobrancaPix {
-
-    private final ClientTokenPix tokenPix;
 
     private final String PARAM_CPF = "cpf";
     private final String PARAM_CNPJ = "cnpj";
@@ -37,12 +33,11 @@ public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implement
     @Override
     public PayloadCobrancaResponse criarCobranca(String txId, PayloadCobranca payloadCobranca) {
         try {
-            final String bearerToken = HttpConstants.BEARER_AUTH + tokenPix.getBearerToken();
             final RequestEntity<?> request = ClientConsumer.post()
                     .setUrl(urlCobranca)
                     .addParam(txId)
                     .setBody(payloadCobranca)
-                    .addHeaders(HttpHeaders.AUTHORIZATION, bearerToken)
+                    .addHeaders(HttpHeaders.AUTHORIZATION, getBearerToken())
                     .addHeaders(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .getRequest();
 
@@ -60,14 +55,13 @@ public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implement
     }
 
     @Override
-    public PayloadCobranca revisarCobranca(PayloadCobranca payloadCobranca, String txId) {
+    public PayloadCobrancaResponse revisarCobranca(PayloadCobranca payloadCobranca, String txId) {
         try {
-            final String bearerToken = HttpConstants.BEARER_AUTH + tokenPix.getBearerToken();
             final RequestEntity<?> request = ClientConsumer.post()
                     .setUrl(urlCobranca)
                     .addParam(txId)
                     .setBody(payloadCobranca)
-                    .addHeaders(HttpHeaders.AUTHORIZATION, bearerToken)
+                    .addHeaders(HttpHeaders.AUTHORIZATION, getBearerToken())
                     .addHeaders(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .getRequest();
 
@@ -76,7 +70,7 @@ public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implement
 
             validateResponse(response);
             if (isSuccessful(response)) {
-                return Utils.jsonToObject(response.getBody(), PayloadCobranca.class);
+                return Utils.jsonToObject(response.getBody(), PayloadCobrancaResponse.class);
             }
             throw new FcRuntimeException(EnumFcInfraException.CHAMADA_HTTP_INCORRETA);
         } catch (RestClientException e) {
@@ -85,13 +79,12 @@ public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implement
     }
 
     @Override
-    public PayloadCobranca consultarCobranca(String txId) {
+    public PayloadCobrancaResponse consultarCobranca(String txId) {
         try {
-            final String bearerToken = HttpConstants.BEARER_AUTH + tokenPix.getBearerToken();
             final RequestEntity<?> request = ClientConsumer.get()
                     .setUrl(urlCobranca)
                     .addParam(txId)
-                    .addHeaders(HttpHeaders.AUTHORIZATION, bearerToken)
+                    .addHeaders(HttpHeaders.AUTHORIZATION, getBearerToken())
                     .addHeaders(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .getRequest();
 
@@ -100,7 +93,7 @@ public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implement
 
             validateResponse(response);
             if (isSuccessful(response)) {
-                return Utils.jsonToObject(response.getBody(), PayloadCobranca.class);
+                return Utils.jsonToObject(response.getBody(), PayloadCobrancaResponse.class);
             }
             throw new FcRuntimeException(EnumFcInfraException.CHAMADA_HTTP_INCORRETA);
         } catch (RestClientException e) {
@@ -111,11 +104,10 @@ public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implement
     @Override
     public PayloadCobrancaResponse criarCobrancaImediata(PayloadCobranca payloadCobranca) {
         try {
-            final String bearerToken = HttpConstants.BEARER_AUTH + tokenPix.getBearerToken();
             final RequestEntity<?> request = ClientConsumer.post()
                     .setUrl(urlCobranca)
                     .setBody(payloadCobranca)
-                    .addHeaders(HttpHeaders.AUTHORIZATION, bearerToken)
+                    .addHeaders(HttpHeaders.AUTHORIZATION, getBearerToken())
                     .addHeaders(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .getRequest();
 
@@ -133,16 +125,15 @@ public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implement
     }
 
     @Override
-    public List<PayloadCobranca> listarCobrancas(String cpf, String cnpj, Date dataInicio, Date dataFinal, String status) {
+    public List<PayloadCobrancaResponse> listarCobrancas(String cpf, String cnpj, Date dataInicio, Date dataFinal, String status) {
         try {
-            final String bearerToken = HttpConstants.BEARER_AUTH + tokenPix.getBearerToken();
             final RequestEntity<?> request = ClientConsumer.get()
                     .addQueryParam(PARAM_CPF, cpf)
                     .addQueryParam(PARAM_CNPJ, cnpj)
                     .addQueryParam(PARAM_DATA_INICIO, dataInicio)
                     .addQueryParam(PARAM_DATA_FIM, dataFinal)
                     .addQueryParam(PARAM_STATUS, status)
-                    .addHeaders(HttpHeaders.AUTHORIZATION, bearerToken)
+                    .addHeaders(HttpHeaders.AUTHORIZATION, getBearerToken())
                     .addHeaders(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                     .getRequest();
 
@@ -159,9 +150,5 @@ public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implement
         }
     }
 
-    private void validateResponse(final ResponseEntity<String> response) throws FcRuntimeException {
-        if (isClientError(response) || isServerError(response)) {
-            throw new FcRuntimeException(EnumFcInfraException.CHAMADA_HTTP_INCORRETA);
-        }
-    }
+   
 }

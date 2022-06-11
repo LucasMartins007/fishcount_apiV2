@@ -1,7 +1,7 @@
 package com.fishcount.api.repository;
 
 import com.fishcount.api.repository.custom.CustomPagamentoParcelaRepository;
-import com.fishcount.common.model.entity.PagamentoParcela;
+import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

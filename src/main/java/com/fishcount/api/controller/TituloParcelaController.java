@@ -2,7 +2,7 @@
 package com.fishcount.api.controller;
 
 import com.fishcount.api.controller.interfaces.ITituloParcelaController;
-import com.fishcount.common.model.dto.TituloParcelaDTO;
+import com.fishcount.common.model.dto.financeiro.TituloParcelaDTO;
 
 import java.util.List;
 

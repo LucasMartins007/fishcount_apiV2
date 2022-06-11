@@ -1,6 +1,6 @@
 package com.fishcount.api.controller.interfaces;
 
-import com.fishcount.common.model.dto.PlanoDTO;
+import com.fishcount.common.model.dto.financeiro.PlanoDTO;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;

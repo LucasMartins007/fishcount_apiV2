@@ -1,7 +1,7 @@
-package com.fishcount.common.model.dto;
+package com.fishcount.common.model.dto.financeiro;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
-import com.fishcount.common.model.entity.Plano;
+import com.fishcount.common.model.entity.financeiro.Plano;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.model.enums.EnumTipoPagamento;
 import java.math.BigDecimal;
