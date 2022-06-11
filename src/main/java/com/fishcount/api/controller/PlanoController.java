@@ -22,4 +22,9 @@ public class PlanoController extends AbstractController<PlanoService> implements
         return converterEntityParaDTO(getService().incluir(plano), PlanoDTO.class);
     }
 
+    @Override
+    public PlanoDTO encontrar(Integer idPlano) {
+        return converterEntityParaDTO(getService().findAndValidate(idPlano), PlanoDTO.class);
+    }
+
 }
