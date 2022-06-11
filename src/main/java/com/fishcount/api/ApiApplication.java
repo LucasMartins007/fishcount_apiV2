@@ -7,10 +7,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
-@EntityScan(basePackages = {"com.fishcount.common.model.entity",
-    "com.fishcount.common.model.entity.financeiro",
-    "com.fishcount.common.model.entity.financeiro.pix"
-})
+@EntityScan(basePackages = {"com.fishcount.common.model.entity"})
 public class ApiApplication {
 
     public static void main(String[] args) {

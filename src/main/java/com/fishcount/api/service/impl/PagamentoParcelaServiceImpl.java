@@ -1,12 +1,18 @@
 package com.fishcount.api.service.impl;
 
+import com.fishcount.api.repository.CobrancaPixRepository;
+import com.fishcount.api.repository.PagamentoParcelaRepository;
 import com.fishcount.api.service.CobrancaPixService;
+import com.fishcount.api.service.LocationPixService;
 import com.fishcount.api.service.PagamentoParcelaService;
 import com.fishcount.api.service.TituloParcelaService;
 import com.fishcount.api.validators.PagamentoParcelaValidator;
 import com.fishcount.common.model.dto.financeiro.PagamentoParcelaDTO;
 import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
+import com.fishcount.common.model.entity.financeiro.pix.CobrancaPix;
+import com.fishcount.common.model.entity.financeiro.pix.QRCodePix;
+import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.utils.BigDecimalUtil;
 import com.fishcount.common.utils.DateUtil;
 import java.math.BigDecimal;
@@ -67,6 +73,23 @@ public class PagamentoParcelaServiceImpl
         parcela.setSaldo(valorParcelas);
 
         pagamentoParcelaValidator.validateInsert(parcela);
+    }
+
+    @Override
+    public List<PagamentoParcela> listarParcelas(Integer idUsuario, Integer idPagamento, EnumStatusPagamento statusPagamento) {
+        return getRepository(PagamentoParcelaRepository.class).findAllByUsuarioAndPagamentoAndStatus(idUsuario, idPagamento, statusPagamento);
+    }
+
+    @Override
+    public PagamentoParcela consultarParcela(Integer idUsuario, Integer idPagamento, Integer idParcela) {
+        return findAndValidate(idParcela);
+    }
+
+    @Override
+    public QRCodePix gerarQRCodeByParcela(Integer idUsuario, Integer idParcela) {
+        final CobrancaPix cobrancaPix = getRepository(CobrancaPixRepository.class).findByPagamentoParcela(idParcela);
+
+        return getService(LocationPixService.class).gerarQrCode(idUsuario, cobrancaPix.getLocation().getIdLocation());
     }
 
 }

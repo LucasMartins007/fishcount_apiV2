@@ -51,7 +51,6 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
 
     private CobrancaPix gerarCobrancaPix(final PayloadCobrancaResponse payload, final PagamentoParcela parcela) {
         final CobrancaPix cobrancaPix = new CobrancaPix();
-        final TituloParcela tituloParcela = getRepository(TituloParcelaRepository.class).findByPagamentoParcela(parcela);
         final BigDecimal valorCobranca = BigDecimal.valueOf(Double.parseDouble(payload.getValor().getOriginal()));
 
         cobrancaPix.setChave(payload.getChave());
@@ -63,7 +62,7 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
         cobrancaPix.setValor(valorCobranca);
         cobrancaPix.setTxId(payload.getTxid());
         cobrancaPix.setStatusCobranca(payload.getStatus());
-        cobrancaPix.setTituloParcela(tituloParcela);
+        cobrancaPix.setPagamentoParcela(parcela);
 
         final LocationPix locationPix = getService(LocationPixService.class).incluir(payload.getLoc());
         cobrancaPix.setLocation(locationPix);

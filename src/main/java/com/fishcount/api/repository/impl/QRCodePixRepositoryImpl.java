@@ -12,7 +12,7 @@ public class QRCodePixRepositoryImpl extends GenericImpl<QRCodePix, Integer> imp
     @Override
     public QRCodePix findByLocationId(Integer locationId) {
         return getSpecRepository()
-                .findOne(QRCodePixSpec.byLocationID(locationId))
+                .findOne(QRCodePixSpec.byLocationId(locationId))
                 .orElse(null);
     }
 

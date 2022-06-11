@@ -1,6 +1,6 @@
 package com.fishcount.common.model.entity.financeiro.pix;
 
-import com.fishcount.common.model.entity.financeiro.TituloParcela;
+import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -73,8 +73,8 @@ public class CobrancaPix extends AbstractEntity<Integer> {
     private Date dataExpiracao;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_titulo_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_cobranca_pix_to_fin_titulo_parcela"))
-    private TituloParcela tituloParcela;
+    @JoinColumn(name = "id_pagamento_parcela", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_cobranca_pix_to_fin_pagamento_parcela"))
+    private PagamentoParcela pagamentoParcela;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_location", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_cobranca_pix_to_fin_location"))

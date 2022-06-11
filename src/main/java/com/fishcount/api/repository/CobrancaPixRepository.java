@@ -14,4 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CobrancaPixRepository extends JpaRepository<CobrancaPix, Integer>, JpaSpecificationExecutor<CobrancaPix>, CustomCobrancaPixRepository {
 
+    @Override
+    CobrancaPix findByPagamentoParcela(Integer idParcela);
 }

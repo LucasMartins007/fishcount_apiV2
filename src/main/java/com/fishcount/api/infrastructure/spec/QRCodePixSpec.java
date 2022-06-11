@@ -13,8 +13,10 @@ public class QRCodePixSpec {
     
     private final static String FIELD_ID_LOCATION = "idLocation";
 
-    public static Specification<QRCodePix> byLocationID(Integer locationId) {
+    public static Specification<QRCodePix> byLocationId(Integer locationId) {
         return (root, query, criteriaBuilder)
                 -> criteriaBuilder.equal(root.get(FIELD_LOCATION).get(FIELD_ID_LOCATION), locationId);
     }
+    
+   
 }
