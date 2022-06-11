@@ -69,7 +69,7 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
         pagamento.setStatusPagamento(EnumStatusPagamento.ANALISE);
         pagamento.setSaldo(BigDecimal.ZERO);
         pagamento.setValor(plano.getValorMinimo());
-        pagamento.setQtdeParcelas(plano.getNumParcelas() == null ? pagamento.getQtdeParcelas() : plano.getNumParcelas());
+        pagamento.setQtdeParcelas(plano.getQtdeParcela()== null ? pagamento.getQtdeParcelas() : plano.getQtdeParcela());
 
         pagamentoValidator.validateInsert(pagamento);
 

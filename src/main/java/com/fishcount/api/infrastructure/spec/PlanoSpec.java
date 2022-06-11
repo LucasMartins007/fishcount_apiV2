@@ -1,5 +1,7 @@
-
 package com.fishcount.api.infrastructure.spec;
+
+import com.fishcount.common.model.entity.financeiro.Plano;
+import org.springframework.data.jpa.domain.Specification;
 
 /**
  *
@@ -7,4 +9,9 @@ package com.fishcount.api.infrastructure.spec;
  */
 public class PlanoSpec {
 
+    private static final String FIELD_ATIVO = "ativo";
+
+    public static Specification<Plano> byAtivoTrue() {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.isTrue(root.get(FIELD_ATIVO));
+    }
 }

@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = IPlanoController.TAG, description = "Plano")
 public interface IPlanoController {
 
-    String PATH = "/plano";
+    String PATH = "${api.prefix.v1}/plano";
 
     String TAG = "Planos";
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     List<PlanoDTO> listarPlanos();
+    
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    PlanoDTO incluir(@RequestBody PlanoDTO planoDTO);
 }

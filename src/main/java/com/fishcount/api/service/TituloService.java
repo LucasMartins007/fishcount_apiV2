@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface TituloService extends IAbstractService<Titulo, Integer, TituloDTO> {
-
-    Titulo incluir(Integer idUsuario, Titulo titulo);
     
     Titulo gerarTituloByPlano(Usuario usuario, Plano plano);
 

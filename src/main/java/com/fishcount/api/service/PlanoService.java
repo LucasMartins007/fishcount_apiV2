@@ -14,4 +14,6 @@ import org.springframework.stereotype.Service;
 public interface PlanoService extends IAbstractService<Plano, Integer, PlanoDTO> {
 
     List<Plano> listarPlanos();
+
+    Plano incluir(Plano plano);
 }
