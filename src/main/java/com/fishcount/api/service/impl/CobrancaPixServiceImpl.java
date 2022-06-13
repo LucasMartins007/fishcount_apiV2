@@ -93,7 +93,7 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
         final Long segundosMes = Duration
                 .between(DateUtil.getDate().toInstant(), DateUtil.add(dataVencimento, Calendar.MONTH, 1)
                         .toInstant())
-                .toSeconds();
+                .getSeconds();
 
         return Integer.parseInt(Long.toString(segundosMes));
     }
