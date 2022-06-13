@@ -4,7 +4,7 @@ import com.fishcount.common.model.pattern.client.ClientConsumer;
 import com.fishcount.api.service.gerencianet.pix.GenericPix;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
-import com.fishcount.common.model.classes.gerencianet.PayloadCobranca;
+import com.fishcount.common.model.classes.gerencianet.request.PayloadCobranca;
 import com.fishcount.common.utils.Utils;
 
 import java.util.Date;

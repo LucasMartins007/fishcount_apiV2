@@ -4,7 +4,7 @@ import com.fishcount.api.service.gerencianet.pix.GenericPix;
 import com.fishcount.api.service.gerencianet.pix.location.ClientLocationPix;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
-import com.fishcount.common.model.classes.gerencianet.PayloadQRCode;
+import com.fishcount.common.model.classes.gerencianet.request.PayloadQRCode;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadCobrancaResponse;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadLocationResponse;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadQRCodeResponse;

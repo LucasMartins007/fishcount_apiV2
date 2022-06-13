@@ -1,6 +1,6 @@
 package com.fishcount.api.service.gerencianet.pix.location;
 
-import com.fishcount.common.model.classes.gerencianet.PayloadQRCode;
+import com.fishcount.common.model.classes.gerencianet.request.PayloadQRCode;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadLocationResponse;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadQRCodeResponse;
 
