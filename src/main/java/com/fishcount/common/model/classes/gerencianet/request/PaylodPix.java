@@ -1,5 +1,5 @@
 
-package com.fishcount.common.model.classes.gerencianet;
+package com.fishcount.common.model.classes.gerencianet.request;
 
 import java.util.Date;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.fishcount.api.service.gerencianet.pix.cobranca;
 
-import com.fishcount.common.model.classes.gerencianet.PayloadCobranca;
+import com.fishcount.common.model.classes.gerencianet.request.PayloadCobranca;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadCobrancaResponse;
 
 import java.util.Date;

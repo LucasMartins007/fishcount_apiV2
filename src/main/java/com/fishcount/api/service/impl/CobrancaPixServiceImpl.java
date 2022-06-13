@@ -1,19 +1,17 @@
 package com.fishcount.api.service.impl;
 
-import com.fishcount.api.repository.TituloParcelaRepository;
 import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.LocationPixService;
 import com.fishcount.api.service.gerencianet.pix.cobranca.ClientCobrancaPix;
-import com.fishcount.common.model.classes.gerencianet.PayloadCalendario;
-import com.fishcount.common.model.classes.gerencianet.PayloadCobranca;
-import com.fishcount.common.model.classes.gerencianet.PayloadDevedor;
-import com.fishcount.common.model.classes.gerencianet.PayloadValor;
+import com.fishcount.common.model.classes.gerencianet.request.PayloadCalendario;
+import com.fishcount.common.model.classes.gerencianet.request.PayloadCobranca;
+import com.fishcount.common.model.classes.gerencianet.request.PayloadDevedor;
+import com.fishcount.common.model.classes.gerencianet.request.PayloadValor;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadCobrancaResponse;
 import com.fishcount.common.model.dto.financeiro.pix.CobrancaPixDTO;
 import com.fishcount.common.model.entity.financeiro.pix.CobrancaPix;
 import com.fishcount.common.model.entity.financeiro.pix.LocationPix;
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
-import com.fishcount.common.model.entity.financeiro.TituloParcela;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.optional.OptionalUtil;

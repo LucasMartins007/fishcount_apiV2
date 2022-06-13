@@ -1,4 +1,4 @@
-package com.fishcount.common.model.classes.gerencianet;
+package com.fishcount.common.model.classes.gerencianet.request;
 
 import lombok.Getter;
 import lombok.Setter;
