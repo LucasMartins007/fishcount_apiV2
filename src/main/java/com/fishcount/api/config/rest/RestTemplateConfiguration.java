@@ -11,6 +11,9 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 import com.fishcount.common.exception.FcRuntimeException;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URL;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -19,6 +22,7 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
@@ -50,9 +54,12 @@ public class RestTemplateConfiguration {
     @Bean
     public RestTemplate getRestConfig() {
         try {
+            ClassPathResource resource = new ClassPathResource(keyStoreFile);
+            final URL url = resolverUrl(resource);
+            final InputStream inputStream = resolverInputStream(url);
+
             final KeyStore clientStore = KeyStore.getInstance(keyStoreType);
-            final File file = ResourceUtils.getFile(keyStoreFile);
-            clientStore.load(Files.newInputStream(file.toPath()), keyStorePassword.toCharArray());
+            clientStore.load(inputStream, keyStorePassword.toCharArray());
 
             final SSLContextBuilder sslContextBuilder = new SSLContextBuilder();
             sslContextBuilder.setProtocol(protocol);
@@ -71,9 +78,25 @@ public class RestTemplateConfiguration {
 
             return new RestTemplate(requestFactory);
 
-        } catch (KeyStoreException | UnrecoverableKeyException | CertificateException | IOException |
-                 NoSuchAlgorithmException | KeyManagementException e) {
+        } catch (KeyStoreException | UnrecoverableKeyException | CertificateException | IOException
+                | NoSuchAlgorithmException | KeyManagementException e) {
             throw new FcRuntimeException(e);
+        }
+    }
+
+    private InputStream resolverInputStream(URL url) throws IOException {
+        if (url != null) {
+            return url.openStream();
+        }
+        File file = ResourceUtils.getFile(keyStoreFile);
+        return new FileInputStream(file);
+    }
+
+    private URL resolverUrl(ClassPathResource resource) {
+        try {
+            return resource.getURL();
+        } catch (IOException e) {
+            return null;
         }
     }
 }
