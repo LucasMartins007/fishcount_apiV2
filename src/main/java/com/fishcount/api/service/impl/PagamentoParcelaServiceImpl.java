@@ -16,6 +16,7 @@ import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.utils.BigDecimalUtil;
 import com.fishcount.common.utils.DateUtil;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -46,7 +47,7 @@ public class PagamentoParcelaServiceImpl
 
     private List<PagamentoParcela> gerarParcelas(Pagamento pagamento) {
         final Integer qtdeParcelas = pagamento.getQtdeParcelas();
-        final BigDecimal valorParcelas = BigDecimalUtil.truncBig(pagamento.getValor().divide(BigDecimal.valueOf(qtdeParcelas)), 2);
+        final BigDecimal valorParcelas = BigDecimalUtil.truncBig(pagamento.getValor().divide(BigDecimal.valueOf(qtdeParcelas), RoundingMode.HALF_EVEN), 2);
 
         final List<PagamentoParcela> parcelas = new ArrayList<>();
         for (int i = 0; i < qtdeParcelas; i++) {

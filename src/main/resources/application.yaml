@@ -44,7 +44,6 @@ rest-template:
    read-timeout: 15000
 
 ## Spring config
-java.runtime.version: 11
 spring:    
   profiles:
     active: development
@@ -96,10 +95,6 @@ spring:
 
 server:
   port: 8080
-  ssl:
-    key-store: ${rest-template.key-store}
-    key-store-password: ${rest-template.key-store-password}
-    key-store-type: ${rest-template.key-store-type}
   servlet:
     context-path: /
   http2:

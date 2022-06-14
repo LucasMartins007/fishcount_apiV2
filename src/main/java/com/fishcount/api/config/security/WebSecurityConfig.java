@@ -69,7 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .denyAll()
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPoint()).and()
+                .authenticationEntryPoint(authenticationEntryPoint())
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
