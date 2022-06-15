@@ -1,20 +1,15 @@
 package com.fishcount.api.controller.interfaces;
 
 import com.fishcount.common.model.dto.financeiro.PagamentoDTO;
+import com.fishcount.common.model.dto.financeiro.PagamentoParcelaDTO;
+import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.model.pattern.OperationsParam;
 import com.fishcount.common.model.pattern.OperationsPath;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -41,4 +36,11 @@ public interface IPagamentoController {
     @GetMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
     PagamentoDTO consultarPagamento(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsParam.ID) Integer idPagamento);
+
+    @GetMapping("/parcelas")
+    @ResponseStatus(HttpStatus.OK)
+    List<PagamentoParcelaDTO> listarParcelas(
+            @PathVariable(OperationsParam.PARENT_ID) Integer idUsuario,
+            @RequestParam(value = "status", required = true) EnumStatusPagamento statusPagamento
+    );
 }

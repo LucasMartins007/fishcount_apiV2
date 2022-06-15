@@ -17,4 +17,7 @@ public interface PagamentoParcelaRepository extends JpaRepository<PagamentoParce
 
     @Override
     List<PagamentoParcela> findAllByUsuarioAndPagamentoAndStatus(Integer idUsuario, Integer idPagamento, EnumStatusPagamento statusPagamento);
+
+    @Override
+    List<PagamentoParcela> findAllByUsuarioAndStatus(Integer idUsuario, EnumStatusPagamento statusPagamento);
 }

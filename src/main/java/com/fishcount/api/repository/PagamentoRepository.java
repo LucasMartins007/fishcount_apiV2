@@ -16,9 +16,9 @@ import java.util.List;
 public interface PagamentoRepository extends JpaRepository<Pagamento, Integer>, JpaSpecificationExecutor<Pagamento>, CustomPagamentoRepository {
 
     @Override
-    public List<Pagamento> findAllPagamentoByUsuario(Usuario usuario);
+    List<Pagamento> findAllPagamentoByUsuario(Usuario usuario);
 
     @Override
-    public Pagamento findPagamentoByUsuarioAndId(Usuario usuario, Integer id);
+    Pagamento findPagamentoByUsuarioAndId(Usuario usuario, Integer id);
     
 }

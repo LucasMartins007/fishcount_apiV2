@@ -55,7 +55,7 @@ public class PagamentoParcela extends AbstractEntity<Integer> {
     private EnumStatusPagamento statusPagamento;
 
     @Column(name = "tipo_pagamento")
-    @Convert(converter = EnumStatusPagamento.EnumConverter.class)
+    @Convert(converter = EnumTipoPagamento.EnumConverter.class)
     private EnumTipoPagamento tipoPagamento;
 
     @ManyToOne(fetch = FetchType.LAZY)
