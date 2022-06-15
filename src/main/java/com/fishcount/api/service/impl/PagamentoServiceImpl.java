@@ -48,8 +48,6 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
 
     @Override
     public List<PagamentoParcela> listarParcelas(Integer idUsuario, EnumStatusPagamento statusPagamento){
-        final Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
-
         return getRepository(PagamentoParcelaRepository.class).findAllByUsuarioAndStatus(idUsuario, statusPagamento);
 
     }
