@@ -22,7 +22,7 @@ public class Usuario extends AbstractEntity<Integer> {
     @Column(name = "id")
     @SequenceGenerator(name = "id_fish_usuario", sequenceName = "gen_id_fish_usuario")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_usuario")
-    private Integer Id;
+    private Integer id;
 
     @Column(name = "nome")
     private String nome;

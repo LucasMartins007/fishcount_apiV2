@@ -37,12 +37,14 @@ public class PagamentoParcelaServiceImpl
 
         getRepository().saveAll(parcelas);
 
-        parcelas.forEach(parcela -> {
-            getService(TituloParcelaService.class).gerarTitulosParcelasByPagamentoParcela(parcela);
-            getService(CobrancaPixService.class).gerarRegistoCobrancaPix(parcela);
-        });
+        parcelas.forEach(this::onAfterInsert);
 
         return parcelas;
+    }
+
+    private void onAfterInsert(PagamentoParcela parcela) {
+        getService(TituloParcelaService.class).gerarTitulosParcelasByPagamentoParcela(parcela);
+        getService(CobrancaPixService.class).gerarRegistoCobrancaPix(parcela);
     }
 
     private List<PagamentoParcela> gerarParcelas(Pagamento pagamento) {

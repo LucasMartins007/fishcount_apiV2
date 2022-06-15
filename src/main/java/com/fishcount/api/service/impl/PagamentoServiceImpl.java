@@ -1,5 +1,6 @@
 package com.fishcount.api.service.impl;
 
+import com.fishcount.api.repository.PagamentoParcelaRepository;
 import com.fishcount.api.repository.PagamentoRepository;
 import com.fishcount.api.service.PagamentoParcelaService;
 import com.fishcount.api.service.PagamentoService;
@@ -9,6 +10,7 @@ import com.fishcount.api.service.UsuarioService;
 import com.fishcount.api.validators.PagamentoValidator;
 import com.fishcount.common.model.dto.financeiro.PagamentoDTO;
 import com.fishcount.common.model.entity.financeiro.Pagamento;
+import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.entity.financeiro.Plano;
 import com.fishcount.common.model.entity.financeiro.Titulo;
 import com.fishcount.common.model.entity.Usuario;
@@ -42,6 +44,14 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
         final Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
 
         return getRepository(PagamentoRepository.class).findAllPagamentoByUsuario(usuario);
+    }
+
+    @Override
+    public List<PagamentoParcela> listarParcelas(Integer idUsuario, EnumStatusPagamento statusPagamento){
+        final Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
+
+        return getRepository(PagamentoParcelaRepository.class).findAllByUsuarioAndStatus(idUsuario, statusPagamento);
+
     }
 
     @Override
