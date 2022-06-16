@@ -16,6 +16,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaS
     
     @Override
     Usuario findByEmailPrincipal(String email);
+
+    Usuario findByCpf(String cpf);
     
     
 }

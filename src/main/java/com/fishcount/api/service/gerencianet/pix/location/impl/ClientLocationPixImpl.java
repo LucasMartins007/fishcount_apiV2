@@ -43,7 +43,7 @@ public class ClientLocationPixImpl extends GenericPix<PayloadLocationResponse> i
     @Override
     public PayloadQRCodeResponse gerarQRCode(Integer locationId) {
         try {
-            final RequestEntity<?> request = ClientConsumer.get()
+            final RequestEntity<?> request = get()
                     .setUrl(urlLocation)
                     .addParam(locationId)
                     .addParam("qrcode")
