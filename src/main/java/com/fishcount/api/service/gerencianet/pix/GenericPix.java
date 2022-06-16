@@ -4,13 +4,14 @@ import com.fishcount.api.config.rest.RestTemplateConfiguration;
 import com.fishcount.api.service.gerencianet.pix.authentication.ClientTokenPix;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
+import com.fishcount.common.model.pattern.client.ClientConsumer;
 import com.fishcount.common.model.pattern.constants.HttpConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public abstract class GenericPix<T> {
+public class GenericPix<T> extends ClientConsumer<T> {
 
     @Value("${pix-config.client_id}")
     protected String clientId;
@@ -23,17 +24,17 @@ public abstract class GenericPix<T> {
 
     @Value("${pix-config.url-cobranca}")
     protected String urlCobranca;
-    
+
     @Value("${pix-config.url-location}")
     protected String urlLocation;
 
     @Autowired
     protected RestTemplateConfiguration restTemplate;
-    
+
     @Autowired
     protected ClientTokenPix tokenPix;
-    
-    protected String getBearerToken(){
+
+    protected String getBearerToken() {
         return HttpConstants.BEARER_AUTH + tokenPix.getBearerToken();
     }
 
@@ -54,8 +55,8 @@ public abstract class GenericPix<T> {
     protected T getBody(ResponseEntity<T> response) {
         return response.getBody();
     }
-    
-     protected void validateResponse(final ResponseEntity<String> response) throws FcRuntimeException {
+
+    protected void validateResponse(final ResponseEntity<String> response) throws FcRuntimeException {
         if (isClientError(response) || isServerError(response)) {
             throw new FcRuntimeException(EnumFcInfraException.CHAMADA_HTTP_INCORRETA);
         }
