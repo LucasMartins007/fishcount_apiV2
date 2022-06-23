@@ -50,7 +50,7 @@ public class ListUtil {
         return retorno;
     }
 
-    public static <T> List<T> toList(T values) {
+    public static <T> List<T> toList(T... values) {
         return Arrays.asList(values);
     }
 

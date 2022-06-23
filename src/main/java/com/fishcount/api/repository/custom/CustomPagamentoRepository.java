@@ -2,6 +2,8 @@ package com.fishcount.api.repository.custom;
 
 import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.enums.EnumStatusPagamento;
+
 import java.util.List;
 
 /**
@@ -13,5 +15,6 @@ public interface CustomPagamentoRepository {
     List<Pagamento> findAllPagamentoByUsuario(Usuario usuario);
     
     Pagamento findPagamentoByUsuarioAndId(Usuario usuario, Integer id);
-    
+
+    Pagamento findPagamentoByUsuarioAndStatus(Usuario usuario, List<EnumStatusPagamento> status);
 }
