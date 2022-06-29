@@ -3,22 +3,24 @@ package com.fishcount.api.infrastructure.spec;
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.utils.ListUtil;
+import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.criteria.Predicate;
-
-import org.springframework.data.jpa.domain.Specification;
 
 /**
  * @author Lucas Martins
  */
 public class PagamentoParcelaSpec {
 
-    private final static String FIELD_USUARIO = "usuario";
-    private final static String FIELD_PAGAMENTO = "pagamento";
-    private final static String FIELD_STATUS_PAGAMENTO = "statusPagamento";
-    private final static String FIELD_ID = "id";
+    private PagamentoParcelaSpec(){
+    }
+
+    private static final String FIELD_USUARIO = "usuario";
+    private static final String FIELD_PAGAMENTO = "pagamento";
+    private static final String FIELD_STATUS_PAGAMENTO = "statusPagamento";
+    private static final String FIELD_ID = "id";
 
     public static Specification<PagamentoParcela> byUsuario(final Integer idUsuario) {
         return (root, query, criteriaBuilder)

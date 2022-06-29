@@ -1,5 +1,7 @@
 package com.fishcount.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.Normalizer;
@@ -8,7 +10,6 @@ import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -72,7 +73,7 @@ public class StringUtil extends StringUtils {
     public static String firstWord(String texto) {
         if (StringUtil.isNotNullOrEmpty(texto)) {
             final StringTokenizer tokenizer = new StringTokenizer(texto);
-            final String text = tokenizer.nextToken().toString();
+            final String text = tokenizer.nextToken();
             if (text.length() < 4 && tokenizer.hasMoreTokens()) {
                 return text + " " + tokenizer.nextToken();
             }
@@ -91,24 +92,8 @@ public class StringUtil extends StringUtils {
         value = Normalizer.normalize(value, Normalizer.Form.NFD);
         value = value.replaceAll("[^\\p{ASCII}]", "");
 
-        if (value.endsWith("-")) {
-            value.subSequence(0, value.length() - 1);
-        }
         value = value.replaceAll("[^\\p{ASCII}]", "");
         return value;
-    }
-
-    public static String randomIdentifier(final Integer qtd, final Boolean caseSensitive) {
-        final String lexicon = caseSensitive == null || !caseSensitive ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890" : "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890abcdefghijklmnopqrstuvxyz";
-        final java.util.Random rand = new java.util.Random();
-        StringBuilder builder = new StringBuilder();
-        while (builder.toString().length() == 0) {
-            int length = qtd != null ? qtd : rand.nextInt(5) + 5;
-            for (int i = 0; i < length; i++) {
-                builder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
-            }
-        }
-        return builder.toString();
     }
 
     public static String capitalize(String value) {

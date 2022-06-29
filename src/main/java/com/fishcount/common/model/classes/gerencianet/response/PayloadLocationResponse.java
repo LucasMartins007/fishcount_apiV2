@@ -1,9 +1,10 @@
 
 package com.fishcount.common.model.classes.gerencianet.response;
 
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
 
 /**
  *

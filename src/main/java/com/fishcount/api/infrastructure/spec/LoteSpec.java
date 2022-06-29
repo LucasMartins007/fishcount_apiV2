@@ -2,9 +2,9 @@ package com.fishcount.api.infrastructure.spec;
 
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.model.entity.Usuario;
-import javax.persistence.criteria.Order;
-
 import org.springframework.data.jpa.domain.Specification;
+
+import javax.persistence.criteria.Order;
 
 /**
  *

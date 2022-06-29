@@ -4,11 +4,12 @@ import com.fishcount.common.model.entity.Email;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoEmail;
 import com.fishcount.common.utils.ListUtil;
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.data.jpa.domain.Specification;
+
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
-import org.springframework.data.jpa.domain.Specification;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *

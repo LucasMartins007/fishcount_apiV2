@@ -1,6 +1,5 @@
 package com.fishcount.api.service.gerencianet.pix.location;
 
-import com.fishcount.common.model.classes.gerencianet.request.PayloadQRCode;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadLocationResponse;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadQRCodeResponse;
 
@@ -17,5 +16,5 @@ public interface ClientLocationPix {
 
     PayloadQRCodeResponse gerarQRCode(Integer locationId);
 
-    void desvincularTxIdDaLocation(Integer LocationId);
+    void desvincularTxIdDaLocation(Integer locationId);
 }

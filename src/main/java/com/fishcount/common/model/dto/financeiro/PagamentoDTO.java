@@ -4,9 +4,10 @@ import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import com.fishcount.common.model.entity.financeiro.Plano;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.model.enums.EnumTipoPagamento;
-import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 /**
  *
@@ -14,7 +15,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class PagamentoDTO extends AbstractDTO<Integer> {
+public class PagamentoDTO implements AbstractDTO<Integer> {
 
     private Integer id;
 

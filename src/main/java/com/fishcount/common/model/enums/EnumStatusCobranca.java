@@ -1,11 +1,10 @@
 package com.fishcount.common.model.enums;
 
-import javax.persistence.Converter;
-
 import com.fishcount.common.model.dto.pattern.IEnum;
 import com.fishcount.common.model.dto.pattern.converter.AbstractEnumConverter;
-
 import lombok.Getter;
+
+import javax.persistence.Converter;
 
 @Getter
 public enum EnumStatusCobranca implements IEnum<Integer> {
@@ -19,7 +18,7 @@ public enum EnumStatusCobranca implements IEnum<Integer> {
 
     private final String value;
 
-    private EnumStatusCobranca(Integer key, String value) {
+    EnumStatusCobranca(Integer key, String value) {
         this.key = key;
         this.value = value;
     }

@@ -6,11 +6,11 @@ import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.pattern.AbstractEntity;
 import com.fishcount.common.utils.LoggerUtil;
 import com.fishcount.common.utils.StringUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -19,7 +19,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Map;
-import org.springframework.data.repository.Repository;
 
 /**
  *
@@ -27,8 +26,8 @@ import org.springframework.data.repository.Repository;
  */
 @Transactional(readOnly = true)
 @org.springframework.stereotype.Repository
-public class GenericImpl<T extends AbstractEntity<?>, ID>
-        implements IOperations<T>, IGeneric<T, ID>, Repository<T, ID> {
+public class GenericImpl<T extends AbstractEntity<?>, I>
+        implements IOperations<T>, IGeneric<T, I>, Repository<T, I> {
 
     @Lazy
     @Autowired
@@ -46,7 +45,7 @@ public class GenericImpl<T extends AbstractEntity<?>, ID>
         resolverClass(entityClass);
     }
 
-    public <R extends Repository<T, ID>> R getRepository(Class<R> classRespository) {
+    public <R extends Repository<T, I>> R getRepository(Class<R> classRespository) {
         return getContext().getBean(classRespository);
     }
 
@@ -55,7 +54,7 @@ public class GenericImpl<T extends AbstractEntity<?>, ID>
     }
 
     @Override
-    public JpaRepository<T, ID> getRepository() {
+    public JpaRepository<T, I> getRepository() {
         return resolverContext().getRepositoryFromClass(getEntityClass());
     }
 

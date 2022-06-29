@@ -4,21 +4,20 @@ import com.fishcount.api.config.security.JwtTokenUtil;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author lucas
@@ -37,6 +36,8 @@ public class AppAuthorizationHandler implements HandlerInterceptor {
 
         if (shouldNotFilter(request)) return true;
 
+        if (Utils.isEmpty(requestTokenHeader)) return false;
+
         validarRequestTokenHeader(requestTokenHeader);
 
         String jwtToken = requestTokenHeader.replace("Bearer ", "");
@@ -45,7 +46,7 @@ public class AppAuthorizationHandler implements HandlerInterceptor {
         if (Utils.isNotEmpty(username) && Utils.isEmpty(SecurityContextHolder.getContext().getAuthentication())) {
             UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
 
-            if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+            if (Boolean.TRUE.equals(jwtTokenUtil.validateToken(jwtToken, userDetails))) {
                 autenticarUsuario(userDetails, request);
             }
         }
@@ -84,7 +85,7 @@ public class AppAuthorizationHandler implements HandlerInterceptor {
     }
 
     private void validarRequestTokenHeader(String requestTokenHeader) {
-        if (Utils.isEmpty(requestTokenHeader) || !requestTokenHeader.startsWith("Bearer ")) {
+        if (!requestTokenHeader.startsWith("Bearer ")) {
             throw new FcRuntimeException(EnumFcInfraException.TOKEN_NAO_INFORMADO);
         }
     }

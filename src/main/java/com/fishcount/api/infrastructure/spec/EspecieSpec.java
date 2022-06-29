@@ -1,10 +1,9 @@
 package com.fishcount.api.infrastructure.spec;
 
-import javax.persistence.criteria.Order;
-
 import com.fishcount.common.model.entity.Especie;
-
 import org.springframework.data.jpa.domain.Specification;
+
+import javax.persistence.criteria.Order;
 
 /**
  *

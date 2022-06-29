@@ -2,15 +2,16 @@ package com.fishcount.api.service.impl;
 
 import com.fishcount.api.repository.EmailRepository;
 import com.fishcount.api.service.EmailService;
-import com.fishcount.api.service.UsuarioService;
+import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.validators.EmailValidator;
 import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.entity.Email;
-import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.utils.DateUtil;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *
@@ -46,10 +47,10 @@ public class EmailServiceImpl extends AbstractServiceImpl<Email, Integer, EmailD
     }
     
     @Override
-    public List<Email> listar(Integer idUsuario) {
-        Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
+    public List<Email> listar(Integer idPessoa) {
+        Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
         
-        return getRepository(EmailRepository.class).findAllByUsuario(usuario);
+        return getRepository(EmailRepository.class).findAllByPessoa(pessoa);
     }
     
     @Override
@@ -63,14 +64,14 @@ public class EmailServiceImpl extends AbstractServiceImpl<Email, Integer, EmailD
         getRepository().save(email);
     }
 
-    private void onPrepareInsert(Integer idUsuario, Email email) {
-        Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
-        
+    private void onPrepareInsert(Integer idPessoa, Email email) {
+        final Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
+
         email.setAtivo(true);
         email.setDataAtualizacao(DateUtil.getDate());
         email.setDataInclusao(DateUtil.getDate());
         email.setDescricao(email.getDescricao().toLowerCase());
-        email.setUsuario(usuario);
+        email.setPessoa(pessoa);
     }
 
     private void onPrepareUpdate(Integer id, Email email) {
@@ -78,7 +79,7 @@ public class EmailServiceImpl extends AbstractServiceImpl<Email, Integer, EmailD
         
         email.setId(managedEmail.getId());
         email.setDataInclusao(managedEmail.getDataInclusao());
-        email.setUsuario(managedEmail.getUsuario());
+        email.setPessoa(managedEmail.getPessoa());
         email.setDataAtualizacao(DateUtil.getDate());
         email.setAtivo(true);
     }

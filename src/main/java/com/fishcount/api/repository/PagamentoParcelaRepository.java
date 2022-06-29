@@ -3,10 +3,11 @@ package com.fishcount.api.repository;
 import com.fishcount.api.repository.custom.CustomPagamentoParcelaRepository;
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  *

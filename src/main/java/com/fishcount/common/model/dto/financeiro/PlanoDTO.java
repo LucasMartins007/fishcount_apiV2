@@ -2,9 +2,10 @@
 package com.fishcount.common.model.dto.financeiro;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
-import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 /**
  *
@@ -12,7 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class PlanoDTO extends AbstractDTO<Integer> {
+public class PlanoDTO implements AbstractDTO<Integer> {
 
     private Integer id;
     

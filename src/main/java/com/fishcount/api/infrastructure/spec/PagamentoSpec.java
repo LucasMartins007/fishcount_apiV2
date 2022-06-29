@@ -1,7 +1,7 @@
 package com.fishcount.api.infrastructure.spec;
 
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.financeiro.Pagamento;
-import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -13,13 +13,16 @@ import java.util.List;
  */
 public class PagamentoSpec {
 
-    private final static String FIELD_USUARIO = "usuario";
-    private final static String FIELD_STATUS = "statusPagamento";
-    private final static String FIELD_ID = "id";
+    private PagamentoSpec() {
+    }
 
-    public static Specification<Pagamento> byUsuario(Usuario usuario) {
+    private static final String FIELD_PESSOA = "pessoa";
+    private static final String FIELD_STATUS = "statusPagamento";
+    private static final String FIELD_ID = "id";
+
+    public static Specification<Pagamento> byPessoa(Pessoa pessoa) {
         return (root, query, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get(FIELD_USUARIO), usuario);
+                -> criteriaBuilder.equal(root.get(FIELD_PESSOA), pessoa);
     }
 
     public static Specification<Pagamento> byId(Integer id) {

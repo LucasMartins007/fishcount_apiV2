@@ -1,14 +1,13 @@
 package com.fishcount.api.validators.pattern;
 
-import java.lang.reflect.ParameterizedType;
-
 import com.fishcount.api.infrastructure.context.IContext;
 import com.fishcount.api.service.impl.interfaces.IAbstractService;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.pattern.AbstractEntity;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.lang.reflect.ParameterizedType;
 
 /**
  *

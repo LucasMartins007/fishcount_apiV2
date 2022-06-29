@@ -29,6 +29,7 @@ public enum EnumFcDomainException implements IFcException {
     HORA_INICIAL_MAIOR_DATA_FINAL("A hora inicial {0} não pode ser maior que a hora final {1}."),
     
     EMAIL_INVALIDO("O endereço de e-mail {0} é inválido."),
+    EMAIL_PRINCIPAL_NAO_INFORMADO("Email principal Não informado"),
     EMAIL_DUPLICADO("O endereço de e-mail {0} já esta cadastrado no sistema, tente fazer o login."),
     EMAIL_PRINCIPAL_NAO_PODE_SER_INATIVADO("O email {0} é o seu email de login, você não pode inativa-lo."),
     EMAIL_PRINCIPAL_DUPLICADO("Você não pode ter mais de um email principal, esse é o seu email de login. "),
@@ -43,7 +44,7 @@ public enum EnumFcDomainException implements IFcException {
 
     USUARIO_POSSUI_TITULO_ABERTO("O usuario {0} possui pendências no sistema, não é possível criar novo contrato"),
 
-    USUARIO_POSSUI_PAGAMENTOS_EM_ABERTO_OU_EM_ANALISE("Usuário possui pendências em aberto ou em análise, por favor, conclua-os antes de gerar novos")
+    USUARIO_POSSUI_PAGAMENTOS_EM_ABERTO_OU_EM_ANALISE("Usuário possui pendências em aberto ou em análise, por favor, conclua-os antes de gerar novos.")
     ;
     
     private final String message;

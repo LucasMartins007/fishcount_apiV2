@@ -5,8 +5,9 @@ import com.fishcount.api.service.PagamentoParcelaService;
 import com.fishcount.common.model.dto.financeiro.PagamentoParcelaDTO;
 import com.fishcount.common.model.dto.financeiro.pix.QRCodePixDTO;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
-import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  *

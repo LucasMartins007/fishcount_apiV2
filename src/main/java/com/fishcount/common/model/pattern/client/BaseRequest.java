@@ -1,10 +1,11 @@
 package com.fishcount.common.model.pattern.client;
 
-import java.net.URI;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import java.net.URI;
 
 /**
  *
@@ -24,7 +25,7 @@ public abstract class BaseRequest<T> {
 
     protected T body;
 
-    protected Class responseClass;
+    protected Class<?> responseClass;
 
     public RequestEntity<T> getRequest() {
         resolverParams();

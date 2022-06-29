@@ -1,12 +1,11 @@
 package com.fishcount.api.service;
 
-import java.util.List;
-
 import com.fishcount.api.service.impl.interfaces.IAbstractService;
 import com.fishcount.common.model.dto.LoteDTO;
 import com.fishcount.common.model.entity.Lote;
-
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *
@@ -19,6 +18,6 @@ public interface LoteService extends IAbstractService<Lote, Integer, LoteDTO> {
     
     List<Lote> listarFromUsuario(Integer idUsuario);
 
-    public void editar(Integer idUsuario, Lote lote);
+    void editar(Integer idUsuario, Lote lote);
 
 }

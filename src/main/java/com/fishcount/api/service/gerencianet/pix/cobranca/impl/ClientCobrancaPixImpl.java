@@ -1,36 +1,30 @@
 package com.fishcount.api.service.gerencianet.pix.cobranca.impl;
 
-import com.fishcount.api.service.log.erros.PixHistoricoService;
-import com.fishcount.common.model.pattern.client.ClientConsumer;
 import com.fishcount.api.service.gerencianet.pix.GenericPix;
+import com.fishcount.api.service.gerencianet.pix.cobranca.ClientCobrancaPix;
+import com.fishcount.api.service.log.erros.PixHistoricoService;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.classes.gerencianet.request.PayloadCobranca;
+import com.fishcount.common.model.classes.gerencianet.response.PayloadCobrancaResponse;
 import com.fishcount.common.utils.Utils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.*;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 
 import java.util.Date;
 import java.util.List;
-
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import com.fishcount.api.service.gerencianet.pix.cobranca.ClientCobrancaPix;
-import com.fishcount.common.model.classes.gerencianet.response.PayloadCobrancaResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.client.RestClientException;
 
 @Component
 @RequiredArgsConstructor
 public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implements ClientCobrancaPix {
 
-    private final String PARAM_CPF = "cpf";
-    private final String PARAM_CNPJ = "cnpj";
-    private final String PARAM_DATA_INICIO = "inicio";
-    private final String PARAM_DATA_FIM = "fim";
-    private final String PARAM_STATUS = "status";
+    private static final String PARAM_CPF = "cpf";
+    private static final String PARAM_CNPJ = "cnpj";
+    private static final String PARAM_DATA_INICIO = "inicio";
+    private static final String PARAM_DATA_FIM = "fim";
+    private static final String PARAM_STATUS = "status";
 
     private final PixHistoricoService pixHistoricoService;
 

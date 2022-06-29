@@ -1,21 +1,16 @@
 package com.fishcount.common.utils;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
+import com.fishcount.common.exception.FcRuntimeException;
+import com.fishcount.common.model.dto.pattern.IEnum;
+import com.fishcount.common.model.pattern.enums.EnumDateFormat;
+import org.springframework.util.ClassUtils;
+import org.springframework.web.method.HandlerMethod;
+
+import java.lang.reflect.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;
-
-import com.fishcount.common.exception.FcRuntimeException;
-import com.fishcount.common.model.dto.pattern.IEnum;
-import com.fishcount.common.model.pattern.enums.EnumDateFormat;
-
-import org.springframework.util.ClassUtils;
-import org.springframework.web.method.HandlerMethod;
 
 /**
  *
@@ -27,49 +22,6 @@ public class ClassUtil {
     ClassUtil() {
     }
 
-    private static final Map<Class<?>, Class<?>> CLASSES = new HashMap<>();
-
-    private static final Map<String, Boolean> BOOLEAN_VALUES = new LinkedHashMap<>();
-
-    private static final Map<EnumDateFormat, String> DATE_VALUES = new LinkedHashMap<>();
-
-    static {
-        DATE_VALUES.put(EnumDateFormat.YYYYMMDD, "[0-9]{4}-[0-9]{2}-[0-9]{2}");
-        DATE_VALUES.put(EnumDateFormat.YYYYMMDDTHHMMSS, "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}");
-        DATE_VALUES.put(EnumDateFormat.YYYYMMDDHHMMSS, "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}");
-        DATE_VALUES.put(EnumDateFormat.DDMMYYYY, "[0-9]{2}/[0-9]{2}/[0-9]{4}");
-        DATE_VALUES.put(EnumDateFormat.DDMMYYYYHHMMSS, "[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}");
-
-        CLASSES.put(boolean.class, Boolean.class);
-        CLASSES.put(char.class, Character.class);
-        CLASSES.put(byte.class, Byte.class);
-        CLASSES.put(short.class, Short.class);
-        CLASSES.put(long.class, Long.class);
-        CLASSES.put(float.class, Float.class);
-        CLASSES.put(int.class, Integer.class);
-        CLASSES.put(double.class, Double.class);
-        CLASSES.put(void.class, Void.class);
-
-        BOOLEAN_VALUES.put("1", true);
-        BOOLEAN_VALUES.put("0", false);
-        BOOLEAN_VALUES.put("s", true);
-        BOOLEAN_VALUES.put("n", false);
-        BOOLEAN_VALUES.put("v", true);
-        BOOLEAN_VALUES.put("f", false);
-        BOOLEAN_VALUES.put("sim", true);
-        BOOLEAN_VALUES.put("nao", false);
-        BOOLEAN_VALUES.put("verdadeiro", true);
-        BOOLEAN_VALUES.put("falso", false);
-        BOOLEAN_VALUES.put("on", true);
-        BOOLEAN_VALUES.put("off", false);
-        BOOLEAN_VALUES.put("yes", true);
-        BOOLEAN_VALUES.put("no", false);
-        BOOLEAN_VALUES.put("y", true);
-        BOOLEAN_VALUES.put("n", false);
-        BOOLEAN_VALUES.put("true", true);
-        BOOLEAN_VALUES.put("false", false);
-    }
-
     public static Class<?> getClassParameterizedType(Class<?> clazz) {
         return ((Class<?>) ((ParameterizedType) clazz.getGenericSuperclass()).getActualTypeArguments()[0]);
     }
@@ -79,12 +31,12 @@ public class ClassUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static final <C> C createInstance(String className, ClassLoader classLoader) {
+    public static <C> C createInstance(String className, ClassLoader classLoader) {
         final Class<C> clazz = (Class<C>) createClass(className, classLoader);
         return createInstance(clazz);
     }
 
-    public static final Class<?> createClass(String className, ClassLoader classLoader) {
+    public static Class<?> createClass(String className, ClassLoader classLoader) {
         try {
             return ClassUtils.forName(className, classLoader);
         } catch (ClassNotFoundException e) {
@@ -92,7 +44,7 @@ public class ClassUtil {
         }
     }
 
-    public static final <C> C createInstance(Class<C> clazz) {
+    public static <C> C createInstance(Class<C> clazz) {
         try {
             final Constructor<C> constructorIfAvailable = ClassUtils.getConstructorIfAvailable(clazz);
 
@@ -165,14 +117,14 @@ public class ClassUtil {
 
     @SuppressWarnings("unchecked")
     public static <T> T getEnumValue(Class<T> enumClass, String valor) {
-        for (Object enumered : enumClass.getEnumConstants()) {
+        for (T enumered : enumClass.getEnumConstants()) {
             if (enumered instanceof IEnum) {
                 IEnum<T> ienum = ((IEnum<T>) enumered);
 
                 if (ienum.getKey().equals(valor) ||
                         ienum.getValue().equals(valor) ||
                         ienum.getName().equals(valor)) {
-                    return (T) enumered;
+                    return enumered;
                 }
             }
 
@@ -181,7 +133,7 @@ public class ClassUtil {
 
                 if (typeEnum.name().equals(valor) ||
                         typeEnum.toString().equals(valor)) {
-                    return (T) enumered;
+                    return enumered;
                 }
             }
         }
