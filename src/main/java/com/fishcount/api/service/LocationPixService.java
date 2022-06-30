@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
  *
  * @author Lucas Martins
  */
-@Service
 public interface LocationPixService extends IAbstractService<LocationPix, Integer, LocationPixDTO> {
 
     LocationPix incluir(PayloadLocationResponse location);

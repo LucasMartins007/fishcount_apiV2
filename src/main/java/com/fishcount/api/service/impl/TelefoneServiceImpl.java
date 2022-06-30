@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TelefoneServiceImpl extends AbstractServiceImpl<Telefone, Integer, TelefoneDTO> implements TelefoneService {
 
-    private final TelefoneValidator telefoneValidator = new TelefoneValidator();
+    private final TelefoneValidator telefoneValidator;
     
     @Override
     public Telefone incluir(Integer idPessoa, Telefone telefone) {

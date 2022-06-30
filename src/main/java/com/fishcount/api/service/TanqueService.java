@@ -11,7 +11,6 @@ import java.util.List;
  *
  * @author lucas
  */
-@Service
 public interface TanqueService extends IAbstractService<Tanque, Integer, TanqueDTO> {
     
     Tanque incluir(Integer loteId, Tanque tanque);

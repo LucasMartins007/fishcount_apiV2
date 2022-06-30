@@ -11,7 +11,6 @@ import java.util.List;
  *
  * @author lucas
  */
-@Service
 public interface LoteService extends IAbstractService<Lote, Integer, LoteDTO> {
 
     Lote incluir(Integer idUsuario, Lote lote);

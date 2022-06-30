@@ -6,14 +6,16 @@ import com.fishcount.api.validators.PlanoValidator;
 import com.fishcount.common.model.dto.financeiro.PlanoDTO;
 import com.fishcount.common.model.entity.financeiro.Plano;
 import com.fishcount.common.utils.DateUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PlanoServiceImpl extends AbstractServiceImpl<Plano, Integer, PlanoDTO> implements PlanoService {
 
-    private final PlanoValidator planoValidator = new PlanoValidator();
+    private final PlanoValidator planoValidator;
 
     @Override
     public List<Plano> listarPlanos() {

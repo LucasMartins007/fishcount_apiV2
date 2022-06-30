@@ -11,7 +11,6 @@ import java.util.List;
  *
  * @author lucas
  */
-@Service
 public interface TelefoneService extends IAbstractService<Telefone, Integer, TelefoneDTO>{
     
    Telefone incluir(Integer idUsuario, Telefone telefone);

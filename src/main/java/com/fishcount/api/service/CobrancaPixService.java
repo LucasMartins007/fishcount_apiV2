@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
  *
  * @author Lucas Martins
  */
-@Service
 public interface CobrancaPixService extends IAbstractService<CobrancaPix, Integer, CobrancaPixDTO> {
 
     @Async

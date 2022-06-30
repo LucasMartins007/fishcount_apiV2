@@ -12,7 +12,6 @@ import java.util.List;
  *
  * @author lucas
  */
-@Service
 public interface EmailService extends IAbstractService<Email, Integer, EmailDTO> {
 
     Email incluir(Integer idUsuario, Email email);

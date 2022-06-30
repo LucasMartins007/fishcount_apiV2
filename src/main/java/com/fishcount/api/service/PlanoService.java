@@ -11,7 +11,6 @@ import java.util.List;
  *
  * @author Lucas Martins
  */
-@Service
 public interface PlanoService extends IAbstractService<Plano, Integer, PlanoDTO> {
 
     List<Plano> listarPlanos();

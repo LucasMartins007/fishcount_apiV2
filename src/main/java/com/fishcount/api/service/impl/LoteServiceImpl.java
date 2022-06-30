@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO> implements LoteService {
 
-    private final LoteValidator loteValidator = new LoteValidator();
+    private final LoteValidator loteValidator;
 
     @Override
     public Lote incluir(Integer idUsuario, Lote lote) {

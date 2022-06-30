@@ -12,7 +12,6 @@ import java.util.List;
  *
  * @author lucas
  */
-@Service
 public interface EspecieService extends IAbstractService<Especie, Integer, EspecieDTO> {
     
     Especie incluir(Especie especie);

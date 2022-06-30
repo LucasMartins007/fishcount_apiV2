@@ -14,7 +14,6 @@ import java.util.List;
  *
  * @author Lucas Martins
  */
-@Service
 public interface PagamentoParcelaService extends IAbstractService<PagamentoParcela, Integer, PagamentoParcelaDTO> {
 
     List<PagamentoParcela> incluirParcelas(Pagamento pagamento);

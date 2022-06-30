@@ -30,7 +30,7 @@ public class PagamentoParcelaServiceImpl
         extends AbstractServiceImpl<PagamentoParcela, Integer, PagamentoParcelaDTO>
         implements PagamentoParcelaService {
 
-    private final PagamentoParcelaValidator pagamentoParcelaValidator = new PagamentoParcelaValidator();
+    private final PagamentoParcelaValidator pagamentoParcelaValidator;
 
     @Override
     public List<PagamentoParcela> incluirParcelas(Pagamento pagamento) {

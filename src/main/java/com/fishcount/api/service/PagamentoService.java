@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * @author Lucas Martins
  */
-@Service
 public interface PagamentoService extends IAbstractService<Pagamento, Integer, PagamentoDTO> {
 
     Pagamento incluir(Pagamento pagamento, Integer idUsuario);

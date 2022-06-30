@@ -9,10 +9,12 @@ import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.financeiro.Titulo;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Lucas Martins
  */
+@Component
 public class TituloValidator extends AbstractValidatorImpl<Titulo> {
 
     @Override

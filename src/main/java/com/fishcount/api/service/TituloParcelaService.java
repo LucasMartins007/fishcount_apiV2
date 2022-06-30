@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
  *
  * @author Lucas Martins
  */
-@Service
 public interface TituloParcelaService extends IAbstractService<TituloParcela, Integer, TituloParcelaDTO> {
     
     TituloParcela gerarTitulosParcelasByPagamentoParcela(PagamentoParcela parcela);

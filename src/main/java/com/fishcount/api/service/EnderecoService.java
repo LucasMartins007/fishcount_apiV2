@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
  *
  * @author lucas
  */
-@Service
 public interface EnderecoService extends IAbstractService<Endereco, Integer, EnderecoDTO>{
  
     Endereco incluir(Endereco endereco);

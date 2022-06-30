@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, UsuarioDTO> implements UsuarioService {
 
-    private final UsuarioValidator usuarioValidator = new UsuarioValidator();
+    private final UsuarioValidator usuarioValidator;
 
     private final PasswordEncoder passwordEnconder;
 

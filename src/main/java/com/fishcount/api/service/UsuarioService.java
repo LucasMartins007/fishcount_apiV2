@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
  *
  * @author lucas
  */
-@Service
 public interface UsuarioService extends IAbstractService<Usuario, Integer, UsuarioDTO>{
  
     Usuario incluir(Usuario usuario);
