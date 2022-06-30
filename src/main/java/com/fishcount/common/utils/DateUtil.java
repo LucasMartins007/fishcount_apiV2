@@ -4,10 +4,12 @@
  */
 package com.fishcount.common.utils;
 
+import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.model.pattern.enums.EnumDateFormat;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -21,6 +23,7 @@ import java.util.Locale;
  *
  * @author lucas
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class DateUtil {
     public static final String TIMEZONE = "America/Sao_Paulo";
 
@@ -28,26 +31,20 @@ public class DateUtil {
 
     public static final Locale LOCALE_BRAZIL = new Locale("pt", "BR");
 
-    private static final SimpleDateFormat DDMMYYYY = EnumDateFormat.DDMMYYYY.getFormat();
-
-    private static final SimpleDateFormat HHMM = EnumDateFormat.HHMM.getFormat();
-
-    private static final SimpleDateFormat DDMMYYYYHHMMSS = EnumDateFormat.DDMMYYYYHHMMSS.getFormat();
-
     public static String format(EnumDateFormat dataFormat, Date date) {
         return date != null ? dataFormat.getFormat().format(date) : "";
     }
 
     public static String formatHHMM(Date date) {
-        return date != null ? HHMM.format(date) : "";
+        return date != null ? EnumDateFormat.HHMM.getFormat().format(date) : "";
     }
 
     public static String formatDDMMYYYY(Date date) {
-        return date != null ? DDMMYYYY.format(date) : "";
+        return date != null ? EnumDateFormat.DDMMYYYY.getFormat().format(date) : "";
     }
 
     public static String formatDDMMYYYYHHMMSS(Date date) {
-        return date != null ? DDMMYYYYHHMMSS.format(date) : "";
+        return date != null ? EnumDateFormat.DDMMYYYYHHMMSS.getFormat().format(date) : "";
     }
 
     public static Date parse(Date date, EnumDateFormat dateFormat) {
@@ -60,7 +57,7 @@ public class DateUtil {
 
             return dateFormat.parse(dataFormat);
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            throw new FcRuntimeException(e);
         }
     }
 

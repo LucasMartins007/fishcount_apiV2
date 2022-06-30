@@ -1,16 +1,19 @@
 package com.fishcount.common.model.pattern;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
 /**
- *
  * @author lucas
  */
-public interface OperationsPath {
-    
-    String ID = "/{id}";
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+public class OperationsPath {
 
-    String PARENT_ID = "/{parentId}";
-    
-    String CHILD_ID = "/{childId}";
+    public static final String ID = "/{id}";
 
-    
+    public static final String PARENT_ID = "/{parentId}";
+
+    public static final String CHILD_ID = "/{childId}";
+
+
 }

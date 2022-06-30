@@ -14,23 +14,20 @@ import java.util.List;
  * @author lucas
  * @param <E>
  * @param <I>
- * @param <DTO>
+ * @param <D>
  */
-public interface IAbstractService<E extends AbstractEntity<?>, I, DTO extends AbstractDTO<?>>  {
+public interface IAbstractService<E extends AbstractEntity<?>, I, D extends AbstractDTO<?>>  {
     
     JpaRepository<E, I> getRepository();
 
     JpaSpecificationExecutor<E> getSpecRepository();
 
-    DTO findById(I id);
+    D findById(I id);
 
-    List<DTO> findAll();
+    List<D> findAll();
 
-    Page<DTO> findAll(Pageable pageable);
+    Page<D> findAll(Pageable pageable);
 
     E findAndValidate(I id);
-    
-//    Page<DTO> findAll(Pageable pageable, Map filters, ExampleMatcher.StringMatcher matchFilter);
-//
-//    Page<DTO> findAll(Pageable pageable, Map filters);
+
 }

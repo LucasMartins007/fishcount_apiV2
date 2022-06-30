@@ -8,11 +8,13 @@ import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.utils.Utils;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author lucas
  */
+@Component
 public class LoteValidator extends AbstractValidatorImpl<Lote> {
 
     @Override

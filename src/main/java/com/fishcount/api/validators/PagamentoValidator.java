@@ -10,11 +10,13 @@ import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Lucas Martins
  */
+@Component
 public class PagamentoValidator extends AbstractValidatorImpl<Pagamento> {
 
     @Override

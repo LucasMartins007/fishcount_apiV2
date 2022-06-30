@@ -5,14 +5,12 @@ import com.fishcount.common.model.dto.financeiro.PagamentoDTO;
 import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author Lucas Martins
  */
-@Service
 public interface PagamentoService extends IAbstractService<Pagamento, Integer, PagamentoDTO> {
 
     Pagamento incluir(Pagamento pagamento, Integer idUsuario);

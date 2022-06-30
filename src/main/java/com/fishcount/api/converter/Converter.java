@@ -20,60 +20,59 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- *
+ * @param <D>
+ * @param <E>
  * @author lucas
- * @param <DTO>
- * @param <Entity>
  */
-public class Converter<DTO extends AbstractDTO<?>, Entity extends AbstractEntity<?>> {
+public class Converter<D extends AbstractDTO<?>, E extends AbstractEntity<?>> {
 
-    private Class<DTO> dtoClass;
+    private final Class<D> dtoClass;
 
-    private Class<Entity> entityClass;
+    private final Class<E> entityClass;
 
     public Converter() {
         Type[] actualTypeArguments = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments();
-        this.dtoClass = (Class<DTO>) actualTypeArguments[0];
-        this.entityClass = (Class<Entity>) actualTypeArguments[1];
+        this.dtoClass = (Class<D>) actualTypeArguments[0];
+        this.entityClass = (Class<E>) actualTypeArguments[1];
     }
 
-    public Entity converterDTOParaEntity(DTO dto) {
+    public E converterDTOParaEntity(D dto) {
         return converterDTOParaEntity(dto, this.entityClass);
     }
 
-    public List<Entity> converterDTOParaEntity(List<DTO> dtos) {
+    public List<E> converterDTOParaEntity(List<D> dtos) {
         return converterDTOParaEntity(dtos, this.entityClass);
     }
 
-    public DTO converterEntityParaDTO(Entity entity) {
+    public D converterEntityParaDTO(E entity) {
         return converterEntityParaDTO(entity, this.dtoClass);
     }
 
-    public List<DTO> converterEntityParaDTO(List<Entity> entitys) {
+    public List<D> converterEntityParaDTO(List<E> entitys) {
         return converterEntityParaDTO(entitys, this.dtoClass);
     }
 
-    public static <D extends AbstractDTO<?>, E extends AbstractEntity> E converterDTOParaEntity(D dto, Class<E> clazzEntity) {
+    public static <D extends AbstractDTO<?>, E extends AbstractEntity<?>> E converterDTOParaEntity(D dto, Class<E> clazzEntity) {
         return (E) converter(dto, clazzEntity);
     }
 
-    public static <D extends AbstractDTO<?>, E extends AbstractEntity> List<E> converterDTOParaEntity(List<D> dtos, Class<E> clazzEntity) {
+    public static <D extends AbstractDTO<?>, E extends AbstractEntity<?>> List<E> converterDTOParaEntity(List<D> dtos, Class<E> clazzEntity) {
         return dtos.stream().map(dto -> (E) converter(dto, clazzEntity)).collect(Collectors.toList());
     }
 
-    public static <D extends AbstractDTO<?>, E extends AbstractEntity> D converterEntityParaDTO(E entity, Class<D> clazzDto) {
+    public static <D extends AbstractDTO<?>, E extends AbstractEntity<?>> D converterEntityParaDTO(E entity, Class<D> clazzDto) {
         return (D) converter(entity, clazzDto);
     }
 
-    public static <D extends AbstractDTO<?>, E extends AbstractEntity> List<D> converterEntityParaDTO(List<E> entitys, Class<D> clazzDto) {
+    public static <D extends AbstractDTO<?>, E extends AbstractEntity<?>> List<D> converterEntityParaDTO(List<E> entitys, Class<D> clazzDto) {
         return entitys.stream().map(entity -> (D) converter(entity, clazzDto)).collect(Collectors.toList());
     }
 
-    private static Object converter(Object objectOrigem, Class classDestino) {
+    private static Object converter(Object objectOrigem, Class<?> classDestino) {
         return converter(objectOrigem, classDestino, null);
     }
 
-    private static Object converter(Object objectOrigem, Class classDestino, List<Field> fieldsEquals) {
+    private static Object converter(Object objectOrigem, Class<?> classDestino, List<Field> fieldsEquals) {
         try {
             if (Objects.isNull(objectOrigem) || Objects.isNull(classDestino)) {
                 return null;
@@ -105,45 +104,46 @@ public class Converter<DTO extends AbstractDTO<?>, Entity extends AbstractEntity
 
             return popular(toMapPopulateObjectDesino, classDestino);
         } catch (Exception ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
+            throw new FcRuntimeException(ex.getMessage(), ex);
         }
     }
 
     private static Object getValueFieldTypeDTO(Object valueFieldOrigem, Field field) {
         try {
-            if (valueFieldOrigem != null) {
-                final Class<?> clazzValue = valueFieldOrigem.getClass();
-                final Class<?> clazzField = field.getType();
+            if (valueFieldOrigem == null) return null;
 
-                if (!clazzValue.equals(clazzField)) {
-                    final List<Field> fieldsToConvert = getFieldsFromOnlyField(field, clazzField);
+            final Class<?> clazzValue = valueFieldOrigem.getClass();
+            final Class<?> clazzField = field.getType();
 
-                    if (IIdentifier.class.isAssignableFrom(clazzValue) && IIdentifier.class.isAssignableFrom(clazzField)) {
-                        return converter(valueFieldOrigem, clazzField, fieldsToConvert);
-                    }
+            if (clazzValue.equals(clazzField)) return null;
 
-                    if (Collection.class.isAssignableFrom(clazzValue) && Collection.class.isAssignableFrom(clazzField)) {
-                        final Class classFieldTypeCollection = ClassUtil.getClassParameterizedTypeField(field);
-                        if (IIdentifier.class.isAssignableFrom(classFieldTypeCollection)) {
-                            return ((Collection) valueFieldOrigem).stream()
-                                    .map(value -> converter(value, classFieldTypeCollection, fieldsToConvert))
-                                    .collect(Collectors.toList());
-                        }
-                    }
+            final List<Field> fieldsToConvert = getFieldsFromOnlyField(field, clazzField);
+
+            if (IIdentifier.class.isAssignableFrom(clazzValue) && IIdentifier.class.isAssignableFrom(clazzField)) {
+                return converter(valueFieldOrigem, clazzField, fieldsToConvert);
+            }
+
+            if (Collection.class.isAssignableFrom(clazzValue) && Collection.class.isAssignableFrom(clazzField)) {
+                final Class<?> classFieldTypeCollection = ClassUtil.getClassParameterizedTypeField(field);
+                if (IIdentifier.class.isAssignableFrom(classFieldTypeCollection)) {
+                    return ((Collection) valueFieldOrigem).stream()
+                            .map(value -> converter(value, classFieldTypeCollection, fieldsToConvert))
+                            .collect(Collectors.toList());
                 }
             }
+
             return null;
         } catch (Exception ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
+            throw new FcRuntimeException(ex.getMessage(), ex);
         }
     }
 
-    private static List<Field> getEqualsFields(Class classOrigem, Class classDestino) {
-        final List<Field> fieldsOrigem = new ArrayList();
+    private static List<Field> getEqualsFields(Class<?> classOrigem, Class<?> classDestino) {
+        final List<Field> fieldsOrigem = new ArrayList<>();
         addIfNotExistsFieldModifier(fieldsOrigem, Arrays.asList(classOrigem.getDeclaredFields()));
         addIfNotExistsFieldModifier(fieldsOrigem, Arrays.asList(classOrigem.getSuperclass().getDeclaredFields()));
 
-        final List<Field> fieldsDestino = new ArrayList();
+        final List<Field> fieldsDestino = new ArrayList<>();
         addIfNotExistsFieldModifier(fieldsDestino, Arrays.asList(classDestino.getDeclaredFields()));
         addIfNotExistsFieldModifier(fieldsDestino, Arrays.asList(classDestino.getSuperclass().getDeclaredFields()));
 
@@ -181,7 +181,7 @@ public class Converter<DTO extends AbstractDTO<?>, Entity extends AbstractEntity
         return fields;
     }
 
-    private static List<Field> getFieldsNotDeclared(Class classOrigem, List<Field> fieldsDestino, List<Field> fieldsOrigem) {
+    private static List<Field> getFieldsNotDeclared(Class<?> classOrigem, List<Field> fieldsDestino, List<Field> fieldsOrigem) {
         final List<Field> fields = new ArrayList<>();
 
         fieldsDestino.removeAll(fieldsOrigem);
@@ -205,14 +205,14 @@ public class Converter<DTO extends AbstractDTO<?>, Entity extends AbstractEntity
 
             final List<String> valuesOnlyField = Arrays.asList(field.getAnnotation(OnlyField.class).value());
 
-            final List<Field> fieldsOrigem = new ArrayList();
+            final List<Field> fieldsOrigem = new ArrayList<>();
             addIfNotExistsFieldModifier(fieldsOrigem, Arrays.asList(clazzValue.getDeclaredFields()));
             addIfNotExistsFieldModifier(fieldsOrigem, Arrays.asList(clazzValue.getSuperclass().getDeclaredFields()));
 
             return valuesOnlyField.stream().flatMap(s -> fieldsOrigem.stream().filter(fd -> fd.getName().equalsIgnoreCase(s))).collect(Collectors.toList());
         }
 
-        return null;
+        return Collections.emptyList();
     }
 
     private static String getPathFieldOrPathMappedFieldDTO(Field field) {
@@ -232,45 +232,42 @@ public class Converter<DTO extends AbstractDTO<?>, Entity extends AbstractEntity
     }
 
     private static Object parseEnum(Object value, Field field) {
-        if (field.getType().isAssignableFrom(EnumPadraoDTO.class)) {
-            if (value instanceof Enum) {
-                value = new EnumPadraoDTO((IEnum<?>) value);
-            }
+        if (field.getType().isAssignableFrom(EnumPadraoDTO.class) && value instanceof Enum) {
+            value = new EnumPadraoDTO((IEnum<?>) value);
         }
 
-        if (!value.getClass().equals(field.getType())) {
-            if (field.getType().isEnum() && value instanceof EnumPadraoDTO) {
-                final EnumPadraoDTO padraoDTO = (EnumPadraoDTO) value;
+        if (value.getClass().equals(field.getType())) {
+            return value;
+        }
 
-                value = Stream.of(field.getType().getEnumConstants())
-                        .map(valueEnum -> ((Enum) valueEnum))
-                        .filter(valueEnum -> {
-                            return valueEnum.name().equalsIgnoreCase((String) padraoDTO.getKey())
-                                    || valueEnum.name().equalsIgnoreCase((String) padraoDTO.getName());
-                        })
-                        .findFirst()
-                        .orElseThrow(() -> new FcRuntimeException(EnumFcInfraException.ENUM_NOT_FOUND, padraoDTO.getKey()));
-            }
+        if (field.getType().isEnum() && value instanceof EnumPadraoDTO) {
+            final EnumPadraoDTO padraoDTO = (EnumPadraoDTO) value;
+
+            value = Stream.of(field.getType().getEnumConstants())
+                    .map(Enum.class::cast)
+                    .filter(valueEnum -> valueEnum.name().equalsIgnoreCase((String) padraoDTO.getKey())
+                            || valueEnum.name().equalsIgnoreCase((String) padraoDTO.getName())
+                    )
+                    .findFirst()
+                    .orElseThrow(() -> new FcRuntimeException(EnumFcInfraException.ENUM_NOT_FOUND, padraoDTO.getKey()));
         }
         return value;
     }
 
-    private static Object popular(Map propertiesToMap, Class classDestino) {
+    private static Object popular(Map<String, ?> propertiesToMap, Class<?> classDestino) {
         try {
             Object instanceObjectDestino = classDestino.newInstance();
             BeanUtilsBean.getInstance().populate(instanceObjectDestino, propertiesToMap);
             return instanceObjectDestino;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
+            throw new FcRuntimeException(ex.getMessage(), ex);
         }
     }
 
     private static void addIfNotExistsFieldModifier(Collection<Field> collectionsFields, List<Field> fields) {
         fields.forEach(field -> {
-            if (!collectionsFields.contains(field)) {
-                if (!Modifier.isFinal(field.getModifiers()) && !Modifier.isStatic(field.getModifiers())) {
-                    collectionsFields.add(field);
-                }
+            if (!collectionsFields.contains(field) && !Modifier.isFinal(field.getModifiers()) && !Modifier.isStatic(field.getModifiers())) {
+                collectionsFields.add(field);
             }
         });
     }

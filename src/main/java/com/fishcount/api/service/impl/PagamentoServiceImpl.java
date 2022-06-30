@@ -23,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer, PagamentoDTO> implements PagamentoService {
 
-    private final PagamentoValidator pagamentoValidator = new PagamentoValidator();
+    private final PagamentoValidator pagamentoValidator;
 
     @Override
     public Pagamento incluir(Pagamento pagamento, Integer idUsuario) {

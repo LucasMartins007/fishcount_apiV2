@@ -9,16 +9,18 @@ import com.fishcount.common.model.dto.EspecieDTO;
 import com.fishcount.common.model.entity.Especie;
 import com.fishcount.common.model.entity.TaxaCrescimento;
 import com.fishcount.common.utils.DateUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EspecieServiceImpl extends AbstractServiceImpl<Especie, Integer, EspecieDTO> implements EspecieService {
 
-    private final EspecieValidator especieValidator = new EspecieValidator();
+    private final EspecieValidator especieValidator;
 
-    private final TaxaCrescimentoValidator validadorTaxaCrescimento = new TaxaCrescimentoValidator();
+    private final TaxaCrescimentoValidator validadorTaxaCrescimento;
 
     @Override
     public Especie incluir(Especie especie) {

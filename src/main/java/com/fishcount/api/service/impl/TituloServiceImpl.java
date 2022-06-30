@@ -9,6 +9,7 @@ import com.fishcount.common.model.entity.financeiro.Titulo;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import com.fishcount.common.model.enums.EnumTipoTitulo;
 import com.fishcount.common.utils.DateUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,9 +20,10 @@ import java.util.Calendar;
  * @author Lucas Martins
  */
 @Service
+@RequiredArgsConstructor
 public class TituloServiceImpl extends AbstractServiceImpl<Titulo, Integer, TituloDTO> implements TituloService {
 
-    private final TituloValidator tituloValidator = new TituloValidator();
+    private final TituloValidator tituloValidator;
 
     @Override
     public Titulo gerarTituloByPlano(Pessoa pessoa, Plano plano) {

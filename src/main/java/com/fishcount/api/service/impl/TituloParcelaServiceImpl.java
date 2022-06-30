@@ -8,6 +8,7 @@ import com.fishcount.common.model.entity.financeiro.TituloParcela;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import com.fishcount.common.model.enums.EnumTipoTitulo;
 import com.fishcount.common.utils.DateUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
  * @author Lucas Martins
  */
 @Service
+@RequiredArgsConstructor
 public class TituloParcelaServiceImpl
         extends AbstractServiceImpl<TituloParcela, Integer, TituloParcelaDTO>
         implements TituloParcelaService {

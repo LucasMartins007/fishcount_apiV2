@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmailServiceImpl extends AbstractServiceImpl<Email, Integer, EmailDTO> implements EmailService {
 
-    private final EmailValidator emailValidator = new EmailValidator();
+    private final EmailValidator emailValidator;
     
     @Override
     public Email findByEmail(Email email) {

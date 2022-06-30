@@ -9,9 +9,9 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @author Lucas Martins
  */
 @NoRepositoryBean
-public interface IGeneric<T, ID> {
+public interface IGeneric<T, I> {
 
-    JpaRepository<T, ID> getRepository();
+    JpaRepository<T, I> getRepository();
 
     JpaSpecificationExecutor<T> getSpecRepository();
 
