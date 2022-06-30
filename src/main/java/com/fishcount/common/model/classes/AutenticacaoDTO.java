@@ -1,9 +1,8 @@
 package com.fishcount.common.model.classes;
 
+import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
 
 /**
  *
@@ -11,7 +10,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class UserDTO implements Serializable {
+public class AutenticacaoDTO implements AbstractDTO<Integer> {
     
     private Integer id;
 
@@ -23,10 +22,10 @@ public class UserDTO implements Serializable {
 
     private String refreshToken;
 
-    public UserDTO() {
+    public AutenticacaoDTO() {
     }
 
-    public UserDTO(String username, String password) {
+    public AutenticacaoDTO(String username, String password) {
         this.setUsername(username);
         this.setPassword(password);
     }
