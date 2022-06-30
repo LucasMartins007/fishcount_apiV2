@@ -9,7 +9,6 @@ import com.fishcount.common.model.dto.TaxaCrescimentoDTO;
 import com.fishcount.common.model.entity.Especie;
 import com.fishcount.common.model.entity.TaxaCrescimento;
 import com.fishcount.common.utils.DateUtil;
-import jdk.nashorn.internal.ir.annotations.Reference;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

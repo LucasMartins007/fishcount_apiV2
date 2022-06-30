@@ -1,19 +1,20 @@
 package com.fishcount.api.infrastructure.spec;
 
 import com.fishcount.common.model.entity.Usuario;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
  * @author Lucas Martins
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class UsuarioSpec {
 
     private static final String FIELD_ID = "id";
     private static final String FIELD_EMAIL = "email";
     private static final String FIELD_ATIVO = "ativo";
 
-    UsuarioSpec() {
-    }
 
     public static Specification<Usuario> usuarioAtivo() {
         return (root, query, criteriaBuilder) -> criteriaBuilder.isTrue(root.get(FIELD_ATIVO));

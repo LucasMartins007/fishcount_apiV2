@@ -3,15 +3,15 @@ package com.fishcount.api.infrastructure.spec;
 import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.financeiro.Titulo;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
  * @author Lucas Martins
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TituloSpec {
-
-    private TituloSpec() {
-    }
 
     private static final String FIELD_PESSOA = "pessoa";
 

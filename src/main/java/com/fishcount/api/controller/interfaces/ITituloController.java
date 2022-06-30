@@ -28,6 +28,6 @@ public interface ITituloController {
     void liquidar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsParam.ID) Integer tituloId);
     
     @PutMapping(OperationsPath.ID + "/cancelar")
-    void calncelar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsParam.ID) Integer tituloId);
+    void calcelar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsParam.ID) Integer tituloId);
 
 }

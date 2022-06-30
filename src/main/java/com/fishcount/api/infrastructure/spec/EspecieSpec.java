@@ -1,6 +1,8 @@
 package com.fishcount.api.infrastructure.spec;
 
 import com.fishcount.common.model.entity.Especie;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Order;
@@ -9,12 +11,10 @@ import javax.persistence.criteria.Order;
  *
  * @author Lucas Martins
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class EspecieSpec {
 
     private static final String FIELD_DESCRICAO = "descricao";
-
-    EspecieSpec() {
-    }
 
     public static Specification<Especie> findByDescricao(String descricao) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(FIELD_DESCRICAO), descricao);

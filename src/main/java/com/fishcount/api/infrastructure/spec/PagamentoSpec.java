@@ -3,6 +3,8 @@ package com.fishcount.api.infrastructure.spec;
 import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
@@ -11,10 +13,8 @@ import java.util.List;
  *
  * @author Lucas Martins
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class PagamentoSpec {
-
-    private PagamentoSpec() {
-    }
 
     private static final String FIELD_PESSOA = "pessoa";
     private static final String FIELD_STATUS = "statusPagamento";

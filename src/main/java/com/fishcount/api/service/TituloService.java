@@ -5,7 +5,6 @@ import com.fishcount.common.model.dto.financeiro.TituloDTO;
 import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.financeiro.Plano;
 import com.fishcount.common.model.entity.financeiro.Titulo;
-import org.springframework.stereotype.Service;
 
 /**
  *

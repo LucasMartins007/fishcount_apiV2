@@ -20,6 +20,7 @@ import java.util.stream.Stream;
  *
  * @author lucas
  */
+@SuppressWarnings("rawtypes")
 public class BeanInvokeDynamic {
     
     
@@ -38,7 +39,8 @@ public class BeanInvokeDynamic {
 
     public static <T> T getFieldValue(Object javaBean, String fieldName) {
         try {
-            Object fieldValue = getCachedFunction(javaBean.getClass(), fieldName).apply(javaBean);
+            Function fun = getCachedFunction(javaBean.getClass(), fieldName);
+            Object fieldValue = fun != null ? fun.apply(javaBean) : null;
 
             if (Objects.isNull(fieldValue)) {
                 fieldValue = BeanUtilsBean.getInstance().getPropertyUtils().getProperty(javaBean, fieldName);
@@ -82,7 +84,7 @@ public class BeanInvokeDynamic {
         return cachedFunction != null ? cachedFunction : functionToBeCached;
     }
 
-    private static List<Function> createFunctions(Class<?> javaBeanClass, String path) {
+    private static List<Function> createFunctions(Class javaBeanClass, String path) {
         List<Function> functions = new ArrayList<>();
         Stream.of(FIELD_SEPARATOR.split(path))
                 .reduce(javaBeanClass, (nestedJavaBeanClass, fieldName) -> {
@@ -90,6 +92,7 @@ public class BeanInvokeDynamic {
                     functions.add(getFunction._2);
                     return getFunction._1;
                 }, (previousClass, nextClass) -> nextClass);
+
         return functions;
     }
 

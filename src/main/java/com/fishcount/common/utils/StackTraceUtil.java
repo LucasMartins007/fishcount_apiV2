@@ -1,5 +1,8 @@
 package com.fishcount.common.utils;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
@@ -8,6 +11,7 @@ import java.sql.SQLException;
  *
  * @author lucas
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class StackTraceUtil {
 
     private static final String CAUSE = "Cause:";

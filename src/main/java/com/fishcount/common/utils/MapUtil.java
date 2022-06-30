@@ -1,6 +1,9 @@
 
 package com.fishcount.common.utils;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,6 +14,7 @@ import java.util.Map;
  *
  * @author Lucas Martins
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class MapUtil {
 
       public static <K> Double putIncrement(Map<K, Double> map, K key, Double value) {
