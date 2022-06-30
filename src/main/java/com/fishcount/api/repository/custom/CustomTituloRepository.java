@@ -1,7 +1,7 @@
 package com.fishcount.api.repository.custom;
 
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.financeiro.Titulo;
-import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 
 /**
@@ -10,5 +10,5 @@ import com.fishcount.common.model.enums.EnumStatusTitulo;
  */
 public interface CustomTituloRepository {
 
-    Titulo findByStatusAndUsuario(EnumStatusTitulo statusTitulo, Usuario usuario);
+    Titulo findByStatusAndUsuario(EnumStatusTitulo statusTitulo, Pessoa pessoa);
 }

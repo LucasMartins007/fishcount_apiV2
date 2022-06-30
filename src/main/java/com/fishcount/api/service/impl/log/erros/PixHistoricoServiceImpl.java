@@ -1,13 +1,11 @@
 package com.fishcount.api.service.impl.log.erros;
 
-import com.fishcount.api.repository.UsuarioRepository;
-import com.fishcount.api.service.PixService;
-import com.fishcount.api.service.UsuarioService;
+import com.fishcount.api.repository.PessoaRepository;
 import com.fishcount.api.service.impl.AbstractServiceImpl;
 import com.fishcount.api.service.log.erros.PixHistoricoService;
 import com.fishcount.common.model.classes.gerencianet.request.PayloadCobranca;
 import com.fishcount.common.model.dto.PixHistoricoDTO;
-import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.log.erros.PixHistorico;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -26,8 +24,8 @@ public class PixHistoricoServiceImpl
         pixHistorico.setValor(BigDecimal.valueOf(Long.parseLong(payloadCobranca.getValor().getOriginal())));
 
         final String cpf = payloadCobranca.getDevedor().getCpf();
-        final Usuario usuario = getRepository(UsuarioRepository.class).findByCpf(cpf);
-        pixHistorico.setUsuario(usuario);
+        final Pessoa pessoa = getRepository(PessoaRepository.class).findByCpf(cpf);
+        pixHistorico.setPessoa(pessoa);
         pixHistorico.setAssinaturaMetodo(assinaturaMetodo);
 
         getRepository().save(pixHistorico);

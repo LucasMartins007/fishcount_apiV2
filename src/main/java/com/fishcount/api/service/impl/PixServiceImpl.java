@@ -38,7 +38,7 @@ public class PixServiceImpl implements PixService {
     public String getBearerToken() {
         PayloadToken token = getPayloadToken();
 
-        return token.getAccess_token();
+        return token.getAccessToken();
     }
 
     private PayloadToken getPayloadToken() {

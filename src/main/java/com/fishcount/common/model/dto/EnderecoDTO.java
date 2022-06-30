@@ -10,7 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class EnderecoDTO extends AbstractDTO<Integer>{
+public class EnderecoDTO implements AbstractDTO<Integer>{
     
     private Integer id;
     

@@ -1,6 +1,7 @@
 package com.fishcount.api.repository.custom;
 
 import com.fishcount.common.model.entity.Especie;
+
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface CustomEspecieRepository {
 
-    List<Especie> findAll();
+    List<Especie> findAllOrderByDescricao();
     
     Especie findByDescricao(String descricao);
 }

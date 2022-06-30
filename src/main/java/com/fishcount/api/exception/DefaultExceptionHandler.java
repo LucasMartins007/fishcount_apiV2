@@ -5,7 +5,6 @@ import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.utils.LoggerUtil;
 import com.fishcount.common.utils.StackTraceUtil;
-
 import org.hibernate.exception.DataException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,44 +35,44 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(HttpClientErrorException.class)
-    public ResponseEntity<Object> handleHttpClientErrorException(HttpClientErrorException ex) {
+    public ResponseEntity<String> handleHttpClientErrorException(HttpClientErrorException ex) {
         return exception(ex.getResponseBodyAsString());
     }
 
     @ExceptionHandler(HttpServerErrorException.class)
-    public ResponseEntity<Object> handleHttpServerErrorException(HttpServerErrorException ex) {
+    public ResponseEntity<String> handleHttpServerErrorException(HttpServerErrorException ex) {
         return exception(ex.getResponseBodyAsString());
     }
 
     @ExceptionHandler(FcRuntimeException.class)
-    public ResponseEntity<?> handleFcRuntimeException(FcRuntimeException ex) {
+    public ResponseEntity<CommonExceptionResponse> handleFcRuntimeException(FcRuntimeException ex) {
         return exception(ex);
     }
 
     @ExceptionHandler(DataException.class)
-    public ResponseEntity<?> handleSmartRuntimeExceptionA(DataException ex) {
+    public ResponseEntity<CommonExceptionResponse> handleSmartRuntimeExceptionA(DataException ex) {
         return exception(ex.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private ResponseEntity exception(Throwable e) {
+    private ResponseEntity<CommonExceptionResponse> exception(Throwable e) {
         return ResponseEntity.badRequest()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new CommonExceptionResponse(e));
     }
 
-    private ResponseEntity exception(String e) {
+    private ResponseEntity<String> exception(String e) {
         return ResponseEntity.badRequest()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(e);
     }
 
-    private ResponseEntity exception(Throwable e, HttpStatus httpStatus) {
+    private ResponseEntity<CommonExceptionResponse> exception(Throwable e, HttpStatus httpStatus) {
         return ResponseEntity.status(httpStatus)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new CommonExceptionResponse(e));
     }
 
-    private ResponseEntity exception(CommonExceptionResponse respostaError, HttpStatus httpStatus) {
+    private ResponseEntity<CommonExceptionResponse> exception(CommonExceptionResponse respostaError, HttpStatus httpStatus) {
         return ResponseEntity.status(httpStatus)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(respostaError);

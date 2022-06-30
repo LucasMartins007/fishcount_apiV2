@@ -1,7 +1,8 @@
 package com.fishcount.api.repository.custom;
 
 import com.fishcount.common.model.entity.Email;
-import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.entity.Pessoa;
+
 import java.util.List;
 
 /**
@@ -12,6 +13,6 @@ public interface CustomEmailRepository {
 
     Email findAtivoByDescricao(String descricao);
 
-    List<Email> findAllByUsuario(Usuario usuario);
+    List<Email> findAllByPessoa(Pessoa pessoa);
     
 }

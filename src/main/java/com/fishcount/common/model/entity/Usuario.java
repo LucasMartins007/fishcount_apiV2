@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -26,24 +25,12 @@ public class Usuario extends AbstractEntity<Integer> {
 
     @Column(name = "nome")
     private String nome;
-
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Telefone> telefones;
-
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Endereco> enderecos;
-
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Email> emails;
-
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Lote> lotes;
     
     @Column(name = "senha")
     private String senha;
-    
-    @Column(name = "cpf")
-    private String cpf;
+
+    @Column(name = "email")
+    private String email;
     
     @Column(name = "ativo")
     private boolean ativo;
@@ -55,4 +42,14 @@ public class Usuario extends AbstractEntity<Integer> {
     @Column(name = "data_alteracao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAlteracao;
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

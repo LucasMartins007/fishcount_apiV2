@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class AnaliseDTO extends AbstractDTO<Integer> {
+public class AnaliseDTO implements AbstractDTO<Integer> {
 
     private Integer id;
 

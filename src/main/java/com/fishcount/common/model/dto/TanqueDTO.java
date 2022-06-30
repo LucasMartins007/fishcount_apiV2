@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class TanqueDTO extends AbstractDTO<Integer> {
+public class TanqueDTO implements AbstractDTO<Integer> {
 
     private Integer id;
     

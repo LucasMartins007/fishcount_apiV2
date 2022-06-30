@@ -3,11 +3,12 @@ package com.fishcount.api.repository.impl;
 import com.fishcount.api.infrastructure.spec.TelefoneSpec;
 import com.fishcount.api.repository.custom.CustomTelefoneRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Telefone;
-import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoTelefone;
-import java.util.List;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  *
@@ -25,22 +26,22 @@ public class TelefoneRepositoryImpl extends GenericImpl<Telefone, Integer> imple
     }
 
     @Override
-    public Telefone findByUsuarioAndTipo(Usuario usuario, EnumTipoTelefone tipoTelefone) {
+    public Telefone findByPessoaAndTipo(Pessoa pessoa, EnumTipoTelefone tipoTelefone) {
         return getSpecRepository()
                 .findOne(
                         TelefoneSpec.telefonesAtivos()
-                                .and(TelefoneSpec.telefonesByUsuario(usuario))
+                                .and(TelefoneSpec.telefonesByPessoa(pessoa))
                                 .and(TelefoneSpec.telefoneByTipo(tipoTelefone))
                 )
                 .orElse(null);
     }
 
     @Override
-    public List<Telefone> findAllAtivosByUsuario(Usuario usuario) {
+    public List<Telefone> findAllAtivosByPessoa(Pessoa pessoa) {
         return getSpecRepository()
                 .findAll(
                         TelefoneSpec.telefonesAtivos()
-                                .and(TelefoneSpec.telefonesByUsuario(usuario))
+                                .and(TelefoneSpec.telefonesByPessoa(pessoa))
                 );
     }
 

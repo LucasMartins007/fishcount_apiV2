@@ -4,9 +4,9 @@ import com.fishcount.api.controller.interfaces.ITelefoneController;
 import com.fishcount.api.service.TelefoneService;
 import com.fishcount.common.model.dto.TelefoneDTO;
 import com.fishcount.common.model.entity.Telefone;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TelefoneController extends AbstractController<TelefoneService> implements ITelefoneController {

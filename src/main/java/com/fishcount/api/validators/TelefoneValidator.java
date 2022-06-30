@@ -6,16 +6,18 @@ import com.fishcount.api.validators.pattern.ValidateEntity;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Telefone;
-import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoTelefone;
 import com.fishcount.common.utils.Utils;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author lucas
  */
+@Component
 public class TelefoneValidator extends AbstractValidatorImpl<Telefone> {
 
     @Override
@@ -24,7 +26,7 @@ public class TelefoneValidator extends AbstractValidatorImpl<Telefone> {
 
         validate.add(telefone.getDescricao(), "Telefone");
         validate.add(telefone.getTipoTelefone(), "Tipo Telefone");
-        validate.add(telefone.getUsuario(), "Usuário");
+        validate.add(telefone.getPessoa(), "Pessoa");
 
         validate.validate();
     }
@@ -62,13 +64,13 @@ public class TelefoneValidator extends AbstractValidatorImpl<Telefone> {
     }
 
     private void validateTelefonePrincipalDuplicado(Telefone telefone) {
-        final Usuario usuario = telefone.getUsuario();
+        final Pessoa pessoa = telefone.getPessoa();
 
-        if (Utils.isEmpty(usuario.getId())) {
+        if (Utils.isEmpty(pessoa.getId())) {
             return;
         }
 
-        OptionalUtil.ofNullable(getRepository(TelefoneRepository.class).findByUsuarioAndTipo(usuario, EnumTipoTelefone.PRINCIPAL))
+        OptionalUtil.ofNullable(getRepository(TelefoneRepository.class).findByPessoaAndTipo(pessoa, EnumTipoTelefone.PRINCIPAL))
                 .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.TELEFONE_PRINCIPAL_DUPLICADO, telefone.getDescricao()));
     }
 

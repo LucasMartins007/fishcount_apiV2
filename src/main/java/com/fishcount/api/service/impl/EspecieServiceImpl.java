@@ -9,8 +9,9 @@ import com.fishcount.common.model.dto.EspecieDTO;
 import com.fishcount.common.model.entity.Especie;
 import com.fishcount.common.model.entity.TaxaCrescimento;
 import com.fishcount.common.utils.DateUtil;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EspecieServiceImpl extends AbstractServiceImpl<Especie, Integer, EspecieDTO> implements EspecieService {
@@ -43,7 +44,7 @@ public class EspecieServiceImpl extends AbstractServiceImpl<Especie, Integer, Es
 
     @Override
     public List<Especie> listarTodos() {
-        return getRepository(EspecieRepository.class).findAll();
+        return getRepository(EspecieRepository.class).findAllOrderByDescricao();
     }
 
     @Override

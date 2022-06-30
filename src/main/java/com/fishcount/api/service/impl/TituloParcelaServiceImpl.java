@@ -1,6 +1,5 @@
 package com.fishcount.api.service.impl;
 
-import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.TituloParcelaService;
 import com.fishcount.common.model.dto.financeiro.TituloParcelaDTO;
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;

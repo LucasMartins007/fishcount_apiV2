@@ -7,7 +7,6 @@ import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.classes.UserDTO;
 import com.fishcount.common.model.entity.Usuario;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +26,7 @@ public class LoginController extends AbstractController<UsuarioService> implemen
     private final PasswordEncoder passwordEnconder;
 
     @Override
-    public ResponseEntity<?> authenticate(@RequestBody UserDTO authenticationRequest) throws Exception {
+    public ResponseEntity<UserDTO> authenticate(@RequestBody UserDTO authenticationRequest) {
         final Usuario user = getService().findByEmail(authenticationRequest.getUsername());
         
         if (!passwordEnconder.matches(authenticationRequest.getPassword(), user.getSenha())){

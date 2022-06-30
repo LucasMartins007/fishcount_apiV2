@@ -1,11 +1,10 @@
 package com.fishcount.common.model.enums;
 
-import javax.persistence.Converter;
-
 import com.fishcount.common.model.dto.pattern.IEnum;
 import com.fishcount.common.model.dto.pattern.converter.AbstractEnumConverter;
-
 import lombok.Getter;
+
+import javax.persistence.Converter;
 
 @Getter
 public enum EnumTipoPagamento implements IEnum<Integer> {
@@ -17,7 +16,7 @@ public enum EnumTipoPagamento implements IEnum<Integer> {
 
     private final String value;
 
-    private EnumTipoPagamento(Integer key, String value) {
+    EnumTipoPagamento(Integer key, String value) {
         this.key = key;
         this.value = value;
     }
