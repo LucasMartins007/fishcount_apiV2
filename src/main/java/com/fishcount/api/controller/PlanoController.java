@@ -4,8 +4,9 @@ import com.fishcount.api.controller.interfaces.IPlanoController;
 import com.fishcount.api.service.PlanoService;
 import com.fishcount.common.model.dto.financeiro.PlanoDTO;
 import com.fishcount.common.model.entity.financeiro.Plano;
-import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class PlanoController extends AbstractController<PlanoService> implements IPlanoController {

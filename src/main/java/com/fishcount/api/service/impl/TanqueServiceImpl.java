@@ -12,16 +12,18 @@ import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.model.entity.Tanque;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.Utils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, TanqueDTO> implements TanqueService {
 
-    private final TanqueValidator tanqueValidator = new TanqueValidator();
+    private final TanqueValidator tanqueValidator;
     
-    private final EspecieValidator especieValidator = new EspecieValidator();
+    private final EspecieValidator especieValidator;
 
     @Override
     public Tanque incluir(Integer loteId, Tanque tanque) {

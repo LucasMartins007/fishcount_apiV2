@@ -160,7 +160,7 @@ public class NumericUtil {
 
         String sRet = "";
 
-        if (!(s == null)) {
+        if (s != null) {
             sRet = numbers(s);
         }
 

@@ -4,15 +4,8 @@ import com.fishcount.api.service.gerencianet.pix.GenericPix;
 import com.fishcount.api.service.gerencianet.pix.location.ClientLocationPix;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
-import com.fishcount.common.model.classes.gerencianet.request.PayloadQRCode;
-import com.fishcount.common.model.classes.gerencianet.response.PayloadCobrancaResponse;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadLocationResponse;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadQRCodeResponse;
-import com.fishcount.common.model.pattern.client.ClientConsumer;
-import com.fishcount.common.utils.Utils;
-
-import java.util.Date;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,6 +13,10 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
+
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -32,7 +29,7 @@ public class ClientLocationPixImpl extends GenericPix<PayloadLocationResponse> i
 
     @Override
     public List<PayloadLocationResponse> consultarLocations(Date dataInicio, Date dataFim, boolean txIdPresente, String tipoCobranca) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -65,7 +62,7 @@ public class ClientLocationPixImpl extends GenericPix<PayloadLocationResponse> i
     }
 
     @Override
-    public void desvincularTxIdDaLocation(Integer LocationId) {
-
+    public void desvincularTxIdDaLocation(Integer locationId) {
+        // TODO document why this method is empty
     }
 }

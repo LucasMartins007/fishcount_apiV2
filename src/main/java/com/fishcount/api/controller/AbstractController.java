@@ -4,13 +4,9 @@ import com.fishcount.api.converter.Converter;
 import com.fishcount.api.infrastructure.context.IContext;
 import com.fishcount.api.service.impl.interfaces.IAbstractService;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
-import com.fishcount.common.model.dto.pattern.converter.DefaultDTO;
 import com.fishcount.common.model.pattern.AbstractEntity;
 import com.fishcount.common.utils.LoggerUtil;
-import com.fishcount.common.utils.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.ParameterizedType;
@@ -26,7 +22,7 @@ public abstract class AbstractController<E extends IAbstractService<?, ?, ?>> {
     @Autowired
     private HttpServletRequest request;
     
-    private Class<E> serviceClass;
+    private final Class<E> serviceClass;
 
     protected AbstractController() {
         this.serviceClass = resolverServiceClass(this.getClass());
@@ -36,54 +32,23 @@ public abstract class AbstractController<E extends IAbstractService<?, ?, ?>> {
         return getContext().getBean(serviceClass);
     }
 
-    protected ResponseEntity<?> okResponse() {
-        return ResponseEntity.ok().build();
-    }
-
-    protected ResponseEntity<?> okResponse(Object body) {
-        return ResponseEntity.ok(body);
-    }
-
-    protected <E extends AbstractEntity<?>, DTO extends AbstractDTO<?>> ResponseEntity<?> okResponsePage(Page<E> bodyPageCollection, Class<DTO> classDTO) {
-        if (!bodyPageCollection.isEmpty()) {
-            return ResponseEntity.ok(bodyPageCollection.map(item -> converterEntityParaDTO(item, classDTO)));
-        }
-        return createNoContentResponse();
-    }
-
-    protected <D extends AbstractDTO> ResponseEntity defaultResponse(List<? extends AbstractEntity> list, Class<D> clazzDto) {
-        final List<D> dtoList = Converter.converterEntityParaDTO(list, clazzDto);
-        return okResponse(new DefaultDTO(dtoList));
-    }
-
-    protected ResponseEntity createNoContentResponse() {
-        return ResponseEntity.noContent().build();
-    }
-
-    protected ResponseEntity createBadRequestResponse() {
-        return ResponseEntity.badRequest().build();
-    }
-
-    protected Integer getParamValueAsInteger(final String pathVariable) {
-        return RequestUtil.getParamValueAsInteger(request, pathVariable);
-    }
-
-    protected <D extends AbstractDTO<?>, E extends AbstractEntity> E converterDTOParaEntity(D dto, Class<E> clazzEntity) {
+    protected <D extends AbstractDTO<?>, C extends AbstractEntity<?>> C converterDTOParaEntity(D dto, Class<C> clazzEntity) {
         return Converter.converterDTOParaEntity(dto, clazzEntity);
     }
 
-    protected <D extends AbstractDTO<?>, E extends AbstractEntity> List<E> converterDTOParaEntity(List<D> dtos, Class<E> clazzEntity) {
+    protected <D extends AbstractDTO<?>, C extends AbstractEntity<?>> List<C> converterDTOParaEntity(List<D> dtos, Class<C> clazzEntity) {
         return Converter.converterDTOParaEntity(dtos, clazzEntity);
     }
 
-    protected <D extends AbstractDTO<?>, E extends AbstractEntity> D converterEntityParaDTO(E entity, Class<D> clazzDto) {
+    protected <D extends AbstractDTO<?>, C extends AbstractEntity<?>> D converterEntityParaDTO(C entity, Class<D> clazzDto) {
         return Converter.converterEntityParaDTO(entity, clazzDto);
     }
 
-    protected <D extends AbstractDTO<?>, E extends AbstractEntity> List<D> converterEntityParaDTO(List<E> entitys, Class<D> clazzDto) {
+    protected <D extends AbstractDTO<?>, C extends AbstractEntity<?>> List<D> converterEntityParaDTO(List<C> entitys, Class<D> clazzDto) {
         return Converter.converterEntityParaDTO(entitys, clazzDto);
     }
 
+    @SuppressWarnings("unchecked")
     private Class<E> resolverServiceClass(Class<?> serviceClass) {
         try {
             return (Class<E>) ((ParameterizedType) serviceClass.getGenericSuperclass()).getActualTypeArguments()[0];

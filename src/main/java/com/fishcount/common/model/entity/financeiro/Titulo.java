@@ -1,14 +1,14 @@
 package com.fishcount.common.model.entity.financeiro;
 
-import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import com.fishcount.common.model.enums.EnumTipoTitulo;
 import com.fishcount.common.model.pattern.AbstractEntity;
-import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -67,7 +67,17 @@ public class Titulo extends AbstractEntity<Integer> {
     private List<TituloParcela> titulosParcelas;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_titulo_to_fish_usuario"))
-    private Usuario usuario;
+    @JoinColumn(name = "id_pessoa", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_titulo_to_fish_pessoa"))
+    private Pessoa pessoa;
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
 }

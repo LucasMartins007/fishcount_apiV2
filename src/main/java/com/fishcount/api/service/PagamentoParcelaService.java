@@ -6,14 +6,13 @@ import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.entity.financeiro.pix.QRCodePix;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
+
 import java.util.List;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Lucas Martins
  */
-@Service
 public interface PagamentoParcelaService extends IAbstractService<PagamentoParcela, Integer, PagamentoParcelaDTO> {
 
     List<PagamentoParcela> incluirParcelas(Pagamento pagamento);

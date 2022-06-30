@@ -52,4 +52,14 @@ public class TaxaCrescimento extends AbstractEntity<Integer> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
 }

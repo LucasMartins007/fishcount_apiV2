@@ -18,9 +18,9 @@ public interface IContext {
     
     IContext context = new ContextImpl();
 
-    void createBean(Class domainClass);
+    void createBean(Class<?> domainClass);
 
-    void destroyBean(Class domainClass);
+    void destroyBean(Class<?> domainClass);
 
     <T> T getBean(Class<T> domainClass);
 
@@ -28,7 +28,7 @@ public interface IContext {
 
     boolean hasRepositoryFor(Class<?> domainClass);
 
-    <T extends AbstractEntity<?>, ID extends Object> JpaRepository<T, ID> getRepositoryFromClass(Class<T> domainClass);
+    <T extends AbstractEntity<?>, I> JpaRepository<T, I> getRepositoryFromClass(Class<T> domainClass);
 
     <T extends AbstractEntity<?>> JpaSpecificationExecutor<T> getSpecRepositoryFromClass(Class<T> domainClass);
 

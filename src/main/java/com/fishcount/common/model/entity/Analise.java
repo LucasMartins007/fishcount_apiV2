@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.persistence.Column;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -41,5 +40,15 @@ public class Analise extends AbstractEntity<Integer>{
     @Column(name = "data_analise")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateAnalise;
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
 }

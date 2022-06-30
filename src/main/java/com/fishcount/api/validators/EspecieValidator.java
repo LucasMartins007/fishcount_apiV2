@@ -5,6 +5,7 @@ import com.fishcount.api.validators.pattern.AbstractValidatorImpl;
 import com.fishcount.api.validators.pattern.ValidateEntity;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
 import com.fishcount.common.model.entity.Especie;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
  *
  * @author lucas
  */
+@Component
 public class EspecieValidator extends AbstractValidatorImpl<Especie>{
 
     @Override

@@ -42,4 +42,18 @@ public class Lote extends AbstractEntity<Integer> {
 
     @OneToMany(mappedBy = "lote", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tanque> tanques;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pessoa", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_lote_to_fish_pessoa"))
+    private Pessoa pessoa;
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

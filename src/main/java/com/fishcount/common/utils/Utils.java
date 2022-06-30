@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public class Utils {
 
-    Utils() {
+    private Utils(){
     }
 
     public static boolean isEmpty(Object obj) {
@@ -129,6 +129,21 @@ public class Utils {
 
         return g.fromJson(jsonString, clzz);
     }
+
+    public static boolean equals(Object val1, Object val2) {
+        if (val1 == null && val2 == null) {
+            return true;
+        } else if (val1 != null && val2 != null) {
+            if (val1.getClass().isPrimitive()) {
+                return val1 == val2;
+            } else {
+                return val1.equals(val2);
+            }
+        } else {
+            return false;
+        }
+    }
+
 
 
 }

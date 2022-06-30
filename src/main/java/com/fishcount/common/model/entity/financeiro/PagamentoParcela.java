@@ -3,24 +3,12 @@ package com.fishcount.common.model.entity.financeiro;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.model.enums.EnumTipoPagamento;
 import com.fishcount.common.model.pattern.AbstractEntity;
-import java.math.BigDecimal;
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -73,5 +61,15 @@ public class PagamentoParcela extends AbstractEntity<Integer> {
     @Column(name = "data_vencimento")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataVencimento;
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
 }

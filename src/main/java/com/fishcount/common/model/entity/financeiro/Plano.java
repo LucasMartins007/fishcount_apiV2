@@ -1,12 +1,12 @@
 package com.fishcount.common.model.entity.financeiro;
 
 import com.fishcount.common.model.pattern.AbstractEntity;
-import java.math.BigDecimal;
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -52,5 +52,15 @@ public class Plano extends AbstractEntity<Integer> {
     @Column(name = "data_alteracao", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAlteracao;
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
 }

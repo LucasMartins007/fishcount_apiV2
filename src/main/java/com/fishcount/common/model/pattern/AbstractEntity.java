@@ -1,8 +1,9 @@
 package com.fishcount.common.model.pattern;
 
-import javax.persistence.MappedSuperclass;
-
 import org.hibernate.proxy.HibernateProxyHelper;
+import org.jetbrains.annotations.Contract;
+
+import javax.persistence.MappedSuperclass;
 
 /**
  *
@@ -17,8 +18,9 @@ public abstract class AbstractEntity<T extends Number> implements IIdentifier<T>
         return this.getClass().getSimpleName() + "(id=" + getId() + ")";
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
+    @Contract(value = "null -> false", pure = true)
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;

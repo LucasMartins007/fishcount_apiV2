@@ -4,11 +4,13 @@ package com.fishcount.api.validators;
 import com.fishcount.api.validators.pattern.AbstractValidatorImpl;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
 import com.fishcount.common.model.entity.Tanque;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author lucas
  */
+@Component
 public class TanqueValidator extends AbstractValidatorImpl<Tanque>{
 
     @Override

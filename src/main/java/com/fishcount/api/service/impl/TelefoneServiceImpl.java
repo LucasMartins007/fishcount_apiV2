@@ -1,17 +1,17 @@
 package com.fishcount.api.service.impl;
 
 import com.fishcount.api.repository.TelefoneRepository;
+import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.TelefoneService;
-import com.fishcount.api.service.UsuarioService;
 import com.fishcount.api.validators.TelefoneValidator;
 import com.fishcount.common.model.dto.TelefoneDTO;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Telefone;
-import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.utils.DateUtil;
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *
@@ -21,26 +21,29 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TelefoneServiceImpl extends AbstractServiceImpl<Telefone, Integer, TelefoneDTO> implements TelefoneService {
 
-    private final TelefoneValidator telefoneValidator = new TelefoneValidator();
+    private final TelefoneValidator telefoneValidator;
     
     @Override
-    public Telefone incluir(Integer idUsuario, Telefone telefone) {
-        onPrepareInsert(telefone);
+    public Telefone incluir(Integer idPessoa, Telefone telefone) {
+        onPrepareInsert(telefone, idPessoa);
         
         telefoneValidator.validateInsertOrUpdate(telefone);
         
         return getRepository().save(telefone);
     }
 
-    private void onPrepareInsert(Telefone telefone) {
+    private void onPrepareInsert(Telefone telefone, Integer idPessoa) {
+        final Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
+
         telefone.setAtivo(true);
         telefone.setDataAtualizacao(DateUtil.getDate());
         telefone.setDataInclusao(DateUtil.getDate());
+        telefone.setPessoa(pessoa);
     }
 
     @Override
-    public void editar(Integer idUsuario, Integer idTelefone, Telefone telefone) {
-        onPrepareUpdate(idUsuario, idTelefone, telefone);
+    public void editar(Integer idPessoa, Integer idTelefone, Telefone telefone) {
+        onPrepareUpdate(idPessoa, idTelefone, telefone);
         
         telefoneValidator.validateInsertOrUpdate(telefone);
         
@@ -48,10 +51,10 @@ public class TelefoneServiceImpl extends AbstractServiceImpl<Telefone, Integer, 
     }
 
     @Override
-    public List<Telefone> listarAtivos(Integer idUsuario) {
-        final Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
+    public List<Telefone> listarAtivos(Integer idPessoa) {
+        final Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
         
-        return getRepository(TelefoneRepository.class).findAllAtivosByUsuario(usuario);
+        return getRepository(TelefoneRepository.class).findAllAtivosByPessoa(pessoa);
     }
 
     @Override
@@ -65,15 +68,15 @@ public class TelefoneServiceImpl extends AbstractServiceImpl<Telefone, Integer, 
         getRepository().save(telefone);
     }
 
-    private void onPrepareUpdate(Integer idUsuario, Integer idTelefone, Telefone telefone) {
-        final Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
+    private void onPrepareUpdate(Integer idPessoa, Integer idTelefone, Telefone telefone) {
+        final Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
         
         final Telefone managedTelefone = findAndValidate(idTelefone);
         
         telefone.setId(managedTelefone.getId());
         telefone.setAtivo(true);
         telefone.setDataAtualizacao(DateUtil.getDate());
-        telefone.setUsuario(usuario);
+        telefone.setPessoa(pessoa);
     }
 
     private void onPrepareDelete(Telefone telefone) {

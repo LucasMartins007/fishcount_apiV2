@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class LoteDTO extends AbstractDTO<Integer> {
+public class LoteDTO implements AbstractDTO<Integer> {
 
     private Integer id;
     

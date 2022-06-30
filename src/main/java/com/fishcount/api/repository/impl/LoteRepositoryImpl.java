@@ -1,12 +1,13 @@
 package com.fishcount.api.repository.impl;
 
+import com.fishcount.api.infrastructure.spec.LoteSpec;
 import com.fishcount.api.repository.custom.CustomLoteRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
-import com.fishcount.api.infrastructure.spec.LoteSpec;
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.model.entity.Usuario;
-import java.util.List;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  *
