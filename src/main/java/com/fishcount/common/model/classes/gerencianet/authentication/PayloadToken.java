@@ -1,6 +1,6 @@
 package com.fishcount.common.model.classes.gerencianet.authentication;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,11 +8,14 @@ import lombok.Setter;
 @Setter
 public class PayloadToken {
 
-    private String access_token;
+    @JsonProperty("access_token")
+    private String accessToken;
 
-    private String token_type;
+    @JsonProperty("token_type")
+    private String tokenType;
 
-    private Integer expires_in;
+    @JsonProperty("expires_in")
+    private Integer expiresIn;
 
     private String scope;
 }

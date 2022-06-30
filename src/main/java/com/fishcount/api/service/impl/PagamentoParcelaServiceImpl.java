@@ -15,13 +15,14 @@ import com.fishcount.common.model.entity.financeiro.pix.QRCodePix;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.utils.BigDecimalUtil;
 import com.fishcount.common.utils.DateUtil;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class PagamentoParcelaServiceImpl
         extends AbstractServiceImpl<PagamentoParcela, Integer, PagamentoParcelaDTO>
         implements PagamentoParcelaService {
 
-    private final PagamentoParcelaValidator pagamentoParcelaValidator = new PagamentoParcelaValidator();
+    private final PagamentoParcelaValidator pagamentoParcelaValidator;
 
     @Override
     public List<PagamentoParcela> incluirParcelas(Pagamento pagamento) {

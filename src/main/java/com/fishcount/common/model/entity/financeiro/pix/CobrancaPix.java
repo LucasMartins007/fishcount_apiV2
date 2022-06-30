@@ -1,29 +1,14 @@
 package com.fishcount.common.model.entity.financeiro.pix;
 
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
-import java.math.BigDecimal;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import com.fishcount.common.model.enums.EnumStatusCobranca;
 import com.fishcount.common.model.pattern.AbstractEntity;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -79,4 +64,14 @@ public class CobrancaPix extends AbstractEntity<Integer> {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_location", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_cobranca_pix_to_fin_location"))
     private LocationPix location;
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

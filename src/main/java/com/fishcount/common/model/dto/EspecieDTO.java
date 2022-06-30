@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  */
 @Getter
 @Setter
-public class EspecieDTO extends AbstractDTO<Integer> {
+public class EspecieDTO implements AbstractDTO<Integer> {
 
     private Integer id;
     

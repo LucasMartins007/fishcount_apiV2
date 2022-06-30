@@ -9,20 +9,21 @@ import com.fishcount.common.model.classes.gerencianet.request.PayloadDevedor;
 import com.fishcount.common.model.classes.gerencianet.request.PayloadValor;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadCobrancaResponse;
 import com.fishcount.common.model.dto.financeiro.pix.CobrancaPixDTO;
+import com.fishcount.common.model.entity.Pessoa;
+import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.entity.financeiro.pix.CobrancaPix;
 import com.fishcount.common.model.entity.financeiro.pix.LocationPix;
-import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
-import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.optional.OptionalUtil;
-import java.math.BigDecimal;
-import java.time.Duration;
-import java.util.Calendar;
-import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.util.Calendar;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -38,12 +39,12 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
 
     @Override
     @Async
-    public CobrancaPix gerarRegistoCobrancaPix(PagamentoParcela parcela) {
+    public void gerarRegistoCobrancaPix(PagamentoParcela parcela) {
         final PayloadCobrancaResponse payload = gerarPayloadCobranca(parcela);
 
         final CobrancaPix cobrancaPix = gerarCobrancaPix(payload, parcela);
 
-        return getRepository().save(cobrancaPix);
+        getRepository().save(cobrancaPix);
 
     }
 
@@ -69,12 +70,12 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
     }
 
     private PayloadCobrancaResponse gerarPayloadCobranca(PagamentoParcela parcela) {
-        PayloadCobranca payload = new PayloadCobranca();
-        Usuario usuario = OptionalUtil
-                .ofFallibleNullable(() -> parcela.getPagamento().getUsuario())
+        final PayloadCobranca payload = new PayloadCobranca();
+        final Pessoa pessoa = OptionalUtil
+                .ofFallibleNullable(() -> parcela.getPagamento().getPessoa())
                 .orElse(null);
 
-        PayloadDevedor devedor = new PayloadDevedor(usuario.getNome(), usuario.getCpf());
+        PayloadDevedor devedor = new PayloadDevedor(pessoa.getNome(), pessoa.getCpf());
         payload.setDevedor(devedor);
 
         PayloadCalendario calendario = new PayloadCalendario(calcularSegundosNoMes(parcela.getDataVencimento()));

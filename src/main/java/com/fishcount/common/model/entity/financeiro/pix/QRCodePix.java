@@ -2,22 +2,11 @@ package com.fishcount.common.model.entity.financeiro.pix;
 
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.pattern.AbstractEntity;
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  *
@@ -53,5 +42,15 @@ public class QRCodePix extends AbstractEntity<Integer> {
     @Column(name = "data_alteracao", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAlteracao;
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
 }

@@ -6,7 +6,6 @@ import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcHttpException;
 import com.fishcount.common.model.classes.gerencianet.authentication.PayloadToken;
 import com.fishcount.common.model.pattern.constants.HttpConstants;
-import com.fishcount.common.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -36,19 +35,15 @@ public class PixServiceImpl implements PixService {
 
     @Override
     public String getBearerToken() {
-        PayloadToken token = getPayloadToken();
-
-        return token.getAccess_token();
-    }
-
-    private PayloadToken getPayloadToken() {
         final RequestEntity<?> requestConfig = getRequestTokenConfiguration();
         final ResponseEntity<PayloadToken> response = restTemplate.getRestConfig().postForEntity(urlToken, requestConfig, PayloadToken.class);
 
-        if (!HttpStatus.OK.equals(response.getStatusCode()) || Utils.isEmpty(response.getBody())) {
+        final PayloadToken token = response.getBody();
+        if (!HttpStatus.OK.equals(response.getStatusCode()) || token == null) {
             throw new FcRuntimeException(EnumFcHttpException.NAO_FOI_POSSIVEL_CAPTURAR_TOKEN_PIX);
         }
-        return response.getBody();
+
+        return token.getAccessToken();
     }
 
     private RequestEntity<?> getRequestTokenConfiguration() {
@@ -64,7 +59,7 @@ public class PixServiceImpl implements PixService {
 
             return new RequestEntity<>(clientCredentials, headers, HttpMethod.POST, urlAccessToken);
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            throw new FcRuntimeException(e);
         }
     }
 

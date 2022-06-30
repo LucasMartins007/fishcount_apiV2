@@ -1,33 +1,16 @@
 package com.fishcount.common.model.entity.financeiro;
 
-import com.fishcount.common.model.entity.Usuario;
-import java.math.BigDecimal;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.model.enums.EnumTipoPagamento;
 import com.fishcount.common.model.pattern.AbstractEntity;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -62,8 +45,8 @@ public class Pagamento extends AbstractEntity<Integer> {
     private EnumTipoPagamento tipoPagamento;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_pagamento_to_fish_usuario"))
-    private Usuario usuario;
+    @JoinColumn(name = "id_pessoa", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_pagamento_to_fish_pessoa"))
+    private Pessoa pessoa;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_plano", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_pagamento_to_fin_plano"))
@@ -90,5 +73,15 @@ public class Pagamento extends AbstractEntity<Integer> {
     @Column(name = "data_vencimento")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataVencimento;
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 
 }

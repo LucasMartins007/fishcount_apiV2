@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class EmailDTO extends AbstractDTO<Integer> {
+public class EmailDTO implements AbstractDTO<Integer> {
 
     private Integer id;
 

@@ -4,9 +4,9 @@ import com.fishcount.api.controller.interfaces.IEmailController;
 import com.fishcount.api.service.EmailService;
 import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.entity.Email;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class EmailController extends AbstractController<EmailService> implements IEmailController {

@@ -13,7 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class TaxaCrescimentoDTO extends AbstractDTO<Integer> {
+public class TaxaCrescimentoDTO implements AbstractDTO<Integer> {
 
     private Integer id;
 

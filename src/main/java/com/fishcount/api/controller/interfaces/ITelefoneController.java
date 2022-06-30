@@ -3,10 +3,10 @@ package com.fishcount.api.controller.interfaces;
 import com.fishcount.common.model.dto.TelefoneDTO;
 import com.fishcount.common.model.pattern.OperationsParam;
 import com.fishcount.common.model.pattern.OperationsPath;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.http.HttpStatus;
 
 /**
  *

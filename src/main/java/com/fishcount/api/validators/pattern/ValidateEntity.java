@@ -5,6 +5,8 @@ import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.pattern.enums.EnumDateFormat;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.NumericUtil;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,6 +15,7 @@ import java.util.Date;
  *
  * @author lucas
  */
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidateEntity {
 
     public static void validateGreaterThanZero(Number number, String name) {
@@ -21,7 +24,7 @@ public class ValidateEntity {
         }
     }
 
-    public static <N extends Number> void validateLessThan(BigDecimal number, BigDecimal min, String name) {
+    public static void validateLessThan(BigDecimal number, BigDecimal min, String name) {
         if (number != null && number.compareTo(min) >= 0) {
             throw new FcRuntimeException(EnumFcDomainException.CAMPO_MENOR_QUE, name, min);
         }
@@ -62,13 +65,13 @@ public class ValidateEntity {
         }
     }
 
-    public static <N extends Number> void validateMinCaracter(String value, int min, String name) {
+    public static void validateMinCaracter(String value, int min, String name) {
         if (value == null || value.trim().length() < min) {
             throw new FcRuntimeException(EnumFcDomainException.CAMPO_MINIMO_CARACTERS, name, min);
         }
     }
 
-    public static <N extends Number> void validateMaxCaracter(String value, int max, String name) {
+    public static void validateMaxCaracter(String value, int max, String name) {
         if (value != null && value.trim().length() > max) {
             throw new FcRuntimeException(EnumFcDomainException.CAMPO_MAXIMO_CARACTERS, name, max);
         }
@@ -117,7 +120,7 @@ public class ValidateEntity {
         }
     }
 
-    public static <N extends Number> void validateSizeEqualsCaracter(String value, int size, String name) {
+    public static void validateSizeEqualsCaracter(String value, int size, String name) {
         value = value == null ? "" : value;
         if (value.trim().length() != size) {
             throw new FcRuntimeException(EnumFcDomainException.CAMPO_IGUAL_CARACTERS, name, size);

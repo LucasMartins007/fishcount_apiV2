@@ -6,17 +6,18 @@ import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.entity.Email;
-import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.enums.EnumTipoEmail;
 import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.StringUtil;
 import com.fishcount.common.utils.Utils;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import org.springframework.stereotype.Component;
 
 /**
- *
  * @author lucas
  */
+@Component
 public class EmailValidator extends AbstractValidatorImpl<Email> {
 
     @Override
@@ -25,7 +26,7 @@ public class EmailValidator extends AbstractValidatorImpl<Email> {
 
         validate.add(email.getDescricao(), "Email");
         validate.add(email.getTipoEmail(), "Tipo Email");
-        validate.add(email.getUsuario(), "Usuário");
+        validate.add(email.getPessoa(), "Pessoa");
 
         validate.validate();
     }
@@ -33,7 +34,7 @@ public class EmailValidator extends AbstractValidatorImpl<Email> {
     @Override
     public void validateInsertOrUpdate(Email email) {
         validateRequiredFields(email);
-        validarEmailUsuario(email);
+        validarEmail(email);
         validateDuplicidadeEmail(email);
         validateEmailPrincipal(email);
     }
@@ -51,11 +52,9 @@ public class EmailValidator extends AbstractValidatorImpl<Email> {
                 });
     }
 
-    private void validarEmailUsuario(Email email) {
-        if (Utils.isNotEmpty(email)) {
-            if (!StringUtil.isValidEmail(email.getDescricao())) {
-                throw new FcRuntimeException(EnumFcDomainException.EMAIL_INVALIDO, email.getDescricao());
-            }
+    private void validarEmail(Email email) {
+        if (Utils.isNotEmpty(email) && !StringUtil.isValidEmail(email.getDescricao())) {
+            throw new FcRuntimeException(EnumFcDomainException.EMAIL_INVALIDO, email.getDescricao());
         }
     }
 
@@ -66,13 +65,14 @@ public class EmailValidator extends AbstractValidatorImpl<Email> {
     }
 
     private void validateEmailPrincipal(Email email) {
-        final Usuario usuario = email.getUsuario();
-        final boolean usuarioHasEmailPrincipal = ListUtil.stream(usuario.getEmails())
-                .anyMatch(e -> !e.equals(email) && EnumTipoEmail.isPrincipal(email) && EnumTipoEmail.isPrincipal(e));
+        final Pessoa pessoa = email.getPessoa();
 
-        if (usuarioHasEmailPrincipal) {
-            throw new FcRuntimeException(EnumFcDomainException.EMAIL_PRINCIPAL_DUPLICADO);
-        }
+        ListUtil.stream(pessoa.getEmails())
+                .filter(e -> !e.equals(email) && EnumTipoEmail.isPrincipal(email) && EnumTipoEmail.isPrincipal(e))
+                .findAny()
+                .ifPresent(e -> {
+                    throw new FcRuntimeException(EnumFcDomainException.EMAIL_PRINCIPAL_DUPLICADO);
+                });
     }
 
 }

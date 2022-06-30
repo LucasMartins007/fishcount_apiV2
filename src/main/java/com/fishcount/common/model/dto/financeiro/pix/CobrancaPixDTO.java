@@ -3,10 +3,11 @@ package com.fishcount.common.model.dto.financeiro.pix;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import com.fishcount.common.model.enums.EnumStatusCobranca;
-import java.math.BigDecimal;
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -14,7 +15,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class CobrancaPixDTO extends AbstractDTO<Integer>{
+public class CobrancaPixDTO implements AbstractDTO<Integer>{
 
     private Integer id;
     

@@ -9,12 +9,14 @@ import com.fishcount.common.model.dto.TaxaCrescimentoDTO;
 import com.fishcount.common.model.entity.Especie;
 import com.fishcount.common.model.entity.TaxaCrescimento;
 import com.fishcount.common.utils.DateUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class TaxaCrescimentoServiceImpl extends AbstractServiceImpl<TaxaCrescimento, Integer, TaxaCrescimentoDTO> implements TaxaCrescimentoService {
 
-    private final TaxaCrescimentoValidator validadorTaxaCrescimento = new TaxaCrescimentoValidator();
+    private final TaxaCrescimentoValidator validadorTaxaCrescimento;
     
     @Override
     public TaxaCrescimento incluir(TaxaCrescimento taxaCrescimento) {

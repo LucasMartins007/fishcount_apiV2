@@ -4,12 +4,6 @@
  */
 package com.fishcount.api.service.impl;
 
-import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.fishcount.api.converter.Converter;
 import com.fishcount.api.infrastructure.context.IContext;
 import com.fishcount.api.service.impl.interfaces.IAbstractService;
@@ -17,7 +11,7 @@ import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import com.fishcount.common.model.pattern.AbstractEntity;
-
+import com.fishcount.common.utils.Utils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,23 +20,29 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.Repository;
 
+import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  *
  * @author lucas
  * @param <E>
  * @param <I>
- * @param <DTO>
+ * @param <D>
  */
-public abstract class AbstractServiceImpl<E extends AbstractEntity<?>, I extends Serializable, DTO extends AbstractDTO<?>>
-        implements IAbstractService<E, I, DTO> {
+public abstract class AbstractServiceImpl<E extends AbstractEntity<?>, I extends Serializable, D extends AbstractDTO<?>>
+        implements IAbstractService<E, I, D> {
 
     private final Class<E> entityClass;
-    private final Class<DTO> dtoClass;
+    private final Class<D> dtoClass;
 
-    public AbstractServiceImpl() {
+    protected AbstractServiceImpl() {
         Type[] actualTypeArguments = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments();
         entityClass = (Class<E>) actualTypeArguments[0];
-        dtoClass = (Class<DTO>) actualTypeArguments[2];
+        dtoClass = (Class<D>) actualTypeArguments[2];
     }
 
     private IContext getContext() {
@@ -79,18 +79,14 @@ public abstract class AbstractServiceImpl<E extends AbstractEntity<?>, I extends
     }
 
     @Override
-    public DTO findById(I id) {
+    public D findById(I id) {
         final E entidade = findAndValidate(id);
 
         return converterEntityToDTO(entidade);
     }
 
-    protected DTO converterEntityToDTO(E entidade) {
+    protected D converterEntityToDTO(E entidade) {
         return Converter.converterEntityParaDTO(entidade, dtoClass);
-    }
-
-    private E converterDTOToEntity(DTO dto) {
-        return Converter.converterDTOParaEntity(dto, entityClass);
     }
 
     private Sort sortBy() {
@@ -98,7 +94,7 @@ public abstract class AbstractServiceImpl<E extends AbstractEntity<?>, I extends
     }
 
     @Override
-    public List<DTO> findAll() {
+    public List<D> findAll() {
         final List<E> entidades = getRepository().findAll();
 
         return entidades.stream()
@@ -107,10 +103,10 @@ public abstract class AbstractServiceImpl<E extends AbstractEntity<?>, I extends
     }
 
     @Override
-    public Page<DTO> findAll(Pageable pageable) {
+    public Page<D> findAll(Pageable pageable) {
         Sort sort = pageable.getSort();
 
-        if (sort == null) {
+        if (Utils.isEmpty(sort)) {
             sort = sortBy();
             pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         }

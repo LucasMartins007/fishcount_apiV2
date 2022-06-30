@@ -5,15 +5,16 @@ import com.fishcount.api.validators.pattern.AbstractValidatorImpl;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.financeiro.Titulo;
-import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import org.springframework.stereotype.Component;
 
 /**
- *
  * @author Lucas Martins
  */
+@Component
 public class TituloValidator extends AbstractValidatorImpl<Titulo> {
 
     @Override
@@ -23,7 +24,7 @@ public class TituloValidator extends AbstractValidatorImpl<Titulo> {
         validate.add(titulo.getValor(), "Valor");
         validate.add(titulo.getAcrescimo(), "Acrescimo");
         validate.add(titulo.getDesconto(), "Desconto");
-        validate.add(titulo.getUsuario(), "Usuario");
+        validate.add(titulo.getPessoa(), "Pessoa");
         validate.add(titulo.getDataVencimento(), "Data de vencimento");
         validate.add(titulo.getStatusTitulo(), "Status do título");
 
@@ -38,11 +39,10 @@ public class TituloValidator extends AbstractValidatorImpl<Titulo> {
     }
 
     private void validateTituloAbertoUsuario(Titulo titulo) {
-        Usuario usuario = titulo.getUsuario();
+        final Pessoa pessoa = titulo.getPessoa();
         OptionalUtil.ofFallibleNullable(() -> getRepository(TituloRepository.class)
-                .findByStatusAndUsuario(EnumStatusTitulo.ABERTO, usuario))
-                .ifPresentThrow(
-                        () -> new FcRuntimeException(EnumFcDomainException.USUARIO_POSSUI_TITULO_ABERTO, usuario.getNome()));
+                        .findByStatusAndUsuario(EnumStatusTitulo.ABERTO, pessoa))
+                .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.USUARIO_POSSUI_TITULO_ABERTO, pessoa.getNome()));
     }
 
 }

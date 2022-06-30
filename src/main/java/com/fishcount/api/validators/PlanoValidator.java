@@ -4,11 +4,13 @@ import com.fishcount.api.validators.pattern.AbstractValidatorImpl;
 import com.fishcount.api.validators.pattern.ValidateEntity;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
 import com.fishcount.common.model.entity.financeiro.Plano;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Lucas Martins
  */
+@Component
 public class PlanoValidator extends AbstractValidatorImpl<Plano> {
 
     @Override

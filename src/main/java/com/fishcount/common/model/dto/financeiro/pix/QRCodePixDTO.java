@@ -10,7 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class QRCodePixDTO extends AbstractDTO<Integer> {
+public class QRCodePixDTO implements AbstractDTO<Integer> {
 
     private Integer id;
 

@@ -1,22 +1,22 @@
 package com.fishcount.api.service.gerencianet.pix.authentication.impl;
 
 import com.fishcount.api.config.rest.RestTemplateConfiguration;
-import com.fishcount.api.service.gerencianet.pix.GenericPix;
-import com.fishcount.common.model.classes.gerencianet.authentication.PayloadToken;
-import com.fishcount.common.model.pattern.constants.HttpConstants;
-import org.springframework.http.*;
-import java.util.Base64;
-import org.springframework.stereotype.Component;
 import com.fishcount.api.service.gerencianet.pix.authentication.ClientTokenPix;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcHttpException;
+import com.fishcount.common.model.classes.gerencianet.authentication.PayloadToken;
+import com.fishcount.common.model.pattern.constants.HttpConstants;
 import com.fishcount.common.utils.Utils;
-import java.net.URI;
-import java.net.URISyntaxException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Base64;
 
 @Component
 public class ClientTokenPixImpl implements ClientTokenPix {
@@ -37,7 +37,7 @@ public class ClientTokenPixImpl implements ClientTokenPix {
     public String getBearerToken() {
         final PayloadToken token = getPayloadToken();
 
-        return token.getAccess_token();
+        return token != null ? token.getAccessToken() : null;
     }
 
     private PayloadToken getPayloadToken() {
@@ -66,7 +66,7 @@ public class ClientTokenPixImpl implements ClientTokenPix {
             return new RequestEntity<>(clientCredentials, headers, HttpMethod.POST, urlAccessToken);
 
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            throw new FcRuntimeException(EnumFcHttpException.NAO_FOI_POSSIVEL_CAPTURAR_TOKEN_PIX);
         }
     }
 

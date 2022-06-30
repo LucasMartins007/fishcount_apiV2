@@ -5,6 +5,7 @@ import com.fishcount.api.service.TituloService;
 import com.fishcount.common.model.dto.financeiro.TituloDTO;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,22 +17,22 @@ public class TituloController extends AbstractController<TituloService> implemen
 
     @Override
     public TituloDTO incluir(Integer idUsuario, TituloDTO tituloDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return null;
     }
 
     @Override
     public List<TituloDTO> listar(Integer idUsuario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Collections.emptyList();
     }
 
     @Override
     public void liquidar(Integer idUsuario, Integer tituloId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // @Todo implementar
     }
 
     @Override
-    public void calncelar(Integer idUsuario, Integer tituloId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void calcelar(Integer idUsuario, Integer tituloId) {
+        // @Todo implementar
     }
 
 }

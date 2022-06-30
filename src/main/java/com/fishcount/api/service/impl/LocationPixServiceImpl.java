@@ -9,7 +9,6 @@ import com.fishcount.common.model.classes.gerencianet.response.PayloadLocationRe
 import com.fishcount.common.model.classes.gerencianet.response.PayloadQRCodeResponse;
 import com.fishcount.common.model.dto.financeiro.pix.LocationPixDTO;
 import com.fishcount.common.model.entity.Usuario;
-
 import com.fishcount.common.model.entity.financeiro.pix.LocationPix;
 import com.fishcount.common.model.entity.financeiro.pix.QRCodePix;
 import com.fishcount.common.utils.DateUtil;

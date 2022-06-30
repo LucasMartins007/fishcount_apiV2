@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class TituloParcelaDTO extends AbstractDTO<Integer> {
+public class TituloParcelaDTO implements AbstractDTO<Integer> {
 
     private Integer id;
     

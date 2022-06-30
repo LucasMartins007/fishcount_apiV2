@@ -1,10 +1,8 @@
 package com.fishcount.api.controller.interfaces;
 
+import com.fishcount.common.model.classes.AutenticacaoDTO;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import com.fishcount.common.model.classes.UserDTO;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +24,6 @@ public interface ILoginController {
     String TAG = "Login";
 
     @PostMapping
-    ResponseEntity<?> authenticate(@RequestBody UserDTO authenticationRequest) throws Exception;
+    ResponseEntity<AutenticacaoDTO> authenticate(@RequestBody AutenticacaoDTO authenticationRequest);
 
 }
