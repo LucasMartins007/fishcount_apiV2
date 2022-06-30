@@ -1,6 +1,8 @@
 package com.fishcount.api.controller.interfaces;
 
 import com.fishcount.common.model.dto.PessoaDTO;
+import com.fishcount.common.model.pattern.OperationsParam;
+import com.fishcount.common.model.pattern.OperationsPath;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -23,4 +25,9 @@ public interface IPessoaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     PessoaDTO incluir(@RequestBody PessoaDTO pessoaDTO);
+
+    @GetMapping(OperationsPath.ID)
+    @ResponseStatus(HttpStatus.OK)
+    PessoaDTO encontrarPorId(@PathVariable(OperationsParam.ID) Integer id);
+
 }

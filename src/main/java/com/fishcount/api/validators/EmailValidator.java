@@ -12,10 +12,12 @@ import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.StringUtil;
 import com.fishcount.common.utils.Utils;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import org.springframework.stereotype.Component;
 
 /**
  * @author lucas
  */
+@Component
 public class EmailValidator extends AbstractValidatorImpl<Email> {
 
     @Override

@@ -16,7 +16,7 @@ public class Pessoa extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_pessoa", sequenceName = "gen_id_fish_pessoa")
+    @SequenceGenerator(name = "id_fish_pessoa", sequenceName = "gen_id_fish_pessoa", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_pessoa")
     private Integer id;
 

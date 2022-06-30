@@ -11,11 +11,13 @@ import com.fishcount.common.model.entity.Telefone;
 import com.fishcount.common.model.enums.EnumTipoTelefone;
 import com.fishcount.common.utils.Utils;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author lucas
  */
+@Component
 public class TelefoneValidator extends AbstractValidatorImpl<Telefone> {
 
     @Override

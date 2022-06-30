@@ -1,15 +1,16 @@
 package com.fishcount.api.service.impl;
 
-import com.fishcount.api.service.EmailService;
 import com.fishcount.api.service.PessoaService;
-import com.fishcount.api.service.TelefoneService;
 import com.fishcount.api.service.UsuarioService;
+import com.fishcount.api.validators.EmailValidator;
 import com.fishcount.api.validators.PessoaValidator;
+import com.fishcount.api.validators.TelefoneValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.dto.PessoaDTO;
 import com.fishcount.common.model.entity.Email;
 import com.fishcount.common.model.entity.Pessoa;
+import com.fishcount.common.model.entity.Telefone;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoEmail;
 import com.fishcount.common.utils.DateUtil;
@@ -17,11 +18,21 @@ import com.fishcount.common.utils.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, PessoaDTO> implements PessoaService {
 
     @Autowired
     private PessoaValidator pessoaValidator;
+
+    @Autowired
+    private EmailValidator emailValidator;
+
+    @Autowired
+    private TelefoneValidator telefoneValidator;
+
 
     @Override
     public Pessoa incluir(Pessoa pessoa) {
@@ -32,25 +43,49 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
         return getRepository().save(pessoa);
     }
 
+    @Override
+    public Pessoa encontrarPessoa(Integer id){
+        final Pessoa pessoa = findAndValidate(id);
+
+        final List<Email> emails = ListUtil.stream(pessoa.getEmails())
+                .filter(Email::isAtivo)
+                .collect(Collectors.toList());
+
+        final List<Telefone> telefones = ListUtil.stream(pessoa.getTelefones())
+                .filter(Telefone::isAtivo)
+                .collect(Collectors.toList());
+
+        pessoa.setEmails(emails);
+        pessoa.setTelefones(telefones);
+
+        return pessoa;
+    }
+
     private void onPrepareInsert(Pessoa pessoa) {
         pessoa.setDataInclusao(DateUtil.getDate());
         pessoa.setDaraAlteracao(DateUtil.getDate());
 
-        salvarEmails(pessoa);
-        salvarTelefones(pessoa);
+        validarEmails(pessoa);
+        validarTelefones(pessoa);
 
         final Usuario usuario = gerarUsuario(pessoa);
         pessoa.setUsuario(usuario);
     }
 
-    private void salvarTelefones(Pessoa pessoa) {
+    private void validarTelefones(Pessoa pessoa) {
         ListUtil.stream(pessoa.getTelefones())
-                .forEach(telefone -> getService(TelefoneService.class).incluir(pessoa.getId(), telefone));
+                .forEach(telefone -> {
+                    telefone.setPessoa(pessoa);
+                    telefoneValidator.validateInsertOrUpdate(telefone);
+                });
     }
 
-    private void salvarEmails(Pessoa pessoa) {
+    private void validarEmails(Pessoa pessoa) {
         ListUtil.stream(pessoa.getEmails())
-                .forEach(email -> getService(EmailService.class).incluir(pessoa.getId(), email));
+                .forEach(email -> {
+                    email.setPessoa(pessoa);
+                    emailValidator.validateInsertOrUpdate(email);
+                });
     }
 
     private Usuario gerarUsuario(Pessoa pessoa) {

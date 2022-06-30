@@ -9,4 +9,6 @@ import org.springframework.stereotype.Service;
 public interface PessoaService extends IAbstractService<Pessoa, Integer, PessoaDTO> {
 
     Pessoa incluir(Pessoa pessoa);
+
+    Pessoa encontrarPessoa(Integer id);
 }

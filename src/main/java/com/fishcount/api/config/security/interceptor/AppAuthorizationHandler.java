@@ -36,8 +36,6 @@ public class AppAuthorizationHandler implements HandlerInterceptor {
 
         if (shouldNotFilter(request)) return true;
 
-        if (Utils.isEmpty(requestTokenHeader)) return false;
-
         validarRequestTokenHeader(requestTokenHeader);
 
         String jwtToken = requestTokenHeader.replace("Bearer ", "");
@@ -67,7 +65,8 @@ public class AppAuthorizationHandler implements HandlerInterceptor {
     private boolean shouldNotFilter(HttpServletRequest request) {
         return HttpMethod.OPTIONS.matches(request.getMethod())
                 || new AntPathMatcher().match("/api/v1/login", request.getRequestURI())
-                || new AntPathMatcher().match("/api/v1/usuario/cadastro", request.getRequestURI());
+                || new AntPathMatcher().match("/api/v1/usuario/cadastro", request.getRequestURI())
+                || new AntPathMatcher().match("/api/v1/pessoa", request.getRequestURI());
     }
 
     private void autenticarUsuario(UserDetails userDetails, HttpServletRequest request) {
@@ -85,6 +84,9 @@ public class AppAuthorizationHandler implements HandlerInterceptor {
     }
 
     private void validarRequestTokenHeader(String requestTokenHeader) {
+        if (Utils.isEmpty(requestTokenHeader)) {
+            throw new FcRuntimeException(EnumFcInfraException.TOKEN_NAO_INFORMADO);
+        }
         if (!requestTokenHeader.startsWith("Bearer ")) {
             throw new FcRuntimeException(EnumFcInfraException.TOKEN_NAO_INFORMADO);
         }
