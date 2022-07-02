@@ -5,7 +5,7 @@ import com.fishcount.api.service.LoginService;
 import com.fishcount.api.service.UsuarioService;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
-import com.fishcount.common.model.classes.AutenticacaoDTO;
+import com.fishcount.common.model.dto.AutenticacaoDTO;
 import com.fishcount.common.model.entity.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,6 +1,6 @@
 package com.fishcount.api.service.gerencianet.pix.authentication.impl;
 
-import com.fishcount.api.config.rest.RestTemplateConfiguration;
+import com.fishcount.api.config.beans.RestTemplateBean;
 import com.fishcount.api.service.gerencianet.pix.authentication.ClientTokenPix;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcHttpException;
@@ -31,7 +31,7 @@ public class ClientTokenPixImpl implements ClientTokenPix {
     private String secretId;
 
     @Autowired
-    private RestTemplateConfiguration restTemplate;
+    private RestTemplateBean restTemplate;
 
     @Override
     public String getBearerToken() {

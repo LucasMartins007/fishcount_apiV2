@@ -1,6 +1,6 @@
 package com.fishcount.api.service.gerencianet.pix;
 
-import com.fishcount.api.config.rest.RestTemplateConfiguration;
+import com.fishcount.api.config.beans.RestTemplateBean;
 import com.fishcount.api.service.gerencianet.pix.authentication.ClientTokenPix;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
@@ -29,7 +29,7 @@ public class GenericPix<T> extends ClientConsumer<T> {
     protected String urlLocation;
 
     @Autowired
-    protected RestTemplateConfiguration restTemplate;
+    protected RestTemplateBean restTemplate;
 
     @Autowired
     protected ClientTokenPix tokenPix;

@@ -2,7 +2,7 @@ package com.fishcount.api.controller;
 
 import com.fishcount.api.controller.interfaces.ILoginController;
 import com.fishcount.api.service.LoginService;
-import com.fishcount.common.model.classes.AutenticacaoDTO;
+import com.fishcount.common.model.dto.AutenticacaoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;

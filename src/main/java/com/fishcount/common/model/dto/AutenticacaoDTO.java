@@ -1,4 +1,4 @@
-package com.fishcount.common.model.classes;
+package com.fishcount.common.model.dto;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.fishcount.api.controller.interfaces;
 
-import com.fishcount.common.model.classes.AutenticacaoDTO;
+import com.fishcount.common.model.dto.AutenticacaoDTO;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
