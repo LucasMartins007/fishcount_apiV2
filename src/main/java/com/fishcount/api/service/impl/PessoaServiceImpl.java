@@ -64,9 +64,6 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
     }
 
     private void onPrepareInsert(Pessoa pessoa) {
-        pessoa.setDataInclusao(DateUtil.getDate());
-        pessoa.setDaraAlteracao(DateUtil.getDate());
-
         validarEmails(pessoa);
         validarTelefones(pessoa);
 
