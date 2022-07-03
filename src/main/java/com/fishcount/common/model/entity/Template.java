@@ -6,7 +6,6 @@ import com.fishcount.common.model.pattern.AbstractEntity;
 import com.fishcount.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,6 +26,7 @@ public class Template extends AbstractEntity<Integer> {
     private String assunto;
 
     @Column(name = "tipo_envio_email")
+    @Convert(converter = EnumTipoEnvioEmail.EnumConverter.class)
     private EnumTipoEnvioEmail tipoEnvioEmail;
 
     @Column(name = "corpo_html")

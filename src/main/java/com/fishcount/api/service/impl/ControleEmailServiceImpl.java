@@ -39,7 +39,7 @@ public class ControleEmailServiceImpl extends AbstractServiceImpl<ControleEmail,
     public void enviarEmail(Pessoa pessoa, EnumTipoEnvioEmail tipoEnvioEmail) {
         final DadosEmail dadosEmail = gerarDadosEmail(pessoa, tipoEnvioEmail);
 
-        if (environment.getActiveProfiles()[0].equals("development")) {
+        if (!environment.getActiveProfiles()[0].equals("development")) {
             System.out.println(dadosEmail.getCorpoEmail());
             registrarEnvioEmail(dadosEmail);
             return;
@@ -60,6 +60,7 @@ public class ControleEmailServiceImpl extends AbstractServiceImpl<ControleEmail,
             registrarEnvioEmail(dadosEmail);
         } catch (MessagingException | MailException e) {
             registrarExcecaoEnvioEmail(dadosEmail, e);
+            e.printStackTrace();
         }
     }
 
@@ -67,12 +68,14 @@ public class ControleEmailServiceImpl extends AbstractServiceImpl<ControleEmail,
         final ControleEmail controleEmail = gerarControleEmail(dadosEmail);
         controleEmail.setEnviado(false);
         controleEmail.setExcecaoEnvio(e.getMessage());
+
+        getRepository().save(controleEmail);
     }
 
     private void registrarEnvioEmail(DadosEmail dadosEmail) {
         final ControleEmail controleEmail = gerarControleEmail(dadosEmail);
-
         controleEmail.setEnviado(true);
+
         getRepository().save(controleEmail);
     }
 
