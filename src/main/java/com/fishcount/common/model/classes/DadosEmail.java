@@ -1,5 +1,6 @@
 package com.fishcount.common.model.classes;
 
+import com.fishcount.common.model.entity.Pessoa;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +17,7 @@ public class DadosEmail {
     private String assunto;
 
     private String corpoEmail;
+
+    private Pessoa pessoa;
 
 }

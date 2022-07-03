@@ -22,8 +22,8 @@ public class ControleEmail extends AbstractEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_controle_email")
     private Integer id;
 
-    @Column(name = "remetente")
-    private String remetente;
+    @Column(name = "email_remetente")
+    private String emailRemetente;
 
     @Column(name = "email_destinatario")
     private String emailDestinatario;
@@ -44,6 +44,12 @@ public class ControleEmail extends AbstractEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pessoa", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_controle_email_to_fish_pessoa"))
     private Pessoa pessoa;
+
+    @Column(name = "is_enviado")
+    private boolean isEnviado;
+
+    @Column(name = "excecao_envio")
+    private String excecaoEnvio;
 
     @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)
