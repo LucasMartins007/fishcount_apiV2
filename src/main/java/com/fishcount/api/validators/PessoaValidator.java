@@ -27,6 +27,12 @@ public class PessoaValidator extends AbstractValidatorImpl<Pessoa> {
     }
 
     @Override
+    public void validateUpdate(Pessoa pessoa) {
+        validateRequiredFields(pessoa);
+        validateSizeFields(pessoa);
+    }
+
+    @Override
     public void validateSizeFields(Pessoa pessoa) {
         ValidateEntity.validateMinMaxCaracterIfFieldNotNull(pessoa.getNome(), 3, 50, "Nome");
     }

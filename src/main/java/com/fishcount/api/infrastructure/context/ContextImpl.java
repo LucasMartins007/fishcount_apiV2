@@ -30,9 +30,9 @@ import java.util.Map;
 @Configuration
 public class ContextImpl implements ApplicationContextAware, IContext {
 
-    private ApplicationContext applicationContext;
+    private static ApplicationContext applicationContext;
 
-    private Repositories repositories;
+    private static Repositories repositories;
 
     @Override
     public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {

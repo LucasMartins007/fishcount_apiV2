@@ -8,7 +8,6 @@ import lombok.Getter;
 import javax.persistence.Converter;
 
 /**
- *
  * @author lucas
  */
 @Getter
@@ -16,12 +15,14 @@ public enum EnumTipoEmail implements IEnum<Integer> {
 
     PRINCIPAL(1, "Principal"),
     ADICIONAL(2, "Adicional"),
-    COMERCIAL(3, "Comercial"),;
+    COMERCIAL(3, "Comercial"),
+    ;
 
     private EnumTipoEmail(Integer key, String value) {
         this.key = key;
         this.value = value;
     }
+
     private final Integer key;
 
     private final String value;
@@ -32,6 +33,14 @@ public enum EnumTipoEmail implements IEnum<Integer> {
 
     public static boolean isPrincipal(Email email) {
         return PRINCIPAL.equals(email.getTipoEmail());
+    }
+
+    public static boolean isComercial(Email email) {
+        return COMERCIAL.equals(email.getTipoEmail());
+    }
+
+    public static boolean isAdicional(Email email) {
+        return ADICIONAL.equals(email.getTipoEmail());
     }
 
 }

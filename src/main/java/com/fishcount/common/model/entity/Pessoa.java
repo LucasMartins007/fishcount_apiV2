@@ -1,6 +1,7 @@
 package com.fishcount.common.model.entity;
 
 import com.fishcount.common.model.pattern.AbstractEntity;
+import com.fishcount.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,9 +53,21 @@ public class Pessoa extends AbstractEntity<Integer> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataInclusao;
 
-    @Column(name = "data_alteracao")
+    @Column(name = "data_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date daraAlteracao;
+    private Date dataAtualizacao;
+
+    @PrePersist
+    private void prePersist(){
+        this.dataInclusao = DateUtil.getDate();
+        this.dataAtualizacao = DateUtil.getDate();
+        this.setAtivo(true);
+    }
+
+    @PreUpdate
+    private void preUpdate(){
+        this.dataAtualizacao = DateUtil.getDate();
+    }
 
     @Override
     public boolean equals(Object obj) {

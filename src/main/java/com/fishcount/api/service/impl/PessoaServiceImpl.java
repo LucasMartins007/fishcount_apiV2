@@ -1,5 +1,6 @@
 package com.fishcount.api.service.impl;
 
+import com.fishcount.api.service.ControleEmailService;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.UsuarioService;
 import com.fishcount.api.validators.EmailValidator;
@@ -13,6 +14,7 @@ import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Telefone;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoEmail;
+import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,14 +64,13 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
     }
 
     private void onPrepareInsert(Pessoa pessoa) {
-        pessoa.setDataInclusao(DateUtil.getDate());
-        pessoa.setDaraAlteracao(DateUtil.getDate());
-
         validarEmails(pessoa);
         validarTelefones(pessoa);
 
         final Usuario usuario = gerarUsuario(pessoa);
         pessoa.setUsuario(usuario);
+
+        getService(ControleEmailService.class).enviarEmail(pessoa, EnumTipoEnvioEmail.CONFIRMACAO_NOVO_CADASTRO);
     }
 
     private void validarTelefones(Pessoa pessoa) {
