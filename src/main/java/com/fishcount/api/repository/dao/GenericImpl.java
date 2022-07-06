@@ -1,6 +1,6 @@
 package com.fishcount.api.repository.dao;
 
-import com.fishcount.api.infrastructure.context.IContext;
+import com.fishcount.api.config.context.IContext;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.pattern.AbstractEntity;

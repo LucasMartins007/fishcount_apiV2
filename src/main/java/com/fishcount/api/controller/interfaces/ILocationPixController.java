@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = ILocationPixController.TAG, description = "Autenticação")
 public interface ILocationPixController {
 
-    String PATH = IUsuarioController.PATH + OperationsPath.PARENT_ID + "/pix";
+    String PATH = IPessoaController.PATH + OperationsPath.PARENT_ID + "/pix";
 
     String TAG = "Pix | Location";
 
     @GetMapping("/qrcode" + OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
     QRCodePixDTO gerarQRCode(
-            @PathVariable(OperationsParam.PARENT_ID) Integer idUsuario,
+            @PathVariable(OperationsParam.PARENT_ID) Integer idPessoa,
             @PathVariable(OperationsParam.ID) Integer locationId
     );
 

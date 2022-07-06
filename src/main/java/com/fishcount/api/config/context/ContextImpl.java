@@ -1,4 +1,4 @@
-package com.fishcount.api.infrastructure.context;
+package com.fishcount.api.config.context;
 
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;

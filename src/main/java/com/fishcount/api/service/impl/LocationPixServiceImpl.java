@@ -3,11 +3,13 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.repository.LocationPixRepository;
 import com.fishcount.api.repository.QRCodePixRepository;
 import com.fishcount.api.service.LocationPixService;
+import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.UsuarioService;
 import com.fishcount.api.service.gerencianet.pix.location.ClientLocationPix;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadLocationResponse;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadQRCodeResponse;
 import com.fishcount.common.model.dto.financeiro.pix.LocationPixDTO;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.entity.financeiro.pix.LocationPix;
 import com.fishcount.common.model.entity.financeiro.pix.QRCodePix;
@@ -35,32 +37,32 @@ public class LocationPixServiceImpl extends AbstractServiceImpl<LocationPix, Int
     }
 
     @Override
-    public QRCodePix gerarQrCode(Integer idUsuario, Integer idLocation) {
-        final Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
+    public QRCodePix gerarQrCode(Integer idPessoa, Integer idLocation) {
+        final Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
         final LocationPix location = getRepository(LocationPixRepository.class).findByIdLocation(idLocation);
 
-        final QRCodePix qrCodePix = resolverQRCodePix(idLocation, location, usuario);
+        final QRCodePix qrCodePix = resolverQRCodePix(idLocation, location, pessoa);
 
         return getRepository(QRCodePixRepository.class).save(qrCodePix);
     }
 
-    private QRCodePix resolverQRCodePix(Integer idLocation, final LocationPix location, final Usuario usuario) {
+    private QRCodePix resolverQRCodePix(Integer idLocation, final LocationPix location, final Pessoa pessoa) {
         final QRCodePix qrCodePix = getRepository(QRCodePixRepository.class).findByLocationId(idLocation);
         if (Utils.isNotEmpty(qrCodePix)) {
             return qrCodePix;
         }
         final PayloadQRCodeResponse payloadQRCodeResponse = clientLocationPix.gerarQRCode(idLocation);
-        return gerarQrCodePix(location, usuario, payloadQRCodeResponse);
+        return gerarQrCodePix(location, pessoa, payloadQRCodeResponse);
     }
 
-    private QRCodePix gerarQrCodePix(final LocationPix location, final Usuario usuario, final PayloadQRCodeResponse payloadQRCodeResponse) {
+    private QRCodePix gerarQrCodePix(final LocationPix location, final Pessoa pessoa, final PayloadQRCodeResponse payloadQRCodeResponse) {
         final QRCodePix qrCodePix = new QRCodePix();
 
         qrCodePix.setDataAlteracao(DateUtil.getDate());
         qrCodePix.setDataInclusao(DateUtil.getDate());
         qrCodePix.setLocationPix(location);
         qrCodePix.setQrCode(payloadQRCodeResponse.getQrcode());
-        qrCodePix.setUsuario(usuario);
+        qrCodePix.setPessoa(pessoa);
 
         return qrCodePix;
     }

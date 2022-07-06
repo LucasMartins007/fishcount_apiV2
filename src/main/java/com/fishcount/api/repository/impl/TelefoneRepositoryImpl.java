@@ -1,6 +1,6 @@
 package com.fishcount.api.repository.impl;
 
-import com.fishcount.api.infrastructure.spec.TelefoneSpec;
+import com.fishcount.api.repository.infrastructure.spec.TelefoneSpec;
 import com.fishcount.api.repository.custom.CustomTelefoneRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
 import com.fishcount.common.model.entity.Pessoa;
