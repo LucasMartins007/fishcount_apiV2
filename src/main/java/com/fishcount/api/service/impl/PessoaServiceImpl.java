@@ -42,7 +42,11 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
 
         onPrepareInsert(pessoa);
 
-        return getRepository().save(pessoa);
+        getRepository().save(pessoa);
+
+        onAfterInsert(pessoa);
+
+        return pessoa;
     }
 
     @Override
@@ -69,7 +73,9 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
 
         final Usuario usuario = gerarUsuario(pessoa);
         pessoa.setUsuario(usuario);
+    }
 
+    private void onAfterInsert(Pessoa pessoa) {
         getService(ControleEmailService.class).enviarEmail(pessoa, EnumTipoEnvioEmail.CONFIRMACAO_NOVO_CADASTRO);
     }
 
