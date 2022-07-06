@@ -1,6 +1,6 @@
 package com.fishcount.api.repository.impl;
 
-import com.fishcount.api.infrastructure.spec.LocationPixSpec;
+import com.fishcount.api.repository.infrastructure.spec.LocationPixSpec;
 import com.fishcount.api.repository.custom.CustomLocationPixRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
 import com.fishcount.common.model.entity.financeiro.pix.LocationPix;

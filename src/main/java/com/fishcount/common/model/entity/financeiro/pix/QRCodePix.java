@@ -1,6 +1,6 @@
 package com.fishcount.common.model.entity.financeiro.pix;
 
-import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.pattern.AbstractEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +28,8 @@ public class QRCodePix extends AbstractEntity<Integer> {
     private String qrCode;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_qrcode_pix_to_fish_usuario"))
-    private Usuario usuario;
+    @JoinColumn(name = "id_pessoa", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_qrcode_pix_to_fish_pessoa"))
+    private Pessoa pessoa;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_location", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_qrcode_pix_to_fin_location"))

@@ -14,5 +14,5 @@ public interface LocationPixService extends IAbstractService<LocationPix, Intege
 
     LocationPix incluir(PayloadLocationResponse location);
 
-    QRCodePix gerarQrCode(Integer idUsuario, Integer idLocation);
+    QRCodePix gerarQrCode(Integer idPessoa, Integer idLocation);
 }

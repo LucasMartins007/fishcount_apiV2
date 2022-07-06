@@ -1,6 +1,7 @@
 package com.fishcount.common.model.dto.financeiro.pix;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

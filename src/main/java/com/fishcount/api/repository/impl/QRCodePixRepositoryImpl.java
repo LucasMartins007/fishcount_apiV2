@@ -1,6 +1,6 @@
 package com.fishcount.api.repository.impl;
 
-import com.fishcount.api.infrastructure.spec.QRCodePixSpec;
+import com.fishcount.api.repository.infrastructure.spec.QRCodePixSpec;
 import com.fishcount.api.repository.custom.CustomQRCodePixRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
 import com.fishcount.common.model.entity.financeiro.pix.QRCodePix;

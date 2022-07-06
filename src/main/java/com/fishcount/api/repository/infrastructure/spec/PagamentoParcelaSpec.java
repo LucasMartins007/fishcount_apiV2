@@ -1,4 +1,4 @@
-package com.fishcount.api.infrastructure.spec;
+package com.fishcount.api.repository.infrastructure.spec;
 
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.enums.EnumStatusPagamento;

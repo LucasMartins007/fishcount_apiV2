@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LocationPixController extends AbstractController<LocationPixService> implements ILocationPixController {
 
     @Override
-    public QRCodePixDTO gerarQRCode(Integer idUsuario, Integer locationId) {
-        return converterEntityParaDTO(getService().gerarQrCode(idUsuario, locationId), QRCodePixDTO.class);
+    public QRCodePixDTO gerarQRCode(Integer idPessoa, Integer locationId) {
+        return converterEntityParaDTO(getService().gerarQrCode(idPessoa, locationId), QRCodePixDTO.class);
     }
 
 }
