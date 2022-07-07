@@ -22,6 +22,8 @@ public class AutenticacaoDTO implements AbstractDTO<Integer> {
 
     private String refreshToken;
 
+    private Integer pessoaId;
+
     public AutenticacaoDTO() {
     }
 

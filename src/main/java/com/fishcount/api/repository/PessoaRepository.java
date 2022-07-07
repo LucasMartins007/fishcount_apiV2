@@ -2,6 +2,7 @@ package com.fishcount.api.repository;
 
 import com.fishcount.api.repository.custom.CustomPessoaRepository;
 import com.fishcount.common.model.entity.Pessoa;
+import com.fishcount.common.model.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -10,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface PessoaRepository extends JpaRepository<Pessoa, Integer>, JpaSpecificationExecutor<Pessoa>, CustomPessoaRepository {
 
     Pessoa findByCpf(String cpf);
+
+    Pessoa findByUsuario(Usuario usuario);
 }

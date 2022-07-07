@@ -1,5 +1,6 @@
 package com.fishcount.api.service.impl;
 
+import com.fishcount.api.repository.PessoaRepository;
 import com.fishcount.api.service.ControleEmailService;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.UsuarioService;
@@ -15,7 +16,6 @@ import com.fishcount.common.model.entity.Telefone;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoEmail;
 import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
-import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +53,21 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
     public Pessoa encontrarPessoa(Integer id){
         final Pessoa pessoa = findAndValidate(id);
 
+        retirarCamposInativos(pessoa);
+
+        return pessoa;
+    }
+
+    @Override
+    public Pessoa encontrarPessoaByUsuario(Usuario usuario) {
+        final Pessoa pessoa = getRepository(PessoaRepository.class).findByUsuario(usuario);
+
+        retirarCamposInativos(pessoa);
+
+        return pessoa;
+    }
+
+    private void retirarCamposInativos(Pessoa pessoa) {
         final List<Email> emails = ListUtil.stream(pessoa.getEmails())
                 .filter(Email::isAtivo)
                 .collect(Collectors.toList());
@@ -63,8 +78,6 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
 
         pessoa.setEmails(emails);
         pessoa.setTelefones(telefones);
-
-        return pessoa;
     }
 
     private void onPrepareInsert(Pessoa pessoa) {
