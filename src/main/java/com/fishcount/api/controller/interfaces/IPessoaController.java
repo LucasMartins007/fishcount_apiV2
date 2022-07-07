@@ -30,4 +30,8 @@ public interface IPessoaController {
     @ResponseStatus(HttpStatus.OK)
     PessoaDTO encontrarPorId(@PathVariable(OperationsParam.ID) Integer id);
 
+    @PutMapping(OperationsPath.ID)
+    @ResponseStatus(HttpStatus.OK)
+    void atualizar(@PathVariable(OperationsParam.ID) Integer id, @RequestBody PessoaDTO pessoaDTO);
+
 }

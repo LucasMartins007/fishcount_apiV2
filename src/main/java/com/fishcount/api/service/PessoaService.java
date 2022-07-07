@@ -11,5 +11,7 @@ public interface PessoaService extends IAbstractService<Pessoa, Integer, PessoaD
 
     Pessoa encontrarPessoa(Integer id);
 
+    void atualizar(Integer id, Pessoa pessoa);
+
     Pessoa encontrarPessoaByUsuario(Usuario usuario);
 }
