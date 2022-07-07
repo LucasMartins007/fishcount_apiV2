@@ -25,4 +25,9 @@ public class PessoaController
     public PessoaDTO encontrarPorId(Integer id) {
         return converterEntityParaDTO(getService().encontrarPessoa(id), PessoaDTO.class);
     }
+
+    @Override
+    public void atualizar(Integer id, PessoaDTO pessoaDTO) {
+        getService().atualizar(id, converterDTOParaEntity(pessoaDTO, Pessoa.class));
+    }
 }

@@ -59,6 +59,24 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
     }
 
     @Override
+    public void atualizar(Integer id, Pessoa pessoa) {
+        final Pessoa managedPessoa = findAndValidate(id);
+
+        onPrepareUpdate(pessoa, managedPessoa);
+
+        getRepository().save(pessoa);
+    }
+
+    private void onPrepareUpdate(Pessoa pessoa, Pessoa managedPessoa) {
+        pessoa.setId(managedPessoa.getId());
+        pessoa.setAtivo(true);
+
+        pessoaValidator.validateUpdate(pessoa);
+        validarEmails(pessoa);
+        validarTelefones(pessoa);
+    }
+
+    @Override
     public Pessoa encontrarPessoaByUsuario(Usuario usuario) {
         final Pessoa pessoa = getRepository(PessoaRepository.class).findByUsuario(usuario);
 
