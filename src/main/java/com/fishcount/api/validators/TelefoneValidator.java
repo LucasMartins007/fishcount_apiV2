@@ -69,8 +69,10 @@ public class TelefoneValidator extends AbstractValidatorImpl<Telefone> {
         if (Utils.isEmpty(pessoa.getId())) {
             return;
         }
-
         OptionalUtil.ofNullable(getRepository(TelefoneRepository.class).findByPessoaAndTipo(pessoa, EnumTipoTelefone.PRINCIPAL))
+                .filter(tel -> EnumTipoTelefone.PRINCIPAL.equals(telefone.getTipoTelefone()))
+                .filter(tel -> !Utils.equals(tel.getId(), telefone.getId()))
+                .filter(tel -> !Utils.equals(tel.getDescricao(), telefone.getDescricao()))
                 .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.TELEFONE_PRINCIPAL_DUPLICADO, telefone.getDescricao()));
     }
 
