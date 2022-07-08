@@ -43,7 +43,7 @@ hibernate-config:
   format-sql: true
   show-sql: true
   generate-ddl: true
-  ddl-auto: create
+  ddl-auto: update
 
 jwt:
   secret: FGj2herA5v2ZUaTt

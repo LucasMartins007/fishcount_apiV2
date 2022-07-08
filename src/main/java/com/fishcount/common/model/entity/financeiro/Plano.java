@@ -1,6 +1,7 @@
 package com.fishcount.common.model.entity.financeiro;
 
 import com.fishcount.common.model.pattern.AbstractEntity;
+import com.fishcount.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +21,7 @@ public class Plano extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fin_plano", sequenceName = "gen_fin_id_plano")
+    @SequenceGenerator(name = "id_fin_plano", sequenceName = "gen_id_fin_plano")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_plano")
     private Integer id;
 
@@ -49,9 +50,21 @@ public class Plano extends AbstractEntity<Integer> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataInclusao;
 
-    @Column(name = "data_alteracao", nullable = false)
+    @Column(name = "data_atualizacao", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAlteracao;
+    private Date dataAtualizacao;
+
+    @PrePersist
+    private void prePersist() {
+        this.dataInclusao = DateUtil.getDate();
+        this.dataAtualizacao = DateUtil.getDate();
+        this.setAtivo(true);
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        this.dataAtualizacao = DateUtil.getDate();
+    }
 
     @Override
     public boolean equals(Object obj) {

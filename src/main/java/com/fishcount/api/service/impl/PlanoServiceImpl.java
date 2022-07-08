@@ -30,10 +30,6 @@ public class PlanoServiceImpl extends AbstractServiceImpl<Plano, Integer, PlanoD
     }
 
     private void onPrepareInsert(Plano plano) {
-        plano.setDataInclusao(DateUtil.getDate());
-        plano.setDataAlteracao(DateUtil.getDate());
-        plano.setAtivo(true);
-
         planoValidator.validateInsert(plano);
     }
 
