@@ -43,7 +43,7 @@ public class TelefoneServiceImpl extends AbstractServiceImpl<Telefone, Integer, 
 
     @Override
     public void editar(Integer idPessoa, Integer idTelefone, Telefone telefone) {
-        onPrepareUpdate(idPessoa, idTelefone, telefone);
+        onPrepareUpdate(idTelefone, telefone);
         
         telefoneValidator.validateInsertOrUpdate(telefone);
         
@@ -68,15 +68,14 @@ public class TelefoneServiceImpl extends AbstractServiceImpl<Telefone, Integer, 
         getRepository().save(telefone);
     }
 
-    private void onPrepareUpdate(Integer idPessoa, Integer idTelefone, Telefone telefone) {
-        final Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
-        
+    @Override
+    public void onPrepareUpdate(Integer idTelefone, Telefone telefone) {
         final Telefone managedTelefone = findAndValidate(idTelefone);
         
         telefone.setId(managedTelefone.getId());
         telefone.setAtivo(true);
-        telefone.setDataAtualizacao(DateUtil.getDate());
-        telefone.setPessoa(pessoa);
+        telefone.setDataInclusao(managedTelefone.getDataInclusao());
+        telefone.setPessoa(managedTelefone.getPessoa());
     }
 
     private void onPrepareDelete(Telefone telefone) {

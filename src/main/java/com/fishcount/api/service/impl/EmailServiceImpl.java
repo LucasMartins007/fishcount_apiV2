@@ -64,7 +64,8 @@ public class EmailServiceImpl extends AbstractServiceImpl<Email, Integer, EmailD
         getRepository().save(email);
     }
 
-    private void onPrepareInsert(Integer idPessoa, Email email) {
+    @Override
+    public void onPrepareInsert(Integer idPessoa, Email email) {
         final Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
 
         email.setAtivo(true);
@@ -74,7 +75,8 @@ public class EmailServiceImpl extends AbstractServiceImpl<Email, Integer, EmailD
         email.setPessoa(pessoa);
     }
 
-    private void onPrepareUpdate(Integer id, Email email) {
+    @Override
+    public void onPrepareUpdate(Integer id, Email email) {
         Email managedEmail = findAndValidate(id);
         
         email.setId(managedEmail.getId());

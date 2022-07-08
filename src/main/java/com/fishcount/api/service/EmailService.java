@@ -23,4 +23,7 @@ public interface EmailService extends IAbstractService<Email, Integer, EmailDTO>
     
     Email findByEmail(Email email);
 
+    void onPrepareInsert(Integer idPessoa, Email email);
+
+    void onPrepareUpdate(Integer id, Email email);
 }

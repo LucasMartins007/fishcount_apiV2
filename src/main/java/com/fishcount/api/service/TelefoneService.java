@@ -19,4 +19,6 @@ public interface TelefoneService extends IAbstractService<Telefone, Integer, Tel
    List<Telefone> listarAtivos(Integer idUsuario);
    
    void inativar(Integer idUsuario, Integer idTelefone);
+
+   void onPrepareUpdate(Integer idTelefone, Telefone telefone);
 }

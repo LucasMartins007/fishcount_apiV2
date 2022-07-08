@@ -1,9 +1,7 @@
 package com.fishcount.api.service.impl;
 
 import com.fishcount.api.repository.PessoaRepository;
-import com.fishcount.api.service.ControleEmailService;
-import com.fishcount.api.service.PessoaService;
-import com.fishcount.api.service.UsuarioService;
+import com.fishcount.api.service.*;
 import com.fishcount.api.validators.EmailValidator;
 import com.fishcount.api.validators.PessoaValidator;
 import com.fishcount.api.validators.TelefoneValidator;
@@ -17,6 +15,7 @@ import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoEmail;
 import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 import com.fishcount.common.utils.ListUtil;
+import com.fishcount.common.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +49,7 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
     }
 
     @Override
-    public Pessoa encontrarPessoa(Integer id){
+    public Pessoa encontrarPessoa(Integer id) {
         final Pessoa pessoa = findAndValidate(id);
 
         retirarCamposInativos(pessoa);
@@ -70,6 +69,8 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
     private void onPrepareUpdate(Pessoa pessoa, Pessoa managedPessoa) {
         pessoa.setId(managedPessoa.getId());
         pessoa.setAtivo(true);
+        pessoa.setDataInclusao(managedPessoa.getDataInclusao());
+        pessoa.setUsuario(managedPessoa.getUsuario());
 
         pessoaValidator.validateUpdate(pessoa);
         validarEmails(pessoa);
@@ -115,6 +116,10 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
                 .forEach(telefone -> {
                     telefone.setPessoa(pessoa);
                     telefoneValidator.validateInsertOrUpdate(telefone);
+
+                    if (Utils.isNotEmpty(telefone.getId())){
+                        getService(TelefoneService.class).onPrepareUpdate(telefone.getId(), telefone);
+                    }
                 });
     }
 
@@ -123,6 +128,10 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
                 .forEach(email -> {
                     email.setPessoa(pessoa);
                     emailValidator.validateInsertOrUpdate(email);
+
+                    if (Utils.isNotEmpty(email.getId())) {
+                        getService(EmailService.class).onPrepareUpdate(email.getId(), email);
+                    }
                 });
     }
 
