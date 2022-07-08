@@ -4,7 +4,7 @@ import com.fishcount.api.repository.infrastructure.spec.LoteSpec;
 import com.fishcount.api.repository.custom.CustomLoteRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
 import com.fishcount.common.model.entity.Lote;
-import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.entity.Pessoa;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,15 +20,15 @@ public class LoteRepositoryImpl extends GenericImpl<Lote, Integer> implements Cu
     public Lote findByDescricao(String descricao) {
         return getSpecRepository()
                 .findOne(
-                        LoteSpec.loteByDescricao(descricao))
+                        LoteSpec.byDescricao(descricao))
                 .orElse(null);
     }
 
     @Override
-    public List<Lote> findAllByUsuario(Usuario usuario) {
+    public List<Lote> findAllByPessoa(Pessoa pessoa) {
         return getSpecRepository()
                 .findAll(
-                        LoteSpec.loteByUsuario(usuario)
+                        LoteSpec.byPessoa(pessoa)
                                 .and(LoteSpec.orderBy(true, "descricao")));
     }
 

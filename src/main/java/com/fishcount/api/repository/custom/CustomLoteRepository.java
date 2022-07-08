@@ -1,7 +1,7 @@
 package com.fishcount.api.repository.custom;
 
 import com.fishcount.common.model.entity.Lote;
-import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.entity.Pessoa;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ public interface CustomLoteRepository {
 
     Lote findByDescricao(String descricao);
 
-    List<Lote> findAllByUsuario(Usuario usuario);
+    List<Lote> findAllByPessoa(Pessoa pessoa);
 }

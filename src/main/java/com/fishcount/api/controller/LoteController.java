@@ -14,25 +14,25 @@ import java.util.List;
  * @author lucas
  */
 @RestController
-public class LoteController  extends AbstractController<LoteService> implements ILoteController {
+public class LoteController extends AbstractController<LoteService> implements ILoteController {
 
     @Override
-    public LoteDTO incluir(Integer idUsuario, LoteDTO loteDTO) {
+    public LoteDTO incluir(Integer idPessoa, LoteDTO loteDTO) {
         Lote lote = converterDTOParaEntity(loteDTO, Lote.class);
         
-        return converterEntityParaDTO(getService().incluir(idUsuario, lote), LoteDTO.class);
+        return converterEntityParaDTO(getService().incluir(idPessoa, lote), LoteDTO.class);
     }
 
     @Override
-    public List<LoteDTO> listarLotesFromUsuario(Integer idUsuario) {
-        return converterEntityParaDTO(getService().listarFromUsuario(idUsuario), LoteDTO.class);
+    public List<LoteDTO> listarLotesFromUsuario(Integer idPessoa) {
+        return converterEntityParaDTO(getService().listarFromPessoa(idPessoa), LoteDTO.class);
     }
 
     @Override
-    public void atualizar(Integer idUsuario, LoteDTO loteDTO) {
+    public void atualizar(Integer idPessoa, LoteDTO loteDTO) {
         Lote lote = converterDTOParaEntity(loteDTO, Lote.class);
         
-        getService().editar(idUsuario, lote);
+        getService().editar(idPessoa, lote);
     }
     
 }

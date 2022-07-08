@@ -2,6 +2,7 @@ package com.fishcount.api.repository;
 
 import com.fishcount.api.repository.custom.CustomLoteRepository;
 import com.fishcount.common.model.entity.Lote;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -20,5 +21,5 @@ public interface LoteRepository extends JpaRepository<Lote, Integer>, JpaSpecifi
     Lote findByDescricao(String descricao);
     
     @Override
-    List<Lote> findAllByUsuario(Usuario usuario);
+    List<Lote> findAllByPessoa(Pessoa pessoa);
 }

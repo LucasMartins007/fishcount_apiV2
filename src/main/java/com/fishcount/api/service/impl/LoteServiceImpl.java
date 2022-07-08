@@ -2,11 +2,11 @@ package com.fishcount.api.service.impl;
 
 import com.fishcount.api.repository.LoteRepository;
 import com.fishcount.api.service.LoteService;
-import com.fishcount.api.service.UsuarioService;
+import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.validators.LoteValidator;
 import com.fishcount.common.model.dto.LoteDTO;
 import com.fishcount.common.model.entity.Lote;
-import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.Utils;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,8 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     private final LoteValidator loteValidator;
 
     @Override
-    public Lote incluir(Integer idUsuario, Lote lote) {
-        onPrepareInsertOrUpdate(idUsuario, lote);
+    public Lote incluir(Integer idPessoa, Lote lote) {
+        onPrepareInsertOrUpdate(idPessoa, lote);
 
         loteValidator.validateInsertOrUpdate(lote);
 
@@ -34,8 +34,8 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     }
 
     @Override
-    public void editar(Integer idUsuario, Lote lote) {
-        onPrepareInsertOrUpdate(idUsuario, lote);
+    public void editar(Integer idPessoa, Lote lote) {
+        onPrepareInsertOrUpdate(idPessoa, lote);
 
         loteValidator.validateInsertOrUpdate(lote);
 
@@ -43,23 +43,23 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     }
 
     @Override
-    public List<Lote> listarFromUsuario(Integer idUsuario) {
-        Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
+    public List<Lote> listarFromPessoa(Integer idPessoa) {
+        Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
 
-        return getRepository(LoteRepository.class).findAllByUsuario(usuario);
+        return getRepository(LoteRepository.class).findAllByPessoa(pessoa);
     }
 
-    private void onPrepareInsertOrUpdate(Integer idUsuario, Lote lote) {
+    private void onPrepareInsertOrUpdate(Integer idPessoa, Lote lote) {
         if (Utils.isNotEmpty(lote.getId())){
             Lote managedLote = getService(LoteService.class).findAndValidate(lote.getId());
             lote.setTanques(managedLote.getTanques());
         }
         
-        Usuario usuario = getService(UsuarioService.class).findAndValidate(idUsuario);
+        Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
         lote.setDescricao(lote.getDescricao().toLowerCase());
         lote.setDataInclusao(DateUtil.getDate());
         lote.setDataAtualizacao(DateUtil.getDate());
-        lote.setUsuario(usuario);
+        lote.setPessoa(pessoa);
     }
 
 }

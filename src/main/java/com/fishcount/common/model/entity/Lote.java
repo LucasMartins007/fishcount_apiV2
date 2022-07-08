@@ -36,10 +36,6 @@ public class Lote extends AbstractEntity<Integer> {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_lote_to_fish_usuario"))
-    private Usuario usuario;
-
     @OneToMany(mappedBy = "lote", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tanque> tanques;
 

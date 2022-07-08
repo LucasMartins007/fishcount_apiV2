@@ -20,21 +20,21 @@ import java.util.List;
 @Tag(name = ILoteController.TAG, description = "Lote")
 public interface ILoteController {
 
-    String PATH = IUsuarioController.PATH + OperationsPath.PARENT_ID + "/lote";
+    String PATH = IPessoaController.PATH + OperationsPath.PARENT_ID + "/lote";
 
     String TAG = "Lote";
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public LoteDTO incluir(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @RequestBody LoteDTO loteDTO);
+    LoteDTO incluir(@PathVariable(OperationsParam.PARENT_ID) Integer idPessoa, @RequestBody LoteDTO loteDTO);
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<LoteDTO> listarLotesFromUsuario(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario);
+    List<LoteDTO> listarLotesFromUsuario(@PathVariable(OperationsParam.PARENT_ID) Integer idPessoa);
     
     
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void atualizar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @RequestBody LoteDTO loteDTO);
+    void atualizar(@PathVariable(OperationsParam.PARENT_ID) Integer idPessoa, @RequestBody LoteDTO loteDTO);
 
 }
