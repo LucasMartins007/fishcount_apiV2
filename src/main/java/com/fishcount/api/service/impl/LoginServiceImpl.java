@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LoginServiceImpl extends AbstractServiceImpl<Usuario, Integer, AutenticacaoDTO> implements LoginService {
 
-    private final JwtTokenUtil jwtTokenUtil;
-
     private final PasswordEncoder passwordEnconder;
 
     private final UsuarioService usuarioService;
@@ -32,7 +30,7 @@ public class LoginServiceImpl extends AbstractServiceImpl<Usuario, Integer, Aute
             throw new FcRuntimeException(EnumFcDomainException.CREDENCIAIS_INVALIDAS);
         }
 
-        final String token = jwtTokenUtil.generateToken(autenticacaoDTO.getUsername());
+        final String token = JwtTokenUtil.generateToken(autenticacaoDTO.getUsername());
         autenticacaoDTO.setId(usuario.getId());
         autenticacaoDTO.setToken(token);
         autenticacaoDTO.setPassword(null);
