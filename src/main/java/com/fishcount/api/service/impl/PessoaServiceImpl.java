@@ -117,7 +117,7 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
                     telefone.setPessoa(pessoa);
                     telefoneValidator.validateInsertOrUpdate(telefone);
 
-                    if (Utils.isNotEmpty(telefone.getId())){
+                    if (Utils.isNotEmpty(telefone.getId())) {
                         getService(TelefoneService.class).onPrepareUpdate(telefone.getId(), telefone);
                     }
                 });

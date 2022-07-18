@@ -20,7 +20,7 @@ import java.util.List;
 @Tag(name = IEspecieController.TAG, description = "Autenticação")
 public interface IEspecieController {
 
-    String PATH = "${api.prefix.v1}/especie";
+    String PATH = "especie";
 
     String TAG = "Especies";
 

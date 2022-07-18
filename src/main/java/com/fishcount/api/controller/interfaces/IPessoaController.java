@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = IPessoaController.TAG, description = "Pessoa")
 public interface IPessoaController {
 
-    String PATH = "${api.prefix.v1}/pessoa";
+    String PATH = "pessoa";
 
     String TAG = "Pessoa";
 

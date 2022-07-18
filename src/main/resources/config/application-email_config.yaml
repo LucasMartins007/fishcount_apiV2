@@ -1,0 +1,30 @@
+email-config:
+  development:
+    host: smtp.office365.com
+    port: 587
+    username: fishcount_comercial@hotmail.com
+    password: Gaviao-007!
+    properties.mail:
+      test-connection: true
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+          required: true
+
+
+##### Todo alterar para parâmetros de produção #####
+  production:
+    host: smtp.office365.com
+    port: 587
+    username: fishcount_comercial@hotmail.com
+    password: Gaviao-007!
+    properties.mail:
+      test-connection: true
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+          required: true
+
+email.suporte: lucasrodriguesmartinsoliveira@gmail.com

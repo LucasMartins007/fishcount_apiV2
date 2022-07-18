@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = ILoginController.TAG, description = "Autenticação")
 public interface ILoginController {
 
-    String PATH = "${api.prefix.v1}/login";
+    String PATH = "login";
 
     String TAG = "Login";
 

@@ -1,0 +1,7 @@
+swagger:
+  contact-email: lucasrodriguesmartinsoliveira@gmail.com
+  contact-name: Lucas Martins
+  contact-url: https://github.com/LucasMartins007
+  description: Api de serviço das aplicações da Fishcount
+  title: FishCount-api
+  version: 1.0

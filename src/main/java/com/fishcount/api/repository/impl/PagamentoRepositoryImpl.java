@@ -1,8 +1,8 @@
 package com.fishcount.api.repository.impl;
 
-import com.fishcount.api.repository.infrastructure.spec.PagamentoSpec;
 import com.fishcount.api.repository.custom.CustomPagamentoRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
+import com.fishcount.api.repository.infrastructure.spec.PagamentoSpec;
 import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.enums.EnumStatusPagamento;

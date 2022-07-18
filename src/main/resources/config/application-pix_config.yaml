@@ -1,0 +1,54 @@
+pix-config:
+  chave-pix: ${pix-config.${spring.profiles.active}.chave-pix}
+  msg-solicitacao-padrao: ${pix-config.${spring.profiles.active}.msg}
+
+  base-url: ${pix-config.${spring.profiles.active}.base-url}
+  client_id: ${pix-config.${spring.profiles.active}.client_id}
+  client_secret: ${pix-config.${spring.profiles.active}.client_secret}
+
+  url-access-token: ${pix-config.base-url}/oauth/token
+  url-cobranca: ${pix-config.base-url}/v2/cob
+  url-location: ${pix-config.base-url}/v2/loc
+
+rest-template:
+  key-store: ${pix-config.${spring.profiles.active}.key-store}
+  key-store-password: ${pix-config.${spring.profiles.active}.key-store-password}
+  key-store-type: ${pix-config.${spring.profiles.active}.key-store-type}
+  protocol: ${pix-config.${spring.profiles.active}.protocol}
+  connection-timeout: ${pix-config.${spring.profiles.active}.connection-timeout}
+  read-timeout: ${pix-config.${spring.profiles.active}.read-timeout}
+
+---
+
+pix-config:
+
+  development:
+    chave-pix: f3ca0e7d-93c3-41cc-8711-237ee0d2d63d
+    msg: Abertura de pagamentos inicial padrão.
+
+    base-url: https://api-pix-h.gerencianet.com.br
+    client_id: Client_Id_3e71852f85888c5f3817fd296e831d118de3c979
+    client_secret: Client_Secret_b0e2f50a94392df2bb62fb572570345525626972
+
+    key-store: "classpath:certificates/homologacao-393390-fishcount_finan.p12"
+    key-store-password:
+    key-store-type: PKCS12
+    protocol: TLSv1.2
+    connection-timeout: 15000
+    read-timeout: 15000
+
+##### Todo alterar para parâmetros de produção #####
+  production:
+    chave-pix: f3ca0e7d-93c3-41cc-8711-237ee0d2d63d
+    msg: Abertura de pagamentos inicial padrão.
+
+    base-url: https://api-pix-h.gerencianet.com.br
+    client_id: Client_Id_3e71852f85888c5f3817fd296e831d118de3c979
+    client_secret: Client_Secret_b0e2f50a94392df2bb62fb572570345525626972
+
+    key-store: "classpath:certificates/homologacao-393390-fishcount_finan.p12"
+    key-store-password:
+    key-store-type: PKCS12
+    protocol: TLSv1.2
+    connection-timeout: 15000
+    read-timeout: 15000

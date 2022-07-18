@@ -5,7 +5,6 @@ import com.fishcount.api.service.PlanoService;
 import com.fishcount.api.validators.PlanoValidator;
 import com.fishcount.common.model.dto.financeiro.PlanoDTO;
 import com.fishcount.common.model.entity.financeiro.Plano;
-import com.fishcount.common.utils.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

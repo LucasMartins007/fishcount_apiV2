@@ -1,8 +1,7 @@
 
 package com.fishcount.api.config.swagger;
 
-import com.fishcount.api.controller.UsuarioController;
-import com.fishcount.common.utils.ListUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -10,14 +9,9 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.ApiKey;
-import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.SecurityReference;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-
-import java.util.List;
 
 /**
  *
@@ -26,42 +20,51 @@ import java.util.List;
 @Configuration
 @EnableOpenApi
 public class SwaggerConfig {
-    
+
+    @Value("${app.name}")
+    private String appName;
+
+    @Value("${swagger.title}")
+    private String title;
+
+    @Value("${swagger.description}")
+    private String description;
+
+    @Value("${swagger.version}")
+    private String version;
+
+    @Value("${swagger.contact-name}")
+    private String contactName;
+
+    @Value("${swagger.contact-url}")
+    private String contacUrl;
+
+    @Value("${swagger.contact-email}")
+    private String contactEmail;
+
+    @Value("${api.base-path}/**")
+    private String basePath;
+
+    private static final String BASE_PACKAGE = "com.fishcount.api.controller";
+
     @Bean
-    public Docket portal() {
+    public Docket api() {
         return new Docket(DocumentationType.OAS_30)
-                .groupName("FishCount api")
+                .groupName(appName)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(UsuarioController.class.getPackage().getName()))
-                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
+                .paths(PathSelectors.ant(basePath))
                 .build()
-                .securityContexts(ListUtil.toList(securityContext()))
-                .securitySchemes(ListUtil.toList(apiKey()))
-                .apiInfo(metaInfo());
+                .apiInfo(apiInfo());
     }
 
-    private ApiInfo metaInfo() {
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Fish-count API")
-                .description("Created by Lucas")
-                .version("1.0")
-                .termsOfServiceUrl("http://fishcount.com")
+                .title(title)
+                .description(description)
+                .version(version)
+                .contact(new Contact(contactName, contacUrl, contactEmail))
                 .build();
-    }
-
-    private ApiKey apiKey() {
-        return new ApiKey("JWT", "Authorization", "header");
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth()).build();
-    }
-
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return ListUtil.toList(new SecurityReference("JWT", authorizationScopes));
     }
 
 }

@@ -1,84 +1,63 @@
-pix-config:
-  chave-pix: f3ca0e7d-93c3-41cc-8711-237ee0d2d63d
-  msg-solicitacao-padrao: Abertura de pagamentos inicial padrão.
-
-  base-url: https://api-pix-h.gerencianet.com.br
-  client_id: Client_Id_3e71852f85888c5f3817fd296e831d118de3c979
-  client_secret: Client_Secret_b0e2f50a94392df2bb62fb572570345525626972
-
-  url-access-token: ${pix-config.base-url}/oauth/token
-  url-cobranca: ${pix-config.base-url}/v2/cob
-  url-location: ${pix-config.base-url}/v2/loc
-
-rest-template:
-  key-store: "classpath:certificates/homologacao-393390-fishcount_finan.p12"
-  key-store-password:
-  key-store-type: PKCS12
-  protocol: TLSv1.2
-  connection-timeout: 15000
-  read-timeout: 15000
-
-email.suporte: lucasrodriguesmartinsoliveira@gmail.com
-
----
-
 app:
-  name: FishCount-api
+  name: fishcount-api
   version: "1.0.0"
-  base-path: /api
 
 api:
-  prefix.v1: ${app.base-path}/v1
-  url: fishcount.belezaintime.com.br
-
+  app-name: ${app.name}
+  path: /api
+  version: /v1
+  base-path: /${api.app-name}${api.path}${api.version}
 
 database-config:
-  server: localhost
-  port: 5432
-  name: fishcount
-  username: admin
-  password: admin
+  development:
+    server: localhost
+    port: 5432
+    name: fishcount
+    username: admin
+    password: admin
 
 hibernate-config:
-  format-sql: true
-  show-sql: true
-  generate-ddl: true
-  ddl-auto: update
+  development:
+    format-sql: true
+    show-sql: true
+    generate-ddl: true
+    ddl-auto: update
 
-jwt:
-  secret: FGj2herA5v2ZUaTt
 
-################################# PROFILE DEVELOPMENT ##################################
+jwt.secret: FGj2herA5v2ZUaTt
+
 spring:
   profiles:
-    active: development
+    include:
+      swagger, email_config, pix_config
+
+
+---
+spring:
+  config.activate.on-profile: production
 
   application:
     name: ${app.name}
 
-  data:
-    rest:
-      base-path: ${app.base-path}
-
   flyway:
     locations: "classpath:/db/migration"
-    url: jdbc:postgresql://${database-config.server}:${database-config.port}/${database-config.name}
-    user: ${database-config.username}
-    password: ${database-config.password}
+    url: jdbc:postgresql://${database-config.development.server}:${database-config.development.port}/${database-config.development.name}
+    user: ${database-config.development.username}
+    password: ${database-config.development.password}
     schemas: migration
     validate-on-migrate: true
-    
-    
+
+
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    show-sql: ${hibernate-config.show-sql}
-    generate-ddl: ${hibernate-config.generate-ddl}
+    show-sql: ${hibernate-config.development.show-sql}
+    generate-ddl: ${hibernate-config.development.generate-ddl}
     hibernate:
-      ddl-auto: ${hibernate-config.ddl-auto}
-    properties: 
+      ddl-auto: ${hibernate-config.development.ddl-auto}
+    properties:
       hibernate:
-        format_sql: ${hibernate-config.format-sql}
+        format_sql: ${hibernate-config.development.format-sql}
         dialect: ${spring.jpa.database-platform}
         temp.use_jdbc_metadata_defaults: false
         enable_lazy_load_no_trans: true
@@ -88,47 +67,130 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://${database-config.server}:${database-config.port}/${database-config.name}
-    username: ${database-config.username}
-    password: ${database-config.password}
+    url: jdbc:postgresql://${database-config.development.server}:${database-config.development.port}/${database-config.development.name}
+    username: ${database-config.development.username}
+    password: ${database-config.development.password}
 
     hikari:
       maximum-pool-size: 1
       connection-test-query: SELECT 1
       data-source-properties:
-              "[v$session.program]": ${spring.application.name}
+        "[v$session.program]": ${spring.application.name}
 
   mail:
-    host: smtp.office365.com
-    port: 587
-    username: fishcount_comercial@hotmail.com
-    password: Gaviao-007!
+    host: ${email-config.development.host}
+    port: ${email-config.development.port}
+    username: ${email-config.development.username}
+    password: ${email-config.development.password}
     properties.mail:
-      test-connection: true
+      test-connection: ${email-config.development.test-connection}
       smtp:
-        auth: true
+        auth: ${email-config.development.auth}
         starttls:
-          enable: true
-          required: true
+          enable: ${email-config.development.enable}
+          required: ${email-config.development.required}
 
 server:
   port: 8080
   servlet:
-    context-path: /
+    context-path: ${api.base-path}
   http2:
     enabled: true
   compression:
     enabled: true
     min-response-size: 1
     mime-types: text/html,
-                text/xml,
-                text/plain,
-                text/css,
-                text/javascript,
-                application/javascript,
-                application/json,
-                application/xml,
-                application/pdf,
-                image/png,
-                image/jpeg,
-                image/svg+xml
+      text/xml,
+      text/plain,
+      text/css,
+      text/javascript,
+      application/javascript,
+      application/json,
+      application/xml,
+      application/pdf,
+      image/png,
+      image/jpeg,
+      image/svg+xml
+
+---
+
+
+spring:
+  profiles:
+    active: development
+
+  application:
+    name: ${app.name}
+
+  flyway:
+    locations: "classpath:/db/migration"
+    url: jdbc:postgresql://${database-config.development.server}:${database-config.development.port}/${database-config.development.name}
+    user: ${database-config.development.username}
+    password: ${database-config.development.password}
+    schemas: migration
+    validate-on-migrate: true
+
+
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: ${hibernate-config.development.show-sql}
+    generate-ddl: ${hibernate-config.development.generate-ddl}
+    hibernate:
+      ddl-auto: ${hibernate-config.development.ddl-auto}
+    properties:
+      hibernate:
+        format_sql: ${hibernate-config.development.format-sql}
+        dialect: ${spring.jpa.database-platform}
+        temp.use_jdbc_metadata_defaults: false
+        enable_lazy_load_no_trans: true
+      query:
+        in_clause_parameter_padding: true
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://${database-config.development.server}:${database-config.development.port}/${database-config.development.name}
+    username: ${database-config.development.username}
+    password: ${database-config.development.password}
+
+    hikari:
+      maximum-pool-size: 1
+      connection-test-query: SELECT 1
+      data-source-properties:
+        "[v$session.program]": ${spring.application.name}
+
+  mail:
+    host: ${email-config.development.host}
+    port: ${email-config.development.port}
+    username: ${email-config.development.username}
+    password: ${email-config.development.password}
+    properties.mail:
+      test-connection: ${email-config.development.test-connection}
+      smtp:
+        auth: ${email-config.development.auth}
+        starttls:
+          enable: ${email-config.development.enable}
+          required: ${email-config.development.required}
+
+server:
+  port: 8080
+  servlet:
+    context-path: ${api.base-path}
+  http2:
+    enabled: true
+  compression:
+    enabled: true
+    min-response-size: 1
+    mime-types: text/html,
+      text/xml,
+      text/plain,
+      text/css,
+      text/javascript,
+      application/javascript,
+      application/json,
+      application/xml,
+      application/pdf,
+      image/png,
+      image/jpeg,
+      image/svg+xml

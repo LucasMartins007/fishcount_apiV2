@@ -22,7 +22,7 @@ import java.util.List;
 @Tag(name = IPagamentoController.TAG, description = "Pagamento")
 public interface IPagamentoController {
 
-    String PATH = IUsuarioController.PATH + OperationsPath.PARENT_ID + "/pagamento";
+    String PATH = IPessoaController.PATH + OperationsPath.PARENT_ID + "/pagamento";
 
     String TAG = "Usuário | Pagamento";
 
