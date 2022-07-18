@@ -5,10 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fishcount.api.config.security.interceptor.AppAuthorizationHandler;
 import com.fishcount.common.model.pattern.enums.EnumDateFormat;
+import com.fishcount.common.utils.ListUtil;
+import io.vavr.collection.Array;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,15 +30,19 @@ import org.springframework.web.servlet.config.annotation.*;
 import java.util.List;
 
 /**
- *
  * @author lucas
  */
 @Configuration
 @EnableScheduling
 public class WebConfig extends WebMvcConfigurationSupport {
 
-    @Value("#{'${api.prefix.v1}'.replace('v1', '**')}")
-    private String apiPrefixPath;
+    private static final List<String> INTERCEPTOR_EXCLUDE_URLS = Array.of(
+                    "/swagger-ui/**",
+                    "/swagger-resources/**",
+                    "/v3/api-docs",
+                    "/login",
+                    "/pessoa")
+            .toJavaList();
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -56,12 +60,11 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.
-                addResourceHandler("/api/v1/swagger-ui/**")
+        registry.addResourceHandler(ListUtil.first(INTERCEPTOR_EXCLUDE_URLS))
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
                 .resourceChain(false);
 
-        registry.addResourceHandler("/api/v1/webjars/**")
+        registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
@@ -93,12 +96,12 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
         argumentResolvers.add(pageableResolver);
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
 
     @Bean
     public RestTemplate getClientHttpRequestFactory() {
@@ -120,13 +123,14 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(appAuthorizationHandler()).addPathPatterns(apiPrefixPath);
+        registry.addInterceptor(appAuthorizationHandler())
+                .excludePathPatterns(ListUtil.toArray(INTERCEPTOR_EXCLUDE_URLS));
     }
-    
+
     @Bean
-    public HandlerInterceptor appAuthorizationHandler(){
+    public HandlerInterceptor appAuthorizationHandler() {
         return new AppAuthorizationHandler();
     }
-    
-    
+
+
 }
