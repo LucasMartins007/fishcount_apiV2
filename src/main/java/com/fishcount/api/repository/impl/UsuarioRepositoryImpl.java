@@ -1,8 +1,8 @@
 package com.fishcount.api.repository.impl;
 
-import com.fishcount.api.repository.infrastructure.spec.UsuarioSpec;
 import com.fishcount.api.repository.custom.CustomUsuarioRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
+import com.fishcount.api.repository.infrastructure.spec.UsuarioSpec;
 import com.fishcount.common.model.entity.Usuario;
 import org.springframework.stereotype.Repository;
 

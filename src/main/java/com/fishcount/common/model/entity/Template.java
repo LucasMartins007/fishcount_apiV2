@@ -1,13 +1,11 @@
 package com.fishcount.common.model.entity;
 
 
-import com.fishcount.common.model.enums.EnumTipoEmail;
 import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 import com.fishcount.common.model.pattern.AbstractEntity;
 import com.fishcount.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import javax.persistence.*;
 import java.util.Date;

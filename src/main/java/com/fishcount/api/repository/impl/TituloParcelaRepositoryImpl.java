@@ -1,8 +1,8 @@
 package com.fishcount.api.repository.impl;
 
-import com.fishcount.api.repository.infrastructure.spec.TituloParcelaSpec;
 import com.fishcount.api.repository.custom.CustomTituloParcelaRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
+import com.fishcount.api.repository.infrastructure.spec.TituloParcelaSpec;
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.entity.financeiro.TituloParcela;
 import org.springframework.stereotype.Repository;

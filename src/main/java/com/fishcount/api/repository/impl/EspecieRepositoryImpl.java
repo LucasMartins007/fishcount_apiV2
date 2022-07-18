@@ -1,8 +1,8 @@
 package com.fishcount.api.repository.impl;
 
-import com.fishcount.api.repository.infrastructure.spec.EspecieSpec;
 import com.fishcount.api.repository.custom.CustomEspecieRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
+import com.fishcount.api.repository.infrastructure.spec.EspecieSpec;
 import com.fishcount.common.model.entity.Especie;
 import org.springframework.stereotype.Repository;
 

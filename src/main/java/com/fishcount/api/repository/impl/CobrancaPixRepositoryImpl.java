@@ -1,8 +1,8 @@
 package com.fishcount.api.repository.impl;
 
-import com.fishcount.api.repository.infrastructure.spec.CobrancaPixSpec;
 import com.fishcount.api.repository.custom.CustomCobrancaPixRepository;
 import com.fishcount.api.repository.dao.GenericImpl;
+import com.fishcount.api.repository.infrastructure.spec.CobrancaPixSpec;
 import com.fishcount.common.model.entity.financeiro.pix.CobrancaPix;
 import org.springframework.stereotype.Repository;
 
