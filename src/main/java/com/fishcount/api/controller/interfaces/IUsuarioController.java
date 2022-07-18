@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = IUsuarioController.PATH)
 @Api(tags = IUsuarioController.TAG)
-@Tag(name = IUsuarioController.TAG, description = "Autenticação")
+@Tag(name = IUsuarioController.TAG, description = "teste")
 public interface IUsuarioController {
    
-    String PATH = "${api.prefix.v1}/usuario";
+    String PATH = "usuario";
     
     String TAG = "Usuário";
     

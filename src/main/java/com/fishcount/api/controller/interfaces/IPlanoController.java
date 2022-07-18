@@ -19,7 +19,7 @@ import java.util.List;
 @Tag(name = IPlanoController.TAG, description = "Plano")
 public interface IPlanoController {
 
-    String PATH = "${api.prefix.v1}/plano";
+    String PATH = "plano";
 
     String TAG = "Planos";
 

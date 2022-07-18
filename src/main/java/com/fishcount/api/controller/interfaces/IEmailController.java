@@ -3,6 +3,8 @@ package com.fishcount.api.controller.interfaces;
 import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.pattern.OperationsParam;
 import com.fishcount.common.model.pattern.OperationsPath;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +16,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = IEmailController.PATH)
+@Api(tags = IEmailController.TAG)
+@Tag(name = IEmailController.TAG, description = "Email")
 public interface IEmailController {
 
-    String PATH = IUsuarioController.PATH + OperationsPath.PARENT_ID + "/email";
+    String PATH = IPessoaController.PATH + OperationsPath.PARENT_ID + "/email";
+
+    String TAG = "Email";
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

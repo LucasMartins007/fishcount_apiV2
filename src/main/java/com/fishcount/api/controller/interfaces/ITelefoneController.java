@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping(value = ITelefoneController.PATH)
 public interface ITelefoneController {
 
-    String PATH = IUsuarioController.PATH + OperationsPath.PARENT_ID + "/telefone";
+    String PATH = IPessoaController.PATH + OperationsPath.PARENT_ID + "/telefone";
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

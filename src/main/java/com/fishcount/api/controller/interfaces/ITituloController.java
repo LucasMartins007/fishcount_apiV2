@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping(ITituloController.PATH)
 public interface ITituloController {
     
-    String PATH = IUsuarioController.PATH + OperationsPath.PARENT_ID + "/titulo";
+    String PATH = IPessoaController.PATH + OperationsPath.PARENT_ID + "/titulo";
     
     @PostMapping
     TituloDTO incluir(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @RequestBody TituloDTO tituloDTO);
