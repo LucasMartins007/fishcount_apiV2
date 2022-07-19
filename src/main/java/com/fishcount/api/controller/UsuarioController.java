@@ -1,31 +1,32 @@
 package com.fishcount.api.controller;
 
-import com.fishcount.api.controller.interfaces.IUsuarioController;
-import com.fishcount.api.service.UsuarioService;
 import com.fishcount.common.model.dto.UsuarioDTO;
-import com.fishcount.common.model.entity.Usuario;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
  * @author lucas
  */
 @RestController
-public class UsuarioController extends AbstractController<UsuarioService> implements IUsuarioController{
-
-    @Override
-    public UsuarioDTO incluir(UsuarioDTO usuarioDTO) {
-        Usuario usuario = converterDTOParaEntity(usuarioDTO, Usuario.class);
-        usuario = getService().incluir(usuario);
-        
-        return converterEntityParaDTO(usuario, UsuarioDTO.class);
-    }
-
-    @Override
-    public UsuarioDTO findById(Integer id) {
-        Usuario usuario = getService().encontrarPorId(id);
-        
-        return converterEntityParaDTO(usuario, UsuarioDTO.class);
-    }
+@RequestMapping(value = UsuarioController.PATH)
+@Api(tags = UsuarioController.TAG)
+@Tag(name = UsuarioController.TAG, description = "teste")
+public interface UsuarioController {
+   
+    String PATH = "usuario";
+    
+    String TAG = "Usuário";
+    
+    @PostMapping("/cadastro")
+    @ResponseStatus(HttpStatus.CREATED)
+    UsuarioDTO incluir(@RequestBody UsuarioDTO usuarioDTO);
+    
+    
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    UsuarioDTO findById(@PathVariable("id") Integer id);
     
 }

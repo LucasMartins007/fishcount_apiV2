@@ -1,33 +1,46 @@
-
 package com.fishcount.api.controller;
 
-import com.fishcount.api.controller.interfaces.ITituloParcelaController;
 import com.fishcount.common.model.dto.financeiro.TituloParcelaDTO;
+import com.fishcount.common.model.pattern.constants.OperationsParam;
+import com.fishcount.common.model.pattern.constants.OperationsPath;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
+/**
+ *
+ * @author lucas
+ */
+@RestController
+@RequestMapping(TituloParcelaController.PATH)
+public interface TituloParcelaController {
 
-public class TituloParcelaController implements ITituloParcelaController {
+    String PATH = TituloController.PATH + OperationsPath.ID + "/pacela";
 
-    @Override
-    public TituloParcelaDTO adicionar(Integer idUsuario, Integer idTitulo, TituloParcelaDTO tituloParcelaDTO) {
-        return null;
-    }
+    @PostMapping
+    TituloParcelaDTO adicionar(
+            @PathVariable(OperationsParam.PARENT_ID) Integer idUsuario,
+            @PathVariable(OperationsParam.ID) Integer idTitulo,
+            @RequestBody TituloParcelaDTO tituloParcelaDTO
+    );
 
-    @Override
-    public void liquidar(Integer idUsuario, Integer idTitulo, Integer idTituloParcela) {
-        // @Todo implementar
-    }
+    @PutMapping(OperationsPath.CHILD_ID)
+    void liquidar(
+            @PathVariable(OperationsParam.PARENT_ID) Integer idUsuario,
+            @PathVariable(OperationsParam.ID) Integer idTitulo,
+            @PathVariable(OperationsParam.CHILD_ID) Integer idTituloParcela
+    );
 
-    @Override
-    public List<TituloParcelaDTO> listar(Integer idUsuario, Integer idTitulo) {
-        return Collections.emptyList();
-    }
+    @GetMapping
+    List<TituloParcelaDTO> listar(
+            @PathVariable(OperationsParam.PARENT_ID) Integer idUsuario,
+            @PathVariable(OperationsParam.ID) Integer idTitulo
+    );
 
-    @Override
-    public TituloParcelaDTO encontrar(Integer idUsuario, Integer idTitulo, Integer idTituloParcela) {
-        return null;
-    }
-
+    @GetMapping(OperationsPath.CHILD_ID)
+    TituloParcelaDTO encontrar(
+            @PathVariable(OperationsParam.PARENT_ID) Integer idUsuario,
+            @PathVariable(OperationsParam.ID) Integer idTitulo,
+            @PathVariable(OperationsParam.CHILD_ID) Integer idTituloParcela
+    );
 }
