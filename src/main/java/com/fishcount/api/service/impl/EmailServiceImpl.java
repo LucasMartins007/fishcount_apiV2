@@ -3,6 +3,7 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.repository.EmailRepository;
 import com.fishcount.api.service.EmailService;
 import com.fishcount.api.service.PessoaService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.EmailValidator;
 import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.entity.Email;

@@ -3,13 +3,13 @@ package com.fishcount.api.converter;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
-import com.fishcount.common.model.dto.pattern.EnumPadraoDTO;
-import com.fishcount.common.model.dto.pattern.IEnum;
-import com.fishcount.common.model.pattern.AbstractEntity;
+import com.fishcount.common.model.entity.pattern.AbstractEntity;
+import com.fishcount.common.model.enums.pattern.EnumPadraoDTO;
+import com.fishcount.common.model.enums.pattern.IEnum;
 import com.fishcount.common.model.pattern.IIdentifier;
-import com.fishcount.common.model.pattern.annotations.converter.MappedFieldPropsChildren;
-import com.fishcount.common.model.pattern.annotations.converter.OnlyField;
-import com.fishcount.common.model.pattern.annotations.converter.TransientFieldDTO;
+import com.fishcount.common.model.pattern.annotations.MappedFieldPropsChildren;
+import com.fishcount.common.model.pattern.annotations.OnlyField;
+import com.fishcount.common.model.pattern.annotations.TransientFieldDTO;
 import com.fishcount.common.utils.ClassUtil;
 import com.fishcount.common.utils.ListUtil;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -256,10 +256,10 @@ public class Converter<D extends AbstractDTO<?>, E extends AbstractEntity<?>> {
 
     private static Object popular(Map<String, ?> propertiesToMap, Class<?> classDestino) {
         try {
-            Object instanceObjectDestino = classDestino.newInstance();
+            Object instanceObjectDestino = classDestino.getDeclaredConstructor().newInstance();
             BeanUtilsBean.getInstance().populate(instanceObjectDestino, propertiesToMap);
             return instanceObjectDestino;
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException ex) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
             throw new FcRuntimeException(ex.getMessage(), ex);
         }
     }

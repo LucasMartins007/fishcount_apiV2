@@ -2,6 +2,7 @@ package com.fishcount.api.service.impl;
 
 import com.fishcount.api.repository.PlanoRepository;
 import com.fishcount.api.service.PlanoService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.PlanoValidator;
 import com.fishcount.common.model.dto.financeiro.PlanoDTO;
 import com.fishcount.common.model.entity.financeiro.Plano;

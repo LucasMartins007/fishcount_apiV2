@@ -1,6 +1,6 @@
 package com.fishcount.api.service;
 
-import com.fishcount.api.service.impl.interfaces.IAbstractService;
+import com.fishcount.api.service.pattern.IAbstractService;
 import com.fishcount.common.model.dto.financeiro.PagamentoDTO;
 import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;

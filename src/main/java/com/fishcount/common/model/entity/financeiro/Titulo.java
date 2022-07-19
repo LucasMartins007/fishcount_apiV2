@@ -3,7 +3,7 @@ package com.fishcount.common.model.entity.financeiro;
 import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.enums.EnumStatusTitulo;
 import com.fishcount.common.model.enums.EnumTipoTitulo;
-import com.fishcount.common.model.pattern.AbstractEntity;
+import com.fishcount.common.model.entity.pattern.AbstractEntity;
 import lombok.Getter;
 import lombok.Setter;
 

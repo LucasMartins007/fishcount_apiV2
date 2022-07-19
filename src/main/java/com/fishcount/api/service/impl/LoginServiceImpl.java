@@ -4,6 +4,7 @@ import com.fishcount.api.config.security.JwtTokenUtil;
 import com.fishcount.api.service.LoginService;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.UsuarioService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.dto.AutenticacaoDTO;

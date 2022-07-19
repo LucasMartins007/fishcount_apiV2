@@ -3,6 +3,7 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.LocationPixService;
 import com.fishcount.api.service.gerencianet.pix.cobranca.ClientCobrancaPix;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.common.model.classes.gerencianet.request.PayloadCalendario;
 import com.fishcount.common.model.classes.gerencianet.request.PayloadCobranca;
 import com.fishcount.common.model.classes.gerencianet.request.PayloadDevedor;

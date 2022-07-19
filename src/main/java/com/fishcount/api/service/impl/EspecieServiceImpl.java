@@ -3,6 +3,7 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.repository.EspecieRepository;
 import com.fishcount.api.service.EspecieService;
 import com.fishcount.api.service.TaxaCrescimentoService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.EspecieValidator;
 import com.fishcount.api.validators.TaxaCrescimentoValidator;
 import com.fishcount.common.model.dto.EspecieDTO;

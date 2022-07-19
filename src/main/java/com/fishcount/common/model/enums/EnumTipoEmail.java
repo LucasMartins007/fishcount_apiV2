@@ -1,7 +1,7 @@
 package com.fishcount.common.model.enums;
 
-import com.fishcount.common.model.dto.pattern.IEnum;
-import com.fishcount.common.model.dto.pattern.converter.AbstractEnumConverter;
+import com.fishcount.common.model.enums.pattern.IEnum;
+import com.fishcount.common.model.entity.pattern.AbstractEnumConverter;
 import com.fishcount.common.model.entity.Email;
 import lombok.Getter;
 

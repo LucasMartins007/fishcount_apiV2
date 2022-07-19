@@ -2,7 +2,7 @@ package com.fishcount.api.controller.pattern;
 
 import com.fishcount.api.config.context.IContext;
 import com.fishcount.api.converter.Converter;
-import com.fishcount.api.service.impl.interfaces.IAbstractService;
+import com.fishcount.api.service.pattern.IAbstractService;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
 import com.fishcount.common.utils.LoggerUtil;

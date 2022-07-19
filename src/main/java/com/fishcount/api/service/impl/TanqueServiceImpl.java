@@ -4,6 +4,7 @@ import com.fishcount.api.repository.TanqueRepository;
 import com.fishcount.api.service.EspecieService;
 import com.fishcount.api.service.LoteService;
 import com.fishcount.api.service.TanqueService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.EspecieValidator;
 import com.fishcount.api.validators.TanqueValidator;
 import com.fishcount.common.model.dto.TanqueDTO;

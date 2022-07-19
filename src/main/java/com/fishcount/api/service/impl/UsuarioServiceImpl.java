@@ -2,6 +2,7 @@ package com.fishcount.api.service.impl;
 
 import com.fishcount.api.repository.UsuarioRepository;
 import com.fishcount.api.service.UsuarioService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.UsuarioValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;

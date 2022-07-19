@@ -2,7 +2,7 @@ package com.fishcount.api.config.context;
 
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
-import com.fishcount.common.model.pattern.AbstractEntity;
+import com.fishcount.common.model.entity.pattern.AbstractEntity;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanDefinitionStoreException;

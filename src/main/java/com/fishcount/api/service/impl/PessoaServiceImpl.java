@@ -2,6 +2,7 @@ package com.fishcount.api.service.impl;
 
 import com.fishcount.api.repository.PessoaRepository;
 import com.fishcount.api.service.*;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.EmailValidator;
 import com.fishcount.api.validators.PessoaValidator;
 import com.fishcount.api.validators.TelefoneValidator;

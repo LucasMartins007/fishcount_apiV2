@@ -1,7 +1,7 @@
 package com.fishcount.api.service.impl.log.erros;
 
 import com.fishcount.api.repository.PessoaRepository;
-import com.fishcount.api.service.impl.AbstractServiceImpl;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.service.log.erros.PixHistoricoService;
 import com.fishcount.common.model.classes.gerencianet.request.PayloadCobranca;
 import com.fishcount.common.model.dto.PixHistoricoDTO;

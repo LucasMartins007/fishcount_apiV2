@@ -1,6 +1,7 @@
 package com.fishcount.api.service.impl;
 
 import com.fishcount.api.service.TituloService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.TituloValidator;
 import com.fishcount.common.model.dto.financeiro.TituloDTO;
 import com.fishcount.common.model.entity.Pessoa;

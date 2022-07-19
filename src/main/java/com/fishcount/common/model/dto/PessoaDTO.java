@@ -1,7 +1,7 @@
 package com.fishcount.common.model.dto;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
-import com.fishcount.common.model.pattern.annotations.converter.TransientFieldDTO;
+import com.fishcount.common.model.pattern.annotations.TransientFieldDTO;
 import lombok.Getter;
 import lombok.Setter;
 

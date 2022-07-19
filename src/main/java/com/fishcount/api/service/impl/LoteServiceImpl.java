@@ -3,6 +3,7 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.repository.LoteRepository;
 import com.fishcount.api.service.LoteService;
 import com.fishcount.api.service.PessoaService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.LoteValidator;
 import com.fishcount.common.model.dto.LoteDTO;
 import com.fishcount.common.model.entity.Lote;

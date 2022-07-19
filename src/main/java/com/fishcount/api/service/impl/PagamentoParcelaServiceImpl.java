@@ -6,6 +6,7 @@ import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.LocationPixService;
 import com.fishcount.api.service.PagamentoParcelaService;
 import com.fishcount.api.service.TituloParcelaService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.PagamentoParcelaValidator;
 import com.fishcount.common.model.dto.financeiro.PagamentoParcelaDTO;
 import com.fishcount.common.model.entity.financeiro.Pagamento;

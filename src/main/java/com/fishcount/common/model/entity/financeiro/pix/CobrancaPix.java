@@ -2,7 +2,7 @@ package com.fishcount.common.model.entity.financeiro.pix;
 
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.enums.EnumStatusCobranca;
-import com.fishcount.common.model.pattern.AbstractEntity;
+import com.fishcount.common.model.entity.pattern.AbstractEntity;
 import lombok.Getter;
 import lombok.Setter;
 

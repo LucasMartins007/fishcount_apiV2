@@ -3,6 +3,7 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.repository.PagamentoParcelaRepository;
 import com.fishcount.api.repository.PagamentoRepository;
 import com.fishcount.api.service.*;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.PagamentoValidator;
 import com.fishcount.common.model.dto.financeiro.PagamentoDTO;
 import com.fishcount.common.model.entity.Pessoa;
