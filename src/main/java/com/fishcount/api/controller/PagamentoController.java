@@ -16,29 +16,29 @@ public class PagamentoController
         implements IPagamentoController {
 
     @Override
-    public PagamentoDTO incluir(Integer idUsuario, PagamentoDTO pagamentoDTO) {
-        Pagamento pagamento = getService().incluir(converterDTOParaEntity(pagamentoDTO, Pagamento.class), idUsuario);
+    public PagamentoDTO incluir(Integer pessoaId, PagamentoDTO pagamentoDTO) {
+        Pagamento pagamento = getService().incluir(converterDTOParaEntity(pagamentoDTO, Pagamento.class), pessoaId);
 
         return converterEntityParaDTO(pagamento, PagamentoDTO.class);
     }
 
     @Override
-    public List<PagamentoDTO> listarPagamentos(Integer idUsuario) {
-        List<Pagamento> pagamentos = getService().listarPagamentos(idUsuario);
+    public List<PagamentoDTO> listarParcelas(Integer pessoaId) {
+        List<Pagamento> pagamentos = getService().listarPagamentos(pessoaId);
 
         return converterEntityParaDTO(pagamentos, PagamentoDTO.class);
     }
 
     @Override
-    public PagamentoDTO consultarPagamento(Integer idUsuario, Integer idPagamento) {
-        Pagamento pagamento = getService().consultarCobranca(idUsuario, idPagamento);
+    public PagamentoDTO encontrar(Integer pessoaId, Integer pagamentoId) {
+        Pagamento pagamento = getService().consultarCobranca(pessoaId, pagamentoId);
 
         return converterEntityParaDTO(pagamento, PagamentoDTO.class);
     }
 
     @Override
-    public List<PagamentoParcelaDTO> listarParcelas(Integer idUsuario, EnumStatusPagamento statusPagamento) {
-        return converterEntityParaDTO(getService().listarParcelas(idUsuario, statusPagamento), PagamentoParcelaDTO.class);
+    public List<PagamentoParcelaDTO> listarParcelas(Integer pessoaId, EnumStatusPagamento statusPagamento) {
+        return converterEntityParaDTO(getService().listarParcelas(pessoaId, statusPagamento), PagamentoParcelaDTO.class);
     }
 
 }

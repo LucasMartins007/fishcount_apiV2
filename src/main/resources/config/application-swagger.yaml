@@ -64,3 +64,28 @@ controller:
     atualizar:
       operation: Atualizar lotes
       description: Endpoint responsável por atualizar os dados do lote do usuário
+
+  pagamento:
+    id: pagamentoId
+    parentId: pessoaId
+    queryParam: status do pagamento
+
+    incluir:
+      operation: Cadastrar um novo pagamento para a pessoa
+      description: Endpoint responsável por cadastrar um pagamento para pessoa <br>
+                   As parcelas do pagamento são geradas apartir do plano escolhido pelo usuário <br>
+                   São gerados ``titulos`` e ``tituloParcela`` referentes a esse pagamento <br>
+                   São gerados cobranças pix para cada parcela do pagamento, deixando as mesmas registradas em banco para futuras consultas de QRCode
+
+    listar:
+      operation: Listar os pagamentos da pessoa
+      description: Endpoint responsável por listaros pagamentos da pessoa
+
+    encontrar:
+      operation: Encontrar pagamento
+      description: Endpoint responsável por encontrar um pagamento específico por Id
+
+    listar-parcelas:
+      operation: Listar as parcelas do pagamento referenciado
+      description: Endpoint responsável por listar todas as parcelas do pagamento com o status referenciado.
+
