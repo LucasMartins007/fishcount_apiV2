@@ -43,3 +43,9 @@ controller:
     encontrar:
       operation: Encontrar espécie específica pela descricão
       description: Endpoint responsável por encontrar uma espécie de peixe específica pela descricão
+
+  login:
+
+    autenticar:
+      operation: Realizar o login da aplicação
+      description: Endpoint responsável por realizar o login na aplicação e disponibilizar um token para uso em outras chamadas
