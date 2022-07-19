@@ -5,3 +5,30 @@ swagger:
   description: Api de serviço das aplicações da Fishcount
   title: FishCount-api
   version: 1.0
+
+controller:
+
+  email:
+    id: emailId
+    parentId: pessoaId
+
+    incluir:
+      operation: Cadastrar novo email
+      description: Endpoint responsavél por adicionar um email para uma pessoa
+
+    editar:
+      operation: Editar email existente
+      description: Endpoint responsável por editar um email existente vinculado a uma pessoa
+
+    listar:
+      operation: Listar emails ativos da pessoa
+      description: Endpoint responsável por listar todos os emails ativos da pessoa
+
+    encontrar:
+      operation: Encontrar um email por Id
+      description: Endpoint responsável por encontrar um email específico pelo Id
+
+    inativar:
+      operation: Inativar um email do usuário por Id
+      description: Endpoint responsável por inativar um email do usuário por Id <br>
+                   O email não é excluído, somente sua propriedade ``ativo`` é setada como false
