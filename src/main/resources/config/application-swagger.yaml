@@ -49,3 +49,18 @@ controller:
     autenticar:
       operation: Realizar o login da aplicação
       description: Endpoint responsável por realizar o login na aplicação e disponibilizar um token para uso em outras chamadas
+
+  lote:
+    parentId: pessoaId
+
+    incluir:
+      operation: Cadastrar novo lote
+      description: Endpoint responsável por cadastrar um novo lote para a pessoa referenciada
+
+    listar:
+      operation: Listar lotes
+      description: Endpoint responsável por listar todos os lotes do usuário
+
+    atualizar:
+      operation: Atualizar lotes
+      description: Endpoint responsável por atualizar os dados do lote do usuário
