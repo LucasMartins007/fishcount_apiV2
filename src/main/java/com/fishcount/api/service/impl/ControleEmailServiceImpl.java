@@ -3,6 +3,7 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.config.beans.EmailBean;
 import com.fishcount.api.repository.TemplateRepository;
 import com.fishcount.api.service.ControleEmailService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.common.model.classes.DadosEmail;
 import com.fishcount.common.model.dto.ControleEmailDTO;
 import com.fishcount.common.model.entity.ControleEmail;
@@ -40,7 +41,6 @@ public class ControleEmailServiceImpl extends AbstractServiceImpl<ControleEmail,
         final DadosEmail dadosEmail = gerarDadosEmail(pessoa, tipoEnvioEmail);
 
         if (environment.getActiveProfiles()[0].equals("development")) {
-            System.out.println(dadosEmail.getCorpoEmail());
             registrarEnvioEmail(dadosEmail);
             return;
         }

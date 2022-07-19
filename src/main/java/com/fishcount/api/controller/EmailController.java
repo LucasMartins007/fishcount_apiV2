@@ -1,43 +1,58 @@
 package com.fishcount.api.controller;
 
-import com.fishcount.api.controller.interfaces.IEmailController;
-import com.fishcount.api.service.EmailService;
 import com.fishcount.common.model.dto.EmailDTO;
-import com.fishcount.common.model.entity.Email;
-import org.springframework.web.bind.annotation.RestController;
+import com.fishcount.common.model.pattern.constants.OperationsParam;
+import com.fishcount.common.model.pattern.constants.OperationsPath;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @author lucas
+ */
 @RestController
-public class EmailController extends AbstractController<EmailService> implements IEmailController {
+@RequestMapping(value = EmailController.PATH)
+@Api(tags = EmailController.TAG)
+@Tag(name = EmailController.TAG, description = EmailController.DESCRIPTION)
+public interface EmailController {
 
-    @Override
-    public EmailDTO incluir(Integer idUsuario, EmailDTO emailDTO) {
-        Email email = converterDTOParaEntity(emailDTO, Email.class);
-        
-        return converterEntityParaDTO(getService().incluir(idUsuario, email), EmailDTO.class);
-    }
+    String PATH = PessoaController.PATH + OperationsPath.PARENT_ID + "/email";
 
-    @Override
-    public void editar(Integer idUsuario, Integer idEmail, EmailDTO emailDTO) {
-        Email email = converterDTOParaEntity(emailDTO, Email.class);
-        
-        getService().editar(idEmail, email);
-    }
+    String TAG = "Email";
 
-    @Override
-    public List<EmailDTO> listar(Integer idUsuario) {
-        return converterEntityParaDTO(getService().listar(idUsuario), EmailDTO.class);
-    }
+    String DESCRIPTION = "Endpoints responsáveis pela manipulação de emails";
 
-    @Override
-    public EmailDTO encontrar(Integer idUsuario, Integer idEmail) {
-        return converterEntityParaDTO(getService().findAndValidate(idEmail), EmailDTO.class);
-    }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "${controller.email.incluir.operation}", notes = "${controller.email.incluir.description}")
+    EmailDTO incluir(@ApiParam("${controller.email.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                     @RequestBody EmailDTO emailDTO);
 
-    @Override
-    public void inativar(Integer idUsuario, Integer idEmail) {
-        getService().inativar(idUsuario, idEmail);
-    }
+    @PutMapping(OperationsPath.ID)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${controller.email.editar.operation}", notes = "${controller.email.editar.description}")
+    void editar(@ApiParam("${controller.email.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId, @PathVariable(OperationsParam.ID) Integer idEmail,
+                @RequestBody EmailDTO emailDTO);
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${controller.email.listar.operation}", notes = "${controller.email.listar.description}")
+    List<EmailDTO> listar(@ApiParam("${controller.email.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId);
+
+    @GetMapping(OperationsPath.ID)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${controller.email.encontrar.operation}", notes = "${controller.email.encontrar.description}")
+    EmailDTO encontrar(@ApiParam("${controller.email.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                       @PathVariable(OperationsParam.ID) Integer idEmail);
+
+    @DeleteMapping(OperationsPath.ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "${controller.email.inativar.operation}", notes = "${controller.email.inativar.description}")
+    void inativar(@ApiParam("${controller.email.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                  @ApiParam("${controller.email.id}") @PathVariable(OperationsParam.ID) Integer emailId);
 }

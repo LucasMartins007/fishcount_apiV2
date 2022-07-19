@@ -1,7 +1,7 @@
 package com.fishcount.common.utils;
 
 import com.fishcount.common.exception.FcRuntimeException;
-import com.fishcount.common.model.dto.pattern.IEnum;
+import com.fishcount.common.model.enums.pattern.IEnum;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.method.HandlerMethod;
 

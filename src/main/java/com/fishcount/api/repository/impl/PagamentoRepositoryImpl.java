@@ -1,8 +1,8 @@
 package com.fishcount.api.repository.impl;
 
 import com.fishcount.api.repository.custom.CustomPagamentoRepository;
-import com.fishcount.api.repository.dao.GenericImpl;
-import com.fishcount.api.repository.infrastructure.spec.PagamentoSpec;
+import com.fishcount.api.repository.dao.RepositoryImpl;
+import com.fishcount.api.repository.spec.PagamentoSpec;
 import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author Lucas Martins
  */
 @Repository
-public class PagamentoRepositoryImpl extends GenericImpl<Pagamento, Integer> implements CustomPagamentoRepository {
+public class PagamentoRepositoryImpl extends RepositoryImpl<Pagamento, Integer> implements CustomPagamentoRepository {
 
     @Override
     public List<Pagamento> findAllPagamentoByUsuario(Pessoa pessoa) {

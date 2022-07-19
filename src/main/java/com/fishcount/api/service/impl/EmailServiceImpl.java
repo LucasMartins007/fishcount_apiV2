@@ -3,6 +3,7 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.repository.EmailRepository;
 import com.fishcount.api.service.EmailService;
 import com.fishcount.api.service.PessoaService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.EmailValidator;
 import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.entity.Email;
@@ -29,8 +30,8 @@ public class EmailServiceImpl extends AbstractServiceImpl<Email, Integer, EmailD
     }
 
     @Override
-    public Email incluir(Integer idUsuario, Email email) {
-        onPrepareInsert(idUsuario, email);
+    public Email incluir(Integer pessoaId, Email email) {
+        onPrepareInsert(pessoaId, email);
         
         emailValidator.validateInsertOrUpdate(email);
         
@@ -38,8 +39,8 @@ public class EmailServiceImpl extends AbstractServiceImpl<Email, Integer, EmailD
     }
     
     @Override
-    public void editar(Integer id, Email email){
-        onPrepareUpdate(id, email);
+    public void editar(Integer pessoaId, Email email){
+        onPrepareUpdate(pessoaId, email);
         
         emailValidator.validateInsertOrUpdate(email);
         
@@ -47,15 +48,15 @@ public class EmailServiceImpl extends AbstractServiceImpl<Email, Integer, EmailD
     }
     
     @Override
-    public List<Email> listar(Integer idPessoa) {
-        Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
+    public List<Email> listar(Integer pessoaId) {
+        Pessoa pessoa = getService(PessoaService.class).findAndValidate(pessoaId);
         
         return getRepository(EmailRepository.class).findAllByPessoa(pessoa);
     }
     
     @Override
-    public void inativar(Integer idUsuario, Integer idEmail) {
-        Email email = findAndValidate(idEmail);
+    public void inativar(Integer pessoaId, Integer emailId) {
+        Email email = findAndValidate(emailId);
         
         emailValidator.validateDelete(email);
         

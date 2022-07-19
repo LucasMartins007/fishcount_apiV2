@@ -5,3 +5,137 @@ swagger:
   description: Api de serviço das aplicações da Fishcount
   title: FishCount-api
   version: 1.0
+
+controller:
+
+  email:
+    id: emailId
+    parentId: pessoaId
+
+    incluir:
+      operation: Cadastrar novo email
+      description: Endpoint responsavél por adicionar um email para uma pessoa
+
+    editar:
+      operation: Editar email existente
+      description: Endpoint responsável por editar um email existente vinculado a uma pessoa
+
+    listar:
+      operation: Listar emails ativos da pessoa
+      description: Endpoint responsável por listar todos os emails ativos da pessoa
+
+    encontrar:
+      operation: Encontrar um email por Id
+      description: Endpoint responsável por encontrar um email específico pelo Id
+
+    inativar:
+      operation: Inativar um email do usuário por Id
+      description: Endpoint responsável por inativar um email do usuário por Id <br>
+                   O email não é excluído, somente sua propriedade ``ativo`` é setada como false
+
+  especie:
+    id: especieId
+
+    listar:
+      operation: Listar todas as espécies cadastradas no sistema
+      description:  Endpoint responsável por listar as espécies de peixe já mapeadas no sistema
+
+    encontrar:
+      operation: Encontrar espécie específica pela descricão
+      description: Endpoint responsável por encontrar uma espécie de peixe específica pela descricão
+
+  login:
+
+    autenticar:
+      operation: Realizar o login da aplicação
+      description: Endpoint responsável por realizar o login na aplicação e disponibilizar um token para uso em outras chamadas
+
+  lote:
+    parentId: pessoaId
+
+    incluir:
+      operation: Cadastrar novo lote
+      description: Endpoint responsável por cadastrar um novo lote para a pessoa referenciada
+
+    listar:
+      operation: Listar lotes
+      description: Endpoint responsável por listar todos os lotes do usuário
+
+    atualizar:
+      operation: Atualizar lotes
+      description: Endpoint responsável por atualizar os dados do lote do usuário
+
+  pagamento:
+    id: pagamentoId
+    parentId: pessoaId
+    queryParam: status do pagamento
+
+    incluir:
+      operation: Cadastrar um novo pagamento para a pessoa
+      description: Endpoint responsável por cadastrar um pagamento para pessoa <br>
+                   As parcelas do pagamento são geradas apartir do plano escolhido pelo usuário <br>
+                   São gerados ``titulos`` e ``tituloParcela`` referentes a esse pagamento <br>
+                   São gerados cobranças pix para cada parcela do pagamento, deixando as mesmas registradas em banco para futuras consultas de QRCode
+
+    listar:
+      operation: Listar os pagamentos da pessoa
+      description: Endpoint responsável por listaros pagamentos da pessoa
+
+    encontrar:
+      operation: Encontrar pagamento
+      description: Endpoint responsável por encontrar um pagamento específico por Id
+
+    listar-parcelas:
+      operation: Listar as parcelas do pagamento referenciado
+      description: Endpoint responsável por listar todas as parcelas do pagamento com o status referenciado.
+
+  pagamento-parcela:
+    id: pagamentoParcelaId
+    parentId: pagamentoId
+    queryParam: status da parcela
+
+    listar:
+      operation: Listar as parcelas do pagamento referenciado
+      description: Endpoint responsável por listar todas as parcelas do pagamento com o status referenciado.
+
+    encontrar:
+      operation: Encontrar parcela em específico pelo Id
+      description: Endpoint responsável por encontrar uma parcela específica
+
+    gerarQRCode:
+      operation: Gerar QRCode para a parcela especificada
+      description: Endpoint responsável por gerar QRCode para a parcela referenciada <br>
+                   Código do QRCode é salvo no sistema para evitar transações desnecessárias com servidor externo.
+
+  pessoa:
+    id: pessoaId
+
+    incluir:
+      operation: Cadastrar uma nova pessoa no sistema
+      description: Endpoint responsável por cadastrar uma nova pessoa no sistema
+
+    encontrar:
+      operation: Encontrar uma pessoa específica referenciada pelo Id
+      description: Endpoint responsável por encontrar uma pessoa especifica referenciada por Id
+
+    atualizar:
+      operation: Atualizar os dados da pessoa referenciada por ID
+      description: Endpoint responsável por atualizar os dados da pessoa referenciada por ID
+
+  plano:
+    id: planoId
+
+    listar:
+      operation: Listar os planos disponíveis
+      description: Endpoint responsável por listar os planos disponíveis para o usuário
+
+    incluir:
+      operation: Cadastrar novo plano no sistema
+      description: c cadastrar um novo plano no sistema <br>
+                   posteriormente deve ser configurado para ser feito somente com login de administrador
+
+    encontrar:
+      operation: Encontrar um plano em específico
+      description: Endpoint responsável por encontrar um plano em específico por id
+
+

@@ -5,6 +5,7 @@ import com.fishcount.api.repository.QRCodePixRepository;
 import com.fishcount.api.service.LocationPixService;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.gerencianet.pix.location.ClientLocationPix;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadLocationResponse;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadQRCodeResponse;
 import com.fishcount.common.model.dto.financeiro.pix.LocationPixDTO;

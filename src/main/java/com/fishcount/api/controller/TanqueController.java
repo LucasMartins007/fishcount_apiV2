@@ -1,10 +1,12 @@
 package com.fishcount.api.controller;
 
-import com.fishcount.api.controller.interfaces.ITanqueController;
-import com.fishcount.api.service.TanqueService;
 import com.fishcount.common.model.dto.TanqueDTO;
-import com.fishcount.common.model.entity.Tanque;
-import org.springframework.web.bind.annotation.RestController;
+import com.fishcount.common.model.pattern.constants.OperationsParam;
+import com.fishcount.common.model.pattern.constants.OperationsPath;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,20 +15,21 @@ import java.util.List;
  * @author lucas
  */
 @RestController
-public class TanqueController extends AbstractController<TanqueService> implements ITanqueController {
-
-    @Override
-    public TanqueDTO incluir(Integer loteId, TanqueDTO tanqueDTO) {
-        Tanque tanque = converterDTOParaEntity(tanqueDTO, Tanque.class);
-        
-       return converterEntityParaDTO(getService().incluir(loteId, tanque), TanqueDTO.class);
-    }
-
-    @Override
-    public List<TanqueDTO> listarTanquesFromLote(Integer loteId) {
-        List<Tanque> tanques = getService().listarFromLote(loteId);
-        
-        return converterEntityParaDTO(tanques, TanqueDTO.class);
-    }
+@RequestMapping(value = TanqueController.PATH)
+@Api(tags = TanqueController.TAG)
+@Tag(name = TanqueController.TAG, description = "Tanque")
+public interface TanqueController {
     
+    String PATH = LoteController.PATH + OperationsPath.CHILD_ID + "/tanque";
+    
+    String TAG = LoteController.TAG + " | Tanque";
+    
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    TanqueDTO incluir(@PathVariable(OperationsParam.CHILD_ID) Integer loteId, @RequestBody TanqueDTO tanqueDTO);
+        
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    List<TanqueDTO> listarTanquesFromLote(@PathVariable(OperationsParam.CHILD_ID) Integer loteId);
+
 }

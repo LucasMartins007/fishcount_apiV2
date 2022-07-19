@@ -1,26 +1,32 @@
 package com.fishcount.api.controller;
 
-import com.fishcount.api.controller.interfaces.ILoginController;
-import com.fishcount.api.service.LoginService;
 import com.fishcount.common.model.dto.AutenticacaoDTO;
-import lombok.RequiredArgsConstructor;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
+ *
  * @author lucas
  */
 @RestController
-@RequiredArgsConstructor
-public class LoginController extends AbstractController<LoginService> implements ILoginController {
+@RequestMapping(value = LoginController.PATH)
+@Api(tags = LoginController.TAG)
+@Tag(name = LoginController.TAG, description = LoginController.DESCRIPTION)
+public interface LoginController {
 
+    String PATH = "login";
 
-    @Override
-    public ResponseEntity<AutenticacaoDTO> authenticate(@RequestBody AutenticacaoDTO autenticacaoDTO) {
-        AutenticacaoDTO autenticacao = getService().autenticar(autenticacaoDTO);
+    String TAG = "Login";
 
-        return ResponseEntity.ok(autenticacao);
-    }
+    String DESCRIPTION = "Endpoints referentes a autenticação da aplicação";
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ApiOperation(value = "${controller.login.autenticar.operation}", notes = "${controller.login.autenticar.description}")
+    ResponseEntity<AutenticacaoDTO> autenticar(@RequestBody AutenticacaoDTO autenticacaoDTO);
 
 }

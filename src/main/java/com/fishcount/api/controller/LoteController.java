@@ -1,38 +1,48 @@
 package com.fishcount.api.controller;
 
-
-import com.fishcount.api.controller.interfaces.ILoteController;
-import com.fishcount.api.service.LoteService;
 import com.fishcount.common.model.dto.LoteDTO;
-import com.fishcount.common.model.entity.Lote;
-import org.springframework.web.bind.annotation.RestController;
+import com.fishcount.common.model.pattern.constants.OperationsParam;
+import com.fishcount.common.model.pattern.constants.OperationsPath;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
- *
  * @author lucas
  */
 @RestController
-public class LoteController extends AbstractController<LoteService> implements ILoteController {
+@RequestMapping(value = LoteController.PATH)
+@Api(tags = LoteController.TAG)
+@Tag(name = LoteController.TAG, description = LoteController.DESCRIPTION)
+public interface LoteController {
 
-    @Override
-    public LoteDTO incluir(Integer idPessoa, LoteDTO loteDTO) {
-        Lote lote = converterDTOParaEntity(loteDTO, Lote.class);
-        
-        return converterEntityParaDTO(getService().incluir(idPessoa, lote), LoteDTO.class);
-    }
+    String PATH = PessoaController.PATH + OperationsPath.PARENT_ID + "/lote";
 
-    @Override
-    public List<LoteDTO> listarLotesFromUsuario(Integer idPessoa) {
-        return converterEntityParaDTO(getService().listarFromPessoa(idPessoa), LoteDTO.class);
-    }
+    String TAG = "Lote";
 
-    @Override
-    public void atualizar(Integer idPessoa, LoteDTO loteDTO) {
-        Lote lote = converterDTOParaEntity(loteDTO, Lote.class);
-        
-        getService().editar(idPessoa, lote);
-    }
-    
+    String DESCRIPTION = "Endpoints referentes a manipulação dos lotes da pessoa";
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "${controller.lote.incluir.operation}", notes = "${controller.lote.incluir.description}")
+    LoteDTO incluir(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                    @RequestBody LoteDTO loteDTO);
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${controller.lote.listar.operation}", notes = "${controller.lote.listar.description}")
+    List<LoteDTO> listar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId);
+
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${controller.lote.atualizar.operation}", notes = "${controller.lote.atualizar.description}")
+    void atualizar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                   @RequestBody LoteDTO loteDTO);
+
 }

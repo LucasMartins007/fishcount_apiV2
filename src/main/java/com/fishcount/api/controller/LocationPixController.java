@@ -1,16 +1,32 @@
 package com.fishcount.api.controller;
 
-import com.fishcount.api.controller.interfaces.ILocationPixController;
-import com.fishcount.api.service.LocationPixService;
 import com.fishcount.common.model.dto.financeiro.pix.QRCodePixDTO;
-import org.springframework.web.bind.annotation.RestController;
+import com.fishcount.common.model.pattern.constants.OperationsParam;
+import com.fishcount.common.model.pattern.constants.OperationsPath;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+/**
+ *
+ * @author Lucas Martins
+ */
 @RestController
-public class LocationPixController extends AbstractController<LocationPixService> implements ILocationPixController {
+@RequestMapping(value = LocationPixController.PATH)
+@Api(tags = LocationPixController.TAG)
+@Tag(name = LocationPixController.TAG, description = "Autenticação")
+public interface LocationPixController {
 
-    @Override
-    public QRCodePixDTO gerarQRCode(Integer idPessoa, Integer locationId) {
-        return converterEntityParaDTO(getService().gerarQrCode(idPessoa, locationId), QRCodePixDTO.class);
-    }
+    String PATH = PessoaController.PATH + OperationsPath.PARENT_ID + "/pix";
+
+    String TAG = "Pix | Location";
+
+    @GetMapping("/qrcode" + OperationsPath.ID)
+    @ResponseStatus(HttpStatus.OK)
+    QRCodePixDTO gerarQRCode(
+            @PathVariable(OperationsParam.PARENT_ID) Integer idPessoa,
+            @PathVariable(OperationsParam.ID) Integer locationId
+    );
 
 }

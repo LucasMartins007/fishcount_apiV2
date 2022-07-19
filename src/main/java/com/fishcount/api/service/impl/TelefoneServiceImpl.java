@@ -3,6 +3,7 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.repository.TelefoneRepository;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.TelefoneService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.TelefoneValidator;
 import com.fishcount.common.model.dto.TelefoneDTO;
 import com.fishcount.common.model.entity.Pessoa;

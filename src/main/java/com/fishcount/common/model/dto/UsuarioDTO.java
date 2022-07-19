@@ -2,8 +2,8 @@ package com.fishcount.common.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
-import com.fishcount.common.model.pattern.annotations.converter.OnlyField;
-import com.fishcount.common.model.pattern.annotations.converter.TransientFieldDTO;
+import com.fishcount.common.model.pattern.annotations.OnlyField;
+import com.fishcount.common.model.pattern.annotations.TransientFieldDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

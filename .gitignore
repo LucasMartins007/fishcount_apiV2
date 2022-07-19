@@ -42,6 +42,8 @@ fish-count/.idea/compiler.xml
 *.iws
 *.iml
 *.ipr
+.runDevelopment
+.runProduction
 
 ### NetBeans ###
 /nbproject/private/

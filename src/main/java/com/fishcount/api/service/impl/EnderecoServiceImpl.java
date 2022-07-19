@@ -1,6 +1,7 @@
 package com.fishcount.api.service.impl;
 
 import com.fishcount.api.service.EnderecoService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.common.model.dto.EnderecoDTO;
 import com.fishcount.common.model.entity.Endereco;
 import org.springframework.stereotype.Service;

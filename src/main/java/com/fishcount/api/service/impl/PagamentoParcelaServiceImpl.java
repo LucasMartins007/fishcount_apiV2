@@ -6,6 +6,7 @@ import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.LocationPixService;
 import com.fishcount.api.service.PagamentoParcelaService;
 import com.fishcount.api.service.TituloParcelaService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.PagamentoParcelaValidator;
 import com.fishcount.common.model.dto.financeiro.PagamentoParcelaDTO;
 import com.fishcount.common.model.entity.financeiro.Pagamento;
@@ -80,20 +81,20 @@ public class PagamentoParcelaServiceImpl
     }
 
     @Override
-    public List<PagamentoParcela> listarParcelas(Integer idUsuario, Integer idPagamento, EnumStatusPagamento statusPagamento) {
-        return getRepository(PagamentoParcelaRepository.class).findAllByUsuarioAndPagamentoAndStatus(idUsuario, idPagamento, statusPagamento);
+    public List<PagamentoParcela> listarParcelas(Integer pessoaId, Integer pagamentoId, EnumStatusPagamento statusPagamento) {
+        return getRepository(PagamentoParcelaRepository.class).findAllByUsuarioAndPagamentoAndStatus(pessoaId, pagamentoId, statusPagamento);
     }
 
     @Override
-    public PagamentoParcela consultarParcela(Integer idUsuario, Integer idPagamento, Integer idParcela) {
-        return findAndValidate(idParcela);
+    public PagamentoParcela consultarParcela(Integer pessoaId, Integer pagamentoId, Integer parcelaId) {
+        return findAndValidate(parcelaId);
     }
 
     @Override
-    public QRCodePix gerarQRCodeByParcela(Integer idUsuario, Integer idParcela) {
-        final CobrancaPix cobrancaPix = getRepository(CobrancaPixRepository.class).findByPagamentoParcela(idParcela);
+    public QRCodePix gerarQRCodeByParcela(Integer pessoaId, Integer pagamentoId) {
+        final CobrancaPix cobrancaPix = getRepository(CobrancaPixRepository.class).findByPagamentoParcela(pagamentoId);
 
-        return getService(LocationPixService.class).gerarQrCode(idUsuario, cobrancaPix.getLocation().getIdLocation());
+        return getService(LocationPixService.class).gerarQrCode(pessoaId, cobrancaPix.getLocation().getIdLocation());
     }
 
 }

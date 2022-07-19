@@ -1,31 +1,45 @@
 package com.fishcount.api.controller;
 
-import com.fishcount.api.controller.interfaces.IPlanoController;
-import com.fishcount.api.service.PlanoService;
 import com.fishcount.common.model.dto.financeiro.PlanoDTO;
-import com.fishcount.common.model.entity.financeiro.Plano;
-import org.springframework.web.bind.annotation.RestController;
+import com.fishcount.common.model.pattern.constants.OperationsPath;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ *
+ * @author Lucas Martins
+ */
 @RestController
-public class PlanoController extends AbstractController<PlanoService> implements IPlanoController {
+@RequestMapping(value = PlanoController.PATH)
+@Api(tags = PlanoController.TAG)
+@Tag(name = PlanoController.TAG, description = PlanoController.DESCRIPTION)
+public interface PlanoController {
 
-    @Override
-    public List<PlanoDTO> listarPlanos() {
-        return converterEntityParaDTO(getService().listarPlanos(), PlanoDTO.class);
-    }
+    String PATH = "plano";
 
-    @Override
-    public PlanoDTO incluir(PlanoDTO planoDTO) {
-        Plano plano = converterDTOParaEntity(planoDTO, Plano.class);
+    String TAG = "Planos";
 
-        return converterEntityParaDTO(getService().incluir(plano), PlanoDTO.class);
-    }
+    String DESCRIPTION = "Endpoints responsáveis pela manipulação dos planos disponíveis";
 
-    @Override
-    public PlanoDTO encontrar(Integer idPlano) {
-        return converterEntityParaDTO(getService().findAndValidate(idPlano), PlanoDTO.class);
-    }
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${controller.plano.listar.operation}", notes = "${controller.plano.listar.description}")
+    List<PlanoDTO> listar();
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "${controller.plano.incluir.operation}", notes = "${controller.plano.incluir.description}")
+    PlanoDTO incluir(@RequestBody PlanoDTO planoDTO);
+
+    @GetMapping(OperationsPath.ID)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${controller.plano.encontrar.operation}", notes = "${controller.plano.encontrar.description}")
+    PlanoDTO encontrar(@ApiParam("${controller.plano.id}") @PathVariable(OperationsPath.ID) Integer planoId);
 
 }
