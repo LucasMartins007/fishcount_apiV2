@@ -33,6 +33,7 @@ import springfox.documentation.spring.web.readers.operation.HandlerMethodResolve
 import javax.servlet.ServletContext;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author lucas
@@ -91,7 +92,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
     @Bean
     public WebMvcRequestHandlerProvider webMvcRequestHandlerProvider(Optional<ServletContext> servletContext, HandlerMethodResolver methodResolver, List<RequestMappingInfoHandlerMapping> handlerMappings) {
-        handlerMappings = handlerMappings.stream().filter(rh -> rh.getClass().getName().contains("RequestMapping")).toList();
+        handlerMappings = handlerMappings.stream().filter(rh -> rh.getClass().getName().contains("RequestMapping")).collect(Collectors.toList());
         return new WebMvcRequestHandlerProvider(servletContext, methodResolver, handlerMappings);
     }
 
