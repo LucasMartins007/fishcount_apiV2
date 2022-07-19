@@ -15,12 +15,12 @@ import java.util.List;
 public class EspecieController extends AbstractController<EspecieService> implements IEspecieController {
 
     @Override
-    public List<EspecieDTO> listarEspecies() {
+    public List<EspecieDTO> listar() {
         return getService().findAll();
     }
 
     @Override
-    public EspecieDTO findByDescricao(String descricao) {
+    public EspecieDTO encontrarPorDescricao(String descricao) {
         return converterEntityParaDTO(getService().findByDescricao(descricao), EspecieDTO.class);
     }
 

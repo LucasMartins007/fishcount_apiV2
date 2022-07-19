@@ -32,3 +32,14 @@ controller:
       operation: Inativar um email do usuário por Id
       description: Endpoint responsável por inativar um email do usuário por Id <br>
                    O email não é excluído, somente sua propriedade ``ativo`` é setada como false
+
+  especie:
+    id: especieId
+
+    listar:
+      operation: Listar todas as espécies cadastradas no sistema
+      description:  Endpoint responsável por listar as espécies de peixe já mapeadas no sistema
+
+    encontrar:
+      operation: Encontrar espécie específica pela descricão
+      description: Endpoint responsável por encontrar uma espécie de peixe específica pela descricão
