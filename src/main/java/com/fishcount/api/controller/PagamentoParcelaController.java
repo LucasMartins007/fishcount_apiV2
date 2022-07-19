@@ -17,18 +17,18 @@ import java.util.List;
 public class PagamentoParcelaController extends AbstractController<PagamentoParcelaService> implements IPagamentoParcelaController {
 
     @Override
-    public List<PagamentoParcelaDTO> listarParcelas(Integer idUsuario, Integer idPagamento, EnumStatusPagamento statusPagamento) {
-        return converterEntityParaDTO(getService().listarParcelas(idUsuario, idPagamento, statusPagamento), PagamentoParcelaDTO.class);
+    public List<PagamentoParcelaDTO> listar(Integer pessoaId, Integer pagamentoId, EnumStatusPagamento statusPagamento) {
+        return converterEntityParaDTO(getService().listarParcelas(pessoaId, pagamentoId, statusPagamento), PagamentoParcelaDTO.class);
     }
 
     @Override
-    public PagamentoParcelaDTO encontrarParcela(Integer idUsuario, Integer idPagamento, Integer idParcela) {
-        return converterEntityParaDTO(getService().consultarParcela(idUsuario, idPagamento, idParcela), PagamentoParcelaDTO.class);
+    public PagamentoParcelaDTO encontrar(Integer pessoaId, Integer pagamentoId, Integer parcelaId) {
+        return converterEntityParaDTO(getService().consultarParcela(pessoaId, pagamentoId, parcelaId), PagamentoParcelaDTO.class);
     }
 
     @Override
-    public QRCodePixDTO gerarQRCodeByParcela(Integer idUsuario, Integer idParcela) {
-        return converterEntityParaDTO(getService().gerarQRCodeByParcela(idUsuario, idParcela), QRCodePixDTO.class);
+    public QRCodePixDTO gerarQRCode(Integer pessoaId, Integer pagamentoId, Integer parcelaId) {
+        return converterEntityParaDTO(getService().gerarQRCodeByParcela(pessoaId, parcelaId), QRCodePixDTO.class);
     }
 
 }

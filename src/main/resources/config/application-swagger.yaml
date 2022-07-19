@@ -89,3 +89,21 @@ controller:
       operation: Listar as parcelas do pagamento referenciado
       description: Endpoint responsável por listar todas as parcelas do pagamento com o status referenciado.
 
+  pagamento-parcela:
+    id: pagamentoParcelaId
+    parentId: pagamentoId
+    queryParam: status da parcela
+
+    listar:
+      operation: Listar as parcelas do pagamento referenciado
+      description: Endpoint responsável por listar todas as parcelas do pagamento com o status referenciado.
+
+    encontrar:
+      operation: Encontrar parcela em específico pelo Id
+      description: Endpoint responsável por encontrar uma parcela específica
+
+    gerarQRCode:
+      operation: Gerar QRCode para a parcela especificada
+      description: Endpoint responsável por gerar QRCode para a parcela referenciada <br>
+                   Código do QRCode é salvo no sistema para evitar transações desnecessárias com servidor externo.
+

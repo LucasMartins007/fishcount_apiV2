@@ -6,6 +6,8 @@ import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.model.pattern.OperationsParam;
 import com.fishcount.common.model.pattern.OperationsPath;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,40 +15,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- *
  * @author Lucas Martins
  */
 @RestController
 @RequestMapping(value = IPagamentoParcelaController.PATH)
 @Api(tags = IPagamentoParcelaController.TAG)
-@Tag(name = IPagamentoParcelaController.TAG, description = "Parcelas")
+@Tag(name = IPagamentoParcelaController.TAG, description = IPagamentoParcelaController.DESCRIPTION)
 public interface IPagamentoParcelaController {
 
     String PATH = IPagamentoController.PATH + OperationsPath.ID + "/parcela";
 
-    String TAG = "Pagamento | Parcelas";
+    String TAG = IPagamentoController.TAG + " | Parcelas";
+
+    String DESCRIPTION = "Endpoints referentes a manipulação das parcelas do pagamento";
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<PagamentoParcelaDTO> listarParcelas(
-            @PathVariable(OperationsParam.PARENT_ID) Integer idUsuario,
-            @PathVariable(OperationsParam.ID) Integer idPagamento,
-            @RequestParam(value = "status", required = true) EnumStatusPagamento statusPagamento
-    );
+    @ApiOperation(value = "${controller.pagamento-parcela.listar.operation}", notes = "${controller.pagamento-parcela.listar.description}")
+    List<PagamentoParcelaDTO> listar(@ApiParam("${controller.pagamento-parcela.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                                     @ApiParam("${controller.pagamento-parcela.id}") @PathVariable(OperationsParam.ID) Integer pagamentoId,
+                                     @ApiParam("${controller.pagamento-parcela.queryParam}") @RequestParam(value = "status") EnumStatusPagamento statusPagamento);
 
-    @GetMapping(OperationsParam.CHILD_ID)
+    @GetMapping(OperationsPath.CHILD_ID)
     @ResponseStatus(HttpStatus.OK)
-    PagamentoParcelaDTO encontrarParcela(
-            @PathVariable(OperationsParam.PARENT_ID) Integer idUsuario,
-            @PathVariable(OperationsParam.ID) Integer idPagamento,
-            @PathVariable(OperationsParam.CHILD_ID) Integer idParcela
-    );
+    @ApiOperation(value = "${controller.pagamento-parcela.encontrar.operation}", notes = "${controller.pagamento-parcela.encontrar.description}")
+    PagamentoParcelaDTO encontrar(@ApiParam("${controller.pagamento.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                                  @ApiParam("${controller.pagamento-parcela.parentId}") @PathVariable(OperationsParam.ID) Integer pagamentoId,
+                                  @ApiParam("${controller.pagamento-parcela.id}") @PathVariable(OperationsParam.CHILD_ID) Integer parcelaId);
 
-    @PutMapping(OperationsParam.CHILD_ID)
+    @PutMapping(OperationsPath.CHILD_ID)
     @ResponseStatus(HttpStatus.OK)
-    QRCodePixDTO gerarQRCodeByParcela(
-            @PathVariable(OperationsParam.PARENT_ID) Integer idUsuario,
-            @PathVariable(OperationsParam.CHILD_ID) Integer idParcela
-    );
+    @ApiOperation(value = "${controller.pagamento-parcela.gerarQRCode.operation}", notes = "${controller.pagamento-parcela.gerarQRCode.description}")
+    QRCodePixDTO gerarQRCode(@ApiParam("${controller.pagamento.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                             @ApiParam("${controller.pagamento-parcela.parentId}") @PathVariable(OperationsParam.ID) Integer pagamentoId,
+                             @ApiParam("${controller.pagamento-parcela.id}") @PathVariable(OperationsParam.CHILD_ID) Integer parcelaId);
 
 }
