@@ -17,10 +17,10 @@ public interface PagamentoParcelaService extends IAbstractService<PagamentoParce
 
     List<PagamentoParcela> incluirParcelas(Pagamento pagamento);
     
-    List<PagamentoParcela> listarParcelas(Integer idUsuario, Integer idPagamento, EnumStatusPagamento statusPagamento);
+    List<PagamentoParcela> listarParcelas(Integer pessoaId, Integer pagamentoId, EnumStatusPagamento statusPagamento);
     
-    PagamentoParcela consultarParcela(Integer idUsuario, Integer idPagamento, Integer idParcela);
+    PagamentoParcela consultarParcela(Integer pessoaId, Integer pagamentoId, Integer parcelaId);
     
-    QRCodePix gerarQRCodeByParcela(Integer idUsuario, Integer idParcela);
+    QRCodePix gerarQRCodeByParcela(Integer pessoaId, Integer pagamentoId);
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface CustomPagamentoParcelaRepository {
 
-    List<PagamentoParcela> findAllByUsuarioAndPagamentoAndStatus(Integer idUsuario, Integer idPagamento, EnumStatusPagamento statusPagamento);
+    List<PagamentoParcela> findAllByUsuarioAndPagamentoAndStatus(Integer pessoaId, Integer pagamentoId, EnumStatusPagamento statusPagamento);
 
-    List<PagamentoParcela> findAllByUsuarioAndStatus(Integer idUsuario, EnumStatusPagamento statusPagamento);
+    List<PagamentoParcela> findAllByUsuarioAndStatus(Integer pessoaId, EnumStatusPagamento statusPagamento);
 }

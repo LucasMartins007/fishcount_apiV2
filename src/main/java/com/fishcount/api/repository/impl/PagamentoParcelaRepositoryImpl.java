@@ -13,16 +13,16 @@ import java.util.List;
 public class PagamentoParcelaRepositoryImpl extends GenericImpl<PagamentoParcela, Integer> implements CustomPagamentoParcelaRepository {
 
     @Override
-    public List<PagamentoParcela> findAllByUsuarioAndPagamentoAndStatus(Integer idUsuario, Integer idPagamento, EnumStatusPagamento statusPagamento) {
+    public List<PagamentoParcela> findAllByUsuarioAndPagamentoAndStatus(Integer pessoaId, Integer pagamentoId, EnumStatusPagamento statusPagamento) {
         return getSpecRepository()
-                .findAll(PagamentoParcelaSpec.byUsuarioAndPagamentoAndStatus(idUsuario, idPagamento, statusPagamento));
+                .findAll(PagamentoParcelaSpec.byUsuarioAndPagamentoAndStatus(pessoaId, pagamentoId, statusPagamento));
     }
 
     @Override
-    public List<PagamentoParcela> findAllByUsuarioAndStatus(Integer idUsuario, EnumStatusPagamento statusPagamento) {
+    public List<PagamentoParcela> findAllByUsuarioAndStatus(Integer pessoaId, EnumStatusPagamento statusPagamento) {
         return getSpecRepository()
                 .findAll(
-                        PagamentoParcelaSpec.byUsuario(idUsuario)
+                        PagamentoParcelaSpec.byUsuario(pessoaId)
                                 .and(PagamentoParcelaSpec.byStatus(statusPagamento)));
     }
 

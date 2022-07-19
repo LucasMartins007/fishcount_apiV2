@@ -17,14 +17,14 @@ import java.util.List;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class PagamentoParcelaSpec {
 
-    private static final String FIELD_USUARIO = "usuario";
+    private static final String FIELD_PESSOA = "pessoa";
     private static final String FIELD_PAGAMENTO = "pagamento";
     private static final String FIELD_STATUS_PAGAMENTO = "statusPagamento";
     private static final String FIELD_ID = "id";
 
-    public static Specification<PagamentoParcela> byUsuario(final Integer idUsuario) {
+    public static Specification<PagamentoParcela> byUsuario(final Integer pessoaId) {
         return (root, query, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get(FIELD_PAGAMENTO).get(FIELD_USUARIO).get(FIELD_ID), idUsuario);
+                -> criteriaBuilder.equal(root.get(FIELD_PAGAMENTO).get(FIELD_PESSOA).get(FIELD_ID), pessoaId);
     }
 
     public static Specification<PagamentoParcela> byStatus(final EnumStatusPagamento statusPagamento) {
@@ -32,16 +32,16 @@ public class PagamentoParcelaSpec {
                 -> criteriaBuilder.equal(root.get(FIELD_STATUS_PAGAMENTO), statusPagamento);
     }
 
-    public static Specification<PagamentoParcela> byPagamento(final Integer idPagamento) {
+    public static Specification<PagamentoParcela> byPagamento(final Integer pagamentoId) {
         return (root, query, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get(FIELD_PAGAMENTO).get(FIELD_ID), idPagamento);
+                -> criteriaBuilder.equal(root.get(FIELD_PAGAMENTO).get(FIELD_ID), pagamentoId);
     }
 
-    public static Specification<PagamentoParcela> byUsuarioAndPagamentoAndStatus(final Integer idUsuario, final Integer idPagamento, final EnumStatusPagamento statusPagamento) {
+    public static Specification<PagamentoParcela> byUsuarioAndPagamentoAndStatus(final Integer pessoaId, final Integer pagamentoId, final EnumStatusPagamento statusPagamento) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            predicates.add(criteriaBuilder.equal(root.get(FIELD_PAGAMENTO).get(FIELD_USUARIO).get(FIELD_ID), idUsuario));
-            predicates.add(criteriaBuilder.equal(root.get(FIELD_PAGAMENTO).get(FIELD_ID), idPagamento));
+            predicates.add(criteriaBuilder.equal(root.get(FIELD_PAGAMENTO).get(FIELD_PESSOA).get(FIELD_ID), pessoaId));
+            predicates.add(criteriaBuilder.equal(root.get(FIELD_PAGAMENTO).get(FIELD_ID), pagamentoId));
             predicates.add(criteriaBuilder.equal(root.get(FIELD_STATUS_PAGAMENTO), statusPagamento));
 
             return query.where(ListUtil.toArray(predicates)).getRestriction();
