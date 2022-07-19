@@ -29,10 +29,6 @@ server:
 
 jwt.secret: FGj2herA5v2ZUaTt
 
-java:
-  runtime:
-    version: 17
-
 spring:
   profiles:
     include:
