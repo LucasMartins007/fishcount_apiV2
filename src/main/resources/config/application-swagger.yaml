@@ -122,4 +122,20 @@ controller:
       operation: Atualizar os dados da pessoa referenciada por ID
       description: Endpoint responsável por atualizar os dados da pessoa referenciada por ID
 
+  plano:
+    id: planoId
+
+    listar:
+      operation: Listar os planos disponíveis
+      description: Endpoint responsável por listar os planos disponíveis para o usuário
+
+    incluir:
+      operation: Cadastrar novo plano no sistema
+      description: c cadastrar um novo plano no sistema <br>
+                   posteriormente deve ser configurado para ser feito somente com login de administrador
+
+    encontrar:
+      operation: Encontrar um plano em específico
+      description: Endpoint responsável por encontrar um plano em específico por id
+
 

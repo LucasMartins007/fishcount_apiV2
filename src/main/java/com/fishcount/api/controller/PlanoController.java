@@ -12,7 +12,7 @@ import java.util.List;
 public class PlanoController extends AbstractController<PlanoService> implements IPlanoController {
 
     @Override
-    public List<PlanoDTO> listarPlanos() {
+    public List<PlanoDTO> listar() {
         return converterEntityParaDTO(getService().listarPlanos(), PlanoDTO.class);
     }
 
@@ -24,8 +24,8 @@ public class PlanoController extends AbstractController<PlanoService> implements
     }
 
     @Override
-    public PlanoDTO encontrar(Integer idPlano) {
-        return converterEntityParaDTO(getService().findAndValidate(idPlano), PlanoDTO.class);
+    public PlanoDTO encontrar(Integer planoId) {
+        return converterEntityParaDTO(getService().findAndValidate(planoId), PlanoDTO.class);
     }
 
 }
