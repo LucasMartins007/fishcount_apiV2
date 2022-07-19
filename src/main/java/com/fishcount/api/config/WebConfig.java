@@ -26,8 +26,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
+import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
+import springfox.documentation.spring.web.readers.operation.HandlerMethodResolver;
 
+import javax.servlet.ServletContext;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author lucas
@@ -40,6 +46,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
                     "/swagger-ui/**",
                     "/swagger-resources/**",
                     "/v3/api-docs",
+                    "/actuator/**",
                     "/login",
                     "/pessoa")
             .toJavaList();
@@ -83,6 +90,12 @@ public class WebConfig extends WebMvcConfigurationSupport {
         configurer.defaultContentType(MediaType.APPLICATION_JSON);
     }
 
+    @Bean
+    public WebMvcRequestHandlerProvider webMvcRequestHandlerProvider(Optional<ServletContext> servletContext, HandlerMethodResolver methodResolver, List<RequestMappingInfoHandlerMapping> handlerMappings) {
+        handlerMappings = handlerMappings.stream().filter(rh -> rh.getClass().getName().contains("RequestMapping")).collect(Collectors.toList());
+        return new WebMvcRequestHandlerProvider(servletContext, methodResolver, handlerMappings);
+    }
+
     @Override
     public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> argumentResolvers) {
         final SortHandlerMethodArgumentResolver sortResolver = new SortHandlerMethodArgumentResolver();
@@ -101,7 +114,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Bean
     public RestTemplate getClientHttpRequestFactory() {

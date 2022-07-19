@@ -2,14 +2,12 @@ package com.fishcount.common.model.entity.pattern;
 
 import com.fishcount.common.model.pattern.IIdentifier;
 import org.hibernate.proxy.HibernateProxyHelper;
-import org.jetbrains.annotations.Contract;
 
 import javax.persistence.MappedSuperclass;
 
 /**
- *
- * @author lucas
  * @param <T>
+ * @author lucas
  */
 @MappedSuperclass
 public abstract class AbstractEntity<T extends Number> implements IIdentifier<T> {
@@ -21,7 +19,6 @@ public abstract class AbstractEntity<T extends Number> implements IIdentifier<T>
 
     @Override
     @SuppressWarnings("unchecked")
-    @Contract(value = "null -> false", pure = true)
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
