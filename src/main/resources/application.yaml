@@ -9,7 +9,7 @@ api:
   base-path: /${api.app-name}${api.path}${api.version}
 
 database-config:
-  development:
+  dev:
     server: localhost
     port: 5432
     name: fishcount
@@ -17,11 +17,14 @@ database-config:
     password: admin
 
 hibernate-config:
-  development:
+  dev:
     format-sql: true
     show-sql: true
     generate-ddl: true
     ddl-auto: update
+
+server:
+  path: https://fish-count-api-${spring.profiles.active}.herokuapp.com/fishcount-api/api/v1/actuator/health
 
 
 jwt.secret: FGj2herA5v2ZUaTt
@@ -31,19 +34,22 @@ spring:
     include:
       swagger, email_config, pix_config
 
+  main:
+    allow-bean-definition-overriding: true
+
 
 ---
 spring:
-  config.activate.on-profile: production
+  config.activate.on-profile: prod
 
   application:
     name: ${app.name}
 
   flyway:
     locations: "classpath:/db/migration"
-    url: jdbc:postgresql://${database-config.development.server}:${database-config.development.port}/${database-config.development.name}
-    user: ${database-config.development.username}
-    password: ${database-config.development.password}
+    url: jdbc:postgresql://${database-config.dev.server}:${database-config.dev.port}/${database-config.dev.name}
+    user: ${database-config.dev.username}
+    password: ${database-config.dev.password}
     schemas: migration
     validate-on-migrate: true
 
@@ -51,13 +57,13 @@ spring:
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    show-sql: ${hibernate-config.development.show-sql}
-    generate-ddl: ${hibernate-config.development.generate-ddl}
+    show-sql: ${hibernate-config.dev.show-sql}
+    generate-ddl: ${hibernate-config.dev.generate-ddl}
     hibernate:
-      ddl-auto: ${hibernate-config.development.ddl-auto}
+      ddl-auto: ${hibernate-config.dev.ddl-auto}
     properties:
       hibernate:
-        format_sql: ${hibernate-config.development.format-sql}
+        format_sql: ${hibernate-config.dev.format-sql}
         dialect: ${spring.jpa.database-platform}
         temp.use_jdbc_metadata_defaults: false
         enable_lazy_load_no_trans: true
@@ -67,9 +73,9 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://${database-config.development.server}:${database-config.development.port}/${database-config.development.name}
-    username: ${database-config.development.username}
-    password: ${database-config.development.password}
+    url: jdbc:postgresql://${database-config.dev.server}:${database-config.dev.port}/${database-config.dev.name}
+    username: ${database-config.dev.username}
+    password: ${database-config.dev.password}
 
     hikari:
       maximum-pool-size: 1
@@ -78,17 +84,17 @@ spring:
         "[v$session.program]": ${spring.application.name}
 
   mail:
-    host: ${email-config.development.host}
-    port: ${email-config.development.port}
-    username: ${email-config.development.username}
-    password: ${email-config.development.password}
+    host: ${email-config.dev.host}
+    port: ${email-config.dev.port}
+    username: ${email-config.dev.username}
+    password: ${email-config.dev.password}
     properties.mail:
-      test-connection: ${email-config.development.test-connection}
+      test-connection: ${email-config.dev.test-connection}
       smtp:
-        auth: ${email-config.development.auth}
+        auth: ${email-config.dev.auth}
         starttls:
-          enable: ${email-config.development.enable}
-          required: ${email-config.development.required}
+          enable: ${email-config.dev.enable}
+          required: ${email-config.dev.required}
 
 server:
   port: 8080
@@ -117,16 +123,16 @@ server:
 
 spring:
   profiles:
-    active: development
+    active: dev
 
   application:
     name: ${app.name}
 
   flyway:
     locations: "classpath:/db/migration"
-    url: jdbc:postgresql://${database-config.development.server}:${database-config.development.port}/${database-config.development.name}
-    user: ${database-config.development.username}
-    password: ${database-config.development.password}
+    url: jdbc:postgresql://${database-config.dev.server}:${database-config.dev.port}/${database-config.dev.name}
+    user: ${database-config.dev.username}
+    password: ${database-config.dev.password}
     schemas: migration
     validate-on-migrate: true
 
@@ -134,13 +140,13 @@ spring:
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-    show-sql: ${hibernate-config.development.show-sql}
-    generate-ddl: ${hibernate-config.development.generate-ddl}
+    show-sql: ${hibernate-config.dev.show-sql}
+    generate-ddl: ${hibernate-config.dev.generate-ddl}
     hibernate:
-      ddl-auto: ${hibernate-config.development.ddl-auto}
+      ddl-auto: ${hibernate-config.dev.ddl-auto}
     properties:
       hibernate:
-        format_sql: ${hibernate-config.development.format-sql}
+        format_sql: ${hibernate-config.dev.format-sql}
         dialect: ${spring.jpa.database-platform}
         temp.use_jdbc_metadata_defaults: false
         enable_lazy_load_no_trans: true
@@ -150,9 +156,9 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://${database-config.development.server}:${database-config.development.port}/${database-config.development.name}
-    username: ${database-config.development.username}
-    password: ${database-config.development.password}
+    url: jdbc:postgresql://${database-config.dev.server}:${database-config.dev.port}/${database-config.dev.name}
+    username: ${database-config.dev.username}
+    password: ${database-config.dev.password}
 
     hikari:
       maximum-pool-size: 1
@@ -161,17 +167,17 @@ spring:
         "[v$session.program]": ${spring.application.name}
 
   mail:
-    host: ${email-config.development.host}
-    port: ${email-config.development.port}
-    username: ${email-config.development.username}
-    password: ${email-config.development.password}
+    host: ${email-config.dev.host}
+    port: ${email-config.dev.port}
+    username: ${email-config.dev.username}
+    password: ${email-config.dev.password}
     properties.mail:
-      test-connection: ${email-config.development.test-connection}
+      test-connection: ${email-config.dev.test-connection}
       smtp:
-        auth: ${email-config.development.auth}
+        auth: ${email-config.dev.auth}
         starttls:
-          enable: ${email-config.development.enable}
-          required: ${email-config.development.required}
+          enable: ${email-config.dev.enable}
+          required: ${email-config.dev.required}
 
 server:
   port: 8080

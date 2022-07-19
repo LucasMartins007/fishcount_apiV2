@@ -1,5 +1,5 @@
 email-config:
-  development:
+  dev:
     host: smtp.office365.com
     port: 587
     username: fishcount_comercial@hotmail.com
@@ -14,7 +14,7 @@ email-config:
 
 
 ##### Todo alterar para parâmetros de produção #####
-  production:
+  prod:
     host: smtp.office365.com
     port: 587
     username: fishcount_comercial@hotmail.com
