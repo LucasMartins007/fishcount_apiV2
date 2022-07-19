@@ -4,34 +4,41 @@ import com.fishcount.common.model.dto.PessoaDTO;
 import com.fishcount.common.model.pattern.OperationsParam;
 import com.fishcount.common.model.pattern.OperationsPath;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
- *
  * @author Lucas Martins
  */
 @RestController
 @RequestMapping(value = IPessoaController.PATH)
 @Api(tags = IPessoaController.TAG)
-@Tag(name = IPessoaController.TAG, description = "Pessoa")
+@Tag(name = IPessoaController.TAG, description = IPessoaController.DESCRIPTION)
 public interface IPessoaController {
 
     String PATH = "pessoa";
 
     String TAG = "Pessoa";
 
+    String DESCRIPTION = "Endpoints referentes a manipulação da pessoa";
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "${controller.pessoa.incluir.operation}", notes = "${controller.pessoa.incluir.description}")
     PessoaDTO incluir(@RequestBody PessoaDTO pessoaDTO);
 
     @GetMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
-    PessoaDTO encontrarPorId(@PathVariable(OperationsParam.ID) Integer id);
+    @ApiOperation(value = "${controller.pessoa.encontrar.operation}", notes = "${controller.pessoa.encontrar.description}")
+    PessoaDTO encontrar(@ApiParam("${controller.pessoa.id}") @PathVariable(OperationsParam.ID) Integer id);
 
     @PutMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
-    void atualizar(@PathVariable(OperationsParam.ID) Integer id, @RequestBody PessoaDTO pessoaDTO);
+    @ApiOperation(value = "${controller.pessoa.atualizar.operation}", notes = "${controller.pessoa.atualizar.description}")
+    void atualizar(@ApiParam("${controller.pessoa.id}") @PathVariable(OperationsParam.ID) Integer id,
+                   @RequestBody PessoaDTO pessoaDTO);
 
 }

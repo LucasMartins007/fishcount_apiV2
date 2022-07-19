@@ -107,3 +107,19 @@ controller:
       description: Endpoint responsável por gerar QRCode para a parcela referenciada <br>
                    Código do QRCode é salvo no sistema para evitar transações desnecessárias com servidor externo.
 
+  pessoa:
+    id: pessoaId
+
+    incluir:
+      operation: Cadastrar uma nova pessoa no sistema
+      description: Endpoint responsável por cadastrar uma nova pessoa no sistema
+
+    encontrar:
+      operation: Encontrar uma pessoa específica referenciada pelo Id
+      description: Endpoint responsável por encontrar uma pessoa especifica referenciada por Id
+
+    atualizar:
+      operation: Atualizar os dados da pessoa referenciada por ID
+      description: Endpoint responsável por atualizar os dados da pessoa referenciada por ID
+
+

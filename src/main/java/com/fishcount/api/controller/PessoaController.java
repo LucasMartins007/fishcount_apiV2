@@ -22,7 +22,7 @@ public class PessoaController
     }
 
     @Override
-    public PessoaDTO encontrarPorId(Integer id) {
+    public PessoaDTO encontrar(Integer id) {
         return converterEntityParaDTO(getService().encontrarPessoa(id), PessoaDTO.class);
     }
 
