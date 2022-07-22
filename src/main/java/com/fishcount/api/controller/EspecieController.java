@@ -34,4 +34,9 @@ public interface EspecieController {
     @ApiOperation(value = "${controller.especie.encontrar.operation}", notes = "${controller.especie.encontrar.description}")
     EspecieDTO encontrarPorDescricao(@RequestParam(value = "descricao", required = true) String descricao);
 
+
+    @GetMapping("/first")
+    @ApiOperation(value = "${controller.especie.encontrar.operation}", notes = "${controller.especie.encontrar.description}")
+    EspecieDTO findFist();
+
 }
