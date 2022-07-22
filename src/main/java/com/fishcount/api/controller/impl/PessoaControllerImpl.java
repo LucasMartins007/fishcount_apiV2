@@ -1,5 +1,6 @@
 package com.fishcount.api.controller.impl;
 
+import com.fishcount.api.controller.PessoaController;
 import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.common.model.dto.PessoaDTO;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PessoaControllerImpl
         extends AbstractController<PessoaService>
-        implements com.fishcount.api.controller.PessoaController {
+        implements PessoaController {
 
     @Override
     public PessoaDTO incluir(PessoaDTO pessoaDTO) {

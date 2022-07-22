@@ -7,6 +7,8 @@ import com.fishcount.common.model.enums.EnumUnidadeTempo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 
 /**
  * @author lucas
@@ -17,7 +19,7 @@ public class TaxaCrescimentoDTO implements AbstractDTO<Integer> {
 
     private Integer id;
 
-    private Double qtdeAumento;
+    private BigDecimal qtdeAumento;
 
     private EnumUnidadeTamanho unidadeAumento;
 
