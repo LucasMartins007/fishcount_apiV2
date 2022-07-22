@@ -40,9 +40,14 @@ controller:
       operation: Listar todas as espécies cadastradas no sistema
       description:  Endpoint responsável por listar as espécies de peixe já mapeadas no sistema
 
+    first:
+      operation: Encontrar primeira espécie encontrada
+      description: Endpoint responsável por encontrar a primeira espécie da lista de espécies
+
     encontrar:
       operation: Encontrar espécie específica pela descricão
       description: Endpoint responsável por encontrar uma espécie de peixe específica pela descricão
+
 
   login:
 

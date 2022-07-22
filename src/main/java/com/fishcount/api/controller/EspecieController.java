@@ -36,7 +36,7 @@ public interface EspecieController {
 
 
     @GetMapping("/first")
-    @ApiOperation(value = "${controller.especie.encontrar.operation}", notes = "${controller.especie.encontrar.description}")
+    @ApiOperation(value = "${controller.especie.first.operation}", notes = "${controller.especie.first.description}")
     EspecieDTO findFist();
 
 }
