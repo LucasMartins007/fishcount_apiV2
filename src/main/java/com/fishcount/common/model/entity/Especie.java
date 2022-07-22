@@ -23,7 +23,7 @@ public class Especie extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_especie", sequenceName = "gen_id_fish_especie")
+    @SequenceGenerator(name = "id_fish_especie", allocationSize = 1, sequenceName = "gen_id_fish_especie")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_especie")
     private Integer id;
 
