@@ -2,6 +2,7 @@ package com.fishcount.common.model.entity;
 
 
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
+import com.fishcount.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,6 +43,17 @@ public class Lote extends AbstractEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pessoa", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_lote_to_fish_pessoa"))
     private Pessoa pessoa;
+
+    @PrePersist
+    private void prePersist() {
+        this.dataInclusao = DateUtil.getDate();
+        this.dataAtualizacao = DateUtil.getDate();
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        this.dataAtualizacao = DateUtil.getDate();
+    }
 
     @Override
     public boolean equals(Object obj) {

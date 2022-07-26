@@ -4,6 +4,7 @@ import com.fishcount.api.repository.PessoaRepository;
 import com.fishcount.api.service.*;
 import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.EmailValidator;
+import com.fishcount.api.validators.LoteValidator;
 import com.fishcount.api.validators.PessoaValidator;
 import com.fishcount.api.validators.TelefoneValidator;
 import com.fishcount.common.exception.FcRuntimeException;
@@ -34,6 +35,9 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
 
     @Autowired
     private TelefoneValidator telefoneValidator;
+
+    @Autowired
+    private LoteValidator loteValidator;
 
 
     @Override
@@ -72,10 +76,24 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
         pessoa.setAtivo(true);
         pessoa.setDataInclusao(managedPessoa.getDataInclusao());
         pessoa.setUsuario(managedPessoa.getUsuario());
+        pessoa.setLotes(managedPessoa.getLotes());
 
         pessoaValidator.validateUpdate(pessoa);
         validarEmails(pessoa);
         validarTelefones(pessoa);
+        validarLotes(pessoa);
+    }
+
+    private void validarLotes(Pessoa pessoa) {
+        ListUtil.stream(pessoa.getLotes())
+                .forEach(lote -> {
+                    lote.setPessoa(pessoa);
+                    loteValidator.validateInsertOrUpdate(lote);
+
+                    if (Utils.isNotEmpty(pessoa.getId())) {
+                        getService(LoteService.class).onPrepareInsertOrUpdate(pessoa.getId(), lote);
+                    }
+                });
     }
 
     @Override

@@ -18,4 +18,5 @@ public interface LoteService extends IAbstractService<Lote, Integer, LoteDTO> {
 
     void editar(Integer idUsuario, Lote lote);
 
+    void onPrepareInsertOrUpdate(Integer idPessoa, Lote lote);
 }
