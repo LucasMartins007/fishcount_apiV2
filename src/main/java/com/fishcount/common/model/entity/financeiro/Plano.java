@@ -46,11 +46,11 @@ public class Plano extends AbstractEntity<Integer> {
     @Column(name = "ativo")
     private boolean ativo;
 
-    @Column(name = "data_inclusao", nullable = false)
+    @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataInclusao;
 
-    @Column(name = "data_atualizacao", nullable = false)
+    @Column(name = "data_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
 
