@@ -21,7 +21,7 @@ public class PixHistoricoServiceImpl
     public void incluirCobrancaException(RestClientException exception, PayloadCobranca payloadCobranca, String assinaturaMetodo) {
         final PixHistorico pixHistorico = new PixHistorico();
         pixHistorico.setMensagem(exception.getLocalizedMessage());
-        pixHistorico.setValor(BigDecimal.valueOf(Long.parseLong(payloadCobranca.getValor().getOriginal())));
+        pixHistorico.setValor(BigDecimal.valueOf(Double.parseDouble(payloadCobranca.getValor().getOriginal())));
 
         final String cpf = payloadCobranca.getDevedor().getCpf();
         final Pessoa pessoa = getRepository(PessoaRepository.class).findByCpf(cpf);

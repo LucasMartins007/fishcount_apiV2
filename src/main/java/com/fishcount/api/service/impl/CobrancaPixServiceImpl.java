@@ -15,6 +15,7 @@ import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.entity.financeiro.pix.CobrancaPix;
 import com.fishcount.common.model.entity.financeiro.pix.LocationPix;
 import com.fishcount.common.utils.DateUtil;
+import com.fishcount.common.utils.NumericUtil;
 import com.fishcount.common.utils.optional.OptionalUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,7 +77,7 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
                 .ofFallibleNullable(() -> parcela.getPagamento().getPessoa())
                 .orElse(null);
 
-        PayloadDevedor devedor = new PayloadDevedor(pessoa.getNome(), pessoa.getCpf());
+        PayloadDevedor devedor = new PayloadDevedor(pessoa.getNome(), NumericUtil.somenteNumero(pessoa.getCpf()));
         payload.setDevedor(devedor);
 
         PayloadCalendario calendario = new PayloadCalendario(calcularSegundosNoMes(parcela.getDataVencimento()));
