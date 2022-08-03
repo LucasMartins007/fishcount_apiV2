@@ -12,6 +12,7 @@ import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.entity.financeiro.Plano;
 import com.fishcount.common.model.entity.financeiro.Titulo;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
+import com.fishcount.common.utils.BigDecimalUtil;
 import com.fishcount.common.utils.DateUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -73,7 +74,7 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
         pagamento.setDataAlteracao(DateUtil.getDate());
         pagamento.setDataVencimento(DateUtil.add(Calendar.MONTH, 1));
         pagamento.setStatusPagamento(EnumStatusPagamento.ANALISE);
-        pagamento.setSaldo(BigDecimal.ZERO);
+        pagamento.setSaldo(BigDecimalUtil.truncBig(BigDecimal.ZERO, 1));
         pagamento.setValor(plano.getValorMinimo());
         pagamento.setQtdeParcelas(plano.getQtdeParcela()== null ? pagamento.getQtdeParcelas() : plano.getQtdeParcela());
 
