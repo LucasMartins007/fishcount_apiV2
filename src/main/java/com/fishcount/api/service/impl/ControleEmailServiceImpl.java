@@ -36,6 +36,9 @@ public class ControleEmailServiceImpl extends AbstractServiceImpl<ControleEmail,
     @Value("${email.suporte}")
     private String emailSuporte;
 
+    @Value("${spring.mail.username}")
+    private String from;
+
     @Override
     public void enviarEmail(Pessoa pessoa, EnumTipoEnvioEmail tipoEnvioEmail) {
         final DadosEmail dadosEmail = gerarDadosEmail(pessoa, tipoEnvioEmail);
@@ -51,7 +54,8 @@ public class ControleEmailServiceImpl extends AbstractServiceImpl<ControleEmail,
             MimeMessage mail = mailSender.createMimeMessage();
 
             MimeMessageHelper helper = new MimeMessageHelper(mail);
-            helper.setTo(dadosEmail.getEmailDestinatario());
+            helper.setFrom(from);
+            helper.setTo(emailSuporte);
             helper.setSubject(dadosEmail.getAssunto());
             helper.setText(dadosEmail.getCorpoEmail(), true);
 

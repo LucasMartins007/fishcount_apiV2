@@ -89,12 +89,12 @@ spring:
     username: ${email-config.dev.username}
     password: ${email-config.dev.password}
     properties.mail:
-      test-connection: ${email-config.dev.test-connection}
+      test-connection: ${email-config.dev.properties.mail.test-connection}
       smtp:
-        auth: ${email-config.dev.auth}
+        auth: ${email-config.dev.properties.mail.smtp.auth}
         starttls:
-          enable: ${email-config.dev.enable}
-          required: ${email-config.dev.required}
+          enable: ${email-config.dev.properties.mail.smtp.starttls.enable}
+          required: ${email-config.dev.properties.mail.smtp.starttls.required}
 
 server:
   port: 8080
@@ -172,12 +172,12 @@ spring:
     username: ${email-config.dev.username}
     password: ${email-config.dev.password}
     properties.mail:
-      test-connection: ${email-config.dev.test-connection}
+      test-connection: ${email-config.dev.properties.mail.test-connection}
       smtp:
-        auth: ${email-config.dev.auth}
+        auth: ${email-config.dev.properties.mail.smtp.auth}
         starttls:
-          enable: ${email-config.dev.enable}
-          required: ${email-config.dev.required}
+          enable: ${email-config.dev.properties.mail.smtp.starttls.enable}
+          required: ${email-config.dev.properties.mail.smtp.starttls.required}
 
 server:
   port: 8080

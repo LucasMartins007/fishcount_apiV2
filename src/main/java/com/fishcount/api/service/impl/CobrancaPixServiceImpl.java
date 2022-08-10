@@ -19,7 +19,6 @@ import com.fishcount.common.utils.NumericUtil;
 import com.fishcount.common.utils.optional.OptionalUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -40,7 +39,6 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
     private String msgPadrao;
 
     @Override
-    @Async
     public void gerarRegistoCobrancaPix(PagamentoParcela parcela) {
         final PayloadCobrancaResponse payload = gerarPayloadCobranca(parcela);
 
@@ -76,7 +74,6 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
         final Pessoa pessoa = OptionalUtil
                 .ofFallibleNullable(() -> parcela.getPagamento().getPessoa())
                 .orElse(null);
-
         PayloadDevedor devedor = new PayloadDevedor(pessoa.getNome(), NumericUtil.somenteNumero(pessoa.getCpf()));
         payload.setDevedor(devedor);
 
@@ -93,7 +90,7 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
     }
 
     private Integer calcularSegundosNoMes(Date dataVencimento) {
-        final Long segundosMes = Duration
+        final long segundosMes = Duration
                 .between(DateUtil.getDate().toInstant(), DateUtil.add(dataVencimento, Calendar.MONTH, 1)
                         .toInstant())
                 .getSeconds();

@@ -1,5 +1,6 @@
 package com.fishcount.common.model.classes.gerencianet.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,11 +10,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@AllArgsConstructor
 public class PayloadCalendario {
-
-    public PayloadCalendario(Integer expiracao) {
-        this.expiracao = expiracao;
-    }
 
     private Integer expiracao;
 
