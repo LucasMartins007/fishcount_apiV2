@@ -13,8 +13,14 @@ import java.util.List;
 public interface TanqueService extends IAbstractService<Tanque, Integer, TanqueDTO> {
     
     Tanque incluir(Integer loteId, Tanque tanque);
-    
-    List<Tanque> listarFromLote(Integer loteId);
+
+    void editar(Integer pessoaId, Integer loteId, Integer tanqueId, Tanque tanque);
+
+    List<Tanque> listarFromPessoaAndLote(Integer pessoaId, Integer loteId);
+
+    Tanque encontrarPorId(Integer pessoaId, Integer loteId, Integer tanqueId);
+
+    void inativarTanque(Integer pessoaId, Integer loteId, Integer tanqueId);
     
     
 }

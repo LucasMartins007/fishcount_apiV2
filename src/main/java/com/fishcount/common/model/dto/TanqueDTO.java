@@ -19,6 +19,8 @@ public class TanqueDTO implements AbstractDTO<Integer> {
     
     private String descricao;
 
+    private Integer qtdePeixe;
+
     private EspecieDTO especie;
 
     private Date ultimaAnalise;

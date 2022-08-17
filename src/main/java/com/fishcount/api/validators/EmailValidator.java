@@ -46,7 +46,7 @@ public class EmailValidator extends AbstractValidatorImpl<Email> {
 
     private void validateDuplicidadeEmail(Email email) {
         OptionalUtil.ofNullable(getService(EmailService.class).findByEmail(email))
-                .filter(e -> Utils.isEmpty(email.getId()) || (Utils.isNotEmpty(email.getId()) && !email.getDescricao().equals(e.getDescricao())))
+                .filter(e -> Utils.isNotEmpty(email.getId()) && !email.getDescricao().equals(e.getDescricao()))
                 .ifPresent(e -> {
                     throw new FcRuntimeException(EnumFcDomainException.EMAIL_DUPLICADO, email.getDescricao());
                 });

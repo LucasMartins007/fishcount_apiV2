@@ -1,5 +1,6 @@
 package com.fishcount.api.controller.impl;
 
+import com.fishcount.api.controller.TanqueController;
 import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.TanqueService;
 import com.fishcount.common.model.dto.TanqueDTO;
@@ -9,24 +10,43 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- *
  * @author lucas
  */
 @RestController
-public class TanqueControllerImpl extends AbstractController<TanqueService> implements com.fishcount.api.controller.TanqueController {
+public class TanqueControllerImpl
+        extends AbstractController<TanqueService>
+        implements TanqueController {
 
     @Override
     public TanqueDTO incluir(Integer loteId, TanqueDTO tanqueDTO) {
-        Tanque tanque = converterDTOParaEntity(tanqueDTO, Tanque.class);
-        
-       return converterEntityParaDTO(getService().incluir(loteId, tanque), TanqueDTO.class);
+        final Tanque tanque = converterDTOParaEntity(tanqueDTO, Tanque.class);
+
+        return converterEntityParaDTO(getService().incluir(loteId, tanque), TanqueDTO.class);
     }
 
     @Override
-    public List<TanqueDTO> listarTanquesFromLote(Integer loteId) {
-        List<Tanque> tanques = getService().listarFromLote(loteId);
-        
+    public void editar(Integer pessoaId, Integer loteId, Integer tanqueId, TanqueDTO tanqueDTO) {
+        final Tanque tanque = converterDTOParaEntity(tanqueDTO, Tanque.class);
+
+        getService().editar(pessoaId, loteId, tanqueId, tanque);
+    }
+
+    @Override
+    public List<TanqueDTO> listarTanquesFromLote(Integer pessoaId, Integer loteId) {
+        final List<Tanque> tanques = getService().listarFromPessoaAndLote(pessoaId, loteId);
+
         return converterEntityParaDTO(tanques, TanqueDTO.class);
     }
-    
+
+    @Override
+    public TanqueDTO encontrarPorId(Integer pessoaId, Integer loteId, Integer tanqueId) {
+        return converterEntityParaDTO(getService().encontrarPorId(pessoaId, loteId, tanqueId), TanqueDTO.class);
+
+    }
+
+    @Override
+    public void inativarTanque(Integer pessoaId, Integer loteId, Integer tanqueId) {
+        getService().inativarTanque(pessoaId, loteId, tanqueId);
+    }
+
 }

@@ -17,7 +17,7 @@ public class ServerConfig {
     @Value("${server.path}")
     private String serverPath;
 
-    @Scheduled(cron = "0 0/5 * * * *")
+//    @Scheduled(cron = "0 0/5 * * * *")
     public void keepAlive() {
         restTemplate.getRestConfig()
                 .getForObject(serverPath, String.class);
