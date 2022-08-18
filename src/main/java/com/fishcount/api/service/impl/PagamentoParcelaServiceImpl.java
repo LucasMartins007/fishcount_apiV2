@@ -100,7 +100,7 @@ public class PagamentoParcelaServiceImpl
     public QRCodePix gerarQRCodeByParcela(Integer pessoaId, Integer pagamentoId) {
         final CobrancaPix cobrancaPix = getRepository(CobrancaPixRepository.class).findByPagamentoParcela(pagamentoId);
 
-        return getService(LocationPixService.class).gerarQrCode(pessoaId, cobrancaPix.getLocation().getIdLocation());
+        return getService(LocationPixService.class).gerarQrCodePorLocation(pessoaId, cobrancaPix.getLocation().getIdLocation());
     }
 
 }

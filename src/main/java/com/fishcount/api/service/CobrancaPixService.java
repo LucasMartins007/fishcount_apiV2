@@ -12,4 +12,6 @@ import com.fishcount.common.model.entity.financeiro.pix.CobrancaPix;
 public interface CobrancaPixService extends IAbstractService<CobrancaPix, Integer, CobrancaPixDTO> {
 
     void gerarRegistoCobrancaPix(PagamentoParcela parcela);
+
+    CobrancaPix encontrarCobrancaPorPagamentoParcela(PagamentoParcela parcela);
 }

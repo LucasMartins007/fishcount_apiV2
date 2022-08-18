@@ -1,5 +1,6 @@
 package com.fishcount.api.service.impl;
 
+import com.fishcount.api.repository.CobrancaPixRepository;
 import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.LocationPixService;
 import com.fishcount.api.service.gerencianet.pix.cobranca.ClientCobrancaPix;
@@ -46,6 +47,11 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
 
         getRepository().save(cobrancaPix);
 
+    }
+
+    @Override
+    public CobrancaPix encontrarCobrancaPorPagamentoParcela(PagamentoParcela parcela) {
+        return getRepository(CobrancaPixRepository.class).findByPagamentoParcela(parcela.getId()) ;
     }
 
     private CobrancaPix gerarCobrancaPix(final PayloadCobrancaResponse payload, final PagamentoParcela parcela) {

@@ -20,13 +20,20 @@ public interface LocationPixController {
 
     String PATH = PessoaController.PATH + OperationsPath.PARENT_ID + "/pix";
 
-    String TAG = "Pix | Location";
+    String TAG = "Pix | QRCode";
 
-    @GetMapping("/qrcode" + OperationsPath.ID)
+    @GetMapping("/location" + OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
-    QRCodePixDTO gerarQRCode(
+    QRCodePixDTO encontrarPorLocation(
             @PathVariable(OperationsParam.PARENT_ID) Integer idPessoa,
             @PathVariable(OperationsParam.ID) Integer locationId
+    );
+
+    @GetMapping("/parcela" + OperationsPath.ID)
+    @ResponseStatus(HttpStatus.OK)
+    QRCodePixDTO encontrarPorParcela(
+            @PathVariable(OperationsParam.PARENT_ID) Integer idPessoa,
+            @PathVariable(OperationsParam.ID) Integer pagamentoParcelaId
     );
 
 }
