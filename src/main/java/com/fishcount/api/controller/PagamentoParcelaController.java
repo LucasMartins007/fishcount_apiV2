@@ -34,7 +34,7 @@ public interface PagamentoParcelaController {
     @ApiOperation(value = "${controller.pagamento-parcela.listar.operation}", notes = "${controller.pagamento-parcela.listar.description}")
     List<PagamentoParcelaDTO> listar(@ApiParam("${controller.pagamento-parcela.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
                                      @ApiParam("${controller.pagamento-parcela.id}") @PathVariable(OperationsParam.ID) Integer pagamentoId,
-                                     @ApiParam("${controller.pagamento-parcela.queryParam}") @RequestParam(value = "status") EnumStatusPagamento statusPagamento);
+                                     @ApiParam("${controller.pagamento-parcela.queryParam}") @RequestParam(value = "status", required = false) EnumStatusPagamento statusPagamento);
 
     @GetMapping(OperationsPath.CHILD_ID)
     @ResponseStatus(HttpStatus.OK)

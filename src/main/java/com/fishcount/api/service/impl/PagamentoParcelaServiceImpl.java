@@ -17,6 +17,7 @@ import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.utils.BigDecimalUtil;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.ListUtil;
+import com.fishcount.common.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -84,7 +85,10 @@ public class PagamentoParcelaServiceImpl
 
     @Override
     public List<PagamentoParcela> listarParcelas(Integer pessoaId, Integer pagamentoId, EnumStatusPagamento statusPagamento) {
-        return getRepository(PagamentoParcelaRepository.class).findAllByUsuarioAndPagamentoAndStatus(pessoaId, pagamentoId, statusPagamento);
+        if (Utils.isEmpty(statusPagamento)){
+            return getRepository(PagamentoParcelaRepository.class).findAllByPessoaAndPagamento(pessoaId, pagamentoId);
+        }
+        return getRepository(PagamentoParcelaRepository.class).findAllByPessoaAndPagamentoAndStatus(pessoaId, pagamentoId, statusPagamento);
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoEmail;
 import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 import com.fishcount.common.utils.ListUtil;
+import com.fishcount.common.utils.NumericUtil;
 import com.fishcount.common.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,10 +74,10 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
 
     private void onPrepareUpdate(Pessoa pessoa, Pessoa managedPessoa) {
         pessoa.setId(managedPessoa.getId());
-        pessoa.setAtivo(true);
         pessoa.setDataInclusao(managedPessoa.getDataInclusao());
         pessoa.setUsuario(managedPessoa.getUsuario());
         pessoa.setLotes(managedPessoa.getLotes());
+        pessoa.setCpf(NumericUtil.somenteNumero(pessoa.getCpf()));
 
         pessoaValidator.validateUpdate(pessoa);
         validarEmails(pessoa);
@@ -121,6 +122,7 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
     private void onPrepareInsert(Pessoa pessoa) {
         validarEmails(pessoa);
         validarTelefones(pessoa);
+        pessoa.setCpf(NumericUtil.somenteNumero(pessoa.getCpf()));;
 
         final Usuario usuario = gerarUsuario(pessoa);
         pessoa.setUsuario(usuario);

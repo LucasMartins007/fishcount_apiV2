@@ -8,6 +8,7 @@ import com.fishcount.common.model.enums.EnumTipoPagamento;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -37,7 +38,13 @@ public class PagamentoDTO implements AbstractDTO<Integer> {
 
     private EnumStatusPagamento statusPagamento;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private Date dataInicioVigencia;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private Date dataFimVigencia;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dataVencimento;
 
 }

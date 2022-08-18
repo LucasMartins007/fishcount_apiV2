@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -47,7 +48,7 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
 
     @Override
     public List<PagamentoParcela> listarParcelas(Integer idUsuario, EnumStatusPagamento statusPagamento){
-        return getRepository(PagamentoParcelaRepository.class).findAllByUsuarioAndStatus(idUsuario, statusPagamento);
+        return getRepository(PagamentoParcelaRepository.class).findAllByPessoaAndStatus(idUsuario, statusPagamento);
 
     }
 
@@ -66,13 +67,17 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
         pagamento.setPessoa(pessoa);
         pagamento.setTitulo(titulo);
 
+        final Date dataFimVigencia = DateUtil.add(DateUtil.getDate(), Calendar.MONTH, plano.getQtdeParcela());
+        pagamento.setDataFimVigencia(dataFimVigencia);
+        pagamento.setDataInicioVigencia(DateUtil.getDate());
+
         gerarPagamentoAnalise(pagamento, plano);
     }
 
     private void gerarPagamentoAnalise(final Pagamento pagamento, final Plano plano) {
         pagamento.setDataInclusao(DateUtil.getDate());
         pagamento.setDataAlteracao(DateUtil.getDate());
-        pagamento.setDataVencimento(DateUtil.add(Calendar.MONTH, 1));
+        pagamento.setDataVencimento(DateUtil.add(Calendar.MONTH, plano.getQtdeParcela()));
         pagamento.setStatusPagamento(EnumStatusPagamento.ANALISE);
         pagamento.setSaldo(BigDecimalUtil.truncBig(BigDecimal.ZERO, 1));
         pagamento.setValor(plano.getValorMinimo());

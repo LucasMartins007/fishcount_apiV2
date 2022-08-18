@@ -13,6 +13,7 @@ public enum EnumStatusPagamento implements IEnum<Integer> {
     ABERTO(1, "Em aberto"),
     PAGAMENTO_PARCIAL(2, "Pagamento parcial"),
     FINALIZADO(3, "Finalizado"),
+    ATRASADO(4, "Em Atraso"),
     ;
 
     private final Integer key;
