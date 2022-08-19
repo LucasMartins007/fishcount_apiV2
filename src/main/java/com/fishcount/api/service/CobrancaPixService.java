@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.Async;
  */
 public interface CobrancaPixService extends IAbstractService<CobrancaPix, Integer, CobrancaPixDTO> {
 
-    @Async
     CobrancaPix gerarRegistoCobrancaPix(PagamentoParcela parcela);
 
     CobrancaPix encontrarCobrancaPorPagamentoParcela(PagamentoParcela parcela);
