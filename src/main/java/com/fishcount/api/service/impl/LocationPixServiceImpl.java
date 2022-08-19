@@ -52,9 +52,12 @@ public class LocationPixServiceImpl extends AbstractServiceImpl<LocationPix, Int
     @Override
     public QRCodePix gerarQrCodePorPagamentoParcela(Integer idPessoa, Integer pagamentoParcelaId) {
         final Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
-        final PagamentoParcela pagamentoParcela =  getService(PagamentoParcelaService.class).findAndValidate(pagamentoParcelaId);
+        final PagamentoParcela pagamentoParcela = getService(PagamentoParcelaService.class).findAndValidate(pagamentoParcelaId);
 
-        final CobrancaPix cobrancaPix = getService(CobrancaPixService.class).encontrarCobrancaPorPagamentoParcela(pagamentoParcela);
+        CobrancaPix cobrancaPix = getService(CobrancaPixService.class).encontrarCobrancaPorPagamentoParcela(pagamentoParcela);
+        if (Utils.isEmpty(cobrancaPix)) {
+           cobrancaPix = getService(CobrancaPixService.class).gerarRegistoCobrancaPix(pagamentoParcela);
+        }
 
         return resolverQRCodePix(cobrancaPix.getLocation().getIdLocation(), cobrancaPix.getLocation(), pessoa);
     }

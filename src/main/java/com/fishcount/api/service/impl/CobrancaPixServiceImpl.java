@@ -40,13 +40,12 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
     private String msgPadrao;
 
     @Override
-    public void gerarRegistoCobrancaPix(PagamentoParcela parcela) {
+    public CobrancaPix gerarRegistoCobrancaPix(PagamentoParcela parcela) {
         final PayloadCobrancaResponse payload = gerarPayloadCobranca(parcela);
 
         final CobrancaPix cobrancaPix = gerarCobrancaPix(payload, parcela);
 
-        getRepository().save(cobrancaPix);
-
+        return getRepository().save(cobrancaPix);
     }
 
     @Override

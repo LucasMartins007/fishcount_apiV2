@@ -50,6 +50,7 @@ public class PagamentoParcelaServiceImpl
 
     private void onAfterInsert(PagamentoParcela parcela) {
         getService(TituloParcelaService.class).gerarTitulosParcelasByPagamentoParcela(parcela);
+        getService(CobrancaPixService.class).gerarRegistoCobrancaPix(parcela);
     }
 
     private List<PagamentoParcela> gerarParcelas(Pagamento pagamento) {
