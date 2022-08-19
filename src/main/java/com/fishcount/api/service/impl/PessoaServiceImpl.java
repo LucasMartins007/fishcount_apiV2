@@ -9,6 +9,7 @@ import com.fishcount.api.validators.PessoaValidator;
 import com.fishcount.api.validators.TelefoneValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
+import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.dto.PessoaDTO;
 import com.fishcount.common.model.entity.Email;
 import com.fishcount.common.model.entity.Pessoa;
@@ -19,6 +20,7 @@ import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.NumericUtil;
 import com.fishcount.common.utils.Utils;
+import com.fishcount.common.utils.optional.OptionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -106,6 +108,16 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
         return pessoa;
     }
 
+    @Override
+    public Pessoa encontrarPessoaByCpf(String cpf) {
+        final Pessoa pessoa = getRepository(PessoaRepository.class).findByCpf(cpf);
+
+        if (Utils.isEmpty(pessoa)){
+            throw new FcRuntimeException(EnumFcDomainException.PESSOA_NAO_ENCONTRADA_POR_CPF, cpf);
+        }
+        return pessoa;
+    }
+
     private void retirarCamposInativos(Pessoa pessoa) {
         final List<Email> emails = ListUtil.stream(pessoa.getEmails())
                 .filter(Email::isAtivo)
@@ -129,7 +141,7 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
     }
 
     private void onAfterInsert(Pessoa pessoa) {
-        getService(ControleEmailService.class).enviarEmail(pessoa, EnumTipoEnvioEmail.CONFIRMACAO_NOVO_CADASTRO);
+        getService(ControleEmailService.class).enviarEmail(pessoa, EnumTipoEnvioEmail.CONFIRMACAO_NOVO_CADASTRO, false);
     }
 
     private void validarTelefones(Pessoa pessoa) {

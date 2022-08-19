@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Integer>, JpaSpecificationExecutor<Pessoa>, CustomPessoaRepository {
 
+    @Override
     Pessoa findByCpf(String cpf);
 
+    @Override
     Pessoa findByUsuario(Usuario usuario);
 }

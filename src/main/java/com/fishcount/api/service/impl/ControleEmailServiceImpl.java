@@ -40,8 +40,8 @@ public class ControleEmailServiceImpl extends AbstractServiceImpl<ControleEmail,
     private String from;
 
     @Override
-    public void enviarEmail(Pessoa pessoa, EnumTipoEnvioEmail tipoEnvioEmail) {
-        final DadosEmail dadosEmail = gerarDadosEmail(pessoa, tipoEnvioEmail);
+    public void enviarEmail(Pessoa pessoa, EnumTipoEnvioEmail tipoEnvioEmail, boolean isSuporte) {
+        final DadosEmail dadosEmail = gerarDadosEmail(pessoa, tipoEnvioEmail, isSuporte);
 
         if (environment.getActiveProfiles()[0].equals("development")) {
             registrarEnvioEmail(dadosEmail);
@@ -93,7 +93,7 @@ public class ControleEmailServiceImpl extends AbstractServiceImpl<ControleEmail,
         return controleEmail;
     }
 
-    private DadosEmail gerarDadosEmail(Pessoa pessoa, EnumTipoEnvioEmail tipoEnvioEmail) {
+    private DadosEmail gerarDadosEmail(Pessoa pessoa, EnumTipoEnvioEmail tipoEnvioEmail, boolean isSuporte) {
         final DadosEmail dadosEmail = new DadosEmail();
 
         final Template template = getRepository(TemplateRepository.class).findByTipoEnvioEmail(tipoEnvioEmail);
@@ -103,11 +103,13 @@ public class ControleEmailServiceImpl extends AbstractServiceImpl<ControleEmail,
         dadosEmail.setNomeDestinatario(pessoa.getNome());
         dadosEmail.setPessoa(pessoa);
 
-        final String emailDestinatario = ListUtil.stream(pessoa.getEmails())
+        String emailDestinatario = ListUtil.stream(pessoa.getEmails())
                 .filter(EnumTipoEmail::isPrincipal)
                 .map(Email::getDescricao)
                 .findFirst()
                 .orElse(emailSuporte);
+
+        emailDestinatario = isSuporte ? emailSuporte : emailDestinatario;
 
         dadosEmail.setEmailDestinatario(emailDestinatario);
 
