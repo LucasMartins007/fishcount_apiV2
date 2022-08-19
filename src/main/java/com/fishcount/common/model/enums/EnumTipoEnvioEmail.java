@@ -9,13 +9,13 @@ import javax.persistence.Converter;
 @Getter
 public enum EnumTipoEnvioEmail implements IEnum<Integer> {
 
-    RECUPERACAO_SENHA(1, "Solicitação de alteração de senha", true),
+    RECUPERACAO_SENHA(1, "Solicitação de alteração de senha", true, false),
 
-    CONFIRMACAO_NOVO_CADASTRO(2, "Novo cadastro", true),
+    CONFIRMACAO_NOVO_CADASTRO(2, "Novo cadastro", true, false),
 
-    CONFIRMACAO_EMAIL(3, "Confirmação de email", true),
+    CONFIRMACAO_EMAIL(3, "Confirmação de email", true, false),
 
-    EXCECAO_SISTEMA(4, "Exceção no sistema", true),
+    EXCECAO_SISTEMA(4, "Exceção no sistema", true, true),
     ;
 
     private final Integer key;
@@ -24,10 +24,13 @@ public enum EnumTipoEnvioEmail implements IEnum<Integer> {
 
     private final boolean html;
 
-    EnumTipoEnvioEmail(Integer key, String value, boolean html) {
+    private final boolean isSuporte;
+
+    EnumTipoEnvioEmail(Integer key, String value, boolean html, boolean isSuporte) {
         this.key = key;
         this.value = value;
         this.html = html;
+        this.isSuporte = isSuporte;
     }
 
     @Converter
