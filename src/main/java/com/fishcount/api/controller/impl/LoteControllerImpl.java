@@ -34,5 +34,10 @@ public class LoteControllerImpl extends AbstractController<LoteService> implemen
         
         getService().editar(pessoaId, lote);
     }
-    
+
+    @Override
+    public void inativar(Integer pessoaId, Integer loteId) {
+        getService().inativar(pessoaId, loteId);
+    }
+
 }

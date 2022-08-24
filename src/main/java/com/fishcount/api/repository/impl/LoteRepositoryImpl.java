@@ -10,25 +10,26 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- *
  * @author Lucas Martins
  */
 @Repository
 public class LoteRepositoryImpl extends RepositoryImpl<Lote, Integer> implements CustomLoteRepository {
 
     @Override
-    public Lote findByDescricao(String descricao) {
+    public Lote findAtivoByDescricao(String descricao) {
         return getSpecRepository()
                 .findOne(
-                        LoteSpec.byDescricao(descricao))
+                        LoteSpec.byAtivo()
+                                .and(LoteSpec.byDescricao(descricao)))
                 .orElse(null);
     }
 
     @Override
-    public List<Lote> findAllByPessoa(Pessoa pessoa) {
+    public List<Lote> findAllAtivosByPessoa(Pessoa pessoa) {
         return getSpecRepository()
                 .findAll(
-                        LoteSpec.byPessoa(pessoa)
+                        LoteSpec.byAtivo()
+                                .and(LoteSpec.byPessoa(pessoa))
                                 .and(LoteSpec.orderBy(true, "descricao")));
     }
 

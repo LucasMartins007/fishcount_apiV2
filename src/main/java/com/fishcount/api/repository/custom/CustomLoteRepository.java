@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface CustomLoteRepository {
 
-    Lote findByDescricao(String descricao);
+    Lote findAtivoByDescricao(String descricao);
 
-    List<Lote> findAllByPessoa(Pessoa pessoa);
+    List<Lote> findAllAtivosByPessoa(Pessoa pessoa);
 }

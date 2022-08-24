@@ -34,11 +34,11 @@ public class LoteValidator extends AbstractValidatorImpl<Lote> {
 
     public void validateDuplicidadeLote(Lote lote) {
         if (Utils.isEmpty(lote.getId())) {
-            OptionalUtil.ofNullable(getRepository(LoteRepository.class).findByDescricao(lote.getDescricao()))
+            OptionalUtil.ofNullable(getRepository(LoteRepository.class).findAtivoByDescricao(lote.getDescricao()))
                     .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.LOTE_DUPLICADO, lote.getDescricao()));
             return;
         }
-        OptionalUtil.ofNullable(getRepository(LoteRepository.class).findByDescricao(lote.getDescricao()))
+        OptionalUtil.ofNullable(getRepository(LoteRepository.class).findAtivoByDescricao(lote.getDescricao()))
                 .filter(managedLote -> !managedLote.getId().equals(lote.getId()))
                 .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.LOTE_DUPLICADO, lote.getDescricao()));
     }

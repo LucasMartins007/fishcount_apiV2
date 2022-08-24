@@ -45,4 +45,9 @@ public interface LoteController {
     void atualizar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
                    @RequestBody LoteDTO loteDTO);
 
+    @DeleteMapping(OperationsPath.ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void inativar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                  @ApiParam("${controller.lote.id}") @PathVariable(OperationsParam.ID) Integer loteId);
+
 }
