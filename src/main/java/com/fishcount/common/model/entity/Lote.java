@@ -56,7 +56,6 @@ public class Lote extends AbstractEntity<Integer> {
     @PreUpdate
     private void preUpdate() {
         this.dataAtualizacao = DateUtil.getDate();
-        this.ativo = true;
     }
 
     @Override

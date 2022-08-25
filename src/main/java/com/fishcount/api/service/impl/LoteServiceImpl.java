@@ -62,6 +62,7 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
         Pessoa pessoa = getService(PessoaService.class).findAndValidate(pessoaId);
         lote.setDescricao(lote.getDescricao().toLowerCase());
         lote.setPessoa(pessoa);
+        lote.setAtivo(true);
     }
 
     @Override
