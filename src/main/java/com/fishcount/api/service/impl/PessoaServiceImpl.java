@@ -94,7 +94,7 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
                     loteValidator.validateInsertOrUpdate(lote);
 
                     if (Utils.isNotEmpty(pessoa.getId())) {
-                        getService(LoteService.class).onPrepareInsertOrUpdate(pessoa.getId(), lote);
+                        getService(LoteService.class).onPrepareInsertOrUpdate(pessoa.getId(), null, lote);
                     }
                 });
     }

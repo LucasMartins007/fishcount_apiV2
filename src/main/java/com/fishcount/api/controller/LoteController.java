@@ -39,10 +39,11 @@ public interface LoteController {
     List<LoteDTO> listar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId);
 
 
-    @PutMapping
+    @PutMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "${controller.lote.atualizar.operation}", notes = "${controller.lote.atualizar.description}")
     void atualizar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                   @ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.ID) Integer loteId,
                    @RequestBody LoteDTO loteDTO);
 
     @DeleteMapping(OperationsPath.ID)

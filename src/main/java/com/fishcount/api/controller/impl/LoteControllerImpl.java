@@ -1,6 +1,7 @@
 package com.fishcount.api.controller.impl;
 
 
+import com.fishcount.api.controller.LoteController;
 import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.LoteService;
 import com.fishcount.common.model.dto.LoteDTO;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author lucas
  */
 @RestController
-public class LoteControllerImpl extends AbstractController<LoteService> implements com.fishcount.api.controller.LoteController {
+public class LoteControllerImpl extends AbstractController<LoteService> implements LoteController {
 
     @Override
     public LoteDTO incluir(Integer pessoaId, LoteDTO loteDTO) {
@@ -29,10 +30,10 @@ public class LoteControllerImpl extends AbstractController<LoteService> implemen
     }
 
     @Override
-    public void atualizar(Integer pessoaId, LoteDTO loteDTO) {
+    public void atualizar(Integer pessoaId, Integer loteId, LoteDTO loteDTO) {
         Lote lote = converterDTOParaEntity(loteDTO, Lote.class);
         
-        getService().editar(pessoaId, lote);
+        getService().editar(pessoaId, loteId,lote);
     }
 
     @Override
