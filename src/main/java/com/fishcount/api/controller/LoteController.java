@@ -36,7 +36,8 @@ public interface LoteController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "${controller.lote.listar.operation}", notes = "${controller.lote.listar.description}")
-    List<LoteDTO> listar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId);
+    List<LoteDTO> listar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                         @RequestParam(name = "orderBy", required = false) String orderBy);
 
 
     @PutMapping(OperationsPath.ID)

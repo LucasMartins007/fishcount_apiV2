@@ -45,9 +45,12 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     }
 
     @Override
-    public List<Lote> listarFromPessoa(Integer pessoaId) {
-        Pessoa pessoa = getService(PessoaService.class).findAndValidate(pessoaId);
+    public List<Lote> listarFromPessoa(Integer pessoaId, String orderBy) {
+        final Pessoa pessoa = getService(PessoaService.class).findAndValidate(pessoaId);
 
+        if (Utils.isNotEmpty(orderBy)) {
+            return getRepository(LoteRepository.class).findAllAtivosByPessoaOrderBy(pessoa, orderBy);
+        }
         return getRepository(LoteRepository.class).findAllAtivosByPessoa(pessoa);
     }
 

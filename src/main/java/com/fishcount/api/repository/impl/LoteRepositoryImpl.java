@@ -33,4 +33,11 @@ public class LoteRepositoryImpl extends RepositoryImpl<Lote, Integer> implements
                                 .and(LoteSpec.orderBy(true, "descricao")));
     }
 
+    @Override
+    public List<Lote> findAllAtivosByPessoaOrderBy(Pessoa pessoa, String field) {
+        return getSpecRepository().findAll(LoteSpec.byAtivo()
+                .and(LoteSpec.byPessoa(pessoa))
+                .and(LoteSpec.orderBy(true, field)));
+    }
+
 }

@@ -21,4 +21,7 @@ public interface LoteRepository extends JpaRepository<Lote, Integer>, JpaSpecifi
     
     @Override
     List<Lote> findAllAtivosByPessoa(Pessoa pessoa);
+
+    @Override
+    List<Lote> findAllAtivosByPessoaOrderBy(Pessoa pessoa, String field);
 }

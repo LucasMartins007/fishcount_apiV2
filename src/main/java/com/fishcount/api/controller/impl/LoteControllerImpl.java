@@ -25,8 +25,8 @@ public class LoteControllerImpl extends AbstractController<LoteService> implemen
     }
 
     @Override
-    public List<LoteDTO> listar(Integer pessoaId) {
-        return converterEntityParaDTO(getService().listarFromPessoa(pessoaId), LoteDTO.class);
+    public List<LoteDTO> listar(Integer pessoaId, String orderBy) {
+        return converterEntityParaDTO(getService().listarFromPessoa(pessoaId, orderBy), LoteDTO.class);
     }
 
     @Override

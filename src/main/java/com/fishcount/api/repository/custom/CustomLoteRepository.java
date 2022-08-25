@@ -14,4 +14,6 @@ public interface CustomLoteRepository {
     Lote findAtivoByDescricao(String descricao);
 
     List<Lote> findAllAtivosByPessoa(Pessoa pessoa);
+
+    List<Lote> findAllAtivosByPessoaOrderBy(Pessoa pessoa, String field);
 }

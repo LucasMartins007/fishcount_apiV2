@@ -14,7 +14,7 @@ public interface LoteService extends IAbstractService<Lote, Integer, LoteDTO> {
 
     Lote incluir(Integer pessoaId, Lote lote);
     
-    List<Lote> listarFromPessoa(Integer pessoaId);
+    List<Lote> listarFromPessoa(Integer pessoaId, String orderBy);
 
     void editar(Integer pessoaId, Integer loteId, Lote lote);
 
