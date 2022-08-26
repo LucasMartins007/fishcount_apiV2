@@ -3,10 +3,12 @@ package com.fishcount.common.model.enums;
 import com.fishcount.common.model.enums.pattern.IEnum;
 import com.fishcount.common.model.entity.pattern.AbstractEnumConverter;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Converter;
 
 @Getter
+@RequiredArgsConstructor
 public enum EnumTipoEnvioEmail implements IEnum<Integer> {
 
     RECUPERACAO_SENHA(1, "Solicitação de alteração de senha", true, false),
@@ -25,13 +27,6 @@ public enum EnumTipoEnvioEmail implements IEnum<Integer> {
     private final boolean html;
 
     private final boolean isSuporte;
-
-    EnumTipoEnvioEmail(Integer key, String value, boolean html, boolean isSuporte) {
-        this.key = key;
-        this.value = value;
-        this.html = html;
-        this.isSuporte = isSuporte;
-    }
 
     @Converter
     public static class EnumConverter extends AbstractEnumConverter<EnumTipoEnvioEmail, Integer> {

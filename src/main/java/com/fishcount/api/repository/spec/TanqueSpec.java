@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.Order;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TanqueSpec {
 
@@ -15,6 +17,16 @@ public class TanqueSpec {
     public static Specification<Tanque> byId(Integer tanqueId) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get(PATH_ID), tanqueId);
+    }
+
+    public static Specification<Tanque> orderBy(boolean isAscending, String campo) {
+        return (root, query, criteriaBuilder) -> {
+            final Order order = isAscending ? criteriaBuilder.asc(root.get(campo)) : criteriaBuilder.desc(root.get(campo));
+
+            return query
+                    .distinct(true)
+                    .orderBy(order).getRestriction();
+        };
     }
 
     public static Specification<Tanque> byPessoa(Integer pessoaId) {

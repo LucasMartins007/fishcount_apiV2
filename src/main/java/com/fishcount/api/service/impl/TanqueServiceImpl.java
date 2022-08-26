@@ -26,7 +26,7 @@ import java.util.List;
 public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, TanqueDTO> implements TanqueService {
 
     private final TanqueValidator tanqueValidator;
-    
+
     private final EspecieValidator especieValidator;
 
     @Override
@@ -48,7 +48,10 @@ public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, Tanq
     }
 
     @Override
-    public List<Tanque> listarFromPessoaAndLote(Integer pessoaId, Integer loteId) {
+    public List<Tanque> listarFromPessoaAndLote(Integer pessoaId, Integer loteId, String orderBy) {
+        if (Utils.isNotEmpty(orderBy)) {
+            return getRepository(TanqueRepository.class).findAllByPessoaAndLoteOrderBy(pessoaId, loteId, orderBy);
+        }
         return getRepository(TanqueRepository.class).findAllByPessoaAndLote(pessoaId, loteId);
     }
 
@@ -79,7 +82,7 @@ public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, Tanq
         tanque.setDataUltimoTratamento(DateUtil.getDate());
     }
 
-    private void onPrepareUpdate(Integer loteId, Integer tanqueId, Tanque tanque){
+    private void onPrepareUpdate(Integer loteId, Integer tanqueId, Tanque tanque) {
         final Lote lote = getService(LoteService.class).findAndValidate(loteId);
         tanque.setLote(lote);
 

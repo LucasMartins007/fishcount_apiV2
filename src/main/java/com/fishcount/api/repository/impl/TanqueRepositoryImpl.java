@@ -28,5 +28,13 @@ public class TanqueRepositoryImpl extends RepositoryImpl<Tanque, Integer> implem
                 ).orElse(null);
     }
 
+    @Override
+    public List<Tanque> findAllByPessoaAndLoteOrderBy(Integer pessoaId, Integer loteId, String orderBy) {
+        return getSpecRepository()
+                .findAll(TanqueSpec.byPessoa(pessoaId)
+                        .and(TanqueSpec.byLote(loteId))
+                        .and(TanqueSpec.orderBy(true, orderBy)));
+    }
+
 
 }

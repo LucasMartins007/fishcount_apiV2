@@ -9,4 +9,6 @@ public interface CustomTanqueRepository {
     List<Tanque> findAllByPessoaAndLote(Integer pessoaId, Integer loteId);
 
     Tanque findByPessoaAndLoteAndId(Integer pessoaId, Integer loteId, Integer tanqueId);
+
+    List<Tanque> findAllByPessoaAndLoteOrderBy(Integer pessoaId, Integer loteId, String orderBy);
 }

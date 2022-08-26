@@ -36,11 +36,14 @@ public interface TanqueController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<TanqueDTO> listarTanquesFromLote(@PathVariable(OperationsParam.PARENT_ID) Integer pessoaId, @PathVariable(OperationsParam.CHILD_ID) Integer loteId);
+    List<TanqueDTO> listarTanquesFromLote(@PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                                          @PathVariable(OperationsParam.CHILD_ID) Integer loteId,
+                                          @RequestParam(name = "orderBy", required = false) String orderBy);
 
     @GetMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
-    TanqueDTO encontrarPorId(@PathVariable(OperationsParam.PARENT_ID) Integer pessoaId, @PathVariable(OperationsParam.CHILD_ID) Integer loteId, @PathVariable(OperationsParam.ID) Integer tanqueId);
+    TanqueDTO encontrarPorId(@PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                             @PathVariable(OperationsParam.CHILD_ID) Integer loteId, @PathVariable(OperationsParam.ID) Integer tanqueId);
 
     @DeleteMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)

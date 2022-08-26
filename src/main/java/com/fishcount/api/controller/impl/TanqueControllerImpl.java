@@ -32,8 +32,8 @@ public class TanqueControllerImpl
     }
 
     @Override
-    public List<TanqueDTO> listarTanquesFromLote(Integer pessoaId, Integer loteId) {
-        final List<Tanque> tanques = getService().listarFromPessoaAndLote(pessoaId, loteId);
+    public List<TanqueDTO> listarTanquesFromLote(Integer pessoaId, Integer loteId, String orderBy) {
+        final List<Tanque> tanques = getService().listarFromPessoaAndLote(pessoaId, loteId, orderBy);
 
         return converterEntityParaDTO(tanques, TanqueDTO.class);
     }

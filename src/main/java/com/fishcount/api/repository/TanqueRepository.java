@@ -25,4 +25,7 @@ public interface TanqueRepository extends JpaRepository<Tanque, Integer>, JpaSpe
 
     @Override
     Tanque findByPessoaAndLoteAndId(Integer pessoaId, Integer loteId, Integer tanqueId);
+
+    @Override
+    List<Tanque> findAllByPessoaAndLoteOrderBy(Integer pessoaId, Integer loteId, String orderBy);
 }

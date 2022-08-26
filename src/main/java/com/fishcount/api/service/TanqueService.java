@@ -16,7 +16,7 @@ public interface TanqueService extends IAbstractService<Tanque, Integer, TanqueD
 
     void editar(Integer pessoaId, Integer loteId, Integer tanqueId, Tanque tanque);
 
-    List<Tanque> listarFromPessoaAndLote(Integer pessoaId, Integer loteId);
+    List<Tanque> listarFromPessoaAndLote(Integer pessoaId, Integer loteId, String orderBy);
 
     Tanque encontrarPorId(Integer pessoaId, Integer loteId, Integer tanqueId);
 
