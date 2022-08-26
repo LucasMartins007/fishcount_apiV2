@@ -4,6 +4,7 @@ import com.fishcount.common.model.enums.pattern.IEnum;
 import com.fishcount.common.model.entity.pattern.AbstractEnumConverter;
 import com.fishcount.common.model.entity.Email;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Converter;
 
@@ -11,6 +12,7 @@ import javax.persistence.Converter;
  * @author lucas
  */
 @Getter
+@RequiredArgsConstructor
 public enum EnumTipoEmail implements IEnum<Integer> {
 
     PRINCIPAL(1, "Principal"),
@@ -18,14 +20,12 @@ public enum EnumTipoEmail implements IEnum<Integer> {
     COMERCIAL(3, "Comercial"),
     ;
 
-    private EnumTipoEmail(Integer key, String value) {
-        this.key = key;
-        this.value = value;
-    }
+
 
     private final Integer key;
 
     private final String value;
+
 
     @Converter
     public static class EnumConverter extends AbstractEnumConverter<EnumTipoEmail, Integer> {

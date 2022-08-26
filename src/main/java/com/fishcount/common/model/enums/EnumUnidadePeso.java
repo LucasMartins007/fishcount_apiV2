@@ -10,7 +10,6 @@ import javax.persistence.Converter;
 /**
  * @author lucas
  */
-@Getter
 @RequiredArgsConstructor
 public enum EnumUnidadePeso implements IEnum<String> {
 
@@ -21,6 +20,16 @@ public enum EnumUnidadePeso implements IEnum<String> {
     private final String key;
 
     private final String value;
+
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public String getValue() {
+        return value;
+    }
 
     @Converter
     public static class EnumConverter extends AbstractEnumConverter<EnumUnidadePeso, String> {

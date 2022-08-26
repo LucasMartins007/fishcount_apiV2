@@ -26,6 +26,9 @@ public class Tanque extends AbstractEntity<Integer> {
     
     @Column(name = "descricao")
     private String descricao;
+
+    @Column(name = "qtde_peixe")
+    private Integer qtdePeixe;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_tanque_id_fish_especie"))
