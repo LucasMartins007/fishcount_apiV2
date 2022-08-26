@@ -47,6 +47,8 @@ public interface TanqueController {
 
     @DeleteMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void inativarTanque(@PathVariable(OperationsParam.PARENT_ID) Integer pessoaId, @PathVariable(OperationsParam.CHILD_ID) Integer loteId, @PathVariable(OperationsParam.ID) Integer tanqueId);
+    void inativarTanque(@PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                        @PathVariable(OperationsParam.CHILD_ID) Integer loteId,
+                        @PathVariable(OperationsParam.ID) Integer tanqueId);
 
 }

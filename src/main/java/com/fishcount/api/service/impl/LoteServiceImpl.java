@@ -10,12 +10,16 @@ import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.dto.LoteDTO;
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.model.entity.Pessoa;
+import com.fishcount.common.model.entity.Tanque;
 import com.fishcount.common.utils.DateUtil;
+import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author lucas
@@ -47,7 +51,19 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     @Override
     public List<Lote> listarFromPessoa(Integer pessoaId, String orderBy) {
         final Pessoa pessoa = getService(PessoaService.class).findAndValidate(pessoaId);
+        final List<Lote> lotesAtivos = resolverListaLotes(orderBy, pessoa);
 
+        ListUtil.stream(lotesAtivos)
+                .forEach(lote -> {
+                    final List<Tanque> tanquesAtivos = ListUtil.stream(lote.getTanques())
+                            .filter(Tanque::isAtivo)
+                            .collect(Collectors.toList());
+                    lote.setTanques(tanquesAtivos);
+                });
+        return lotesAtivos;
+    }
+
+    private List<Lote> resolverListaLotes(String orderBy, Pessoa pessoa) {
         if (Utils.isNotEmpty(orderBy)) {
             return getRepository(LoteRepository.class).findAllAtivosByPessoaOrderBy(pessoa, orderBy);
         }
