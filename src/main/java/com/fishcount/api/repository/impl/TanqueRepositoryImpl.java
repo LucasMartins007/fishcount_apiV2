@@ -16,6 +16,7 @@ public class TanqueRepositoryImpl extends RepositoryImpl<Tanque, Integer> implem
         return getSpecRepository()
                 .findAll(TanqueSpec.byLote(loteId)
                         .and(TanqueSpec.byPessoa(pessoaId))
+                        .and(TanqueSpec.byAtivo())
                 );
     }
 
@@ -25,6 +26,7 @@ public class TanqueRepositoryImpl extends RepositoryImpl<Tanque, Integer> implem
                 .findOne(TanqueSpec.byId(tanqueId)
                         .and(TanqueSpec.byPessoa(pessoaId))
                         .and(TanqueSpec.byLote(loteId))
+                        .and(TanqueSpec.byAtivo())
                 ).orElse(null);
     }
 
@@ -33,6 +35,7 @@ public class TanqueRepositoryImpl extends RepositoryImpl<Tanque, Integer> implem
         return getSpecRepository()
                 .findAll(TanqueSpec.byPessoa(pessoaId)
                         .and(TanqueSpec.byLote(loteId))
+                        .and(TanqueSpec.byAtivo())
                         .and(TanqueSpec.orderBy(true, orderBy)));
     }
 

@@ -14,19 +14,17 @@ public class TanqueSpec {
     private static final String PATH_PESSOA = "pessoa";
     private static final String PATH_LOTE = "lote";
 
+    private static final String PATH_ATIVO = "ativo";
+
+
     public static Specification<Tanque> byId(Integer tanqueId) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get(PATH_ID), tanqueId);
     }
 
-    public static Specification<Tanque> orderBy(boolean isAscending, String campo) {
-        return (root, query, criteriaBuilder) -> {
-            final Order order = isAscending ? criteriaBuilder.asc(root.get(campo)) : criteriaBuilder.desc(root.get(campo));
-
-            return query
-                    .distinct(true)
-                    .orderBy(order).getRestriction();
-        };
+    public static Specification<Tanque> byAtivo() {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.isTrue(root.get(PATH_ATIVO));
     }
 
     public static Specification<Tanque> byPessoa(Integer pessoaId) {
@@ -37,6 +35,16 @@ public class TanqueSpec {
     public static Specification<Tanque> byLote(Integer loteId) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get(PATH_LOTE).get(PATH_ID), loteId);
+    }
+
+    public static Specification<Tanque> orderBy(boolean isAscending, String campo) {
+        return (root, query, criteriaBuilder) -> {
+            final Order order = isAscending ? criteriaBuilder.asc(root.get(campo)) : criteriaBuilder.desc(root.get(campo));
+
+            return query
+                    .distinct(true)
+                    .orderBy(order).getRestriction();
+        };
     }
 
 }

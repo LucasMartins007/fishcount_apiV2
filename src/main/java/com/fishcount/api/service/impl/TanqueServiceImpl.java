@@ -64,7 +64,10 @@ public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, Tanq
     public void inativarTanque(Integer pessoaId, Integer loteId, Integer tanqueId) {
         final Tanque tanque = getRepository(TanqueRepository.class).findByPessoaAndLoteAndId(pessoaId, loteId, tanqueId);
         OptionalUtil.ofNullable(tanque)
-                .peekIfPresent(managedTanque -> getRepository().delete(managedTanque))
+                .peekIfPresent(managedTanque -> {
+                    managedTanque.setAtivo(false);
+                    getRepository().save(managedTanque);
+                })
                 .ifAbsentThrow(() -> new FcRuntimeException(EnumFcDomainException.TANQUE_NAO_ENCONTRADO, tanqueId));
     }
 
