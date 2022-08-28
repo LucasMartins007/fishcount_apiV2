@@ -79,6 +79,7 @@ public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, Tanq
             final Especie especie = getService(EspecieService.class).findAndValidate(tanque.getEspecie().getId());
             tanque.setEspecie(especie);
         }
+        tanque.setAtivo(true);
         tanque.setQtdUltimaAnalise(0);
         tanque.setDataProximaAnalise(DateUtil.getDate());
         tanque.setDataUltimaAnalise(DateUtil.getDate());
@@ -90,9 +91,11 @@ public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, Tanq
         tanque.setLote(lote);
 
         final Tanque managedTanque = findAndValidate(tanqueId);
+        tanque.setAtivo(true);
+        tanque.setQtdUltimaAnalise(managedTanque.getQtdUltimaAnalise());
         tanque.setDataInclusao(managedTanque.getDataInclusao());
         tanque.setAnalise(managedTanque.getAnalise());
-        tanque.setDataAtualizacao(managedTanque.getDataAtualizacao());
+        tanque.setDataAtualizacao(DateUtil.getDate());
         tanque.setDataProximaAnalise(managedTanque.getDataProximaAnalise());
         tanque.setDataAtualizacao(managedTanque.getDataAtualizacao());
         tanque.setDataUltimaAnalise(managedTanque.getDataUltimaAnalise());
