@@ -34,6 +34,12 @@ public class Plano extends AbstractEntity<Integer> {
     @Column(name = "valor_maximo")
     private BigDecimal valorMaximo;
 
+    @Column(name = "valor_parcela_maximo")
+    private BigDecimal valorParcelaMaximo;
+
+    @Column(name = "valor_parcela_minimo")
+    private BigDecimal valorParcelaMinimo;
+
     @Column(name = "min_taque")
     private Integer minTanque;
 

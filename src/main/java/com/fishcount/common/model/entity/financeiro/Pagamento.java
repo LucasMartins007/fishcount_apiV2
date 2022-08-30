@@ -62,6 +62,12 @@ public class Pagamento extends AbstractEntity<Integer> {
     @Column(name = "qtde_parcelas")
     private Integer qtdeParcelas;
 
+    @Column(name = "data_inicio_vigencia")
+    private Date dataInicioVigencia;
+
+    @Column(name = "data_fim_vigencia")
+    private Date dataFimVigencia;
+
     @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataInclusao;

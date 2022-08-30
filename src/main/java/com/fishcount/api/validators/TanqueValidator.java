@@ -20,14 +20,18 @@ public class TanqueValidator extends AbstractValidatorImpl<Tanque>{
         validate.add(tanque.getLote(), "Lote");
         validate.add(tanque.getDescricao(), "Descrição");
         validate.add(tanque.getEspecie(), "Espécie");
-        
+        validate.add(tanque.getQtdePeixe(), "Quantidade de peixes");
+
         validate.validate();
     }
 
     @Override
     public void validateInsert(Tanque tanque) {
         validateRequiredFields(tanque);
-        
     }
 
+    @Override
+    public void validateInsertOrUpdate(Tanque tanque) {
+        validateRequiredFields(tanque);
+    }
 }

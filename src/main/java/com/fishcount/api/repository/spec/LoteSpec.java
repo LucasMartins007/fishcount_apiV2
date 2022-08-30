@@ -9,21 +9,30 @@ import org.springframework.data.jpa.domain.Specification;
 import javax.persistence.criteria.Order;
 
 /**
- *
  * @author Lucas Martins
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoteSpec {
 
     private static final String FIELD_DESCRICAO = "descricao";
+
     private static final String FIELD_PESSOA = "pessoa";
 
+    private static final String FIELD_ATIVO = "ativo";
+
     public static Specification<Lote> byDescricao(String descricao) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(FIELD_DESCRICAO), descricao);
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get(FIELD_DESCRICAO), descricao);
     }
 
     public static Specification<Lote> byPessoa(Pessoa pessoa) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(FIELD_PESSOA), pessoa);
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get(FIELD_PESSOA), pessoa);
+    }
+
+    public static Specification<Lote> byAtivo() {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.isTrue(root.get(FIELD_ATIVO));
     }
 
     public static Specification<Lote> orderBy(boolean isAscending, String campo) {

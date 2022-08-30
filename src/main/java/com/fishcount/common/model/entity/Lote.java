@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
  * @author lucas
  */
 @Entity
@@ -19,7 +18,7 @@ import java.util.List;
 @Setter
 @Table(name = "fish_lote")
 public class Lote extends AbstractEntity<Integer> {
-    
+
     @Id
     @Column(name = "id")
     @SequenceGenerator(name = "id_fish_lote", sequenceName = "gen_id_fish_lote")
@@ -28,11 +27,14 @@ public class Lote extends AbstractEntity<Integer> {
 
     @Column(name = "descritpion")
     private String descricao;
-    
+
+    @Column(name = "ativo")
+    private boolean ativo;
+
     @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataInclusao;
-    
+
     @Column(name = "data_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
@@ -48,6 +50,7 @@ public class Lote extends AbstractEntity<Integer> {
     private void prePersist() {
         this.dataInclusao = DateUtil.getDate();
         this.dataAtualizacao = DateUtil.getDate();
+        this.ativo = true;
     }
 
     @PreUpdate

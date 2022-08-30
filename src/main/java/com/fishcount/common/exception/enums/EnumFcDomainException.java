@@ -46,10 +46,14 @@ public enum EnumFcDomainException implements IFcException {
     
     LOTE_DUPLICADO("Lote com o nome {0} já esta cadastrado no sistema."),
 
+    LOTE_NAO_PERTENCE_PESSOA("Lote {0} não pertence a pessoa {0}"),
+
     USUARIO_POSSUI_TITULO_ABERTO("O usuario {0} possui pendências no sistema, não é possível criar novo contrato"),
 
-    USUARIO_POSSUI_PAGAMENTOS_EM_ABERTO_OU_EM_ANALISE("Usuário possui pendências em aberto ou em análise, por favor, conclua-os antes de gerar novos.")
-    ;
+    USUARIO_POSSUI_PAGAMENTOS_EM_ABERTO_OU_EM_ANALISE("Usuário possui pendências em aberto ou em análise, por favor, conclua-os antes de gerar novos."),
+
+    TANQUE_NAO_ENCONTRADO("O tanque {0} não existe ou não é do usuário logado, por favor, tente novamente! "),
+    PESSOA_NAO_ENCONTRADA_POR_CPF("O cpf {0} não pertence a nenhuma pessoa cadastrada no sistema. ");
     
     private final String message;
 

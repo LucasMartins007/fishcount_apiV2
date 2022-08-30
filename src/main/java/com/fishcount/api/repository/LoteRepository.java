@@ -17,8 +17,11 @@ import java.util.List;
 public interface LoteRepository extends JpaRepository<Lote, Integer>, JpaSpecificationExecutor<Lote>, CustomLoteRepository {
     
     @Override
-    Lote findByDescricao(String descricao);
+    Lote findAtivoByDescricao(String descricao);
     
     @Override
-    List<Lote> findAllByPessoa(Pessoa pessoa);
+    List<Lote> findAllAtivosByPessoa(Pessoa pessoa);
+
+    @Override
+    List<Lote> findAllAtivosByPessoaOrderBy(Pessoa pessoa, String field);
 }

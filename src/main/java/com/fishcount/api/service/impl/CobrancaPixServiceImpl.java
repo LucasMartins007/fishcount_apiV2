@@ -1,5 +1,6 @@
 package com.fishcount.api.service.impl;
 
+import com.fishcount.api.repository.CobrancaPixRepository;
 import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.LocationPixService;
 import com.fishcount.api.service.gerencianet.pix.cobranca.ClientCobrancaPix;
@@ -19,7 +20,6 @@ import com.fishcount.common.utils.NumericUtil;
 import com.fishcount.common.utils.optional.OptionalUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -40,14 +40,17 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
     private String msgPadrao;
 
     @Override
-    @Async
-    public void gerarRegistoCobrancaPix(PagamentoParcela parcela) {
+    public CobrancaPix gerarRegistoCobrancaPix(PagamentoParcela parcela) {
         final PayloadCobrancaResponse payload = gerarPayloadCobranca(parcela);
 
         final CobrancaPix cobrancaPix = gerarCobrancaPix(payload, parcela);
 
-        getRepository().save(cobrancaPix);
+        return getRepository().save(cobrancaPix);
+    }
 
+    @Override
+    public CobrancaPix encontrarCobrancaPorPagamentoParcela(PagamentoParcela parcela) {
+        return getRepository(CobrancaPixRepository.class).findByPagamentoParcela(parcela.getId()) ;
     }
 
     private CobrancaPix gerarCobrancaPix(final PayloadCobrancaResponse payload, final PagamentoParcela parcela) {
@@ -76,7 +79,6 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
         final Pessoa pessoa = OptionalUtil
                 .ofFallibleNullable(() -> parcela.getPagamento().getPessoa())
                 .orElse(null);
-
         PayloadDevedor devedor = new PayloadDevedor(pessoa.getNome(), NumericUtil.somenteNumero(pessoa.getCpf()));
         payload.setDevedor(devedor);
 
@@ -93,7 +95,7 @@ public class CobrancaPixServiceImpl extends AbstractServiceImpl<CobrancaPix, Int
     }
 
     private Integer calcularSegundosNoMes(Date dataVencimento) {
-        final Long segundosMes = Duration
+        final long segundosMes = Duration
                 .between(DateUtil.getDate().toInstant(), DateUtil.add(dataVencimento, Calendar.MONTH, 1)
                         .toInstant())
                 .getSeconds();

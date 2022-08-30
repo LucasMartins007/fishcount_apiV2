@@ -16,6 +16,8 @@ import com.fishcount.common.model.entity.financeiro.pix.QRCodePix;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
 import com.fishcount.common.utils.BigDecimalUtil;
 import com.fishcount.common.utils.DateUtil;
+import com.fishcount.common.utils.ListUtil;
+import com.fishcount.common.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +43,13 @@ public class PagamentoParcelaServiceImpl
 
         parcelas.forEach(this::onAfterInsert);
 
+        getService(CobrancaPixService.class).gerarRegistoCobrancaPix(ListUtil.first(parcelas));
+
         return parcelas;
     }
 
     private void onAfterInsert(PagamentoParcela parcela) {
         getService(TituloParcelaService.class).gerarTitulosParcelasByPagamentoParcela(parcela);
-        getService(CobrancaPixService.class).gerarRegistoCobrancaPix(parcela);
     }
 
     private List<PagamentoParcela> gerarParcelas(Pagamento pagamento) {
@@ -82,7 +85,10 @@ public class PagamentoParcelaServiceImpl
 
     @Override
     public List<PagamentoParcela> listarParcelas(Integer pessoaId, Integer pagamentoId, EnumStatusPagamento statusPagamento) {
-        return getRepository(PagamentoParcelaRepository.class).findAllByUsuarioAndPagamentoAndStatus(pessoaId, pagamentoId, statusPagamento);
+        if (Utils.isEmpty(statusPagamento)){
+            return getRepository(PagamentoParcelaRepository.class).findAllByPessoaAndPagamento(pessoaId, pagamentoId);
+        }
+        return getRepository(PagamentoParcelaRepository.class).findAllByPessoaAndPagamentoAndStatus(pessoaId, pagamentoId, statusPagamento);
     }
 
     @Override
@@ -94,7 +100,7 @@ public class PagamentoParcelaServiceImpl
     public QRCodePix gerarQRCodeByParcela(Integer pessoaId, Integer pagamentoId) {
         final CobrancaPix cobrancaPix = getRepository(CobrancaPixRepository.class).findByPagamentoParcela(pagamentoId);
 
-        return getService(LocationPixService.class).gerarQrCode(pessoaId, cobrancaPix.getLocation().getIdLocation());
+        return getService(LocationPixService.class).gerarQrCodePorLocation(pessoaId, cobrancaPix.getLocation().getIdLocation());
     }
 
 }

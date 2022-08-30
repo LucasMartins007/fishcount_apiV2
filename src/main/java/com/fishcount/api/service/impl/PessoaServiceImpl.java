@@ -9,6 +9,7 @@ import com.fishcount.api.validators.PessoaValidator;
 import com.fishcount.api.validators.TelefoneValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
+import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.dto.PessoaDTO;
 import com.fishcount.common.model.entity.Email;
 import com.fishcount.common.model.entity.Pessoa;
@@ -17,7 +18,9 @@ import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoEmail;
 import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 import com.fishcount.common.utils.ListUtil;
+import com.fishcount.common.utils.NumericUtil;
 import com.fishcount.common.utils.Utils;
+import com.fishcount.common.utils.optional.OptionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,10 +76,10 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
 
     private void onPrepareUpdate(Pessoa pessoa, Pessoa managedPessoa) {
         pessoa.setId(managedPessoa.getId());
-        pessoa.setAtivo(true);
         pessoa.setDataInclusao(managedPessoa.getDataInclusao());
         pessoa.setUsuario(managedPessoa.getUsuario());
         pessoa.setLotes(managedPessoa.getLotes());
+        pessoa.setCpf(NumericUtil.somenteNumero(pessoa.getCpf()));
 
         pessoaValidator.validateUpdate(pessoa);
         validarEmails(pessoa);
@@ -91,7 +94,7 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
                     loteValidator.validateInsertOrUpdate(lote);
 
                     if (Utils.isNotEmpty(pessoa.getId())) {
-                        getService(LoteService.class).onPrepareInsertOrUpdate(pessoa.getId(), lote);
+                        getService(LoteService.class).onPrepareInsertOrUpdate(pessoa.getId(), null, lote);
                     }
                 });
     }
@@ -102,6 +105,16 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
 
         retirarCamposInativos(pessoa);
 
+        return pessoa;
+    }
+
+    @Override
+    public Pessoa encontrarPessoaByCpf(String cpf) {
+        final Pessoa pessoa = getRepository(PessoaRepository.class).findByCpf(cpf);
+
+        if (Utils.isEmpty(pessoa)){
+            throw new FcRuntimeException(EnumFcDomainException.PESSOA_NAO_ENCONTRADA_POR_CPF, cpf);
+        }
         return pessoa;
     }
 
@@ -121,13 +134,14 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
     private void onPrepareInsert(Pessoa pessoa) {
         validarEmails(pessoa);
         validarTelefones(pessoa);
+        pessoa.setCpf(NumericUtil.somenteNumero(pessoa.getCpf()));;
 
         final Usuario usuario = gerarUsuario(pessoa);
         pessoa.setUsuario(usuario);
     }
 
     private void onAfterInsert(Pessoa pessoa) {
-        getService(ControleEmailService.class).enviarEmail(pessoa, EnumTipoEnvioEmail.CONFIRMACAO_NOVO_CADASTRO);
+        getService(ControleEmailService.class).enviarEmail(pessoa, EnumTipoEnvioEmail.CONFIRMACAO_NOVO_CADASTRO, false);
     }
 
     private void validarTelefones(Pessoa pessoa) {
