@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,9 +22,8 @@ public class ParametroTipoRacao extends AbstractEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_arracoamento_diario")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_arracoamento_diario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_parametro_tipo_racao_to_fish_configuracao_arracoamento"))
-    private ConfiguracaoArracoamento arracoamentoDiario;
+    @OneToMany(mappedBy = "parametroTipoRacao", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ConfiguracaoArracoamento> configuracoesArracoamentos;
 
     @Column(name = "descricao")
     private String descricao;

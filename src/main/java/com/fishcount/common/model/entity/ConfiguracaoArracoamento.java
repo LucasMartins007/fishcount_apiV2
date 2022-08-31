@@ -34,16 +34,11 @@ public class ConfiguracaoArracoamento extends AbstractEntity<Integer> {
     private Especie especie;
 
     /**
-     * Parametros de cálculo baseado na temperatura da água para a espécie referenciada
-     */
-    @OneToMany(mappedBy = "arracoamentoDiario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ParametroTemperatura> parametrosTemperaturas;
-
-    /**
      * Parametros de cálculo baseado no tipo de ração a ser dada dependendo do período
      */
-    @OneToMany(mappedBy = "arracoamentoDiario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ParametroTipoRacao> parametrosTipoRacao;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_parametro_tipo_racao", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_configuracao_arracoamento_to_fish_parametro_tipo_racao"))
+    private ParametroTipoRacao parametroTipoRacao;
 
     /**
      * Peso mínimo dos peixes em grama

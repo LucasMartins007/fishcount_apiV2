@@ -60,7 +60,10 @@ public class Especie extends AbstractEntity<Integer> {
     private List<Tanque> tanques;
 
     @OneToMany(mappedBy = "especie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ConfiguracaoArracoamento> arracoamentoDiarios;
+    private List<ConfiguracaoArracoamento> configuracaoArracoamentos;
+
+    @OneToMany(mappedBy = "especie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ParametroTemperatura> parametroTemperaturas;
 
     @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)

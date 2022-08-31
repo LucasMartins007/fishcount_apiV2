@@ -12,20 +12,18 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "fish_parametros_temperatura")
+@Table(name = "fish_parametro_temperatura")
 public class ParametroTemperatura extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_especie_parametros_temperatura", allocationSize = 1, sequenceName = "gen_id_fish_especie_parametros_temperatura")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_especie_parametros_temperatura")
+    @SequenceGenerator(name = "id_fish_parametro_temperatura", allocationSize = 1, sequenceName = "gen_id_fish_parametro_temperatura")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_parametro_temperatura")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_arracoamento_diario",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_fish_parametros_temperatura_to_fish_configuracao_arracoamento"))
-    private ConfiguracaoArracoamento arracoamentoDiario;
+    @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_parametro_temperatura_to_fish_especie"))
+    private Especie especie;
 
     @Column(name = "temperatura_minima")
     private Integer temperaturaMinima;
