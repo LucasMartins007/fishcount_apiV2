@@ -9,5 +9,6 @@ import java.math.BigDecimal;
 
 public interface AnaliseService extends IAbstractService<Analise, Integer, AnaliseDTO> {
 
-    BigDecimal realizarCalculoInicial(Tanque tanque, Integer especieId);
+    Analise requisitarInicioAnalise(Integer tanqueId);
+
 }

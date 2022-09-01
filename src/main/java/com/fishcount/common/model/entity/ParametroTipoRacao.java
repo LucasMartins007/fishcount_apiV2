@@ -25,16 +25,16 @@ public class ParametroTipoRacao extends AbstractEntity<Integer> {
     @OneToMany(mappedBy = "parametroTipoRacao", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ConfiguracaoArracoamento> configuracoesArracoamentos;
 
-    @Column(name = "descricao")
+    @Column(name = "descricao", updatable  = false)
     private String descricao;
 
-    @Column(name = "proteina_bruta_maxima")
+    @Column(name = "proteina_bruta_maxima", updatable  = false)
     private BigDecimal proteinaBrutaMaxima;
 
-    @Column(name = "proteina_bruta_minima")
+    @Column(name = "proteina_bruta_minima", updatable  = false)
     private BigDecimal proteinaBrutaMinima;
 
-    @Column(name = "data_atualizacao")
+    @Column(name = "data_atualizacao", updatable  = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
 

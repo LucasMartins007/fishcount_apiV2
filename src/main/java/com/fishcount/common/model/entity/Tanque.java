@@ -63,7 +63,7 @@ public class Tanque extends AbstractEntity<Integer> {
     
     @Column(name = "analise")
     @OneToMany(mappedBy = "tanque", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Analise> analise;
+    private List<Analise> analises;
 
     @Column(name = "ativo")
     private boolean ativo;

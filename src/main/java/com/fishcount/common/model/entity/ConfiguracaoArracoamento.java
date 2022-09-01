@@ -43,26 +43,26 @@ public class ConfiguracaoArracoamento extends AbstractEntity<Integer> {
     /**
      * Peso mínimo dos peixes em grama
      */
-    @Column(name = "peso_minimo")
+    @Column(name = "peso_minimo", updatable  = false)
     private BigDecimal pesoMinimo;
 
     /**
      * Peso máximo dos peixes em grama
      */
-    @Column(name = "peso_maximo")
+    @Column(name = "peso_maximo", updatable  = false)
     private BigDecimal pesoMaximo;
 
     /**
      * Frenquência de vezes no dia que os peixes deveram ser alimentados (Ref/Dia)
      */
-    @Column(name = "frequencia_dia")
-    private BigInteger frequenciaDia;
+    @Column(name = "frequencia_dia", updatable  = false)
+    private Integer frequenciaDia;
 
     /**
      * Porcentagem do peso vivo total (biomassa) dos peixes por dia, calculado
      * por meio da multiplicação do número total de peixes pelo seu peso médio (% PV/dia)
      */
-    @Column(name = "porcentagem_peso_vivo_dia")
+    @Column(name = "porcentagem_peso_vivo_dia", updatable  = false)
     private BigDecimal porcentagemPesoVivoDia;
 
     /**
@@ -70,7 +70,7 @@ public class ConfiguracaoArracoamento extends AbstractEntity<Integer> {
      * = Taxa de Conversão Alimentar esperada. Isso representa a quantidade
      * de ração consumida, em quilos, dividida pelo ganho de peso dos peixes em quilos
      */
-    @Column(name = "tca_esperada")
+    @Column(name = "tca_esperada", updatable  = false)
     private BigDecimal tcaEsperada;
 
 

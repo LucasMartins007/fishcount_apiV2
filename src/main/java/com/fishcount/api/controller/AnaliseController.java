@@ -1,5 +1,6 @@
 package com.fishcount.api.controller;
 
+import com.fishcount.common.model.dto.AnaliseDTO;
 import com.fishcount.common.model.dto.TanqueDTO;
 import com.fishcount.common.model.pattern.constants.OperationsParam;
 import com.fishcount.common.model.pattern.constants.OperationsPath;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = AnaliseController.PATH)
@@ -17,14 +19,17 @@ import java.math.BigDecimal;
 @Tag(name = AnaliseController.TAG, description = AnaliseController.TAG)
 public interface AnaliseController {
 
-    String PATH = EspecieController.PATH + OperationsPath.PARENT_ID + "/analise";
+    String PATH = "analise";
 
     String TAG = "Analise";
 
-     @PostMapping
-     @ResponseStatus(HttpStatus.OK)
-     @ApiOperation(value = "${controller.email.incluir.operation}", notes = "${controller.email.incluir.description}")
-     BigDecimal teste(@RequestBody TanqueDTO tanqueDTO, @PathVariable(OperationsParam.PARENT_ID) Integer especieId);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    AnaliseDTO requisitarInicioAnalise(@RequestParam(name = "tanqueId", required = true) Integer tanqueId);
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    List<AnaliseDTO> listarPorTanque(@RequestParam(name = "tanqueId", required = true) Integer tanqueId);
 
 
 }
