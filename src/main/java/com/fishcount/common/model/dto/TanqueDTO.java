@@ -5,6 +5,7 @@ import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,10 @@ public class TanqueDTO implements AbstractDTO<Integer> {
     private String descricao;
 
     private Integer qtdePeixe;
+
+    private BigDecimal pesoInicial;
+
+    private boolean possuiMedicaoTemperatura;
 
     private EspecieDTO especie;
 
