@@ -21,6 +21,9 @@ public class TanqueValidator extends AbstractValidatorImpl<Tanque>{
         validate.add(tanque.getDescricao(), "Descrição");
         validate.add(tanque.getEspecie(), "Espécie");
         validate.add(tanque.getQtdePeixe(), "Quantidade de peixes");
+        validate.add(tanque.getPesoInicial(), "Peso inicial");
+        validate.add(tanque.isPossuiMedicaoTemperatura(), "Possui medidor temperatura");
+
 
         validate.validate();
     }

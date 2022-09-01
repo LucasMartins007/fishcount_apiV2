@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Tanque extends AbstractEntity<Integer> {
   
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_tanque", sequenceName = "gen_id_fish_tanque")
+    @SequenceGenerator(name = "id_fish_tanque", allocationSize = 1, sequenceName = "gen_id_fish_tanque")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_tanque")
     private Integer id;
     
@@ -30,6 +31,12 @@ public class Tanque extends AbstractEntity<Integer> {
 
     @Column(name = "qtde_peixe")
     private Integer qtdePeixe;
+
+    @Column (name = "peso_inicial")
+    private BigDecimal pesoInicial;
+
+    @Column (name = "possui_medicao_temperatura")
+    private boolean possuiMedicaoTemperatura;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_tanque_id_fish_especie"))
