@@ -16,8 +16,8 @@ public class AnaliseControllerImpl
 
 
     @Override
-    public AnaliseDTO requisitarInicioAnalise(Integer tanqueId) {
-        final Analise analise = getService().requisitarInicioAnalise(tanqueId);
+    public AnaliseDTO requisitarInicioAnalise(Integer tanqueId, Integer temperatura) {
+        final Analise analise = getService().requisitarInicioAnalise(tanqueId, temperatura);
 
         return converterEntityParaDTO(analise, AnaliseDTO.class);
     }

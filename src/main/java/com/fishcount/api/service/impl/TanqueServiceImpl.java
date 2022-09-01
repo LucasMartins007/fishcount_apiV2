@@ -94,7 +94,7 @@ public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, Tanq
         tanque.setAtivo(true);
         tanque.setQtdUltimaAnalise(managedTanque.getQtdUltimaAnalise());
         tanque.setDataInclusao(managedTanque.getDataInclusao());
-        tanque.setAnalise(managedTanque.getAnalise());
+        tanque.setAnalises(managedTanque.getAnalises());
         tanque.setDataAtualizacao(DateUtil.getDate());
         tanque.setDataProximaAnalise(managedTanque.getDataProximaAnalise());
         tanque.setDataAtualizacao(managedTanque.getDataAtualizacao());

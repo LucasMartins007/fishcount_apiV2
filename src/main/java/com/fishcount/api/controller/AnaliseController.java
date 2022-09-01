@@ -25,7 +25,8 @@ public interface AnaliseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    AnaliseDTO requisitarInicioAnalise(@RequestParam(name = "tanqueId", required = true) Integer tanqueId);
+    AnaliseDTO requisitarInicioAnalise(@RequestParam(name = "tanqueId", required = true) Integer tanqueId,
+                                       @RequestParam(name = "temperatura", required = false) Integer temperatura);
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
