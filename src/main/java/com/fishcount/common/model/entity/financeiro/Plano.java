@@ -21,7 +21,7 @@ public class Plano extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fin_plano", sequenceName = "gen_id_fin_plano")
+    @SequenceGenerator(name = "id_fin_plano", allocationSize = 1, sequenceName = "gen_id_fin_plano")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_plano")
     private Integer id;
 

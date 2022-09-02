@@ -1,6 +1,8 @@
 package com.fishcount.common.model.entity;
 
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
+import com.fishcount.common.model.enums.EnumTipoEmail;
+import com.fishcount.common.model.enums.EnumUnidadePeso;
 import com.fishcount.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +37,10 @@ public class Tanque extends AbstractEntity<Integer> {
     @Column (name = "peso_inicial")
     private BigDecimal pesoInicial;
 
+    @Column (name = "unidade_peso")
+    @Convert(converter = EnumUnidadePeso.EnumConverter.class)
+    private EnumUnidadePeso enumUnidadePeso;
+
     @Column (name = "possui_medicao_temperatura")
     private boolean possuiMedicaoTemperatura;
     
@@ -63,7 +69,7 @@ public class Tanque extends AbstractEntity<Integer> {
     
     @Column(name = "analise")
     @OneToMany(mappedBy = "tanque", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Analise> analise;
+    private List<Analise> analises;
 
     @Column(name = "ativo")
     private boolean ativo;

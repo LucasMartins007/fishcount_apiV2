@@ -1,9 +1,11 @@
 package com.fishcount.common.model.dto;
 
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
+import com.fishcount.common.model.enums.EnumStatusAnalise;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -16,12 +18,23 @@ public class AnaliseDTO implements AbstractDTO<Integer> {
 
     private Integer id;
 
-    private Double qtdeRacao;
+    private TanqueDTO tanque;
 
-    private Double pesoMedio;
+    private BigDecimal pesoMedioTanque;
 
-    private Double qtdeMediaRacao;
+    private BigDecimal qtdeMediaRacaoDiaria;
 
-    private Date dataAnalise;
+    private BigDecimal qtdeRacaoDiaria;
+
+    private BigDecimal qtdeMediaRacaoRefeicao;
+
+    private BigDecimal qtdeRacaoRefeicao;
+
+    private Integer frequenciaAlimentacaoDiaria;
+
+    private EnumStatusAnalise statusAnalise;
+
+    private Date dateAnalise;
+
 
 }

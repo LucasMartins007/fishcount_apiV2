@@ -3,6 +3,7 @@ package com.fishcount.common.model.entity;
 import com.fishcount.common.model.enums.EnumUnidadePeso;
 import com.fishcount.common.model.enums.EnumUnidadeTamanho;
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
+import com.fishcount.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,6 +59,12 @@ public class Especie extends AbstractEntity<Integer> {
     @OneToMany(mappedBy = "especie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tanque> tanques;
 
+    @OneToMany(mappedBy = "especie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ConfiguracaoArracoamento> configuracaoArracoamentos;
+
+    @OneToMany(mappedBy = "especie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ParametroTemperatura> parametroTemperaturas;
+
     @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataInclusao;
@@ -65,6 +72,11 @@ public class Especie extends AbstractEntity<Integer> {
     @Column(name = "data_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
+
+    @PreUpdate
+    private void preUpdate(){
+        this.dataAtualizacao = DateUtil.getDate();
+    }
 
     @Override
     public boolean equals(Object obj) {
