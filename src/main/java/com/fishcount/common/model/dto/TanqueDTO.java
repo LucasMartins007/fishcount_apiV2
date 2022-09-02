@@ -2,6 +2,7 @@ package com.fishcount.common.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
+import com.fishcount.common.model.enums.EnumUnidadePeso;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,8 @@ public class TanqueDTO implements AbstractDTO<Integer> {
     private Integer qtdePeixe;
 
     private BigDecimal pesoInicial;
+
+    private EnumUnidadePeso unidadePeso;
 
     private boolean possuiMedicaoTemperatura;
 

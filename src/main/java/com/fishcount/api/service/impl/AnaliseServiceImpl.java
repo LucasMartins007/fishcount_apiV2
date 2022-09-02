@@ -12,6 +12,7 @@ import com.fishcount.common.model.entity.ConfiguracaoArracoamento;
 import com.fishcount.common.model.entity.ParametroTemperatura;
 import com.fishcount.common.model.entity.Tanque;
 import com.fishcount.common.model.enums.EnumStatusAnalise;
+import com.fishcount.common.model.enums.EnumUnidadePeso;
 import com.fishcount.common.utils.BigDecimalUtil;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.ListUtil;
@@ -28,18 +29,25 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
     public Analise requisitarInicioAnalise(Integer tanqueId, Integer temperatura) {
         final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
 
-        final Analise analise = onPrepareInsert(tanque, temperatura);
+        final Analise analise = gerarAnalise(tanque, temperatura);
 
         return getRepository().save(analise);
     }
 
-    private Analise onPrepareInsert(Tanque tanque, Integer temperatura) {
+    private Analise gerarAnalise(Tanque tanque, Integer temperatura) {
         final List<Analise> analisesConcluidas = getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, EnumStatusAnalise.ANALISE_CONCLUIDA);
-        final Analise analise = ListUtil.first(analisesConcluidas);
-        if (Utils.isEmpty(analise)) {
+        final Analise managedAnalise = ListUtil.first(analisesConcluidas);
+        if (Utils.isEmpty(managedAnalise)) {
             return prepararPrimeiraAnalise(tanque, temperatura);
         }
+        return prepararAnaliseSonar(managedAnalise);
+    }
+
+    private Analise prepararAnaliseSonar(Analise managedAnalise) {
+        final Analise analise = new Analise();
         analise.setStatusAnalise(EnumStatusAnalise.AGUARDANDO_ANALISE);
+        analise.setDateAnalise(DateUtil.getDate());
+        analise.setTanque(managedAnalise.getTanque());
 
         return analise;
     }
@@ -47,7 +55,7 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
     private Analise prepararPrimeiraAnalise(Tanque tanque, Integer temperatura) {
         final Analise analise = new Analise();
 
-        final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoInicial(), tanque.getQtdePeixe());
+        final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoInicial(), tanque.getQtdePeixe(), tanque.getEnumUnidadePeso());
         analise.setPesoMedioTanque(pesoVivoMedio);
 
         final ConfiguracaoArracoamento configuracaoArracoamento = getRepository(ConfiguracaoArracoamentoRepository.class).findByPeso(tanque.getPesoInicial());
@@ -67,12 +75,16 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
 
     private BigDecimal calcularQtdeRacaoDiaria(Tanque tanque, Integer temperatura, BigDecimal pesoVivoMedio, ConfiguracaoArracoamento configuracaoArracoamento) {
         final BigDecimal pesoVivoDia = BigDecimalUtil
-                .divide(configuracaoArracoamento.getPorcentagemPesoVivoDia(), BigDecimal.valueOf(100), 2);
+                .divide(configuracaoArracoamento.getPorcentagemPesoVivoDia(), BigDecimal.valueOf(100), 4);
 
         final BigDecimal qtdeRacaoDiaria = pesoVivoMedio.multiply(pesoVivoDia);
         if (!tanque.isPossuiMedicaoTemperatura() || temperatura == null) {
             return qtdeRacaoDiaria;
         }
+        return aplicarDescontoTemperatura(temperatura, qtdeRacaoDiaria);
+    }
+
+    private BigDecimal aplicarDescontoTemperatura(Integer temperatura, BigDecimal qtdeRacaoDiaria) {
         final ParametroTemperatura parametroTemperatura = getRepository(ParametroTemperaturaRepository.class).findByTemperatura(temperatura);
         final BigDecimal porcentagemDescontoRacao = BigDecimalUtil
                 .divide(parametroTemperatura.getPorcentagemDescontoRacao(), BigDecimal.valueOf(100), 2);
@@ -81,15 +93,14 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
     }
 
     private BigDecimal calcularQuantidadeRacaoRefeicao(Integer frequenciaDia, BigDecimal qtdeRacaoDiaria) {
-        return qtdeRacaoDiaria.multiply(BigDecimal.valueOf(frequenciaDia));
+        return BigDecimalUtil.divide(qtdeRacaoDiaria, BigDecimal.valueOf(frequenciaDia), 2);
     }
 
-    private BigDecimal calcularPesoMedioPeixesTotal(BigDecimal pesoPeixe, Integer qtdePeixes) {
-        return BigDecimalUtil.truncBig(pesoPeixe.multiply(BigDecimal.valueOf(qtdePeixes)), 2);
-    }
-
-    private BigDecimal calcularQuantidadeRacaoDiaria(ConfiguracaoArracoamento configuracaoArracoamento, BigDecimal pesoMedio) {
-        final BigDecimal pesoVivoDia = BigDecimalUtil.divide(configuracaoArracoamento.getPorcentagemPesoVivoDia(), BigDecimal.valueOf(100), 2);
-        return pesoMedio.multiply(pesoVivoDia);
+    private BigDecimal calcularPesoMedioPeixesTotal(BigDecimal pesoPeixe, Integer qtdePeixes, EnumUnidadePeso unidadePeso) {
+        if (EnumUnidadePeso.KILO.equals(unidadePeso)) {
+            return BigDecimalUtil.truncBig(pesoPeixe.multiply(BigDecimal.valueOf(qtdePeixes)), 2);
+        }
+        final BigDecimal pesoPeixeQuilo = BigDecimalUtil.divide(pesoPeixe, BigDecimal.valueOf(1000), 2);
+        return BigDecimalUtil.truncBig(pesoPeixeQuilo.multiply(BigDecimal.valueOf(qtdePeixes)), 2);
     }
 }

@@ -15,7 +15,7 @@ public enum EnumUnidadePeso implements IEnum<String> {
 
     KILO("KG", "Quilos"),
     GRAMA("GR", "Gramas"),
-    MILIGRAMA("ML", "Miligramas");
+    ;
 
     private final String key;
 

@@ -18,8 +18,8 @@ public class ConfiguracaoArracoamentoSpec {
     public static Specification<ConfiguracaoArracoamento> byPeso(BigDecimal pesoPeixe) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            predicates.add(criteriaBuilder.lessThan(root.get(FIELD_PESO_MINIMO), pesoPeixe));
-            predicates.add(criteriaBuilder.greaterThan(root.get(FIELD_PESO_MAXIMO), pesoPeixe));
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(FIELD_PESO_MINIMO), pesoPeixe));
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(FIELD_PESO_MAXIMO), pesoPeixe));
 
             return query.where(ListUtil.toArray(predicates)).getRestriction();
         };
