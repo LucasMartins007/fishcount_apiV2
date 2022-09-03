@@ -47,9 +47,6 @@ spring:
 
   flyway:
     locations: "classpath:/db/migration"
-    url: jdbc:postgresql://${database-config.dev.server}:${database-config.dev.port}/${database-config.dev.name}
-    user: ${database-config.dev.username}
-    password: ${database-config.dev.password}
     schemas: migration
     validate-on-migrate: true
 
@@ -130,9 +127,6 @@ spring:
 
   flyway:
     locations: "classpath:/db/migration"
-    url: jdbc:postgresql://${database-config.dev.server}:${database-config.dev.port}/${database-config.dev.name}
-    user: ${database-config.dev.username}
-    password: ${database-config.dev.password}
     schemas: migration
     validate-on-migrate: true
 
