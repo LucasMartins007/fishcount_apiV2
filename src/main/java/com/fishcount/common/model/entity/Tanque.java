@@ -39,7 +39,7 @@ public class Tanque extends AbstractEntity<Integer> {
 
     @Column (name = "unidade_peso")
     @Convert(converter = EnumUnidadePeso.EnumConverter.class)
-    private EnumUnidadePeso enumUnidadePeso;
+    private EnumUnidadePeso unidadePeso;
 
     @Column (name = "possui_medicao_temperatura")
     private boolean possuiMedicaoTemperatura;

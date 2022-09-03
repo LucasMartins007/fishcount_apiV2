@@ -47,6 +47,4 @@ public class TanqueDTO implements AbstractDTO<Integer> {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dataUltimoTratamento;
 
-    private List<AnaliseDTO> analises;
-
 }

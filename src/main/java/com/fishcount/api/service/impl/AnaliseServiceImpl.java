@@ -20,6 +20,7 @@ import com.fishcount.common.utils.Utils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 
 @Service
@@ -55,7 +56,7 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
     private Analise prepararPrimeiraAnalise(Tanque tanque, Integer temperatura) {
         final Analise analise = new Analise();
 
-        final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoInicial(), tanque.getQtdePeixe(), tanque.getEnumUnidadePeso());
+        final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoInicial(), tanque.getQtdePeixe(), tanque.getUnidadePeso());
         analise.setPesoMedioTanque(pesoVivoMedio);
 
         final ConfiguracaoArracoamento configuracaoArracoamento = getRepository(ConfiguracaoArracoamentoRepository.class).findByPeso(tanque.getPesoInicial());
@@ -77,7 +78,7 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
         final BigDecimal pesoVivoDia = BigDecimalUtil
                 .divide(configuracaoArracoamento.getPorcentagemPesoVivoDia(), BigDecimal.valueOf(100), 4);
 
-        final BigDecimal qtdeRacaoDiaria = pesoVivoMedio.multiply(pesoVivoDia);
+        final BigDecimal qtdeRacaoDiaria = BigDecimalUtil.truncBig(pesoVivoMedio.multiply(pesoVivoDia), 2);
         if (!tanque.isPossuiMedicaoTemperatura() || temperatura == null) {
             return qtdeRacaoDiaria;
         }
