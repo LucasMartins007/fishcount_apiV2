@@ -31,14 +31,14 @@ controller:
     inativar:
       operation: Inativar um email do usuário por Id
       description: Endpoint responsável por inativar um email do usuário por Id <br>
-                   O email não é excluído, somente sua propriedade ``ativo`` é setada como false
+        O email não é excluído, somente sua propriedade ``ativo`` é setada como false
 
   especie:
     id: especieId
 
     listar:
       operation: Listar todas as espécies cadastradas no sistema
-      description:  Endpoint responsável por listar as espécies de peixe já mapeadas no sistema
+      description: Endpoint responsável por listar as espécies de peixe já mapeadas no sistema
 
     first:
       operation: Encontrar primeira espécie encontrada
@@ -78,9 +78,9 @@ controller:
     incluir:
       operation: Cadastrar um novo pagamento para a pessoa
       description: Endpoint responsável por cadastrar um pagamento para pessoa <br>
-                   As parcelas do pagamento são geradas apartir do plano escolhido pelo usuário <br>
-                   São gerados ``titulos`` e ``tituloParcela`` referentes a esse pagamento <br>
-                   São gerados cobranças pix para cada parcela do pagamento, deixando as mesmas registradas em banco para futuras consultas de QRCode
+        As parcelas do pagamento são geradas apartir do plano escolhido pelo usuário <br>
+        São gerados ``titulos`` e ``tituloParcela`` referentes a esse pagamento <br>
+        São gerados cobranças pix para cada parcela do pagamento, deixando as mesmas registradas em banco para futuras consultas de QRCode
 
     listar:
       operation: Listar os pagamentos da pessoa
@@ -110,7 +110,7 @@ controller:
     gerarQRCode:
       operation: Gerar QRCode para a parcela especificada
       description: Endpoint responsável por gerar QRCode para a parcela referenciada <br>
-                   Código do QRCode é salvo no sistema para evitar transações desnecessárias com servidor externo.
+        Código do QRCode é salvo no sistema para evitar transações desnecessárias com servidor externo.
 
   pessoa:
     id: pessoaId
@@ -137,10 +137,23 @@ controller:
     incluir:
       operation: Cadastrar novo plano no sistema
       description: c cadastrar um novo plano no sistema <br>
-                   posteriormente deve ser configurado para ser feito somente com login de administrador
+        posteriormente deve ser configurado para ser feito somente com login de administrador
 
     encontrar:
       operation: Encontrar um plano em específico
       description: Endpoint responsável por encontrar um plano em específico por id
+
+  analise:
+    id: analiseId
+    tanqueId: Id do tanque em que será realizada a análise, campo obrigatório
+    temperatura: Caso o tanque possua um medidor de temperatura da aguá, enviar a temperatura em ºC, campo opcional
+
+    requisitar:
+      operation: Requisitar inicicio da análise
+      description: Endpoint responsável por preparar o aplicativo para receber uma análise realizada pelo sonar,
+        <br><br> Caso for a primeira análise do tanque, a análise fica com o status `Concluída` por que
+        inicialmente temos todos os dados necessários para realizar o cálculo (qtde de peixes).
+        <br><br> Nos próximos casos, a analise será salva como `Aguardando análise`, com todos os campos calculados setados como 0,
+        que é o status referente a quando o aplicativo estará preparado para receber uma análise vinda do sonar.
 
 
