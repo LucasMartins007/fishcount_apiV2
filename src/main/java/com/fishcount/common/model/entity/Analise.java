@@ -52,7 +52,7 @@ public class Analise extends AbstractEntity<Integer> {
 
     @Column(name = "data_analise")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateAnalise;
+    private Date dataAnalise;
 
     @Override
     public boolean equals(Object obj) {
