@@ -1,9 +1,6 @@
 package com.fishcount.api.controller;
 
 import com.fishcount.common.model.dto.AnaliseDTO;
-import com.fishcount.common.model.dto.TanqueDTO;
-import com.fishcount.common.model.pattern.constants.OperationsParam;
-import com.fishcount.common.model.pattern.constants.OperationsPath;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -11,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController

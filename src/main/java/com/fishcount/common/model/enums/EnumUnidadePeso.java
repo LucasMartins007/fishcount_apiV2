@@ -1,8 +1,7 @@
 package com.fishcount.common.model.enums;
 
-import com.fishcount.common.model.enums.pattern.IEnum;
 import com.fishcount.common.model.entity.pattern.AbstractEnumConverter;
-import lombok.Getter;
+import com.fishcount.common.model.enums.pattern.IEnum;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Converter;

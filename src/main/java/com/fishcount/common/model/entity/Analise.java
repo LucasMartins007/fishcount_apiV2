@@ -2,7 +2,6 @@ package com.fishcount.common.model.entity;
 
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
 import com.fishcount.common.model.enums.EnumStatusAnalise;
-import com.fishcount.common.model.enums.EnumTipoTelefone;
 import lombok.Getter;
 import lombok.Setter;
 

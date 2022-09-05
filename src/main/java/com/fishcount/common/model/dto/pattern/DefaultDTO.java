@@ -1,10 +1,8 @@
 package com.fishcount.common.model.dto.pattern;
 
-import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import com.fishcount.common.utils.ListUtil;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 

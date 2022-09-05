@@ -1,10 +1,8 @@
 package com.fishcount.api.repository;
 
-import com.fishcount.api.repository.custom.CustomCobrancaPixRepository;
 import com.fishcount.api.repository.custom.CustomTanqueRepository;
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.model.entity.Tanque;
-import com.fishcount.common.model.entity.financeiro.pix.CobrancaPix;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
