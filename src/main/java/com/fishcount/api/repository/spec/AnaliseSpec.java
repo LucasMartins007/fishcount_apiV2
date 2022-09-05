@@ -8,9 +8,16 @@ import org.springframework.data.jpa.domain.Specification;
 import javax.persistence.criteria.Order;
 
 public class AnaliseSpec {
-    private static String FIELD_STATUS_ANALISE = "statusAnalise";
+    private static final String FIELD_ID = "id";
 
-    private static String FIELD_TANQUE = "tanque";
+    private static final String FIELD_STATUS_ANALISE = "statusAnalise";
+
+    private static final String FIELD_TANQUE = "tanque";
+
+    public static Specification<Analise> byId(Integer analiseId) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get(FIELD_ID), analiseId);
+    }
 
     public static Specification<Analise> byStatus(EnumStatusAnalise statusAnalise) {
         return (root, query, criteriaBuilder) ->

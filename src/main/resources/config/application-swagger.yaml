@@ -184,4 +184,6 @@ controller:
         <br><br> Nos próximos casos, a analise será salva como `Aguardando análise`, com todos os campos calculados setados como 0,
         que é o status referente a quando o aplicativo estará preparado para receber uma análise vinda do sonar.
 
-
+    simular:
+      operation: Simular o recebimento de uma análise do sonar
+      description: Simular o recebimento de uma análise do sonar

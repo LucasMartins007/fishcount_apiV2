@@ -6,6 +6,8 @@ import com.fishcount.api.repository.ParametroTemperaturaRepository;
 import com.fishcount.api.service.AnaliseService;
 import com.fishcount.api.service.TanqueService;
 import com.fishcount.api.service.pattern.AbstractServiceImpl;
+import com.fishcount.common.exception.FcRuntimeException;
+import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.dto.AnaliseDTO;
 import com.fishcount.common.model.entity.Analise;
 import com.fishcount.common.model.entity.ConfiguracaoArracoamento;
@@ -23,7 +25,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, AnaliseDTO> implements AnaliseService {
+public class AnaliseServiceImpl
+        extends AbstractServiceImpl<Analise, Integer, AnaliseDTO>
+        implements AnaliseService {
 
     @Override
     public Analise requisitarInicioAnalise(Integer tanqueId, Integer temperatura) {
@@ -34,11 +38,40 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
         return getRepository().save(analise);
     }
 
+    @Override
+    public Analise simularAnaliseConcluida(Integer tanqueId, Integer analiseId, Integer temperatura) {
+        final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
+
+        return simularAnalise(tanque, analiseId, temperatura);
+    }
+
+    @Override
+    public List<Analise> listarPorTanque(Integer tanqueId) {
+        final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
+
+        return getRepository(AnaliseRepository.class).findAllByTanque(tanque);
+    }
+
+    private Analise simularAnalise(Tanque tanque, Integer analiseId, Integer temperatura) {
+        final Analise managedAnalise = findAndValidate(analiseId);
+        if (!EnumStatusAnalise.AGUARDANDO_ANALISE.equals(managedAnalise.getStatusAnalise())){
+            throw new FcRuntimeException(EnumFcDomainException.ANALISE_NAO_INICIADA, analiseId);
+        }
+        Analise analise =  prepararAnaliseConcluida(managedAnalise, tanque, temperatura);
+        analise.setDataAnalise(managedAnalise.getDataAnalise());
+        analise.setTanque(tanque);
+        return analise;
+    }
+
     private Analise gerarAnalise(Tanque tanque, Integer temperatura) {
         final List<Analise> analisesConcluidas = getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, EnumStatusAnalise.ANALISE_CONCLUIDA);
         final Analise managedAnalise = ListUtil.first(analisesConcluidas);
         if (Utils.isEmpty(managedAnalise)) {
-            return prepararPrimeiraAnalise(tanque, temperatura);
+            final Analise analise = new Analise();
+            analise.setDataAnalise(DateUtil.getDate());
+            analise.setTanque(tanque);
+
+            return prepararAnaliseConcluida(analise, tanque, temperatura);
         }
         return prepararAnaliseSonar(managedAnalise);
     }
@@ -46,15 +79,13 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
     private Analise prepararAnaliseSonar(Analise managedAnalise) {
         final Analise analise = new Analise();
         analise.setStatusAnalise(EnumStatusAnalise.AGUARDANDO_ANALISE);
-        analise.setDateAnalise(DateUtil.getDate());
+        analise.setDataAnalise(DateUtil.getDate());
         analise.setTanque(managedAnalise.getTanque());
 
         return analise;
     }
 
-    private Analise prepararPrimeiraAnalise(Tanque tanque, Integer temperatura) {
-        final Analise analise = new Analise();
-
+    private Analise prepararAnaliseConcluida(Analise analise, Tanque tanque, Integer temperatura) {
         final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoInicial(), tanque.getQtdePeixe(), tanque.getUnidadePeso());
         analise.setPesoMedioTanque(pesoVivoMedio);
 
@@ -67,8 +98,6 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
         final BigDecimal qtdeRacaoRefeicao = calcularQuantidadeRacaoRefeicao(configuracaoArracoamento.getFrequenciaDia(), qtdeRacaoDiaria);
         analise.setQtdeRacaoRefeicao(qtdeRacaoRefeicao);
 
-        analise.setDateAnalise(DateUtil.getDate());
-        analise.setTanque(tanque);
         analise.setStatusAnalise(EnumStatusAnalise.ANALISE_CONCLUIDA);
         return analise;
     }

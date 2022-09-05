@@ -10,4 +10,7 @@ public interface CustomAnaliseRepository {
 
     List<Analise> findAllByTanqueAndStatus(Tanque tanque, EnumStatusAnalise statusAnalise);
 
+    Analise findByIdAndStatus(Integer analiseId, EnumStatusAnalise statusAnalise);
+
+    List<Analise> findAllByTanque(Tanque tanque);
 }

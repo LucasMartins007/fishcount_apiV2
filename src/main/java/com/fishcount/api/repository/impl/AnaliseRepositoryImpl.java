@@ -19,6 +19,20 @@ public class AnaliseRepositoryImpl
         return getSpecRepository()
                 .findAll(AnaliseSpec.byStatus(statusAnalise)
                         .and(AnaliseSpec.byTanque(tanque))
-                        .and(AnaliseSpec.orderBY(true, "dateAnalise")));
+                        .and(AnaliseSpec.orderBY(true, "dataAnalise")));
+    }
+
+    @Override
+    public Analise findByIdAndStatus(Integer analiseId, EnumStatusAnalise statusAnalise) {
+        return getSpecRepository()
+                .findOne(AnaliseSpec.byId(analiseId)
+                        .and(AnaliseSpec.byStatus(statusAnalise)))
+                .orElse(null);
+    }
+
+    @Override
+    public List<Analise> findAllByTanque(Tanque tanque) {
+        return getSpecRepository()
+                .findAll(AnaliseSpec.byTanque(tanque));
     }
 }

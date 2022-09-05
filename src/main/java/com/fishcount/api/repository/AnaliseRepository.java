@@ -19,4 +19,10 @@ public interface AnaliseRepository extends JpaRepository<Analise, Integer>, JpaS
 
     @Override
     List<Analise> findAllByTanqueAndStatus(Tanque tanque, EnumStatusAnalise statusAnalise);
+
+    @Override
+    Analise findByIdAndStatus(Integer analiseId, EnumStatusAnalise statusAnalise);
+
+    @Override
+    List<Analise> findAllByTanque(Tanque tanque);
 }
