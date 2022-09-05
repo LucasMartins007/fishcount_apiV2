@@ -143,6 +143,34 @@ controller:
       operation: Encontrar um plano em específico
       description: Endpoint responsável por encontrar um plano em específico por id
 
+  tanque:
+    id: tanqueId
+    pessoaId: Id da pessoa vinculada ao lote
+    loteId: Id do lote vinculado ao tanque
+    orderBy: Campo que a consulta deverá ser ordenada
+
+    incluir:
+      operation: Insere um novo tanque no sistema
+      description: Insere um novo tanque no sistema com as informações enviadas
+
+    editar:
+      operation: Edita um tanque já existente no sistema
+      description: Edita um tanque já existente no sistema com os dados informados, 
+                   <br><br> Não é possível alterar o peso inicial/quantidade de peixes dos peixes do tanque caso já tenha sido realizado uma análise
+
+    listar:
+      operation: Lista todos os tanques do lote referenciado
+      description: Lista todos os tanques do lote e pessoa referenciada
+
+    encontrar:
+      operation: Encontra um tanque específico por Id
+      description: Encontra um tanque específico por Id
+
+    inativar:
+      operation: Inativa o tanque referenciado por Id
+      description: Inativa o tanque referenciado e toas as suas análises por Id
+
+
   analise:
     id: analiseId
     tanqueId: Id do tanque em que será realizada a análise, campo obrigatório
