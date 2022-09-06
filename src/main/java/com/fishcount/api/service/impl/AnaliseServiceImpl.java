@@ -42,7 +42,9 @@ public class AnaliseServiceImpl
     public Analise simularAnaliseConcluida(Integer tanqueId, Integer analiseId, Integer temperatura) {
         final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
 
-        return simularAnalise(tanque, analiseId, temperatura);
+        final Analise analise = simularAnalise(tanque, analiseId, temperatura);
+
+        return getRepository().save(analise);
     }
 
     @Override
@@ -53,11 +55,11 @@ public class AnaliseServiceImpl
     }
 
     private Analise simularAnalise(Tanque tanque, Integer analiseId, Integer temperatura) {
-        final Analise managedAnalise = findAndValidate(analiseId);
-        if (!EnumStatusAnalise.AGUARDANDO_ANALISE.equals(managedAnalise.getStatusAnalise())){
+        final Analise managedAnalise = getRepository(AnaliseRepository.class).findByIdAndStatus(analiseId, EnumStatusAnalise.AGUARDANDO_ANALISE);
+        if (Utils.isEmpty(managedAnalise)) {
             throw new FcRuntimeException(EnumFcDomainException.ANALISE_NAO_INICIADA, analiseId);
         }
-        Analise analise =  prepararAnaliseConcluida(managedAnalise, tanque, temperatura);
+        final Analise analise = prepararAnaliseConcluida(managedAnalise, tanque, temperatura);
         analise.setDataAnalise(managedAnalise.getDataAnalise());
         analise.setTanque(tanque);
         return analise;
