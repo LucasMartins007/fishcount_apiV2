@@ -4,7 +4,6 @@ import com.fishcount.api.controller.AnaliseController;
 import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.AnaliseService;
 import com.fishcount.common.model.dto.AnaliseDTO;
-import com.fishcount.common.model.dto.TanqueDTO;
 import com.fishcount.common.model.entity.Analise;
 import org.springframework.web.bind.annotation.RestController;
 

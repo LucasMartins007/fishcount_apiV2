@@ -10,18 +10,18 @@ import javax.persistence.Converter;
  * @author lucas
  */
 @RequiredArgsConstructor
-public enum EnumUnidadePeso implements IEnum<String> {
+public enum EnumUnidadePeso implements IEnum<Integer> {
 
-    KILO("KG", "Quilos"),
-    GRAMA("GR", "Gramas"),
+    KILO(1,"KG"),
+    GRAMA(2,"GR"),
     ;
 
-    private final String key;
+    private final Integer key;
 
     private final String value;
 
     @Override
-    public String getKey() {
+    public Integer getKey() {
         return key;
     }
 
@@ -31,6 +31,6 @@ public enum EnumUnidadePeso implements IEnum<String> {
     }
 
     @Converter
-    public static class EnumConverter extends AbstractEnumConverter<EnumUnidadePeso, String> {
+    public static class EnumConverter extends AbstractEnumConverter<EnumUnidadePeso, Integer> {
     }
 }

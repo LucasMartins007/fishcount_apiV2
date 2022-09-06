@@ -93,10 +93,12 @@ public class AnaliseServiceImpl
         analise.setFrequenciaAlimentacaoDiaria(configuracaoArracoamento.getFrequenciaDia());
 
         final BigDecimal qtdeRacaoDiaria = calcularQtdeRacaoDiaria(tanque, temperatura, pesoVivoMedio, configuracaoArracoamento);
-        analise.setQtdeMediaRacaoDiaria(qtdeRacaoDiaria);
+        analise.setQtdeRacaoDiaria(qtdeRacaoDiaria);
+        analise.setUnidadePesoRacaoDiaria(EnumUnidadePeso.KILO);
 
         final BigDecimal qtdeRacaoRefeicao = calcularQuantidadeRacaoRefeicao(configuracaoArracoamento.getFrequenciaDia(), qtdeRacaoDiaria);
         analise.setQtdeRacaoRefeicao(qtdeRacaoRefeicao);
+        analise.setUnidadePesoRacaoRefeicao(EnumUnidadePeso.KILO);
 
         analise.setStatusAnalise(EnumStatusAnalise.ANALISE_CONCLUIDA);
         return analise;

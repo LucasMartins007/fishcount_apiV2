@@ -6,6 +6,9 @@ import com.fishcount.common.model.enums.EnumUnidadePeso;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -35,15 +38,18 @@ public class TanqueDTO implements AbstractDTO<Integer> {
     private Date dataInclusao;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Date ultimaAnalise;
+    private Integer qtdUltimaAnalise;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Date proximaAnalise;
+    private Date dataProximaAnalise;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dataUltimaAnalise;
 
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dataUltimoTratamento;
+
+
 
 }
