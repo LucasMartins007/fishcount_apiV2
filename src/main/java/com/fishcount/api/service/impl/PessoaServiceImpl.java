@@ -9,7 +9,6 @@ import com.fishcount.api.validators.PessoaValidator;
 import com.fishcount.api.validators.TelefoneValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
-import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.dto.PessoaDTO;
 import com.fishcount.common.model.entity.Email;
 import com.fishcount.common.model.entity.Pessoa;
@@ -20,7 +19,6 @@ import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.NumericUtil;
 import com.fishcount.common.utils.Utils;
-import com.fishcount.common.utils.optional.OptionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -134,7 +132,7 @@ public class PessoaServiceImpl extends AbstractServiceImpl<Pessoa, Integer, Pess
     private void onPrepareInsert(Pessoa pessoa) {
         validarEmails(pessoa);
         validarTelefones(pessoa);
-        pessoa.setCpf(NumericUtil.somenteNumero(pessoa.getCpf()));;
+        pessoa.setCpf(NumericUtil.somenteNumero(pessoa.getCpf()));
 
         final Usuario usuario = gerarUsuario(pessoa);
         pessoa.setUsuario(usuario);

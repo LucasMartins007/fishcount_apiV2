@@ -23,7 +23,16 @@ public class AnaliseControllerImpl
     }
 
     @Override
+    public AnaliseDTO simularAnaliseConcluida(Integer analiseId, Integer tanqueId, Integer temperatura) {
+        final Analise analise = getService().simularAnaliseConcluida(tanqueId, analiseId, temperatura);
+
+        return converterEntityParaDTO(analise, AnaliseDTO.class);
+    }
+
+    @Override
     public List<AnaliseDTO> listarPorTanque(Integer tanqueId) {
-        return null;
+        final List<Analise> analises =  getService().listarPorTanque(tanqueId);
+
+        return converterEntityParaDTO(analises, AnaliseDTO.class);
     }
 }

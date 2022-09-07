@@ -2,7 +2,7 @@ package com.fishcount.common.model.entity;
 
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
 import com.fishcount.common.model.enums.EnumStatusAnalise;
-import com.fishcount.common.model.enums.EnumTipoTelefone;
+import com.fishcount.common.model.enums.EnumUnidadePeso;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +21,7 @@ public class Analise extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_analise", sequenceName = "gen_id_fish_analise")
+    @SequenceGenerator(name = "id_fish_analise", allocationSize = 1, sequenceName = "gen_id_fish_analise")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_analise")
     private Integer id;
 
@@ -32,17 +32,17 @@ public class Analise extends AbstractEntity<Integer> {
     @Column(name = "peso_medio_tanque")
     private BigDecimal pesoMedioTanque;
 
-    @Column(name = "qtde_media_racao_diaria")
-    private BigDecimal qtdeMediaRacaoDiaria;
-
     @Column(name = "qtde_racao_diaria")
     private BigDecimal qtdeRacaoDiaria;
 
-    @Column(name = "qtde_media_racao_refeicao")
-    private BigDecimal qtdeMediaRacaoRefeicao;
+    @Column(name = "unidade_peso_racao_diaria")
+    private EnumUnidadePeso unidadePesoRacaoDiaria;
 
     @Column(name = "qtde_racao_refeicao")
     private BigDecimal qtdeRacaoRefeicao;
+
+    @Column(name = "unidade_peso_racao_refeicao")
+    private EnumUnidadePeso unidadePesoRacaoRefeicao;
 
     @Column(name = "frequencia_alimentacao_diaria")
     private Integer frequenciaAlimentacaoDiaria;
@@ -53,7 +53,7 @@ public class Analise extends AbstractEntity<Integer> {
 
     @Column(name = "data_analise")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateAnalise;
+    private Date dataAnalise;
 
     @Override
     public boolean equals(Object obj) {

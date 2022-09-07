@@ -1,9 +1,7 @@
 package com.fishcount.api.repository;
 
 import com.fishcount.api.repository.custom.CustomAnaliseRepository;
-import com.fishcount.api.repository.custom.CustomConfiguracaoArracoamentoRepository;
 import com.fishcount.common.model.entity.Analise;
-import com.fishcount.common.model.entity.ConfiguracaoArracoamento;
 import com.fishcount.common.model.entity.Tanque;
 import com.fishcount.common.model.enums.EnumStatusAnalise;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +19,10 @@ public interface AnaliseRepository extends JpaRepository<Analise, Integer>, JpaS
 
     @Override
     List<Analise> findAllByTanqueAndStatus(Tanque tanque, EnumStatusAnalise statusAnalise);
+
+    @Override
+    Analise findByIdAndStatus(Integer analiseId, EnumStatusAnalise statusAnalise);
+
+    @Override
+    List<Analise> findAllByTanque(Tanque tanque);
 }

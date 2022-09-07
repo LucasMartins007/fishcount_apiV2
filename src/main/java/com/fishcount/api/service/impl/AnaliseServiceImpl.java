@@ -6,6 +6,8 @@ import com.fishcount.api.repository.ParametroTemperaturaRepository;
 import com.fishcount.api.service.AnaliseService;
 import com.fishcount.api.service.TanqueService;
 import com.fishcount.api.service.pattern.AbstractServiceImpl;
+import com.fishcount.common.exception.FcRuntimeException;
+import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.dto.AnaliseDTO;
 import com.fishcount.common.model.entity.Analise;
 import com.fishcount.common.model.entity.ConfiguracaoArracoamento;
@@ -23,7 +25,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, AnaliseDTO> implements AnaliseService {
+public class AnaliseServiceImpl
+        extends AbstractServiceImpl<Analise, Integer, AnaliseDTO>
+        implements AnaliseService {
 
     @Override
     public Analise requisitarInicioAnalise(Integer tanqueId, Integer temperatura) {
@@ -34,11 +38,42 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
         return getRepository().save(analise);
     }
 
+    @Override
+    public Analise simularAnaliseConcluida(Integer tanqueId, Integer analiseId, Integer temperatura) {
+        final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
+
+        final Analise analise = simularAnalise(tanque, analiseId, temperatura);
+
+        return getRepository().save(analise);
+    }
+
+    @Override
+    public List<Analise> listarPorTanque(Integer tanqueId) {
+        final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
+
+        return getRepository(AnaliseRepository.class).findAllByTanque(tanque);
+    }
+
+    private Analise simularAnalise(Tanque tanque, Integer analiseId, Integer temperatura) {
+        final Analise managedAnalise = getRepository(AnaliseRepository.class).findByIdAndStatus(analiseId, EnumStatusAnalise.AGUARDANDO_ANALISE);
+        if (Utils.isEmpty(managedAnalise)) {
+            throw new FcRuntimeException(EnumFcDomainException.ANALISE_NAO_INICIADA, analiseId);
+        }
+        final Analise analise = prepararAnaliseConcluida(managedAnalise, tanque, temperatura);
+        analise.setDataAnalise(managedAnalise.getDataAnalise());
+        analise.setTanque(tanque);
+        return analise;
+    }
+
     private Analise gerarAnalise(Tanque tanque, Integer temperatura) {
         final List<Analise> analisesConcluidas = getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, EnumStatusAnalise.ANALISE_CONCLUIDA);
         final Analise managedAnalise = ListUtil.first(analisesConcluidas);
         if (Utils.isEmpty(managedAnalise)) {
-            return prepararPrimeiraAnalise(tanque, temperatura);
+            final Analise analise = new Analise();
+            analise.setDataAnalise(DateUtil.getDate());
+            analise.setTanque(tanque);
+
+            return prepararAnaliseConcluida(analise, tanque, temperatura);
         }
         return prepararAnaliseSonar(managedAnalise);
     }
@@ -46,29 +81,27 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
     private Analise prepararAnaliseSonar(Analise managedAnalise) {
         final Analise analise = new Analise();
         analise.setStatusAnalise(EnumStatusAnalise.AGUARDANDO_ANALISE);
-        analise.setDateAnalise(DateUtil.getDate());
+        analise.setDataAnalise(DateUtil.getDate());
         analise.setTanque(managedAnalise.getTanque());
 
         return analise;
     }
 
-    private Analise prepararPrimeiraAnalise(Tanque tanque, Integer temperatura) {
-        final Analise analise = new Analise();
-
-        final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoInicial(), tanque.getQtdePeixe(), tanque.getEnumUnidadePeso());
+    private Analise prepararAnaliseConcluida(Analise analise, Tanque tanque, Integer temperatura) {
+        final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoInicial(), tanque.getQtdePeixe(), tanque.getUnidadePeso());
         analise.setPesoMedioTanque(pesoVivoMedio);
 
         final ConfiguracaoArracoamento configuracaoArracoamento = getRepository(ConfiguracaoArracoamentoRepository.class).findByPeso(tanque.getPesoInicial());
         analise.setFrequenciaAlimentacaoDiaria(configuracaoArracoamento.getFrequenciaDia());
 
         final BigDecimal qtdeRacaoDiaria = calcularQtdeRacaoDiaria(tanque, temperatura, pesoVivoMedio, configuracaoArracoamento);
-        analise.setQtdeMediaRacaoDiaria(qtdeRacaoDiaria);
+        analise.setQtdeRacaoDiaria(qtdeRacaoDiaria);
+        analise.setUnidadePesoRacaoDiaria(EnumUnidadePeso.KILO);
 
         final BigDecimal qtdeRacaoRefeicao = calcularQuantidadeRacaoRefeicao(configuracaoArracoamento.getFrequenciaDia(), qtdeRacaoDiaria);
         analise.setQtdeRacaoRefeicao(qtdeRacaoRefeicao);
+        analise.setUnidadePesoRacaoRefeicao(EnumUnidadePeso.KILO);
 
-        analise.setDateAnalise(DateUtil.getDate());
-        analise.setTanque(tanque);
         analise.setStatusAnalise(EnumStatusAnalise.ANALISE_CONCLUIDA);
         return analise;
     }
@@ -77,7 +110,7 @@ public class AnaliseServiceImpl extends AbstractServiceImpl<Analise, Integer, An
         final BigDecimal pesoVivoDia = BigDecimalUtil
                 .divide(configuracaoArracoamento.getPorcentagemPesoVivoDia(), BigDecimal.valueOf(100), 4);
 
-        final BigDecimal qtdeRacaoDiaria = pesoVivoMedio.multiply(pesoVivoDia);
+        final BigDecimal qtdeRacaoDiaria = BigDecimalUtil.truncBig(pesoVivoMedio.multiply(pesoVivoDia), 2);
         if (!tanque.isPossuiMedicaoTemperatura() || temperatura == null) {
             return qtdeRacaoDiaria;
         }

@@ -1,8 +1,8 @@
 package com.fishcount.common.model.entity;
 
 
-import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
+import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 import com.fishcount.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
