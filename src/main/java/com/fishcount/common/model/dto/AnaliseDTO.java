@@ -25,6 +25,8 @@ public class AnaliseDTO implements AbstractDTO<Integer> {
 
     private BigDecimal pesoMedioTanque;
 
+    private String tipoRacao;
+
     private BigDecimal qtdeRacaoDiaria;
 
     private EnumUnidadePeso unidadePesoRacaoDiaria;

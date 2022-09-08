@@ -107,6 +107,7 @@ public class AnaliseServiceImpl
 
         final ConfiguracaoArracoamento configuracaoArracoamento = getRepository(ConfiguracaoArracoamentoRepository.class).findByPeso(tanque.getPesoInicial());
         analise.setFrequenciaAlimentacaoDiaria(configuracaoArracoamento.getFrequenciaDia());
+        analise.setTipoRacao(configuracaoArracoamento.getParametroTipoRacao().getDescricao());
 
         final BigDecimal qtdeRacaoDiaria = calcularQtdeRacaoDiaria(tanque, temperatura, pesoVivoMedio, configuracaoArracoamento);
         analise.setQtdeRacaoDiaria(qtdeRacaoDiaria);
