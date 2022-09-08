@@ -1,6 +1,7 @@
 package com.fishcount.common.model.entity;
 
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
+import com.fishcount.common.model.enums.EnumStatusAnalise;
 import com.fishcount.common.model.enums.EnumUnidadePeso;
 import com.fishcount.common.utils.DateUtil;
 import lombok.Getter;
@@ -39,6 +40,10 @@ public class Tanque extends AbstractEntity<Integer> {
     @Column (name = "unidade_peso")
     @Convert(converter = EnumUnidadePeso.EnumConverter.class)
     private EnumUnidadePeso unidadePeso;
+
+    @Column (name = "status_analise")
+    @Convert(converter = EnumStatusAnalise.EnumConverter.class)
+    private EnumStatusAnalise statusAnalise;
 
     @Column (name = "possui_medicao_temperatura")
     private boolean possuiMedicaoTemperatura;

@@ -3,6 +3,7 @@ package com.fishcount.api.service.impl;
 import com.fishcount.api.repository.AnaliseRepository;
 import com.fishcount.api.repository.ConfiguracaoArracoamentoRepository;
 import com.fishcount.api.repository.ParametroTemperaturaRepository;
+import com.fishcount.api.repository.TanqueRepository;
 import com.fishcount.api.service.AnaliseService;
 import com.fishcount.api.service.TanqueService;
 import com.fishcount.api.service.pattern.AbstractServiceImpl;
@@ -44,14 +45,27 @@ public class AnaliseServiceImpl
 
         final Analise analise = simularAnalise(tanque, analiseId, temperatura);
 
+        atualizarDataAnaliseTanque(tanque, analise);
+
         return getRepository().save(analise);
     }
 
+    private void atualizarDataAnaliseTanque(Tanque tanque, Analise analise) {
+        tanque.setDataUltimaAnalise(DateUtil.getDate());
+        tanque.setDataAtualizacao(DateUtil.getDate());
+        tanque.setStatusAnalise(analise.getStatusAnalise());
+
+        getRepository(TanqueRepository.class).save(tanque);
+    }
+
     @Override
-    public List<Analise> listarPorTanque(Integer tanqueId) {
+    public List<Analise> listarPorTanque(Integer tanqueId, EnumStatusAnalise statusAnalise) {
         final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
 
-        return getRepository(AnaliseRepository.class).findAllByTanque(tanque);
+        if (Utils.isEmpty(statusAnalise)) {
+            return getRepository(AnaliseRepository.class).findAllByTanque(tanque);
+        }
+        return getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, statusAnalise);
     }
 
     private Analise simularAnalise(Tanque tanque, Integer analiseId, Integer temperatura) {

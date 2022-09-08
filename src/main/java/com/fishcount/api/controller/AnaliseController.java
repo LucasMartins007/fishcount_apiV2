@@ -1,6 +1,7 @@
 package com.fishcount.api.controller;
 
 import com.fishcount.common.model.dto.AnaliseDTO;
+import com.fishcount.common.model.enums.EnumStatusAnalise;
 import com.fishcount.common.model.pattern.constants.OperationsParam;
 import com.fishcount.common.model.pattern.constants.OperationsPath;
 import io.swagger.annotations.Api;
@@ -37,7 +38,8 @@ public interface AnaliseController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<AnaliseDTO> listarPorTanque(@RequestParam(name = "tanqueId", required = true) Integer tanqueId);
+    List<AnaliseDTO> listarPorTanque(@RequestParam(name = "tanqueId", required = true) Integer tanqueId,
+                                     @RequestParam(name = "statusAnalise", required = false) EnumStatusAnalise statusAnalise);
 
 
 }

@@ -5,6 +5,7 @@ import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.AnaliseService;
 import com.fishcount.common.model.dto.AnaliseDTO;
 import com.fishcount.common.model.entity.Analise;
+import com.fishcount.common.model.enums.EnumStatusAnalise;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,8 +31,8 @@ public class AnaliseControllerImpl
     }
 
     @Override
-    public List<AnaliseDTO> listarPorTanque(Integer tanqueId) {
-        final List<Analise> analises =  getService().listarPorTanque(tanqueId);
+    public List<AnaliseDTO> listarPorTanque(Integer tanqueId, EnumStatusAnalise statusAnalise) {
+        final List<Analise> analises =  getService().listarPorTanque(tanqueId, statusAnalise);
 
         return converterEntityParaDTO(analises, AnaliseDTO.class);
     }

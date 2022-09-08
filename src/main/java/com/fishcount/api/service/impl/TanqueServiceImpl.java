@@ -13,6 +13,7 @@ import com.fishcount.common.model.dto.TanqueDTO;
 import com.fishcount.common.model.entity.Especie;
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.model.entity.Tanque;
+import com.fishcount.common.model.enums.EnumStatusAnalise;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.Utils;
 import com.fishcount.common.utils.optional.OptionalUtil;
@@ -81,6 +82,7 @@ public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, Tanq
         }
         tanque.setAtivo(true);
         tanque.setQtdUltimaAnalise(0);
+        tanque.setStatusAnalise(EnumStatusAnalise.ANALISE_NAO_REALIZADA);
         tanque.setDataProximaAnalise(DateUtil.getDate());
         tanque.setDataUltimaAnalise(DateUtil.getDate());
         tanque.setDataUltimoTratamento(DateUtil.getDate());

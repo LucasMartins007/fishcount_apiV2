@@ -37,6 +37,84 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
+---
+
+spring:
+  config.activate.on-profile: server
+
+  application:
+    name: ${app.name}
+
+  flyway:
+    locations: "classpath:/db/migration"
+    schemas: migration
+    validate-on-migrate: true
+
+
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: ${hibernate-config.dev.show-sql}
+    generate-ddl: ${hibernate-config.dev.generate-ddl}
+    hibernate:
+      ddl-auto: ${hibernate-config.dev.ddl-auto}
+    properties:
+      hibernate:
+        format_sql: ${hibernate-config.dev.format-sql}
+        dialect: ${spring.jpa.database-platform}
+        temp.use_jdbc_metadata_defaults: false
+        enable_lazy_load_no_trans: true
+      query:
+        in_clause_parameter_padding: true
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgres://hfklplfianduof:f4b1489c90714b9b7ef10aaf615ce3ad713203b856283f6f0436384e15e93863@ec2-18-210-64-223.compute-1.amazonaws.com:5432/d9o2tj254l6qne
+    username: hfklplfianduof
+    password: f4b1489c90714b9b7ef10aaf615ce3ad713203b856283f6f0436384e15e93863
+
+    hikari:
+      maximum-pool-size: 1
+      connection-test-query: SELECT 1
+      data-source-properties:
+        "[v$session.program]": ${spring.application.name}
+
+  mail:
+    host: ${email-config.dev.host}
+    port: ${email-config.dev.port}
+    username: ${email-config.dev.username}
+    password: ${email-config.dev.password}
+    properties.mail:
+      test-connection: ${email-config.dev.properties.mail.test-connection}
+      smtp:
+        auth: ${email-config.dev.properties.mail.smtp.auth}
+        starttls:
+          enable: ${email-config.dev.properties.mail.smtp.starttls.enable}
+          required: ${email-config.dev.properties.mail.smtp.starttls.required}
+
+server:
+  port: 8080
+  servlet:
+    context-path: ${api.base-path}
+  http2:
+    enabled: true
+  compression:
+    enabled: true
+    min-response-size: 1
+    mime-types: text/html,
+      text/xml,
+      text/plain,
+      text/css,
+      text/javascript,
+      application/javascript,
+      application/json,
+      application/xml,
+      application/pdf,
+      image/png,
+      image/jpeg,
+      image/svg+xml
+
 
 ---
 spring:

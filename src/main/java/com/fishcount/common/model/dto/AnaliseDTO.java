@@ -1,5 +1,6 @@
 package com.fishcount.common.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import com.fishcount.common.model.entity.Tanque;
 import com.fishcount.common.model.enums.EnumStatusAnalise;
@@ -36,8 +37,7 @@ public class AnaliseDTO implements AbstractDTO<Integer> {
 
     private EnumStatusAnalise statusAnalise;
 
-    private TanqueDTO tanque;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dataAnalise;
 
 }

@@ -25,4 +25,7 @@ public interface AnaliseRepository extends JpaRepository<Analise, Integer>, JpaS
 
     @Override
     List<Analise> findAllByTanque(Tanque tanque);
+
+    @Override
+    List<Analise> findAllByTanqueOrderBy(Tanque tanque, String orderBy);
 }

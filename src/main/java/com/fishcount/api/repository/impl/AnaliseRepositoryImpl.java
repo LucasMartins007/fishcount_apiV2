@@ -35,4 +35,11 @@ public class AnaliseRepositoryImpl
         return getSpecRepository()
                 .findAll(AnaliseSpec.byTanque(tanque));
     }
+
+    @Override
+    public List<Analise> findAllByTanqueOrderBy(Tanque tanque, String orderBy) {
+        return getSpecRepository()
+                .findAll(AnaliseSpec.byTanque(tanque)
+                        .and(AnaliseSpec.orderBY(true, orderBy)));
+    }
 }
