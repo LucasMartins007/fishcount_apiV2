@@ -86,13 +86,18 @@ public class AnaliseServiceImpl
             final Analise analise = new Analise();
             analise.setDataAnalise(DateUtil.getDate());
             analise.setTanque(tanque);
+            analise.setTemperaturaAgua(temperatura);
 
             return prepararAnaliseConcluida(analise, tanque, temperatura);
         }
-        return prepararAnaliseSonar(managedAnalise);
+        return prepararAnaliseSonar(tanque, managedAnalise);
     }
 
-    private Analise prepararAnaliseSonar(Analise managedAnalise) {
+    private Analise prepararAnaliseSonar(Tanque tanque, Analise managedAnalise) {
+        final List<Analise> analisesAguardando = getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, EnumStatusAnalise.AGUARDANDO_ANALISE);
+        if (ListUtil.isNotNullOrNotEmpty(analisesAguardando)){
+            throw new FcRuntimeException(EnumFcDomainException.ANALISE_AGUARDANDO_JA_EXISTE, tanque.getDescricao());
+        }
         final Analise analise = new Analise();
         analise.setStatusAnalise(EnumStatusAnalise.AGUARDANDO_ANALISE);
         analise.setDataAnalise(DateUtil.getDate());
