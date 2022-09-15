@@ -27,7 +27,7 @@ public class TanqueDTO implements AbstractDTO<Integer> {
 
     private Integer qtdePeixe;
 
-    private BigDecimal pesoInicial;
+    private BigDecimal pesoUnitario;
 
     private EnumUnidadePeso unidadePeso;
 

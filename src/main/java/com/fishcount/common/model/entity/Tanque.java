@@ -34,8 +34,8 @@ public class Tanque extends AbstractEntity<Integer> {
     @Column(name = "qtde_peixe")
     private Integer qtdePeixe;
 
-    @Column (name = "peso_inicial")
-    private BigDecimal pesoInicial;
+    @Column (name = "peso_unitario")
+    private BigDecimal pesoUnitario;
 
     @Column (name = "unidade_peso")
     @Convert(converter = EnumUnidadePeso.EnumConverter.class)

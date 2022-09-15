@@ -2,6 +2,7 @@ package com.fishcount.api.controller;
 
 import com.fishcount.common.model.dto.AnaliseDTO;
 import com.fishcount.common.model.enums.EnumStatusAnalise;
+import com.fishcount.common.model.enums.EnumUnidadePeso;
 import com.fishcount.common.model.pattern.constants.OperationsParam;
 import com.fishcount.common.model.pattern.constants.OperationsPath;
 import io.swagger.annotations.Api;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -27,14 +29,17 @@ public interface AnaliseController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "${controller.analise.requisitar.operation}", notes = "${controller.analise.requisitar.description}")
     AnaliseDTO requisitarInicioAnalise(@ApiParam("${controller.analise.tanqueId}") @RequestParam(name = "tanqueId", required = true) Integer tanqueId,
-                                       @ApiParam("${controller.analise.temperatura}") @RequestParam(name = "temperatura", required = false) Integer temperatura);
+                                       @ApiParam("${controller.analise.pesoAtual}") @RequestParam(name = "pesoAtual", required = true) BigDecimal pesoAtual,
+                                       @ApiParam("${controller.analise.unidadePeso}") @RequestParam(name = "unidadePeso", required = true) EnumUnidadePeso unidadePeso,
+                                       @ApiParam("${controller.analise.temperatura}") @RequestParam(name = "temperatura", required = false) BigDecimal temperatura);
 
     @PutMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "${controller.analise.simular.operation}", notes = "${controller.analise.simular.description}")
     AnaliseDTO simularAnaliseConcluida(@ApiParam("${controller.analise.id}") @PathVariable(OperationsParam.ID) Integer analiseId,
                                        @ApiParam("${controller.analise.tanqueId}") @RequestParam(name = "tanqueId", required = true) Integer tanqueId,
-                                       @ApiParam("${controller.analise.temperatura}") @RequestParam(name = "temperatura", required = false) Integer temperatura);
+                                       @ApiParam("${controller.analise.tanqueId}") @RequestParam(name = "qtdePeixes", required = true) Integer qtdePeixes,
+                                       @ApiParam("${controller.analise.temperatura}") @RequestParam(name = "temperatura", required = false) BigDecimal temperatura);
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

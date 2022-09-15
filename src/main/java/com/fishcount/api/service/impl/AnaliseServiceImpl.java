@@ -31,29 +31,33 @@ public class AnaliseServiceImpl
         implements AnaliseService {
 
     @Override
-    public Analise requisitarInicioAnalise(Integer tanqueId, Integer temperatura) {
+    public Analise requisitarInicioAnalise(Integer tanqueId, BigDecimal pesoAtual, EnumUnidadePeso unidadePeso, BigDecimal temperatura) {
         final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
 
         final Analise analise = gerarAnalise(tanque, temperatura);
+
+        atualizarDadosTanque(pesoAtual, unidadePeso, tanque, analise);
 
         return getRepository().save(analise);
     }
 
     @Override
-    public Analise simularAnaliseConcluida(Integer tanqueId, Integer analiseId, Integer temperatura) {
+    public Analise simularAnaliseConcluida(Integer tanqueId, Integer analiseId, Integer qtdePeixes, BigDecimal temperatura) {
         final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
 
-        final Analise analise = simularAnalise(tanque, analiseId, temperatura);
+        final Analise analise = simularAnalise(tanque, analiseId, qtdePeixes, temperatura);
 
-        atualizarDataAnaliseTanque(tanque, analise);
+        atualizarDadosTanque(null, null, tanque, analise);
 
         return getRepository().save(analise);
     }
 
-    private void atualizarDataAnaliseTanque(Tanque tanque, Analise analise) {
+    private void atualizarDadosTanque(BigDecimal pesoUnitario, EnumUnidadePeso unidadePeso, Tanque tanque, Analise analise) {
         tanque.setDataUltimaAnalise(DateUtil.getDate());
         tanque.setDataAtualizacao(DateUtil.getDate());
         tanque.setStatusAnalise(analise.getStatusAnalise());
+        tanque.setPesoUnitario(pesoUnitario);
+        tanque.setUnidadePeso(unidadePeso);
 
         getRepository(TanqueRepository.class).save(tanque);
     }
@@ -68,18 +72,30 @@ public class AnaliseServiceImpl
         return getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, statusAnalise);
     }
 
-    private Analise simularAnalise(Tanque tanque, Integer analiseId, Integer temperatura) {
+    private Analise simularAnalise(Tanque tanque, Integer analiseId, Integer qtdePeixes, BigDecimal temperatura) {
         final Analise managedAnalise = getRepository(AnaliseRepository.class).findByIdAndStatus(analiseId, EnumStatusAnalise.AGUARDANDO_ANALISE);
         if (Utils.isEmpty(managedAnalise)) {
             throw new FcRuntimeException(EnumFcDomainException.ANALISE_NAO_INICIADA, analiseId);
         }
+        tanque.setQtdePeixe(qtdePeixes);
+        tanque = getRepository(TanqueRepository.class).save(tanque);
+
         final Analise analise = prepararAnaliseConcluida(managedAnalise, tanque, temperatura);
         analise.setDataAnalise(managedAnalise.getDataAnalise());
         analise.setTanque(tanque);
         return analise;
     }
 
-    private Analise gerarAnalise(Tanque tanque, Integer temperatura) {
+    /**
+     * Verifica se o tanque possui análises concluidas
+     * <p>
+     * caso sim, quer dizer que esse tanque já finalizou alguma análise em seu ciclo de vida, então é gerado uma
+     * nova análise com status AGUARDANDO_ANALISE.
+     * <p>
+     * caso não, quer dizer que é a primeira ou análise do tanque, então é gerado uma nova análise com o
+     * status ANALISE_CONCLUIDA, fazendo o cálculo com os dados pré-cadastrados inicialmente.
+     */
+    private Analise gerarAnalise(Tanque tanque, BigDecimal temperatura) {
         final List<Analise> analisesConcluidas = getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, EnumStatusAnalise.ANALISE_CONCLUIDA);
         final Analise managedAnalise = ListUtil.first(analisesConcluidas);
         if (Utils.isEmpty(managedAnalise)) {
@@ -95,7 +111,7 @@ public class AnaliseServiceImpl
 
     private Analise prepararAnaliseSonar(Tanque tanque, Analise managedAnalise) {
         final List<Analise> analisesAguardando = getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, EnumStatusAnalise.AGUARDANDO_ANALISE);
-        if (ListUtil.isNotNullOrNotEmpty(analisesAguardando)){
+        if (ListUtil.isNotNullOrNotEmpty(analisesAguardando)) {
             throw new FcRuntimeException(EnumFcDomainException.ANALISE_AGUARDANDO_JA_EXISTE, tanque.getDescricao());
         }
         final Analise analise = new Analise();
@@ -106,11 +122,11 @@ public class AnaliseServiceImpl
         return analise;
     }
 
-    private Analise prepararAnaliseConcluida(Analise analise, Tanque tanque, Integer temperatura) {
-        final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoInicial(), tanque.getQtdePeixe(), tanque.getUnidadePeso());
+    private Analise prepararAnaliseConcluida(Analise analise, Tanque tanque, BigDecimal temperatura) {
+        final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoUnitario(), tanque.getQtdePeixe(), tanque.getUnidadePeso());
         analise.setPesoMedioTanque(pesoVivoMedio);
 
-        final ConfiguracaoArracoamento configuracaoArracoamento = getRepository(ConfiguracaoArracoamentoRepository.class).findByPeso(tanque.getPesoInicial());
+        final ConfiguracaoArracoamento configuracaoArracoamento = getRepository(ConfiguracaoArracoamentoRepository.class).findByPeso(tanque.getPesoUnitario());
         analise.setFrequenciaAlimentacaoDiaria(configuracaoArracoamento.getFrequenciaDia());
         analise.setTipoRacao(configuracaoArracoamento.getParametroTipoRacao().getDescricao());
 
@@ -126,7 +142,7 @@ public class AnaliseServiceImpl
         return analise;
     }
 
-    private BigDecimal calcularQtdeRacaoDiaria(Tanque tanque, Integer temperatura, BigDecimal pesoVivoMedio, ConfiguracaoArracoamento configuracaoArracoamento) {
+    private BigDecimal calcularQtdeRacaoDiaria(Tanque tanque, BigDecimal temperatura, BigDecimal pesoVivoMedio, ConfiguracaoArracoamento configuracaoArracoamento) {
         final BigDecimal pesoVivoDia = BigDecimalUtil
                 .divide(configuracaoArracoamento.getPorcentagemPesoVivoDia(), BigDecimal.valueOf(100), 4);
 
@@ -137,8 +153,11 @@ public class AnaliseServiceImpl
         return aplicarDescontoTemperatura(temperatura, qtdeRacaoDiaria);
     }
 
-    private BigDecimal aplicarDescontoTemperatura(Integer temperatura, BigDecimal qtdeRacaoDiaria) {
+    private BigDecimal aplicarDescontoTemperatura(BigDecimal temperatura, BigDecimal qtdeRacaoDiaria) {
         final ParametroTemperatura parametroTemperatura = getRepository(ParametroTemperaturaRepository.class).findByTemperatura(temperatura);
+        if (Utils.isEmpty(parametroTemperatura)) {
+            throw new FcRuntimeException(EnumFcDomainException.CONFIGURACAO_TEMPERATURA_NAO_VALIDADA, temperatura);
+        }
         final BigDecimal porcentagemDescontoRacao = BigDecimalUtil
                 .divide(parametroTemperatura.getPorcentagemDescontoRacao(), BigDecimal.valueOf(100), 2);
 

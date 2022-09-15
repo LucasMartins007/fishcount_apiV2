@@ -36,7 +36,7 @@ public class Analise extends AbstractEntity<Integer> {
     private String tipoRacao;
 
     @Column(name = "temperatura_agua")
-    private Integer temperaturaAgua;
+    private BigDecimal temperaturaAgua;
 
     @Column(name = "qtde_racao_diaria")
     private BigDecimal qtdeRacaoDiaria;

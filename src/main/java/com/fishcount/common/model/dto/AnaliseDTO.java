@@ -27,7 +27,7 @@ public class AnaliseDTO implements AbstractDTO<Integer> {
 
     private String tipoRacao;
 
-    private Integer temperaturaAgua;
+    private BigDecimal temperaturaAgua;
 
     private BigDecimal qtdeRacaoDiaria;
 
