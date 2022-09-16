@@ -21,7 +21,7 @@ hibernate-config:
     format-sql: true
     show-sql: true
     generate-ddl: true
-    ddl-auto: create
+    ddl-auto: update
 
 server:
   path: https://fish-count-api-${spring.profiles.active}.herokuapp.com/fishcount-api/api/v1/actuator/health
