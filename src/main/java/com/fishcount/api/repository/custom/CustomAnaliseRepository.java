@@ -13,4 +13,6 @@ public interface CustomAnaliseRepository {
     Analise findByIdAndStatus(Integer analiseId, EnumStatusAnalise statusAnalise);
 
     List<Analise> findAllByTanque(Tanque tanque);
+
+    List<Analise> findAllByTanqueOrderBy(Tanque tanque, String orderBy);
 }

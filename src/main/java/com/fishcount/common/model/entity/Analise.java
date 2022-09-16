@@ -32,6 +32,12 @@ public class Analise extends AbstractEntity<Integer> {
     @Column(name = "peso_medio_tanque")
     private BigDecimal pesoMedioTanque;
 
+    @Column(name = "tipo_racao")
+    private String tipoRacao;
+
+    @Column(name = "temperatura_agua")
+    private BigDecimal temperaturaAgua;
+
     @Column(name = "qtde_racao_diaria")
     private BigDecimal qtdeRacaoDiaria;
 
