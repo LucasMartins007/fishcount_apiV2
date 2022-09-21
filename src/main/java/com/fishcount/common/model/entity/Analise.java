@@ -29,6 +29,9 @@ public class Analise extends AbstractEntity<Integer> {
     @JoinColumn(name = "id_tanque", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_analise_to_fish_tanque"))
     private Tanque tanque;
 
+    @Column(name = "qtde_racao")
+    private Integer qtdeRacao;
+
     @Column(name = "peso_medio_tanque")
     private BigDecimal pesoMedioTanque;
 

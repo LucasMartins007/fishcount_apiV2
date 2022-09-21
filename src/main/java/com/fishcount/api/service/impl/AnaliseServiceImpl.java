@@ -77,12 +77,10 @@ public class AnaliseServiceImpl
         if (Utils.isEmpty(managedAnalise)) {
             throw new FcRuntimeException(EnumFcDomainException.ANALISE_NAO_INICIADA, analiseId);
         }
-        tanque.setQtdePeixe(qtdePeixes);
-        tanque = getRepository(TanqueRepository.class).save(tanque);
-
         final Analise analise = prepararAnaliseConcluida(managedAnalise, tanque, temperatura);
         analise.setDataAnalise(managedAnalise.getDataAnalise());
         analise.setTanque(tanque);
+        analise.setQtdeRacao(qtdePeixes);
         return analise;
     }
 
@@ -131,6 +129,7 @@ public class AnaliseServiceImpl
         analise.setTipoRacao(configuracaoArracoamento.getParametroTipoRacao().getDescricao());
 
         final BigDecimal qtdeRacaoDiaria = calcularQtdeRacaoDiaria(tanque, temperatura, pesoVivoMedio, configuracaoArracoamento);
+        analise.setTemperaturaAgua(temperatura);
         analise.setQtdeRacaoDiaria(qtdeRacaoDiaria);
         analise.setUnidadePesoRacaoDiaria(EnumUnidadePeso.KILO);
 
