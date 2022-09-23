@@ -4,6 +4,7 @@ import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Usuario;
 
 public class UsuarioMock {
+
     public static Usuario criarMock(Pessoa pessoa) {
         Usuario usuario = new Usuario();
 

@@ -1,6 +1,7 @@
 package com.fishcount.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.PessoaControllerImpl;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.common.model.dto.PessoaDTO;
@@ -17,16 +18,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class PessoaControllerImplTest {
+class PessoaControllerImplTest extends AbstractMockController {
 
     @InjectMocks
     private PessoaControllerImpl pessoaController;
 
     @Mock
     private PessoaService pessoaService;
-
-    private MockMvc mockMvc;
-
     private PessoaDTO pessoaDTO;
 
     @BeforeEach
@@ -62,12 +60,5 @@ class PessoaControllerImplTest {
                 .andDo(print());
     }
 
-    public static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 }
