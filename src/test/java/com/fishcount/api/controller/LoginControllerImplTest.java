@@ -27,7 +27,7 @@ class LoginControllerImplTest extends AbstractMockController {
 
     private AutenticacaoDTO autenticacaoDTO;
 
-    private static final String url = "/login";
+    private static final String url = "/" + LoginController.PATH;
 
     @BeforeEach
     void setUp() {

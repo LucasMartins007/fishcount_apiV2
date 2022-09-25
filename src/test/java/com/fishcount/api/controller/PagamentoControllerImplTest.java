@@ -7,6 +7,7 @@ import com.fishcount.common.model.dto.financeiro.PagamentoDTO;
 import com.fishcount.common.model.entity.financeiro.Pagamento;
 import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
 import com.fishcount.common.model.enums.EnumStatusPagamento;
+import com.fishcount.common.model.pattern.constants.OperationsPath;
 import com.fishcount.common.utils.ListUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class PagamentoControllerImplTest extends AbstractMockController {
 
     private PagamentoParcela pagamentoParcela;
 
-    private final String url = "/pessoa/{pessoaId}/pagamento";
+    private final String url = "/" + PagamentoController.PATH;
 
     @BeforeEach
     void setUp() {
@@ -77,7 +78,7 @@ class PagamentoControllerImplTest extends AbstractMockController {
         when(pagamentoService.consultarCobranca(1,1))
                 .thenReturn(pagamento);
 
-        mockMvc.perform(get(url + "/{pagamentoId}", 1,1)
+        mockMvc.perform(get(url + OperationsPath.ID, 1,1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());

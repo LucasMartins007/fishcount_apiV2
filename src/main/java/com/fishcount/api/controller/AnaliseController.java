@@ -10,13 +10,14 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = AnaliseController.PATH)
+@RequestMapping(value = AnaliseController.PATH, produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = AnaliseController.TAG)
 @Tag(name = AnaliseController.TAG, description = AnaliseController.TAG)
 public interface AnaliseController {

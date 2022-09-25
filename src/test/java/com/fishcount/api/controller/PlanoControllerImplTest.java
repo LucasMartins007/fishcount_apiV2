@@ -42,7 +42,7 @@ class PlanoControllerImplTest extends AbstractMockController {
 
     private PlanoDTO planoDTO;
 
-    private final String url = "/plano";
+    private final String url = "/" + PlanoController.PATH;
 
     @BeforeEach
     void setUp() {
@@ -72,7 +72,7 @@ class PlanoControllerImplTest extends AbstractMockController {
         when(planoService.findAndValidate(1))
                 .thenReturn(plano);
 
-        MvcResult result = mockMvc.perform(get(url + "/{planoId}", 1)
+        MvcResult result = mockMvc.perform(get(url + OperationsPath.ID, 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();

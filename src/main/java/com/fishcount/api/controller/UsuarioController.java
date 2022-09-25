@@ -4,6 +4,7 @@ import com.fishcount.common.model.dto.UsuarioDTO;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @author lucas
  */
 @RestController
-@RequestMapping(value = UsuarioController.PATH)
+@RequestMapping(value = UsuarioController.PATH, produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = UsuarioController.TAG)
 @Tag(name = UsuarioController.TAG, description = "teste")
 public interface UsuarioController {

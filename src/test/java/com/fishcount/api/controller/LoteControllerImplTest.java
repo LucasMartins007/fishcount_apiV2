@@ -4,6 +4,7 @@ import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.LoteControllerImpl;
 import com.fishcount.api.service.LoteService;
 import com.fishcount.common.model.dto.LoteDTO;
+import com.fishcount.common.model.pattern.constants.OperationsPath;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,8 @@ class LoteControllerImplTest extends AbstractMockController {
 
     private LoteDTO loteDTO;
 
+    private final String url = "/" + LoteController.PATH;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -43,7 +46,7 @@ class LoteControllerImplTest extends AbstractMockController {
 
     @Test
     void testarEndpoint_InativarLotes() throws Exception {
-        mockMvc.perform(delete("/pessoa/{pessoaId}/lote/{loteId}", 1, 1)
+        mockMvc.perform(delete(url + OperationsPath.ID, 1, 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(print());
@@ -51,7 +54,7 @@ class LoteControllerImplTest extends AbstractMockController {
 
     @Test
     void testarEndpoint_AtualizarLotes() throws Exception {
-        mockMvc.perform(put("/pessoa/{pessoaId}/lote/{loteId}", 1, 1)
+        mockMvc.perform(put(url + OperationsPath.ID, 1, 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(loteDTO)))
                 .andExpect(status().isOk())
@@ -60,7 +63,7 @@ class LoteControllerImplTest extends AbstractMockController {
 
     @Test
     void testarEndpoint_TestarListaLotes() throws Exception {
-        mockMvc.perform(get("/pessoa/{pessoaId}/lote", 1)
+        mockMvc.perform(get(url, 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
@@ -71,7 +74,7 @@ class LoteControllerImplTest extends AbstractMockController {
         when(loteService.listarFromPessoa(5, null))
                 .thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/pessoa/{pessoaId}/lote", 1)
+        mockMvc.perform(get(url, 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());
