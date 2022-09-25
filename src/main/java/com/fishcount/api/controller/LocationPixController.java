@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
- *
  * @author Lucas Martins
  */
 @RestController
@@ -24,16 +23,12 @@ public interface LocationPixController {
 
     @GetMapping("/location" + OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
-    QRCodePixDTO encontrarPorLocation(
-            @PathVariable(OperationsParam.PARENT_ID) Integer idPessoa,
-            @PathVariable(OperationsParam.ID) Integer locationId
-    );
+    QRCodePixDTO encontrarPorLocation(@PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                                      @PathVariable(OperationsParam.ID) Integer locationId);
 
     @GetMapping("/parcela" + OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
-    QRCodePixDTO encontrarPorParcela(
-            @PathVariable(OperationsParam.PARENT_ID) Integer idPessoa,
-            @PathVariable(OperationsParam.ID) Integer pagamentoParcelaId
-    );
+    QRCodePixDTO encontrarPorParcela(@PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                                     @PathVariable(OperationsParam.ID) Integer pagamentoParcelaId);
 
 }
