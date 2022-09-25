@@ -52,14 +52,14 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
         final Pessoa pessoa = getService(PessoaService.class).findAndValidate(pessoaId);
         final List<Lote> lotesAtivos = resolverListaLotes(orderBy, pessoa);
 
-        ListUtil.stream(lotesAtivos)
-                .forEach(lote -> {
+        return ListUtil.stream(lotesAtivos)
+                .peek(lote -> {
                     final List<Tanque> tanquesAtivos = ListUtil.stream(lote.getTanques())
                             .filter(Tanque::isAtivo)
                             .collect(Collectors.toList());
                     lote.setTanques(tanquesAtivos);
-                });
-        return lotesAtivos;
+                })
+                .collect(Collectors.toList());
     }
 
     private List<Lote> resolverListaLotes(String orderBy, Pessoa pessoa) {

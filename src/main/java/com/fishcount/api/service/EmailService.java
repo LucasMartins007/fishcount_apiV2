@@ -26,4 +26,6 @@ public interface EmailService extends IAbstractService<Email, Integer, EmailDTO>
     void onPrepareInsert(Integer idPessoa, Email email);
 
     void onPrepareUpdate(Integer id, Email email);
+
+    void validarInsertOrUpdate(Email email);
 }
