@@ -1,6 +1,6 @@
 email-config:
   dev:
-    host: smtp.office365.com
+    host: smtp-mail.outlook.com
     port: 587
     username: fishcount_comercial@hotmail.com
     password: Gaviao-007!

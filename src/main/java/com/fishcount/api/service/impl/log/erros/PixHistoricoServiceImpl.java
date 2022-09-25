@@ -1,8 +1,8 @@
 package com.fishcount.api.service.impl.log.erros;
 
 import com.fishcount.api.repository.PessoaRepository;
-import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.service.log.erros.PixHistoricoService;
+import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.common.model.classes.gerencianet.request.PayloadCobranca;
 import com.fishcount.common.model.dto.PixHistoricoDTO;
 import com.fishcount.common.model.entity.Pessoa;
@@ -21,7 +21,7 @@ public class PixHistoricoServiceImpl
     public void incluirCobrancaException(RestClientException exception, PayloadCobranca payloadCobranca, String assinaturaMetodo) {
         final PixHistorico pixHistorico = new PixHistorico();
         pixHistorico.setMensagem(exception.getLocalizedMessage());
-        pixHistorico.setValor(BigDecimal.valueOf(Long.parseLong(payloadCobranca.getValor().getOriginal())));
+        pixHistorico.setValor(BigDecimal.valueOf(Double.parseDouble(payloadCobranca.getValor().getOriginal())));
 
         final String cpf = payloadCobranca.getDevedor().getCpf();
         final Pessoa pessoa = getRepository(PessoaRepository.class).findByCpf(cpf);

@@ -36,13 +36,20 @@ public interface LoteController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "${controller.lote.listar.operation}", notes = "${controller.lote.listar.description}")
-    List<LoteDTO> listar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId);
+    List<LoteDTO> listar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                         @RequestParam(name = "orderBy", required = false) String orderBy);
 
 
-    @PutMapping
+    @PutMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "${controller.lote.atualizar.operation}", notes = "${controller.lote.atualizar.description}")
     void atualizar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                   @ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.ID) Integer loteId,
                    @RequestBody LoteDTO loteDTO);
+
+    @DeleteMapping(OperationsPath.ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void inativar(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                  @ApiParam("${controller.lote.id}") @PathVariable(OperationsParam.ID) Integer loteId);
 
 }

@@ -5,18 +5,22 @@ import com.fishcount.api.service.LoteService;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.LoteValidator;
+import com.fishcount.common.exception.FcRuntimeException;
+import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.dto.LoteDTO;
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.model.entity.Pessoa;
+import com.fishcount.common.model.entity.Tanque;
 import com.fishcount.common.utils.DateUtil;
+import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- *
  * @author lucas
  */
 @Service
@@ -26,8 +30,8 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     private final LoteValidator loteValidator;
 
     @Override
-    public Lote incluir(Integer idPessoa, Lote lote) {
-        onPrepareInsertOrUpdate(idPessoa, lote);
+    public Lote incluir(Integer pessoaId, Lote lote) {
+        onPrepareInsertOrUpdate(pessoaId, null, lote);
 
         loteValidator.validateInsertOrUpdate(lote);
 
@@ -35,8 +39,8 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     }
 
     @Override
-    public void editar(Integer idPessoa, Lote lote) {
-        onPrepareInsertOrUpdate(idPessoa, lote);
+    public void editar(Integer pessoaId, Integer loteId, Lote lote) {
+        onPrepareInsertOrUpdate(pessoaId, loteId, lote);
 
         loteValidator.validateInsertOrUpdate(lote);
 
@@ -44,23 +48,51 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     }
 
     @Override
-    public List<Lote> listarFromPessoa(Integer idPessoa) {
-        Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
+    public List<Lote> listarFromPessoa(Integer pessoaId, String orderBy) {
+        final Pessoa pessoa = getService(PessoaService.class).findAndValidate(pessoaId);
+        final List<Lote> lotesAtivos = resolverListaLotes(orderBy, pessoa);
 
-        return getRepository(LoteRepository.class).findAllByPessoa(pessoa);
+        return ListUtil.stream(lotesAtivos)
+                .peek(lote -> {
+                    final List<Tanque> tanquesAtivos = ListUtil.stream(lote.getTanques())
+                            .filter(Tanque::isAtivo)
+                            .collect(Collectors.toList());
+                    lote.setTanques(tanquesAtivos);
+                })
+                .collect(Collectors.toList());
     }
 
-    private void onPrepareInsertOrUpdate(Integer idPessoa, Lote lote) {
-        if (Utils.isNotEmpty(lote.getId())){
-            Lote managedLote = getService(LoteService.class).findAndValidate(lote.getId());
-            lote.setTanques(managedLote.getTanques());
+    private List<Lote> resolverListaLotes(String orderBy, Pessoa pessoa) {
+        if (Utils.isNotEmpty(orderBy)) {
+            return getRepository(LoteRepository.class).findAllAtivosByPessoaOrderBy(pessoa, orderBy);
         }
-        
-        Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
+        return getRepository(LoteRepository.class).findAllAtivosByPessoa(pessoa);
+    }
+
+    @Override
+    public void onPrepareInsertOrUpdate(Integer pessoaId, Integer loteId, Lote lote) {
+        if (Utils.isNotEmpty(loteId)) {
+            final Lote managedLote = getService(LoteService.class).findAndValidate(loteId);
+            lote.setTanques(managedLote.getTanques());
+            lote.setDataInclusao(managedLote.getDataInclusao());
+        }
+
+        Pessoa pessoa = getService(PessoaService.class).findAndValidate(pessoaId);
         lote.setDescricao(lote.getDescricao().toLowerCase());
-        lote.setDataInclusao(DateUtil.getDate());
-        lote.setDataAtualizacao(DateUtil.getDate());
         lote.setPessoa(pessoa);
+        lote.setAtivo(true);
+    }
+
+    @Override
+    public void inativar(Integer pessoaId, Integer loteId) {
+        final Lote lote = findAndValidate(loteId);
+        if (!Utils.equals(lote.getPessoa().getId(), pessoaId)) {
+            throw new FcRuntimeException(EnumFcDomainException.LOTE_NAO_PERTENCE_PESSOA, loteId, pessoaId);
+        }
+        lote.setAtivo(false);
+        lote.setDataAtualizacao(DateUtil.getDate());
+
+        getRepository().save(lote);
     }
 
 }

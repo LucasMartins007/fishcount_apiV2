@@ -61,12 +61,13 @@ public class Pessoa extends AbstractEntity<Integer> {
     private void prePersist() {
         this.dataInclusao = DateUtil.getDate();
         this.dataAtualizacao = DateUtil.getDate();
-        this.setAtivo(true);
+        this.ativo = true;
     }
 
     @PreUpdate
     private void preUpdate() {
         this.dataAtualizacao = DateUtil.getDate();
+        this.ativo = true;
     }
 
     @Override

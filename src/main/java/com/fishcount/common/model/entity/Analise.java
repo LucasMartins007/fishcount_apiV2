@@ -1,6 +1,8 @@
 package com.fishcount.common.model.entity;
 
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
+import com.fishcount.common.model.enums.EnumStatusAnalise;
+import com.fishcount.common.model.enums.EnumUnidadePeso;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,18 +11,17 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- *
  * @author lucas
  */
 @Entity
 @Getter
 @Setter
 @Table(name = "fish_analise")
-public class Analise extends AbstractEntity<Integer>{
-    
+public class Analise extends AbstractEntity<Integer> {
+
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_analise", sequenceName = "gen_id_fish_analise")
+    @SequenceGenerator(name = "id_fish_analise", allocationSize = 1, sequenceName = "gen_id_fish_analise")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_analise")
     private Integer id;
 
@@ -29,17 +30,39 @@ public class Analise extends AbstractEntity<Integer>{
     private Tanque tanque;
 
     @Column(name = "qtde_racao")
-    private BigDecimal qtdeRacao;
+    private Integer qtdeRacao;
 
-    @Column(name = "peso_medio")
-    private BigDecimal pesoMedio;
+    @Column(name = "peso_medio_tanque")
+    private BigDecimal pesoMedioTanque;
 
-    @Column(name = "qtde_media_racao")
-    private BigDecimal qtdeMediaRacao;
+    @Column(name = "tipo_racao")
+    private String tipoRacao;
+
+    @Column(name = "temperatura_agua")
+    private BigDecimal temperaturaAgua;
+
+    @Column(name = "qtde_racao_diaria")
+    private BigDecimal qtdeRacaoDiaria;
+
+    @Column(name = "unidade_peso_racao_diaria")
+    private EnumUnidadePeso unidadePesoRacaoDiaria;
+
+    @Column(name = "qtde_racao_refeicao")
+    private BigDecimal qtdeRacaoRefeicao;
+
+    @Column(name = "unidade_peso_racao_refeicao")
+    private EnumUnidadePeso unidadePesoRacaoRefeicao;
+
+    @Column(name = "frequencia_alimentacao_diaria")
+    private Integer frequenciaAlimentacaoDiaria;
+
+    @Column(name = "status_analise")
+    @Convert(converter = EnumStatusAnalise.EnumConverter.class)
+    private EnumStatusAnalise statusAnalise;
 
     @Column(name = "data_analise")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateAnalise;
+    private Date dataAnalise;
 
     @Override
     public boolean equals(Object obj) {

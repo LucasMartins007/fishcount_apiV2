@@ -1,8 +1,8 @@
 package com.fishcount.common.model.entity;
 
 
-import com.fishcount.common.model.enums.EnumTipoEndereco;
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
+import com.fishcount.common.model.enums.EnumTipoEndereco;
 import lombok.Getter;
 import lombok.Setter;
 

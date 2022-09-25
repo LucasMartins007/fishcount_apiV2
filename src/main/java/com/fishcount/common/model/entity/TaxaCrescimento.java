@@ -1,8 +1,8 @@
 package com.fishcount.common.model.entity;
 
+import com.fishcount.common.model.entity.pattern.AbstractEntity;
 import com.fishcount.common.model.enums.EnumUnidadeTamanho;
 import com.fishcount.common.model.enums.EnumUnidadeTempo;
-import com.fishcount.common.model.entity.pattern.AbstractEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +22,7 @@ public class TaxaCrescimento extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_taxa_crescimento", sequenceName = "gen_id_fish_taxa_crescimento")
+    @SequenceGenerator(name = "id_fish_taxa_crescimento", allocationSize = 1, sequenceName = "gen_id_fish_taxa_crescimento")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_taxa_crescimento")
     private Integer id;
 

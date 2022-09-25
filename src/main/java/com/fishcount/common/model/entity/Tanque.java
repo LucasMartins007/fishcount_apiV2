@@ -1,10 +1,14 @@
 package com.fishcount.common.model.entity;
 
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
+import com.fishcount.common.model.enums.EnumStatusAnalise;
+import com.fishcount.common.model.enums.EnumUnidadePeso;
+import com.fishcount.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -20,12 +24,29 @@ public class Tanque extends AbstractEntity<Integer> {
   
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fish_tanque", sequenceName = "gen_id_fish_tanque")
+    @SequenceGenerator(name = "id_fish_tanque", allocationSize = 1, sequenceName = "gen_id_fish_tanque")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fish_tanque")
     private Integer id;
     
     @Column(name = "descricao")
     private String descricao;
+
+    @Column(name = "qtde_peixe")
+    private Integer qtdePeixe;
+
+    @Column (name = "peso_unitario")
+    private BigDecimal pesoUnitario;
+
+    @Column (name = "unidade_peso")
+    @Convert(converter = EnumUnidadePeso.EnumConverter.class)
+    private EnumUnidadePeso unidadePeso;
+
+    @Column (name = "status_analise")
+    @Convert(converter = EnumStatusAnalise.EnumConverter.class)
+    private EnumStatusAnalise statusAnalise;
+
+    @Column (name = "possui_medicao_temperatura")
+    private boolean possuiMedicaoTemperatura;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_tanque_id_fish_especie"))
@@ -52,7 +73,31 @@ public class Tanque extends AbstractEntity<Integer> {
     
     @Column(name = "analise")
     @OneToMany(mappedBy = "tanque", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Analise> analise;
+    private List<Analise> analises;
+
+    @Column(name = "ativo")
+    private boolean ativo;
+
+    @Column(name = "data_inclusao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataInclusao;
+
+    @Column(name = "data_atualizacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataAtualizacao;
+
+    @PrePersist
+    private void prePersist() {
+        this.dataInclusao = DateUtil.getDate();
+        this.dataAtualizacao = DateUtil.getDate();
+        this.ativo = true;
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        this.dataAtualizacao = DateUtil.getDate();
+    }
+
 
     @Override
     public boolean equals(Object obj) {

@@ -8,5 +8,5 @@ import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 
 public interface ControleEmailService extends IAbstractService<ControleEmail, Integer, ControleEmailDTO> {
 
-    void enviarEmail(Pessoa pessoa, EnumTipoEnvioEmail tipoEnvioEmail);
+    void enviarEmail(Pessoa pessoa, EnumTipoEnvioEmail tipoEnvioEmail, boolean isSuporte);
 }

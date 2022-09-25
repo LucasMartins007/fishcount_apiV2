@@ -22,20 +22,20 @@ public interface TelefoneController {
     @ResponseStatus(HttpStatus.CREATED)
     TelefoneDTO incluir(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @RequestBody TelefoneDTO telefoneDTO);
 
-    @PutMapping(OperationsParam.ID)
+    @PutMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
-    void editar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsPath.ID) Integer idTelefone, @RequestBody TelefoneDTO telefoneDTO);
+    void editar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsParam.ID) Integer idTelefone, @RequestBody TelefoneDTO telefoneDTO);
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     List<TelefoneDTO> listar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario);
 
-    @GetMapping(OperationsParam.ID)
+    @GetMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
-    TelefoneDTO encontrar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsPath.ID) Integer idTelefone);
+    TelefoneDTO encontrar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsParam.ID) Integer idTelefone);
     
-    @DeleteMapping(OperationsParam.ID)
+    @DeleteMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void inativar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsPath.ID) Integer idTelefone);
+    void inativar(@PathVariable(OperationsParam.PARENT_ID) Integer idUsuario, @PathVariable(OperationsParam.ID) Integer idTelefone);
 
 }

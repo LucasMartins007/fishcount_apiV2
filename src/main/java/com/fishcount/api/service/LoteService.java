@@ -12,10 +12,13 @@ import java.util.List;
  */
 public interface LoteService extends IAbstractService<Lote, Integer, LoteDTO> {
 
-    Lote incluir(Integer idUsuario, Lote lote);
+    Lote incluir(Integer pessoaId, Lote lote);
     
-    List<Lote> listarFromPessoa(Integer idUsuario);
+    List<Lote> listarFromPessoa(Integer pessoaId, String orderBy);
 
-    void editar(Integer idUsuario, Lote lote);
+    void editar(Integer pessoaId, Integer loteId, Lote lote);
 
+    void onPrepareInsertOrUpdate(Integer pessoaId, Integer loteId, Lote lote);
+
+    void inativar(Integer pessoaId, Integer loteId);
 }

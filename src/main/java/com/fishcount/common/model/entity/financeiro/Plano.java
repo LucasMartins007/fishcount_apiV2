@@ -21,7 +21,7 @@ public class Plano extends AbstractEntity<Integer> {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "id_fin_plano", sequenceName = "gen_id_fin_plano")
+    @SequenceGenerator(name = "id_fin_plano", allocationSize = 1, sequenceName = "gen_id_fin_plano")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_fin_plano")
     private Integer id;
 
@@ -33,6 +33,12 @@ public class Plano extends AbstractEntity<Integer> {
 
     @Column(name = "valor_maximo")
     private BigDecimal valorMaximo;
+
+    @Column(name = "valor_parcela_maximo")
+    private BigDecimal valorParcelaMaximo;
+
+    @Column(name = "valor_parcela_minimo")
+    private BigDecimal valorParcelaMinimo;
 
     @Column(name = "min_taque")
     private Integer minTanque;
@@ -46,11 +52,11 @@ public class Plano extends AbstractEntity<Integer> {
     @Column(name = "ativo")
     private boolean ativo;
 
-    @Column(name = "data_inclusao", nullable = false)
+    @Column(name = "data_inclusao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataInclusao;
 
-    @Column(name = "data_atualizacao", nullable = false)
+    @Column(name = "data_atualizacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
 

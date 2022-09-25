@@ -46,10 +46,21 @@ public enum EnumFcDomainException implements IFcException {
     
     LOTE_DUPLICADO("Lote com o nome {0} já esta cadastrado no sistema."),
 
+    LOTE_NAO_PERTENCE_PESSOA("Lote {0} não pertence a pessoa {0}"),
+
     USUARIO_POSSUI_TITULO_ABERTO("O usuario {0} possui pendências no sistema, não é possível criar novo contrato"),
 
-    USUARIO_POSSUI_PAGAMENTOS_EM_ABERTO_OU_EM_ANALISE("Usuário possui pendências em aberto ou em análise, por favor, conclua-os antes de gerar novos.")
-    ;
+    USUARIO_POSSUI_PAGAMENTOS_EM_ABERTO_OU_EM_ANALISE("Usuário possui pendências em aberto ou em análise, por favor, conclua-os antes de gerar novos."),
+
+    CONFIGURACAO_TEMPERATURA_NAO_VALIDADA("A configuração de cálculo para a temperatura {0} não existe."),
+
+    TANQUE_NAO_ENCONTRADO("O tanque {0} não existe ou não é do usuário logado, por favor, tente novamente! "),
+    PESSOA_NAO_ENCONTRADA_POR_CPF("O cpf {0} não pertence a nenhuma pessoa cadastrada no sistema. "),
+    ANALISE_NAO_INICIADA("A analise {0} já esta concluída ou não foi ainda preparada para receber os dados do sonar."),
+
+    ANALISE_AGUARDANDO_JA_EXISTE("O tanque {0} já está esperando uma análise do sonar, finalize a análise requisitada, para iniciar outra."),
+
+        ;
     
     private final String message;
 

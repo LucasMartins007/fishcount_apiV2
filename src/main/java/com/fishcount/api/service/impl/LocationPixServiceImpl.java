@@ -2,7 +2,9 @@ package com.fishcount.api.service.impl;
 
 import com.fishcount.api.repository.LocationPixRepository;
 import com.fishcount.api.repository.QRCodePixRepository;
+import com.fishcount.api.service.CobrancaPixService;
 import com.fishcount.api.service.LocationPixService;
+import com.fishcount.api.service.PagamentoParcelaService;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.gerencianet.pix.location.ClientLocationPix;
 import com.fishcount.api.service.pattern.AbstractServiceImpl;
@@ -10,6 +12,8 @@ import com.fishcount.common.model.classes.gerencianet.response.PayloadLocationRe
 import com.fishcount.common.model.classes.gerencianet.response.PayloadQRCodeResponse;
 import com.fishcount.common.model.dto.financeiro.pix.LocationPixDTO;
 import com.fishcount.common.model.entity.Pessoa;
+import com.fishcount.common.model.entity.financeiro.PagamentoParcela;
+import com.fishcount.common.model.entity.financeiro.pix.CobrancaPix;
 import com.fishcount.common.model.entity.financeiro.pix.LocationPix;
 import com.fishcount.common.model.entity.financeiro.pix.QRCodePix;
 import com.fishcount.common.utils.DateUtil;
@@ -36,13 +40,26 @@ public class LocationPixServiceImpl extends AbstractServiceImpl<LocationPix, Int
     }
 
     @Override
-    public QRCodePix gerarQrCode(Integer idPessoa, Integer idLocation) {
+    public QRCodePix gerarQrCodePorLocation(Integer idPessoa, Integer idLocation) {
         final Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
         final LocationPix location = getRepository(LocationPixRepository.class).findByIdLocation(idLocation);
 
         final QRCodePix qrCodePix = resolverQRCodePix(idLocation, location, pessoa);
 
         return getRepository(QRCodePixRepository.class).save(qrCodePix);
+    }
+
+    @Override
+    public QRCodePix gerarQrCodePorPagamentoParcela(Integer idPessoa, Integer pagamentoParcelaId) {
+        final Pessoa pessoa = getService(PessoaService.class).findAndValidate(idPessoa);
+        final PagamentoParcela pagamentoParcela = getService(PagamentoParcelaService.class).findAndValidate(pagamentoParcelaId);
+
+        CobrancaPix cobrancaPix = getService(CobrancaPixService.class).encontrarCobrancaPorPagamentoParcela(pagamentoParcela);
+        if (Utils.isEmpty(cobrancaPix)) {
+           cobrancaPix = getService(CobrancaPixService.class).gerarRegistoCobrancaPix(pagamentoParcela);
+        }
+
+        return resolverQRCodePix(cobrancaPix.getLocation().getIdLocation(), cobrancaPix.getLocation(), pessoa);
     }
 
     private QRCodePix resolverQRCodePix(Integer idLocation, final LocationPix location, final Pessoa pessoa) {
@@ -63,7 +80,7 @@ public class LocationPixServiceImpl extends AbstractServiceImpl<LocationPix, Int
         qrCodePix.setQrCode(payloadQRCodeResponse.getQrcode());
         qrCodePix.setPessoa(pessoa);
 
-        return qrCodePix;
+        return getRepository(QRCodePixRepository.class).save(qrCodePix);
     }
 
 }

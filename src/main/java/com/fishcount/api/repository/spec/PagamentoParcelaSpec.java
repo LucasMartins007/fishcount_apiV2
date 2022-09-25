@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,18 @@ public class PagamentoParcelaSpec {
     private static final String FIELD_PESSOA = "pessoa";
     private static final String FIELD_PAGAMENTO = "pagamento";
     private static final String FIELD_STATUS_PAGAMENTO = "statusPagamento";
+
+    private static final String FIELD_DATA_VENCIMENTO = "dataVencimento";
     private static final String FIELD_ID = "id";
 
-    public static Specification<PagamentoParcela> byUsuario(final Integer pessoaId) {
+    public static Specification<PagamentoParcela> orderByDataVencimento() {
+        return (root, query, criteriaBuilder) -> {
+            Order orderBy = criteriaBuilder.asc(root.get(FIELD_DATA_VENCIMENTO));
+            return query.orderBy(orderBy).getRestriction();
+        };
+    }
+
+    public static Specification<PagamentoParcela> byPessoa(final Integer pessoaId) {
         return (root, query, criteriaBuilder)
                 -> criteriaBuilder.equal(root.get(FIELD_PAGAMENTO).get(FIELD_PESSOA).get(FIELD_ID), pessoaId);
     }

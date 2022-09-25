@@ -37,6 +37,21 @@ pix-config:
     connection-timeout: 15000
     read-timeout: 15000
 
+  server:
+    chave-pix: f3ca0e7d-93c3-41cc-8711-237ee0d2d63d
+    msg: Abertura de pagamentos inicial padrão.
+
+    base-url: https://api-pix-h.gerencianet.com.br
+    client_id: Client_Id_3e71852f85888c5f3817fd296e831d118de3c979
+    client_secret: Client_Secret_b0e2f50a94392df2bb62fb572570345525626972
+
+    key-store: "classpath:certificates/homologacao-393390-fishcount_finan.p12"
+    key-store-password:
+    key-store-type: PKCS12
+    protocol: TLSv1.2
+    connection-timeout: 15000
+    read-timeout: 15000
+
 ##### Todo alterar para parâmetros de produção #####
   prod:
     chave-pix: f3ca0e7d-93c3-41cc-8711-237ee0d2d63d

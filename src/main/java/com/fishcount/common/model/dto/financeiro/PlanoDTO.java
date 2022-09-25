@@ -22,7 +22,11 @@ public class PlanoDTO implements AbstractDTO<Integer> {
     private BigDecimal valorMinimo;
     
     private BigDecimal valorMaximo;
-    
+
+    private BigDecimal valorParcelaMaximo;
+
+    private BigDecimal valorParcelaMinimo;
+
     private Integer minTanque;
     
     private Integer maxTanque;

@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,8 +31,16 @@ public interface EspecieController {
     @ApiOperation(value = "${controller.especie.listar.operation}", notes = "${controller.especie.listar.description}")
     List<EspecieDTO> listar();
 
+    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
     @GetMapping("/find")
     @ApiOperation(value = "${controller.especie.encontrar.operation}", notes = "${controller.especie.encontrar.description}")
     EspecieDTO encontrarPorDescricao(@RequestParam(value = "descricao", required = true) String descricao);
+
+
+    @GetMapping("/first")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${controller.especie.first.operation}", notes = "${controller.especie.first.description}")
+    EspecieDTO findFist();
 
 }

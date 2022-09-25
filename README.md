@@ -8,26 +8,37 @@ da metodologia SCRUM.
 
 ## Aplicação
 
-#### Ambiente de desenvolvimento (profile development)
+### Deploy
 
-  - Deploy automático em um servidor da heroku a partir de qualquer novo commit na branch de ``develop``
+#### - Desenvolvimento
+- Profile: dev
+- Servidor: heroku.
+- Host: https://fish-count-api-dev.herokuapp.com/
+- Swagger: https://fish-count-api-dev.herokuapp.com/fishcount-api/api/v1/swagger-ui/index.html
+- Deploy automático com qualquer commit na branch ``develop`` após passar das 
+  pipelines definidas no com o github Actions.
 
-  - Host:
-    - https://fish-count-api-dev.herokuapp.com/
+#### - Produção
+- Profile: prod
+- Servidor: heroku.
+- Host: https://fish-count-api-prod.herokuapp.com/
+- Swagger: https://fish-count-api-prod.herokuapp.com/fishcount-api/api/v1/swagger-ui/index.html
+- Deploy automático com aceitação de qualquer merge request para a ``master`` após passar das
+  pipelines definidas no com o github Actions.
 
-  - Documentação swagger
-    - https://fish-count-api-dev.herokuapp.com/fishcount-api/api/v1/swagger-ui/index.html
+### Tecnologias utilizadas
 
+- Spring Boot
+- Spring Data Specification
+- Spring Data Jpa
+- Spring Mail
+- Spring Security
+- Criteria Query
+- Lombok
+- Github Actions
+- Postgres DB
+- Intellij
 
-#### Ambiente de produção (profile production)
-
-  - Deploy automático em um servidor da heroku a partir da aceitação de uma merge request para a branch ``master``
-
-  - Host:
-    - https://fish-count-api-prod.herokuapp.com/
-
-  - Swagger
-    - https://fish-count-api-prod.herokuapp.com/fishcount-api/api/v1/swagger-ui/index.html
 
 ### Padrões do projeto
 

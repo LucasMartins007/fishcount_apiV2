@@ -1,5 +1,7 @@
 package com.fishcount.api.service.gerencianet.pix.cobranca.impl;
 
+import com.fishcount.api.service.ControleEmailService;
+import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.gerencianet.pix.GenericPix;
 import com.fishcount.api.service.gerencianet.pix.cobranca.ClientCobrancaPix;
 import com.fishcount.api.service.log.erros.PixHistoricoService;
@@ -7,6 +9,8 @@ import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.classes.gerencianet.request.PayloadCobranca;
 import com.fishcount.common.model.classes.gerencianet.response.PayloadCobrancaResponse;
+import com.fishcount.common.model.entity.Pessoa;
+import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
 import com.fishcount.common.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -27,6 +31,10 @@ public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implement
     private static final String PARAM_STATUS = "status";
 
     private final PixHistoricoService pixHistoricoService;
+
+    private final ControleEmailService controleEmailService;
+
+    private final PessoaService pessoaService;
 
     @Override
     public PayloadCobrancaResponse criarCobranca(String txId, PayloadCobranca payloadCobranca) {
@@ -116,9 +124,16 @@ public class ClientCobrancaPixImpl extends GenericPix<PayloadCobranca> implement
 
             return Utils.jsonToObject(response.getBody(), PayloadCobrancaResponse.class);
         } catch (RestClientException e) {
-            pixHistoricoService.incluirCobrancaException(e, payloadCobranca, "criarCobrancaImediata");
+            registrarExcecao(payloadCobranca, e);
             throw new FcRuntimeException(EnumFcInfraException.CHAMADA_HTTP_INCORRETA);
         }
+    }
+
+    private void registrarExcecao(PayloadCobranca payloadCobranca, RestClientException e) {
+        pixHistoricoService.incluirCobrancaException(e, payloadCobranca, "criarCobrancaImediata");
+
+        final Pessoa pessoa = pessoaService.encontrarPessoaByCpf(payloadCobranca.getDevedor().getCpf());
+        controleEmailService.enviarEmail(pessoa, EnumTipoEnvioEmail.EXCECAO_SISTEMA, true);
     }
 
     @Override

@@ -13,17 +13,29 @@ import java.util.List;
 public class PagamentoParcelaRepositoryImpl extends RepositoryImpl<PagamentoParcela, Integer> implements CustomPagamentoParcelaRepository {
 
     @Override
-    public List<PagamentoParcela> findAllByUsuarioAndPagamentoAndStatus(Integer pessoaId, Integer pagamentoId, EnumStatusPagamento statusPagamento) {
+    public List<PagamentoParcela> findAllByPessoaAndPagamentoAndStatus(Integer pessoaId, Integer pagamentoId, EnumStatusPagamento statusPagamento) {
         return getSpecRepository()
-                .findAll(PagamentoParcelaSpec.byUsuarioAndPagamentoAndStatus(pessoaId, pagamentoId, statusPagamento));
+                .findAll(PagamentoParcelaSpec.byPessoa(pessoaId)
+                        .and(PagamentoParcelaSpec.byPagamento(pagamentoId)
+                                .and(PagamentoParcelaSpec.byStatus(statusPagamento)))
+                );
     }
 
     @Override
-    public List<PagamentoParcela> findAllByUsuarioAndStatus(Integer pessoaId, EnumStatusPagamento statusPagamento) {
+    public List<PagamentoParcela> findAllByPessoaAndStatus(Integer pessoaId, EnumStatusPagamento statusPagamento) {
         return getSpecRepository()
                 .findAll(
-                        PagamentoParcelaSpec.byUsuario(pessoaId)
+                        PagamentoParcelaSpec.byPessoa(pessoaId)
                                 .and(PagamentoParcelaSpec.byStatus(statusPagamento)));
+    }
+
+    @Override
+    public List<PagamentoParcela> findAllByPessoaAndPagamento(Integer pessoaId, Integer pagamentoId) {
+        return getSpecRepository()
+                .findAll(
+                        PagamentoParcelaSpec.byPessoa(pessoaId)
+                                .and(PagamentoParcelaSpec.byPagamento(pagamentoId))
+                                .and(PagamentoParcelaSpec.orderByDataVencimento()));
     }
 
 }

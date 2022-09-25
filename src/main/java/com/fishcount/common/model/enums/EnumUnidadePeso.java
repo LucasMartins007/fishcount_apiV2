@@ -1,32 +1,36 @@
 package com.fishcount.common.model.enums;
 
-import com.fishcount.common.model.enums.pattern.IEnum;
 import com.fishcount.common.model.entity.pattern.AbstractEnumConverter;
-import lombok.Getter;
+import com.fishcount.common.model.enums.pattern.IEnum;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Converter;
 
 /**
- *
  * @author lucas
  */
-@Getter
-public enum EnumUnidadePeso implements IEnum<String> {
+@RequiredArgsConstructor
+public enum EnumUnidadePeso implements IEnum<Integer> {
 
-    KILO("KG", "Quilos"),
-    GRAMA("GR", "Gramas"),
-    MILIGRAMA("ML", "Miligramas");
+    KILO(1,"KG"),
+    GRAMA(2,"GR"),
+    ;
 
-    EnumUnidadePeso(String key, String value) {
-        this.key = key;
-        this.value = value;
+    private final Integer key;
+
+    private final String value;
+
+    @Override
+    public Integer getKey() {
+        return key;
     }
 
-    private String key;
+    @Override
+    public String getValue() {
+        return value;
+    }
 
-    private String value;
-    
     @Converter
-    public static class EnumConverter extends AbstractEnumConverter<EnumUnidadePeso, String> {
+    public static class EnumConverter extends AbstractEnumConverter<EnumUnidadePeso, Integer> {
     }
 }

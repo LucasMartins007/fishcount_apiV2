@@ -4,40 +4,44 @@ import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.EmailService;
 import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.entity.Email;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class EmailControllerImpl extends AbstractController<EmailService> implements com.fishcount.api.controller.EmailController {
+
+    private final EmailService emailService;
 
     @Override
     public EmailDTO incluir(Integer pessoaId, EmailDTO emailDTO) {
-        Email email = converterDTOParaEntity(emailDTO, Email.class);
+        final Email email = converterDTOParaEntity(emailDTO, Email.class);
         
-        return converterEntityParaDTO(getService().incluir(pessoaId, email), EmailDTO.class);
+        return converterEntityParaDTO(emailService.incluir(pessoaId, email), EmailDTO.class);
     }
 
     @Override
     public void editar(Integer pessoaId, Integer idEmail, EmailDTO emailDTO) {
         Email email = converterDTOParaEntity(emailDTO, Email.class);
-        
-        getService().editar(idEmail, email);
+
+        emailService.editar(idEmail, email);
     }
 
     @Override
     public List<EmailDTO> listar(Integer pessoaId) {
-        return converterEntityParaDTO(getService().listar(pessoaId), EmailDTO.class);
+        return converterEntityParaDTO(emailService.listar(pessoaId), EmailDTO.class);
     }
 
     @Override
     public EmailDTO encontrar(Integer pessoaId, Integer idEmail) {
-        return converterEntityParaDTO(getService().findAndValidate(idEmail), EmailDTO.class);
+        return converterEntityParaDTO(emailService.findAndValidate(idEmail), EmailDTO.class);
     }
 
     @Override
     public void inativar(Integer pessoaId, Integer emailId) {
-        getService().inativar(pessoaId, emailId);
+        emailService.inativar(pessoaId, emailId);
     }
 
 }
