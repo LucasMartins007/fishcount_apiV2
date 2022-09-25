@@ -25,7 +25,7 @@ public interface LoginController {
     String DESCRIPTION = "Endpoints referentes a autenticação da aplicação";
 
     @PostMapping
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "${controller.login.autenticar.operation}", notes = "${controller.login.autenticar.description}")
     ResponseEntity<AutenticacaoDTO> autenticar(@RequestBody AutenticacaoDTO autenticacaoDTO);
 

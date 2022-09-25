@@ -1,26 +1,18 @@
 package com.fishcount.api.controller;
 
-import com.fishcount.api.config.WebConfig;
 import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.EspecieControllerImpl;
-import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.EspecieService;
 import com.fishcount.common.model.dto.EspecieDTO;
 import com.fishcount.common.model.entity.Especie;
 import com.fishcount.common.utils.ListUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureMockRestServiceServer;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.when;

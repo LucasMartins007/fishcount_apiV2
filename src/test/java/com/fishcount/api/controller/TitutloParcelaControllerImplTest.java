@@ -3,7 +3,6 @@ package com.fishcount.api.controller;
 import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.TituloParcelaControllerImpl;
 import com.fishcount.api.service.TituloParcelaService;
-import com.fishcount.common.model.dto.UsuarioDTO;
 import com.fishcount.common.model.dto.financeiro.TituloParcelaDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

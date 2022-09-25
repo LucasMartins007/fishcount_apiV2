@@ -2,10 +2,8 @@ package com.fishcount.api.controller;
 
 import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.AnaliseControllerImpl;
-import com.fishcount.api.controller.impl.EmailControllerImpl;
 import com.fishcount.api.service.AnaliseService;
 import com.fishcount.common.model.dto.AnaliseDTO;
-import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.enums.EnumStatusAnalise;
 import com.fishcount.common.model.enums.EnumUnidadePeso;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
