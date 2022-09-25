@@ -4,6 +4,7 @@ import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.PessoaControllerImpl;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.common.model.dto.PessoaDTO;
+import com.fishcount.common.model.entity.Pessoa;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,10 +27,13 @@ class PessoaControllerImplTest extends AbstractMockController {
     private PessoaService pessoaService;
     private PessoaDTO pessoaDTO;
 
+    private Pessoa pessoa;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         pessoaDTO = new PessoaDTO();
+        pessoa = new Pessoa();
         mockMvc = MockMvcBuilders.standaloneSetup(pessoaController).build();
     }
 

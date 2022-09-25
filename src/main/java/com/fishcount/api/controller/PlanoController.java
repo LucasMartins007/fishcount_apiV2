@@ -1,12 +1,14 @@
 package com.fishcount.api.controller;
 
 import com.fishcount.common.model.dto.financeiro.PlanoDTO;
+import com.fishcount.common.model.pattern.constants.OperationsParam;
 import com.fishcount.common.model.pattern.constants.OperationsPath;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
  * @author Lucas Martins
  */
 @RestController
-@RequestMapping(value = PlanoController.PATH)
+@RequestMapping(value = PlanoController.PATH, produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = PlanoController.TAG)
 @Tag(name = PlanoController.TAG, description = PlanoController.DESCRIPTION)
 public interface PlanoController {
@@ -40,6 +42,6 @@ public interface PlanoController {
     @GetMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "${controller.plano.encontrar.operation}", notes = "${controller.plano.encontrar.description}")
-    PlanoDTO encontrar(@ApiParam("${controller.plano.id}") @PathVariable(OperationsPath.ID) Integer planoId);
+    PlanoDTO encontrar(@ApiParam("${controller.plano.id}") @PathVariable(OperationsParam.ID) Integer planoId);
 
 }
