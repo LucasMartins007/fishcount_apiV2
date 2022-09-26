@@ -51,7 +51,7 @@ public class Telefone extends AbstractEntity<Integer> {
     private void prePersist(){
         this.dataInclusao = DateUtil.getDate();
         this.dataAtualizacao = DateUtil.getDate();
-        this.setAtivo(true);
+        this.ativo = true;
     }
 
     @PreUpdate

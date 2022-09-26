@@ -3,6 +3,7 @@ package com.fishcount.api.service;
 import com.fishcount.api.service.pattern.IAbstractService;
 import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.entity.Email;
+import com.fishcount.common.model.entity.Pessoa;
 
 import java.util.List;
 
@@ -28,4 +29,8 @@ public interface EmailService extends IAbstractService<Email, Integer, EmailDTO>
     void onPrepareUpdate(Integer id, Email email);
 
     void validarInsertOrUpdate(Email email);
+
+    Email encontrarEmailPrincipal(Pessoa pessoa);
+
+    void validarEmails(Pessoa pessoa);
 }

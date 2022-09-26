@@ -1,12 +1,15 @@
 package com.fishcount.api.service.impl;
 
 import com.fishcount.api.repository.UsuarioRepository;
+import com.fishcount.api.service.EmailService;
 import com.fishcount.api.service.UsuarioService;
 import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.UsuarioValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.dto.UsuarioDTO;
+import com.fishcount.common.model.entity.Email;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.StringUtil;
@@ -26,6 +29,8 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
 
     private final PasswordEncoder passwordEnconder;
 
+    private final EmailService emailService;
+
     @Override
     public Usuario incluir(Usuario usuario) {
         usuarioValidator.validateInsert(usuario);
@@ -33,6 +38,19 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
         onPrepareInsert(usuario);
 
         return getRepository().save(usuario);
+    }
+
+    @Override
+    public Usuario gerarUsuario(Pessoa pessoa) {
+        final Usuario usuario = new Usuario();
+
+        final Email email = emailService.encontrarEmailPrincipal(pessoa);
+        usuario.setNome(pessoa.getNome());
+        usuario.setSenha(pessoa.getSenha());
+        usuario.setEmail(email.getDescricao());
+        usuario.setAtivo(true);
+
+        return incluir(usuario);
     }
 
     private void onPrepareInsert(Usuario usuario) {

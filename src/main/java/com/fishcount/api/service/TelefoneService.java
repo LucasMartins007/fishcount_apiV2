@@ -2,6 +2,7 @@ package com.fishcount.api.service;
 
 import com.fishcount.api.service.pattern.IAbstractService;
 import com.fishcount.common.model.dto.TelefoneDTO;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Telefone;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface TelefoneService extends IAbstractService<Telefone, Integer, Tel
    void inativar(Integer idUsuario, Integer idTelefone);
 
    void onPrepareUpdate(Integer idTelefone, Telefone telefone);
+
+    void validarTelefones(Pessoa pessoa);
 }

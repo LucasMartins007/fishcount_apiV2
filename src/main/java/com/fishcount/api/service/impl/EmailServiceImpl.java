@@ -5,10 +5,15 @@ import com.fishcount.api.service.EmailService;
 import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.EmailValidator;
+import com.fishcount.common.exception.FcRuntimeException;
+import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.entity.Email;
 import com.fishcount.common.model.entity.Pessoa;
+import com.fishcount.common.model.enums.EnumTipoEmail;
 import com.fishcount.common.utils.DateUtil;
+import com.fishcount.common.utils.ListUtil;
+import com.fishcount.common.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +95,27 @@ public class EmailServiceImpl extends AbstractServiceImpl<Email, Integer, EmailD
     @Override
     public void validarInsertOrUpdate(Email email){
         emailValidator.validateInsertOrUpdate(email);
+    }
+
+    @Override
+    public Email encontrarEmailPrincipal(Pessoa pessoa) {
+        return ListUtil.stream(pessoa.getEmails())
+                .filter(EnumTipoEmail::isPrincipal)
+                .findFirst()
+                .orElseThrow(() -> new FcRuntimeException(EnumFcDomainException.EMAIL_PRINCIPAL_NAO_INFORMADO));
+    }
+
+    @Override
+    public void validarEmails(Pessoa pessoa) {
+        ListUtil.stream(pessoa.getEmails())
+                .forEach(email -> {
+                    email.setPessoa(pessoa);
+                    emailValidator.validateInsertOrUpdate(email);
+
+                    if (Utils.isNotEmpty(email.getId())) {
+                        onPrepareUpdate(email.getId(), email);
+                    }
+                });
     }
 
     private void onPrepareDelete(Email email) {
