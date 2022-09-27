@@ -52,14 +52,6 @@ public class Titulo extends AbstractEntity<Integer> {
     @Convert(converter = EnumTipoTitulo.EnumConverter.class)
     private EnumTipoTitulo tipoTitulo;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_inclusao")
-    private Date dataInclusao;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_alteracao")
-    private Date dataAlteracao;
-
     @Column(name = "qtde_parcelas")
     private Integer qtdeParcelas;
 

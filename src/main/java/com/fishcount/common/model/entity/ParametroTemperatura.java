@@ -37,16 +37,6 @@ public class ParametroTemperatura extends AbstractEntity<Integer> {
     @Column(name = "temperatura_valida")
     private boolean isTemperaturaValida;
 
-    @Column(name = "data_atualizacao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAtualizacao;
-
-    @PreUpdate
-    private void preUpdate(){
-        this.dataAtualizacao = DateUtil.getDate();
-    }
-
-
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);

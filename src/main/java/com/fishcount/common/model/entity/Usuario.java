@@ -31,17 +31,6 @@ public class Usuario extends AbstractEntity<Integer> {
 
     @Column(name = "email")
     private String email;
-    
-    @Column(name = "ativo")
-    private boolean ativo;
-
-    @Column(name = "data_inclusao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
-    @Column(name = "data_alteracao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAlteracao;
 
     @Override
     public boolean equals(Object obj) {

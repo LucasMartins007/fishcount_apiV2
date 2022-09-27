@@ -58,7 +58,7 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
         usuario.setSenha(passwordEnconder.encode(usuario.getSenha()));
         usuario.setAtivo(true);
         usuario.setDataInclusao(DateUtil.getDate());
-        usuario.setDataAlteracao(DateUtil.getDate());
+        usuario.setDataAtualizacao(DateUtil.getDate());
     }
 
     @Override

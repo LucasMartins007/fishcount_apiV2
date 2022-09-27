@@ -32,15 +32,6 @@ public class Template extends AbstractEntity<Integer> {
     @Column(name = "corpo_html")
     private String corpoHtml;
 
-    @Column(name = "data_alteracao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAlteracao;
-
-    @PreUpdate
-    private void preUpdate() {
-        this.dataAlteracao = DateUtil.getDate();
-    }
-
     @Override
     public int hashCode() {
         return super.hashCode();

@@ -124,7 +124,7 @@ public class NumericUtil {
     }
 
     public static boolean isNumeric(String str) {
-        return str.matches("^-?[0-9]+(\\.[0-9]+)?$");
+        return str.matches("^-?\\d(\\.\\d+)?$");
     }
 
     public static synchronized boolean isIntegerValue(Double value) {
@@ -169,7 +169,7 @@ public class NumericUtil {
 
     public static String numbers(String str) {
         String n = Utils.nvl(str, "");
-        return n.replaceAll("[^0-9]", "");
+        return n.replaceAll("\\d", "");
     }
 
 }

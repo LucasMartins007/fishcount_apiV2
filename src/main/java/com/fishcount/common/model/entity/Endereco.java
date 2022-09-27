@@ -40,14 +40,6 @@ public class Endereco extends AbstractEntity<Integer> {
     @Column(name = "tipo_endereco")
     @Convert(converter = EnumTipoEndereco.EnumConverter.class)
     private EnumTipoEndereco tipoEndereco;
-
-    @Column(name = "data_inclusao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
-    @Column(name = "data_atualizacao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAtualizacao;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_endereco_to_fish_usuario"))

@@ -42,7 +42,7 @@ public class TituloParcelaServiceImpl
     }
 
     private void onPrepareInsert(Titulo titulo, TituloParcela tituloParcela) {
-        tituloParcela.setDataAlteracao(DateUtil.getDate());
+        tituloParcela.setDataAtualizacao(DateUtil.getDate());
         tituloParcela.setDataInclusao(DateUtil.getDate());
         tituloParcela.setTitulo(titulo);
     }

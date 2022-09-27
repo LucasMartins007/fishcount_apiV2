@@ -34,16 +34,6 @@ public class ParametroTipoRacao extends AbstractEntity<Integer> {
     @Column(name = "proteina_bruta_minima", updatable  = false)
     private BigDecimal proteinaBrutaMinima;
 
-    @Column(name = "data_atualizacao", updatable  = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAtualizacao;
-
-    @PreUpdate
-    private void preUpdate(){
-        this.dataAtualizacao = DateUtil.getDate();
-    }
-
-
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
