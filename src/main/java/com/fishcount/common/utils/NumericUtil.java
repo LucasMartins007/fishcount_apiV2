@@ -157,7 +157,6 @@ public class NumericUtil {
     }
 
     public static String somenteNumero(String s) {
-
         String sRet = "";
 
         if (s != null) {
@@ -169,7 +168,7 @@ public class NumericUtil {
 
     public static String numbers(String str) {
         String n = Utils.nvl(str, "");
-        return n.replaceAll("\\d", "");
+        return n.replaceAll("\\D", "");
     }
 
 }
