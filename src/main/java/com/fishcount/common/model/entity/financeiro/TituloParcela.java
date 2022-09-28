@@ -49,14 +49,6 @@ public class TituloParcela extends AbstractEntity<Integer> {
     @Column(name = "tipo_titulo")
     @Convert(converter = EnumTipoTitulo.EnumConverter.class)
     private EnumTipoTitulo tipoTitulo;
-
-    @Column(name = "data_inclusao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
-    @Column(name = "data_alteracao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAlteracao;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_titulo", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_titulo_parcela_to_fin_titulo"))

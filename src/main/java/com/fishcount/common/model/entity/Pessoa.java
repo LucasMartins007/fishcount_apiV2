@@ -27,9 +27,6 @@ public class Pessoa extends AbstractEntity<Integer> {
     @Column(name = "cpf")
     private String cpf;
 
-    @Column(name = "ativo")
-    private boolean ativo;
-
     @Transient
     private String senha;
 
@@ -48,27 +45,6 @@ public class Pessoa extends AbstractEntity<Integer> {
 
     @OneToMany(mappedBy = "pessoa", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lote> lotes;
-
-    @Column(name = "data_inclusao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
-    @Column(name = "data_atualizacao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAtualizacao;
-
-    @PrePersist
-    private void prePersist() {
-        this.dataInclusao = DateUtil.getDate();
-        this.dataAtualizacao = DateUtil.getDate();
-        this.ativo = true;
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        this.dataAtualizacao = DateUtil.getDate();
-        this.ativo = true;
-    }
 
     @Override
     public boolean equals(Object obj) {

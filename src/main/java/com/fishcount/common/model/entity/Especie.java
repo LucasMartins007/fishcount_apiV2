@@ -65,19 +65,6 @@ public class Especie extends AbstractEntity<Integer> {
     @OneToMany(mappedBy = "especie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ParametroTemperatura> parametroTemperaturas;
 
-    @Column(name = "data_inclusao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
-    @Column(name = "data_atualizacao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAtualizacao;
-
-    @PreUpdate
-    private void preUpdate(){
-        this.dataAtualizacao = DateUtil.getDate();
-    }
-
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);

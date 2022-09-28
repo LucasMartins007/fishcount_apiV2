@@ -50,14 +50,6 @@ public class PagamentoParcela extends AbstractEntity<Integer> {
     @JoinColumn(name = "id_pagamento", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_pagamento_parcela_to_fin_pagamento"))
     private Pagamento pagamento;
 
-    @Column(name = "data_inclusao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
-    @Column(name = "data_alteracao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAlteracao;
-
     @Column(name = "data_vencimento")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataVencimento;

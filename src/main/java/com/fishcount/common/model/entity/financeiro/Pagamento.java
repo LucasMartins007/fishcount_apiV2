@@ -68,14 +68,6 @@ public class Pagamento extends AbstractEntity<Integer> {
     @Column(name = "data_fim_vigencia")
     private Date dataFimVigencia;
 
-    @Column(name = "data_inclusao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
-    @Column(name = "data_alteracao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAlteracao;
-
     @Column(name = "data_vencimento")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataVencimento;

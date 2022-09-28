@@ -1,16 +1,46 @@
 package com.fishcount.common.model.entity.pattern;
 
 import com.fishcount.common.model.pattern.IIdentifier;
+import com.fishcount.common.utils.DateUtil;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.proxy.HibernateProxyHelper;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @param <T>
  * @author lucas
  */
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class AbstractEntity<T extends Number> implements IIdentifier<T> {
+
+    @Column(name = "ativo")
+    protected boolean ativo;
+
+    @Column(name = "data_inclusao")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date dataInclusao;
+
+    @Column(name = "data_atualizacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date dataAtualizacao;
+
+    @PrePersist
+    private void prePersist() {
+        this.dataInclusao = DateUtil.getDate();
+        this.dataAtualizacao = DateUtil.getDate();
+        this.ativo = true;
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        this.dataAtualizacao = DateUtil.getDate();
+        this.ativo = true;
+    }
 
     @Override
     public String toString() {

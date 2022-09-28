@@ -3,6 +3,7 @@ package com.fishcount.api.service;
 import com.fishcount.api.service.pattern.IAbstractService;
 import com.fishcount.common.model.dto.LoteDTO;
 import com.fishcount.common.model.entity.Lote;
+import com.fishcount.common.model.entity.Pessoa;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface LoteService extends IAbstractService<Lote, Integer, LoteDTO> {
     void onPrepareInsertOrUpdate(Integer pessoaId, Integer loteId, Lote lote);
 
     void inativar(Integer pessoaId, Integer loteId);
+
+    void validarLotes(Pessoa pessoa);
 }

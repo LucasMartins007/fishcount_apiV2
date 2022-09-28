@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author Lucas Martins
  */
 @RestController
-@RequestMapping(value = PagamentoParcelaController.PATH)
+@RequestMapping(value = PagamentoParcelaController.PATH, produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = PagamentoParcelaController.TAG)
 @Tag(name = PagamentoParcelaController.TAG, description = PagamentoParcelaController.DESCRIPTION)
 public interface PagamentoParcelaController {

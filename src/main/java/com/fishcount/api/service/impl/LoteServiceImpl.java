@@ -95,4 +95,17 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
         getRepository().save(lote);
     }
 
+    @Override
+    public void validarLotes(Pessoa pessoa) {
+        ListUtil.stream(pessoa.getLotes())
+                .forEach(lote -> {
+                    lote.setPessoa(pessoa);
+                    loteValidator.validateInsertOrUpdate(lote);
+
+                    if (Utils.isNotEmpty(pessoa.getId())) {
+                        onPrepareInsertOrUpdate(pessoa.getId(), null, lote);
+                    }
+                });
+    }
+
 }

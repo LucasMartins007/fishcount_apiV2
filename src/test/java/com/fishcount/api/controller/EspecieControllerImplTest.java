@@ -1,26 +1,20 @@
 package com.fishcount.api.controller;
 
-import com.fishcount.api.config.WebConfig;
 import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.EspecieControllerImpl;
-import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.EspecieService;
 import com.fishcount.common.model.dto.EspecieDTO;
 import com.fishcount.common.model.entity.Especie;
 import com.fishcount.common.utils.ListUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureMockRestServiceServer;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.when;
@@ -40,6 +34,8 @@ class EspecieControllerImplTest extends AbstractMockController {
 
     private Especie especie;
 
+    private final String url = "/" + EspecieController.PATH;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -54,31 +50,38 @@ class EspecieControllerImplTest extends AbstractMockController {
     void testarEndpoint_ListarEspecies() throws Exception {
         when(especieService.findAll()).thenReturn(ListUtil.toList(especieDTO));
 
-        mockMvc.perform(get("/especie")
+        MvcResult result = mockMvc.perform(get(url)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andReturn();
+
+        Assertions.assertEquals(asJsonString(ListUtil.toList(especieDTO)), result.getResponse().getContentAsString());
     }
 
     @Test
     void testarEndpoint_EncontrarEspeciePorDescricao() throws Exception {
         when(especieService.findByDescricao(Mockito.anyString())).thenReturn(especie);
 
-        mockMvc.perform(get("/especie/find")
+        MvcResult result = mockMvc.perform(get(url + "/find")
                         .queryParam("descricao", "tilapia")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andReturn();
+
+        Assertions.assertEquals(asJsonString(especieDTO), result.getResponse().getContentAsString());
     }
 
     @Test
     void testarEndpoint_FindFirst() throws Exception {
-        when(especieService.findAll()).thenReturn(ListUtil.toList(especieDTO));
+        when(especieService.findAll())
+                .thenReturn(ListUtil.toList(especieDTO));
 
-        mockMvc.perform(get("/especie")
+        MvcResult result = mockMvc.perform(get(url + "/first")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andReturn();
+
+        Assertions.assertEquals(asJsonString(especieDTO), result.getResponse().getContentAsString());
     }
 
 

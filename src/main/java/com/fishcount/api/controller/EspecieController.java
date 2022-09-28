@@ -15,7 +15,7 @@ import java.util.List;
  * @author Lucas Martins
  */
 @RestController
-@RequestMapping(value = EspecieController.PATH)
+@RequestMapping(value = EspecieController.PATH, produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = EspecieController.TAG)
 @Tag(name = EspecieController.TAG, description = EspecieController.DESCRIPTION)
 public interface EspecieController {
@@ -32,7 +32,6 @@ public interface EspecieController {
     List<EspecieDTO> listar();
 
     @ResponseStatus(HttpStatus.OK)
-//    @GetMapping(value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
     @GetMapping("/find")
     @ApiOperation(value = "${controller.especie.encontrar.operation}", notes = "${controller.especie.encontrar.description}")
     EspecieDTO encontrarPorDescricao(@RequestParam(value = "descricao", required = true) String descricao);

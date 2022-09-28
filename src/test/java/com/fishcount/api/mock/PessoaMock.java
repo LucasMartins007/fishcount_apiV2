@@ -29,7 +29,6 @@ public class PessoaMock {
         pessoa.setTelefones(ListUtil.toList(telefone));
 
         final Usuario usuario = UsuarioMock.criarMock(pessoa);
-
         pessoa.setUsuario(usuario);
 
         return pessoa;

@@ -48,7 +48,7 @@ public class TituloServiceImpl extends AbstractServiceImpl<Titulo, Integer, Titu
     
     private void onPrepareInsert(Titulo titulo, Pessoa pessoa){
         titulo.setPessoa(pessoa);
-        titulo.setDataAlteracao(DateUtil.getDate());
+        titulo.setDataAtualizacao(DateUtil.getDate());
         titulo.setDataInclusao(DateUtil.getDate());
         titulo.setDataVencimento(DateUtil.add(Calendar.MONTH, 1));
     }

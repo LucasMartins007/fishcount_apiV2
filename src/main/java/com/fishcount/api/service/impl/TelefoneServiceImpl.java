@@ -9,6 +9,8 @@ import com.fishcount.common.model.dto.TelefoneDTO;
 import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Telefone;
 import com.fishcount.common.utils.DateUtil;
+import com.fishcount.common.utils.ListUtil;
+import com.fishcount.common.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -77,6 +79,19 @@ public class TelefoneServiceImpl extends AbstractServiceImpl<Telefone, Integer, 
         telefone.setAtivo(true);
         telefone.setDataInclusao(managedTelefone.getDataInclusao());
         telefone.setPessoa(managedTelefone.getPessoa());
+    }
+
+    @Override
+    public void validarTelefones(Pessoa pessoa) {
+        ListUtil.stream(pessoa.getTelefones())
+                .forEach(telefone -> {
+                    telefone.setPessoa(pessoa);
+                    telefoneValidator.validateInsertOrUpdate(telefone);
+
+                    if (Utils.isNotEmpty(telefone.getId())) {
+                        onPrepareUpdate(telefone.getId(), telefone);
+                    }
+                });
     }
 
     private void onPrepareDelete(Telefone telefone) {

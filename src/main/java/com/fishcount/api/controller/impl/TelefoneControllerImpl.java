@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TelefoneControllerImpl extends AbstractController<TelefoneService> implements com.fishcount.api.controller.TelefoneController {
 
-    private final TelefoneService  telefoneService;
+    private final TelefoneService telefoneService;
 
     @Override
     public TelefoneDTO incluir(Integer idUsuario, TelefoneDTO telefoneDTO) {

@@ -50,18 +50,9 @@ public class ControleEmail extends AbstractEntity<Integer> {
     @Column(name = "excecao_envio")
     private String excecaoEnvio;
 
-    @Column(name = "data_inclusao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
     @Column(name = "data_envio")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataEnvio;
-
-    @PrePersist
-    private void prePersist(){
-        this.dataInclusao = DateUtil.getDate();
-    }
 
     @Override
     public boolean equals(Object obj) {

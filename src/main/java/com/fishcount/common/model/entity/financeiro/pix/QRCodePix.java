@@ -35,14 +35,6 @@ public class QRCodePix extends AbstractEntity<Integer> {
     @JoinColumn(name = "id_location", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fin_qrcode_pix_to_fin_location"))
     private LocationPix locationPix;
 
-    @Column(name = "data_inclusao", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
-    @Column(name = "data_alteracao", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAlteracao;
-
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);

@@ -74,7 +74,7 @@ public class PagamentoParcelaServiceImpl
     }
 
     private void onPrepareInsert(final PagamentoParcela parcela, final BigDecimal valorParcelas, final Integer aumentoMesesVencimento) {
-        parcela.setDataAlteracao(DateUtil.getDate());
+        parcela.setDataAtualizacao(DateUtil.getDate());
         parcela.setDataInclusao(DateUtil.getDate());
         parcela.setDataVencimento(DateUtil.add(Calendar.MONTH, aumentoMesesVencimento));
         parcela.setValor(valorParcelas);

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- *
  * @author Lucas Martins
  */
 @RestController
@@ -50,8 +49,6 @@ public interface PagamentoController {
     @GetMapping("/parcelas")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "${controller.pagamento.listar-parcelas.operation}", notes = "${controller.pagamento.listar-parcelas.description}")
-    List<PagamentoParcelaDTO> listarParcelas(
-            @ApiParam("${controller.pagamento.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
-            @ApiParam("${controller.pagamento.queryParam}") @RequestParam(value = "status") EnumStatusPagamento statusPagamento
-    );
+    List<PagamentoParcelaDTO> listarParcelas(@ApiParam("${controller.pagamento.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                                             @ApiParam("${controller.pagamento.queryParam}") @RequestParam(value = "status") EnumStatusPagamento statusPagamento);
 }

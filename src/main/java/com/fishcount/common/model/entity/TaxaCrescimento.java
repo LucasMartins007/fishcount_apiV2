@@ -44,14 +44,6 @@ public class TaxaCrescimento extends AbstractEntity<Integer> {
     @JoinColumn(name = "id_especie", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_fish_taxa_crescimento_to_fish_especie"))
     private Especie especie;
 
-    @Column(name = "data_inclusao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
-    @Column(name = "data_atualizacao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAtualizacao;
-
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);

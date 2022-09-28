@@ -74,7 +74,7 @@ public class LocationPixServiceImpl extends AbstractServiceImpl<LocationPix, Int
     private QRCodePix gerarQrCodePix(final LocationPix location, final Pessoa pessoa, final PayloadQRCodeResponse payloadQRCodeResponse) {
         final QRCodePix qrCodePix = new QRCodePix();
 
-        qrCodePix.setDataAlteracao(DateUtil.getDate());
+        qrCodePix.setDataAtualizacao(DateUtil.getDate());
         qrCodePix.setDataInclusao(DateUtil.getDate());
         qrCodePix.setLocationPix(location);
         qrCodePix.setQrCode(payloadQRCodeResponse.getQrcode());

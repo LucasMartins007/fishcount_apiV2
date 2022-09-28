@@ -4,11 +4,14 @@ import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.UsuarioControllerImpl;
 import com.fishcount.api.service.UsuarioService;
 import com.fishcount.common.model.dto.UsuarioDTO;
+import com.fishcount.common.model.entity.Usuario;
+import com.fishcount.common.model.pattern.constants.OperationsPath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -27,6 +30,10 @@ class UsuarioControllerImplTest extends AbstractMockController {
 
     private UsuarioDTO usuarioDTO;
 
+    private Usuario usuario;
+
+    private final String url = "/" + UsuarioController.PATH;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -38,16 +45,17 @@ class UsuarioControllerImplTest extends AbstractMockController {
 
     @Test
     void testarEndpoint_IncluirUsuario() throws Exception {
-        mockMvc.perform(post("/usuario/cadastro")
+        mockMvc.perform(post(url + "/cadastro")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(usuarioDTO)))
                 .andExpect(status().isCreated())
                 .andDo(print());
+
     }
 
     @Test
     void testarEndpoint_EncontrarPorId() throws Exception {
-        mockMvc.perform(get("/usuario/{usuarioId}", 1)
+        mockMvc.perform(get(url + OperationsPath.ID, 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print());

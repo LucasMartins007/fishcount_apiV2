@@ -8,13 +8,14 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Lucas Martins
  */
 @RestController
-@RequestMapping(value = PessoaController.PATH)
+@RequestMapping(value = PessoaController.PATH, produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = PessoaController.TAG)
 @Tag(name = PessoaController.TAG, description = PessoaController.DESCRIPTION)
 public interface PessoaController {

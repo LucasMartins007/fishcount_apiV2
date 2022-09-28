@@ -21,7 +21,7 @@ public class PessoaControllerImpl
 
     @Override
     public PessoaDTO incluir(PessoaDTO pessoaDTO) {
-        Pessoa pessoa = converterDTOParaEntity(pessoaDTO, Pessoa.class);
+        final Pessoa pessoa = converterDTOParaEntity(pessoaDTO, Pessoa.class);
 
         return converterEntityParaDTO(pessoaService.incluir(pessoa), PessoaDTO.class);
     }

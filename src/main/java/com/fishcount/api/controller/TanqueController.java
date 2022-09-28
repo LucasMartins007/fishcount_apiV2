@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author lucas
  */
 @RestController
-@RequestMapping(value = TanqueController.PATH)
+@RequestMapping(value = TanqueController.PATH, produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = TanqueController.TAG)
 @Tag(name = TanqueController.TAG, description = "Tanque")
 public interface TanqueController {

@@ -1,5 +1,6 @@
 package com.fishcount.api.controller.impl;
 
+import com.fishcount.api.controller.UsuarioController;
 import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.UsuarioService;
 import com.fishcount.common.model.dto.UsuarioDTO;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-public class UsuarioControllerImpl extends AbstractController<UsuarioService> implements com.fishcount.api.controller.UsuarioController {
+public class UsuarioControllerImpl
+        extends AbstractController<UsuarioService>
+        implements UsuarioController {
 
     private final UsuarioService usuarioService;
 
@@ -27,9 +30,7 @@ public class UsuarioControllerImpl extends AbstractController<UsuarioService> im
 
     @Override
     public UsuarioDTO findById(Integer id) {
-        Usuario usuario = usuarioService.encontrarPorId(id);
-        
-        return converterEntityParaDTO(usuario, UsuarioDTO.class);
+        return converterEntityParaDTO(usuarioService.encontrarPorId(id), UsuarioDTO.class);
     }
     
 }

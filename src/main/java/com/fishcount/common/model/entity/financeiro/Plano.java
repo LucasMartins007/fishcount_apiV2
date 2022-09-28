@@ -49,29 +49,6 @@ public class Plano extends AbstractEntity<Integer> {
     @Column(name = "qtde_parcela")
     private Integer qtdeParcela;
 
-    @Column(name = "ativo")
-    private boolean ativo;
-
-    @Column(name = "data_inclusao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInclusao;
-
-    @Column(name = "data_atualizacao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataAtualizacao;
-
-    @PrePersist
-    private void prePersist() {
-        this.dataInclusao = DateUtil.getDate();
-        this.dataAtualizacao = DateUtil.getDate();
-        this.setAtivo(true);
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        this.dataAtualizacao = DateUtil.getDate();
-    }
-
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
