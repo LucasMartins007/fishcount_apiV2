@@ -2,7 +2,7 @@ package com.fishcount.api.service;
 
 import com.fishcount.api.mock.PessoaMock;
 import com.fishcount.api.repository.PessoaRepository;
-import com.fishcount.api.service.generic.AbstractMockService;
+import com.fishcount.api.service.generic.AbstractMock;
 import com.fishcount.api.service.impl.PessoaServiceImpl;
 import com.fishcount.api.validators.PessoaValidator;
 import com.fishcount.common.exception.FcRuntimeException;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
-class PessoaServiceImplTest extends AbstractMockService {
+class PessoaServiceImplTest extends AbstractMock {
 
     @InjectMocks
     private PessoaServiceImpl pessoaService;
@@ -51,11 +51,21 @@ class PessoaServiceImplTest extends AbstractMockService {
 
     private Pessoa pessoaMock;
 
+    private final String CPF_MOCK = "00000000000";
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         pessoaMock = PessoaMock.criarMock();
+    }
+
+    @Test
+    @DisplayName("Validando se a inclusão está passando pelo validator")
+    void testarInsercao_DadosSaoValidados() {
+        pessoaService.incluir(pessoaMock);
+
+        verify(pessoaValidator, times(1))
+                .validateInsert(pessoaMock);
     }
 
     @Test
@@ -79,7 +89,7 @@ class PessoaServiceImplTest extends AbstractMockService {
     void testarInsercao_CpfSomenteNumero() {
         final Pessoa pessoa = pessoaService.incluir(pessoaMock);
 
-        assertEquals("00000000000", pessoa.getCpf());
+        assertEquals(CPF_MOCK, pessoa.getCpf());
     }
 
     @Test

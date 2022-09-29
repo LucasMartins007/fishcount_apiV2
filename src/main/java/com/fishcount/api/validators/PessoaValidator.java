@@ -10,10 +10,14 @@ import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.utils.CpfUtil;
 import com.fishcount.common.utils.Utils;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class PessoaValidator extends AbstractValidatorImpl<Pessoa> {
+
+    private final PessoaRepository pessoaRepository;
 
     @Override
     public void validateRequiredFields(Pessoa pessoa) {
@@ -53,7 +57,7 @@ public class PessoaValidator extends AbstractValidatorImpl<Pessoa> {
     private void validateCpfDuplicado(Pessoa pessoa) {
         OptionalUtil.ofFallibleNullable(pessoa::getCpf)
                 .ifPresent(cpf ->
-                        OptionalUtil.ofFallibleNullable(() -> getRepository(PessoaRepository.class).findByCpf(cpf))
+                        OptionalUtil.ofFallibleNullable(() -> pessoaRepository.findByCpf(cpf))
                                 .filter(managedPessoa -> !Utils.equals(managedPessoa.getId(), pessoa.getId()))
                                 .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.CPF_DUPLICADO))
                 );

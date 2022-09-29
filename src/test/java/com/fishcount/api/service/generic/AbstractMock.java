@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fishcount.common.exception.MessageExceptionBundle;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
 
-public class AbstractMockService {
+public class AbstractMock {
 
     protected String getException(EnumFcDomainException message, Object... args) {
         return MessageExceptionBundle.getMensagem(message.getMessage(), args);
