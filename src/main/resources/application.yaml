@@ -21,7 +21,7 @@ hibernate-config:
     format-sql: true
     show-sql: true
     generate-ddl: true
-    ddl-auto: update
+    ddl-auto: create
 
 server:
   path: https://fish-count-api-${spring.profiles.active}.herokuapp.com/fishcount-api/api/v1/actuator/health
@@ -94,7 +94,7 @@ spring:
           required: ${email-config.dev.properties.mail.smtp.starttls.required}
 
 server:
-  port: 8080
+  port: 8081
   servlet:
     context-path: ${api.base-path}
   http2:
@@ -172,7 +172,7 @@ spring:
           required: ${email-config.dev.properties.mail.smtp.starttls.required}
 
 server:
-  port: 8080
+  port: 8081
   servlet:
     context-path: ${api.base-path}
   http2:
@@ -252,7 +252,7 @@ spring:
           required: ${email-config.dev.properties.mail.smtp.starttls.required}
 
 server:
-  port: 8080
+  port: 8081
   servlet:
     context-path: ${api.base-path}
   http2:

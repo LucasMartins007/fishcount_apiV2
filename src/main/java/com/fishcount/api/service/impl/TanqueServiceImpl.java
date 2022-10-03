@@ -24,11 +24,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, TanqueDTO> implements TanqueService {
+public class TanqueServiceImpl
+        extends AbstractServiceImpl<Tanque, Integer, TanqueDTO>
+        implements TanqueService {
 
     private final TanqueValidator tanqueValidator;
 
     private final EspecieValidator especieValidator;
+
+    private final TanqueRepository tanqueRepository;
 
     @Override
     public Tanque incluir(Integer loteId, Tanque tanque) {
