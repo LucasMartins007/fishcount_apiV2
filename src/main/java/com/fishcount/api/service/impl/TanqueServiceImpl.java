@@ -98,6 +98,7 @@ public class TanqueServiceImpl
 
         final Tanque managedTanque = findAndValidate(tanqueId);
         tanque.setAtivo(true);
+        tanque.setStatusAnalise(managedTanque.getStatusAnalise());
         tanque.setQtdUltimaAnalise(managedTanque.getQtdUltimaAnalise());
         tanque.setDataInclusao(managedTanque.getDataInclusao());
         tanque.setAnalises(managedTanque.getAnalises());
