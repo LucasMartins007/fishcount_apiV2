@@ -26,7 +26,6 @@ public enum EnumTipoEmail implements IEnum<Integer> {
 
     private final String value;
 
-
     @Converter
     public static class EnumConverter extends AbstractEnumConverter<EnumTipoEmail, Integer> {
     }
