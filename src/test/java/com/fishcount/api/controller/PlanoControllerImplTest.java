@@ -59,6 +59,9 @@ class PlanoControllerImplTest extends AbstractMockController {
         when(planoService.listarPlanos())
                 .thenReturn(ListUtil.toList(plano));
 
+        when(mapper.map(plano, PlanoDTO.class))
+                .thenReturn(planoDTO);
+
         MvcResult result = mockMvc.perform(get(url)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -71,6 +74,9 @@ class PlanoControllerImplTest extends AbstractMockController {
     void testarEndpoint_EncontrarPlanos() throws Exception {
         when(planoService.findAndValidate(1))
                 .thenReturn(plano);
+
+        when(mapper.map(plano, PlanoDTO.class))
+                .thenReturn(planoDTO);
 
         MvcResult result = mockMvc.perform(get(url + OperationsPath.ID, 1)
                         .contentType(MediaType.APPLICATION_JSON))

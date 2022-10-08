@@ -71,6 +71,9 @@ class TanqueControllerImplTest extends AbstractMockController {
         when(tanqueService.listarFromPessoaAndLote(1, 1, null))
                 .thenReturn(ListUtil.toList(tanque));
 
+        when(mapper.map(tanque, TanqueDTO.class))
+                .thenReturn(tanqueDTO);
+
         MvcResult result = mockMvc.perform(get(url, 1, 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -83,6 +86,9 @@ class TanqueControllerImplTest extends AbstractMockController {
     void testarEndpoint_ListarTanquesFromLoteOrderByDescricao() throws Exception {
         when(tanqueService.listarFromPessoaAndLote(1, 1, "descricao"))
                 .thenReturn(ListUtil.toList(tanque));
+
+        when(mapper.map(tanque, TanqueDTO.class))
+                .thenReturn(tanqueDTO);
 
         MvcResult result = mockMvc.perform(get(url, 1, 1)
                         .queryParam("orderBy", "descricao")
@@ -97,6 +103,10 @@ class TanqueControllerImplTest extends AbstractMockController {
     void testarEndpoint_EncontrarPorId() throws Exception {
         when(tanqueService.encontrarPorId(1, 1, 1))
                 .thenReturn(tanque);
+
+        when(mapper.map(tanque, TanqueDTO.class))
+                .thenReturn(tanqueDTO);
+
 
         MvcResult result = mockMvc.perform(get(url + OperationsPath.ID, 1, 1, 1)
                         .contentType(MediaType.APPLICATION_JSON))

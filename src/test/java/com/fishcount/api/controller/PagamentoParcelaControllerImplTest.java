@@ -36,7 +36,7 @@ class PagamentoParcelaControllerImplTest extends AbstractMockController {
 
     private PagamentoParcela pagamentoParcela;
 
-    private PagamentoParcelaDTO pagamentoDTO;
+    private PagamentoParcelaDTO pagamentoParcelaDTO;
 
     private QRCodePix qrCodePix;
 
@@ -47,7 +47,7 @@ class PagamentoParcelaControllerImplTest extends AbstractMockController {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        pagamentoDTO = new PagamentoParcelaDTO();
+        pagamentoParcelaDTO = new PagamentoParcelaDTO();
         pagamentoParcela = new PagamentoParcela();
         qrCodePix = new QRCodePix();
         qrCodePixDTO = new QRCodePixDTO();
@@ -61,12 +61,15 @@ class PagamentoParcelaControllerImplTest extends AbstractMockController {
         when(pagamentoParcelaService.listarParcelas(1, 1, null))
                 .thenReturn(ListUtil.toList(pagamentoParcela));
 
+        when(mapper.map(pagamentoParcela, PagamentoParcelaDTO.class))
+                .thenReturn(pagamentoParcelaDTO);
+
         MvcResult result = mockMvc.perform(get(url, 1, 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Assertions.assertEquals(asJsonString(ListUtil.toList(pagamentoDTO)), result.getResponse().getContentAsString());
+        Assertions.assertEquals(asJsonString(ListUtil.toList(pagamentoParcelaDTO)), result.getResponse().getContentAsString());
     }
 
     @Test
@@ -74,13 +77,16 @@ class PagamentoParcelaControllerImplTest extends AbstractMockController {
         when(pagamentoParcelaService.listarParcelas(1, 1, EnumStatusPagamento.ANALISE))
                 .thenReturn(ListUtil.toList(pagamentoParcela));
 
+        when(mapper.map(pagamentoParcela, PagamentoParcelaDTO.class))
+                .thenReturn(pagamentoParcelaDTO);
+
         MvcResult result = mockMvc.perform(get(url, 1, 1)
                         .queryParam("status", EnumStatusPagamento.ANALISE.name())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Assertions.assertEquals(asJsonString(ListUtil.toList(pagamentoDTO)), result.getResponse().getContentAsString());
+        Assertions.assertEquals(asJsonString(ListUtil.toList(pagamentoParcelaDTO)), result.getResponse().getContentAsString());
     }
 
     @Test
@@ -88,18 +94,24 @@ class PagamentoParcelaControllerImplTest extends AbstractMockController {
         when(pagamentoParcelaService.consultarParcela(1, 1, 1))
                 .thenReturn(pagamentoParcela);
 
+        when(mapper.map(pagamentoParcela, PagamentoParcelaDTO.class))
+                .thenReturn(pagamentoParcelaDTO);
+
         MvcResult result = mockMvc.perform(get(url + OperationsPath.CHILD_ID, 1, 1, 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Assertions.assertEquals(asJsonString(pagamentoDTO), result.getResponse().getContentAsString());
+        Assertions.assertEquals(asJsonString(pagamentoParcelaDTO), result.getResponse().getContentAsString());
     }
 
     @Test
     void testarEndpoint_GerarQRCode() throws Exception {
         when(pagamentoParcelaService.gerarQRCodeByParcela(1, 1))
                 .thenReturn(qrCodePix);
+
+        when(mapper.map(qrCodePix, QRCodePixDTO.class))
+                .thenReturn(qrCodePixDTO);
 
         MvcResult result = mockMvc.perform(put(url + OperationsPath.CHILD_ID, 1, 1, 1)
                         .contentType(MediaType.APPLICATION_JSON))
