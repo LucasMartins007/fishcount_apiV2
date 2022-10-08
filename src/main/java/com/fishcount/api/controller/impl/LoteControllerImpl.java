@@ -32,11 +32,16 @@ public class LoteControllerImpl extends AbstractController<LoteService> implemen
     @Override
     public List<LoteDTO> listar(Integer pessoaId, String orderBy) {
         final List<Lote> lotes = loteService.listarFromPessoa(pessoaId, orderBy);
-        if (ListUtil.isNullOrEmpty(lotes)){
+        if (ListUtil.isNullOrEmpty(lotes)) {
             return Collections.emptyList();
         }
 
         return converterEntityParaDTO(lotes, LoteDTO.class);
+    }
+
+    @Override
+    public LoteDTO encontrarPorId(Integer pessoaId, Integer loteId) {
+        return converterEntityParaDTO(loteService.findAndValidate(loteId), LoteDTO.class);
     }
 
     @Override

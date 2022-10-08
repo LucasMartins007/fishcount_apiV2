@@ -128,6 +128,7 @@ public class AnaliseServiceImpl
         analise.setStatusAnalise(EnumStatusAnalise.AGUARDANDO_ANALISE);
         analise.setDataAnalise(DateUtil.getDate());
         analise.setTanque(managedAnalise.getTanque());
+        analise.setTemperaturaAgua(managedAnalise.getTemperaturaAgua());
 
         return analise;
     }

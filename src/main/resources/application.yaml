@@ -94,7 +94,7 @@ spring:
           required: ${email-config.dev.properties.mail.smtp.starttls.required}
 
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: ${api.base-path}
   http2:
@@ -172,7 +172,7 @@ spring:
           required: ${email-config.dev.properties.mail.smtp.starttls.required}
 
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: ${api.base-path}
   http2:
@@ -252,7 +252,7 @@ spring:
           required: ${email-config.dev.properties.mail.smtp.starttls.required}
 
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: ${api.base-path}
   http2:

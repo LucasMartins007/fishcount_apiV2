@@ -10,6 +10,7 @@ import io.vavr.collection.Array;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
@@ -142,6 +143,11 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Bean
     public HandlerInterceptor appAuthorizationHandler() {
         return new AppAuthorizationHandler();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
 
