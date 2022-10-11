@@ -70,6 +70,7 @@ public class AnaliseServiceImpl
         tanque.setStatusAnalise(analise.getStatusAnalise());
         tanque.setPesoUnitario(pesoUnitario);
         tanque.setUnidadePeso(unidadePeso);
+        tanque.setQtdUltimaAnalise(analise.getQtdePeixe());
 
         tanqueRepository.save(tanque);
     }
