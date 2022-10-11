@@ -20,36 +20,48 @@ import com.fishcount.common.utils.BigDecimalUtil;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.Utils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AnaliseServiceImpl
         extends AbstractServiceImpl<Analise, Integer, AnaliseDTO>
         implements AnaliseService {
 
+    private final TanqueService tanqueService;
+
+    private final TanqueRepository tanqueRepository;
+
+    private final AnaliseRepository analiseRepository;
+
+    private final ParametroTemperaturaRepository parametroTemperaturaRepository;
+
+    private final ConfiguracaoArracoamentoRepository configuracaoArracoamentoRepository;
+
     @Override
     public Analise requisitarInicioAnalise(Integer tanqueId, BigDecimal pesoAtual, EnumUnidadePeso unidadePeso, BigDecimal temperatura) {
-        final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
+        final Tanque tanque = tanqueService.findAndValidate(tanqueId);
 
         final Analise analise = gerarAnalise(tanque, temperatura);
 
         atualizarDadosTanque(pesoAtual, unidadePeso, tanque, analise);
 
-        return getRepository().save(analise);
+        return analiseRepository.save(analise);
     }
 
     @Override
     public Analise simularAnaliseConcluida(Integer tanqueId, Integer analiseId, Integer qtdePeixes, BigDecimal temperatura) {
-        final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
+        final Tanque tanque = tanqueService.findAndValidate(tanqueId);
 
         final Analise analise = simularAnalise(tanque, analiseId, qtdePeixes, temperatura);
 
         atualizarDadosTanque(null, null, tanque, analise);
 
-        return getRepository().save(analise);
+        return analiseRepository.save(analise);
     }
 
     private void atualizarDadosTanque(BigDecimal pesoUnitario, EnumUnidadePeso unidadePeso, Tanque tanque, Analise analise) {
@@ -59,28 +71,28 @@ public class AnaliseServiceImpl
         tanque.setPesoUnitario(pesoUnitario);
         tanque.setUnidadePeso(unidadePeso);
 
-        getRepository(TanqueRepository.class).save(tanque);
+        tanqueRepository.save(tanque);
     }
 
     @Override
     public List<Analise> listarPorTanque(Integer tanqueId, EnumStatusAnalise statusAnalise) {
-        final Tanque tanque = getService(TanqueService.class).findAndValidate(tanqueId);
+        final Tanque tanque = tanqueService.findAndValidate(tanqueId);
 
         if (Utils.isEmpty(statusAnalise)) {
-            return getRepository(AnaliseRepository.class).findAllByTanque(tanque);
+            return analiseRepository.findAllByTanque(tanque);
         }
-        return getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, statusAnalise);
+        return analiseRepository.findAllByTanqueAndStatus(tanque, statusAnalise);
     }
 
     private Analise simularAnalise(Tanque tanque, Integer analiseId, Integer qtdePeixes, BigDecimal temperatura) {
-        final Analise managedAnalise = getRepository(AnaliseRepository.class).findByIdAndStatus(analiseId, EnumStatusAnalise.AGUARDANDO_ANALISE);
+        final Analise managedAnalise = analiseRepository.findByIdAndStatus(analiseId, EnumStatusAnalise.AGUARDANDO_ANALISE);
         if (Utils.isEmpty(managedAnalise)) {
             throw new FcRuntimeException(EnumFcDomainException.ANALISE_NAO_INICIADA, analiseId);
         }
         final Analise analise = prepararAnaliseConcluida(managedAnalise, tanque, temperatura);
         analise.setDataAnalise(managedAnalise.getDataAnalise());
         analise.setTanque(tanque);
-        analise.setQtdeRacao(qtdePeixes);
+        analise.setQtdePeixe(qtdePeixes);
         return analise;
     }
 
@@ -94,7 +106,7 @@ public class AnaliseServiceImpl
      * status ANALISE_CONCLUIDA, fazendo o cálculo com os dados pré-cadastrados inicialmente.
      */
     private Analise gerarAnalise(Tanque tanque, BigDecimal temperatura) {
-        final List<Analise> analisesConcluidas = getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, EnumStatusAnalise.ANALISE_CONCLUIDA);
+        final List<Analise> analisesConcluidas = analiseRepository.findAllByTanqueAndStatus(tanque, EnumStatusAnalise.ANALISE_CONCLUIDA);
         final Analise managedAnalise = ListUtil.first(analisesConcluidas);
         if (Utils.isEmpty(managedAnalise)) {
             final Analise analise = new Analise();
@@ -108,7 +120,7 @@ public class AnaliseServiceImpl
     }
 
     private Analise prepararAnaliseSonar(Tanque tanque, Analise managedAnalise) {
-        final List<Analise> analisesAguardando = getRepository(AnaliseRepository.class).findAllByTanqueAndStatus(tanque, EnumStatusAnalise.AGUARDANDO_ANALISE);
+        final List<Analise> analisesAguardando = analiseRepository.findAllByTanqueAndStatus(tanque, EnumStatusAnalise.AGUARDANDO_ANALISE);
         if (ListUtil.isNotNullOrNotEmpty(analisesAguardando)) {
             throw new FcRuntimeException(EnumFcDomainException.ANALISE_AGUARDANDO_JA_EXISTE, tanque.getDescricao());
         }
@@ -116,6 +128,7 @@ public class AnaliseServiceImpl
         analise.setStatusAnalise(EnumStatusAnalise.AGUARDANDO_ANALISE);
         analise.setDataAnalise(DateUtil.getDate());
         analise.setTanque(managedAnalise.getTanque());
+        analise.setTemperaturaAgua(managedAnalise.getTemperaturaAgua());
 
         return analise;
     }
@@ -124,7 +137,7 @@ public class AnaliseServiceImpl
         final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoUnitario(), tanque.getQtdePeixe(), tanque.getUnidadePeso());
         analise.setPesoMedioTanque(pesoVivoMedio);
 
-        final ConfiguracaoArracoamento configuracaoArracoamento = getRepository(ConfiguracaoArracoamentoRepository.class).findByPeso(tanque.getPesoUnitario());
+        final ConfiguracaoArracoamento configuracaoArracoamento = configuracaoArracoamentoRepository.findByPeso(tanque.getPesoUnitario());
         analise.setFrequenciaAlimentacaoDiaria(configuracaoArracoamento.getFrequenciaDia());
         analise.setTipoRacao(configuracaoArracoamento.getParametroTipoRacao().getDescricao());
 
@@ -153,7 +166,7 @@ public class AnaliseServiceImpl
     }
 
     private BigDecimal aplicarDescontoTemperatura(BigDecimal temperatura, BigDecimal qtdeRacaoDiaria) {
-        final ParametroTemperatura parametroTemperatura = getRepository(ParametroTemperaturaRepository.class).findByTemperatura(temperatura);
+        final ParametroTemperatura parametroTemperatura = parametroTemperaturaRepository.findByTemperatura(temperatura);
         if (Utils.isEmpty(parametroTemperatura)) {
             throw new FcRuntimeException(EnumFcDomainException.CONFIGURACAO_TEMPERATURA_NAO_VALIDADA, temperatura);
         }

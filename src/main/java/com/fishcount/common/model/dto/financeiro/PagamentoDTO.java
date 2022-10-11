@@ -29,7 +29,7 @@ public class PagamentoDTO implements AbstractDTO<Integer> {
     
     private BigDecimal desconto;
     
-    private Plano plano;
+    private PlanoDTO plano;
     
     private Integer qtdeParcelas;
 

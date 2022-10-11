@@ -24,11 +24,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, TanqueDTO> implements TanqueService {
+public class TanqueServiceImpl
+        extends AbstractServiceImpl<Tanque, Integer, TanqueDTO>
+        implements TanqueService {
 
     private final TanqueValidator tanqueValidator;
 
     private final EspecieValidator especieValidator;
+
+    private final TanqueRepository tanqueRepository;
 
     @Override
     public Tanque incluir(Integer loteId, Tanque tanque) {
@@ -94,6 +98,7 @@ public class TanqueServiceImpl extends AbstractServiceImpl<Tanque, Integer, Tanq
 
         final Tanque managedTanque = findAndValidate(tanqueId);
         tanque.setAtivo(true);
+        tanque.setStatusAnalise(managedTanque.getStatusAnalise());
         tanque.setQtdUltimaAnalise(managedTanque.getQtdUltimaAnalise());
         tanque.setDataInclusao(managedTanque.getDataInclusao());
         tanque.setAnalises(managedTanque.getAnalises());

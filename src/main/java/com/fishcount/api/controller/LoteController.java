@@ -40,6 +40,12 @@ public interface LoteController {
                          @RequestParam(name = "orderBy", required = false) String orderBy);
 
 
+    @GetMapping(OperationsPath.ID)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${controller.lote.listar.operation}", notes = "${controller.lote.listar.description}")
+    LoteDTO encontrarPorId(@ApiParam("${controller.lote.parentId}") @PathVariable(OperationsParam.PARENT_ID) Integer pessoaId,
+                                 @ApiParam("${controller.lote.id}") @PathVariable(OperationsParam.ID) Integer loteId);
+
     @PutMapping(OperationsPath.ID)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "${controller.lote.atualizar.operation}", notes = "${controller.lote.atualizar.description}")

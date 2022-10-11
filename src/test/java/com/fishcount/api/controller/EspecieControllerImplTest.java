@@ -4,6 +4,7 @@ import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.EspecieControllerImpl;
 import com.fishcount.api.service.EspecieService;
 import com.fishcount.common.model.dto.EspecieDTO;
+import com.fishcount.common.model.dto.financeiro.PlanoDTO;
 import com.fishcount.common.model.entity.Especie;
 import com.fishcount.common.utils.ListUtil;
 import org.junit.jupiter.api.Assertions;
@@ -61,6 +62,9 @@ class EspecieControllerImplTest extends AbstractMockController {
     @Test
     void testarEndpoint_EncontrarEspeciePorDescricao() throws Exception {
         when(especieService.findByDescricao(Mockito.anyString())).thenReturn(especie);
+
+        when(mapper.map(especie, EspecieDTO.class))
+                .thenReturn(especieDTO);
 
         MvcResult result = mockMvc.perform(get(url + "/find")
                         .queryParam("descricao", "tilapia")

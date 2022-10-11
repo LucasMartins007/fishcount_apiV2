@@ -3,6 +3,7 @@ package com.fishcount.api.controller;
 import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.LocationPixControllerImpl;
 import com.fishcount.api.service.LocationPixService;
+import com.fishcount.common.model.dto.financeiro.PlanoDTO;
 import com.fishcount.common.model.dto.financeiro.pix.QRCodePixDTO;
 import com.fishcount.common.model.entity.financeiro.pix.QRCodePix;
 import org.junit.jupiter.api.Assertions;
@@ -61,6 +62,9 @@ class LocationPixControllerImplTest extends AbstractMockController {
     void testarEndpoint_EncontrarQRCodePorParcela() throws Exception {
         when(locationPixService.gerarQrCodePorPagamentoParcela(Mockito.anyInt(), Mockito.anyInt()))
                 .thenReturn(qrCodePix);
+
+        when(mapper.map(qrCodePix, QRCodePixDTO.class))
+                .thenReturn(qrCodePixDTO);
 
         MvcResult result = mockMvc.perform(get(url + "/parcela/{locationId}", 1, 1)
                         .contentType(MediaType.APPLICATION_JSON))

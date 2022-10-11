@@ -5,12 +5,15 @@ import com.fishcount.api.converter.Converter;
 import com.fishcount.api.service.pattern.IAbstractService;
 import com.fishcount.common.model.dto.pattern.AbstractDTO;
 import com.fishcount.common.model.entity.pattern.AbstractEntity;
+import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.LoggerUtil;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -21,6 +24,9 @@ public abstract class AbstractController<E extends IAbstractService<?, ?, ?>> {
 
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private ModelMapper mapper;
     
     private final Class<E> serviceClass;
 
@@ -33,19 +39,23 @@ public abstract class AbstractController<E extends IAbstractService<?, ?, ?>> {
     }
 
     protected <D extends AbstractDTO<?>, C extends AbstractEntity<?>> C converterDTOParaEntity(D dto, Class<C> clazzEntity) {
-        return Converter.converterDTOParaEntity(dto, clazzEntity);
+        return mapper.map(dto, clazzEntity);
     }
 
     protected <D extends AbstractDTO<?>, C extends AbstractEntity<?>> List<C> converterDTOParaEntity(List<D> dtos, Class<C> clazzEntity) {
-        return Converter.converterDTOParaEntity(dtos, clazzEntity);
+        return ListUtil.stream(dtos)
+                .map(d -> mapper.map(d, clazzEntity))
+                .collect(Collectors.toList());
     }
 
     protected <D extends AbstractDTO<?>, C extends AbstractEntity<?>> D converterEntityParaDTO(C entity, Class<D> clazzDto) {
-        return Converter.converterEntityParaDTO(entity, clazzDto);
+        return mapper.map(entity, clazzDto);
     }
 
     protected <D extends AbstractDTO<?>, C extends AbstractEntity<?>> List<D> converterEntityParaDTO(List<C> entitys, Class<D> clazzDto) {
-        return Converter.converterEntityParaDTO(entitys, clazzDto);
+        return ListUtil.stream(entitys)
+                .map(c -> mapper.map(c, clazzDto))
+                .collect(Collectors.toList());
     }
 
     @SuppressWarnings("unchecked")

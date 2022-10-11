@@ -29,13 +29,15 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
 
     private final LoteValidator loteValidator;
 
+    private final LoteRepository  loteRepository;
+
     @Override
     public Lote incluir(Integer pessoaId, Lote lote) {
         onPrepareInsertOrUpdate(pessoaId, null, lote);
 
         loteValidator.validateInsertOrUpdate(lote);
 
-        return getRepository().save(lote);
+        return loteRepository.save(lote);
     }
 
     @Override
@@ -44,13 +46,12 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
 
         loteValidator.validateInsertOrUpdate(lote);
 
-        getRepository().save(lote);
+        loteRepository.save(lote);
     }
 
     @Override
     public List<Lote> listarFromPessoa(Integer pessoaId, String orderBy) {
-        final Pessoa pessoa = getService(PessoaService.class).findAndValidate(pessoaId);
-        final List<Lote> lotesAtivos = resolverListaLotes(orderBy, pessoa);
+        final List<Lote> lotesAtivos = resolverListaLotes(orderBy, pessoaId);
 
         return ListUtil.stream(lotesAtivos)
                 .peek(lote -> {
@@ -62,17 +63,17 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
                 .collect(Collectors.toList());
     }
 
-    private List<Lote> resolverListaLotes(String orderBy, Pessoa pessoa) {
+    private List<Lote> resolverListaLotes(String orderBy, Integer pessoaId) {
         if (Utils.isNotEmpty(orderBy)) {
-            return getRepository(LoteRepository.class).findAllAtivosByPessoaOrderBy(pessoa, orderBy);
+            return loteRepository.findAllAtivosByPessoaOrderBy(pessoaId, orderBy);
         }
-        return getRepository(LoteRepository.class).findAllAtivosByPessoa(pessoa);
+        return loteRepository.findAllAtivosByPessoa(pessoaId);
     }
 
     @Override
     public void onPrepareInsertOrUpdate(Integer pessoaId, Integer loteId, Lote lote) {
         if (Utils.isNotEmpty(loteId)) {
-            final Lote managedLote = getService(LoteService.class).findAndValidate(loteId);
+            final Lote managedLote = findAndValidate(loteId);
             lote.setTanques(managedLote.getTanques());
             lote.setDataInclusao(managedLote.getDataInclusao());
         }
@@ -92,7 +93,7 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
         lote.setAtivo(false);
         lote.setDataAtualizacao(DateUtil.getDate());
 
-        getRepository().save(lote);
+        loteRepository.save(lote);
     }
 
     @Override

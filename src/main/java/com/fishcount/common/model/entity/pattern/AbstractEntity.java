@@ -39,7 +39,6 @@ public abstract class AbstractEntity<T extends Number> implements IIdentifier<T>
     @PreUpdate
     private void preUpdate() {
         this.dataAtualizacao = DateUtil.getDate();
-        this.ativo = true;
     }
 
     @Override

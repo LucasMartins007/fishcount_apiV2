@@ -4,6 +4,7 @@ import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.AnaliseControllerImpl;
 import com.fishcount.api.service.AnaliseService;
 import com.fishcount.common.model.dto.AnaliseDTO;
+import com.fishcount.common.model.dto.financeiro.PlanoDTO;
 import com.fishcount.common.model.entity.Analise;
 import com.fishcount.common.model.enums.EnumStatusAnalise;
 import com.fishcount.common.model.enums.EnumUnidadePeso;
@@ -76,6 +77,9 @@ class AnaliseControllerImplTest extends AbstractMockController {
     void testarEndpoint_ListaPorTanque() throws Exception {
         when(analiseService.listarPorTanque(1, EnumStatusAnalise.ANALISE_NAO_REALIZADA))
                 .thenReturn(ListUtil.toList(analise));
+
+        when(mapper.map(analise, AnaliseDTO.class))
+                .thenReturn(analiseDTO);
 
         MvcResult result = mockMvc.perform(get(url)
                         .queryParam("tanqueId", "1")

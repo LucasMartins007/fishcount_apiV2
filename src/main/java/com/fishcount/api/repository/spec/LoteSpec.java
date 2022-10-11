@@ -1,7 +1,6 @@
 package com.fishcount.api.repository.spec;
 
 import com.fishcount.common.model.entity.Lote;
-import com.fishcount.common.model.entity.Pessoa;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -14,6 +13,8 @@ import javax.persistence.criteria.Order;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoteSpec {
 
+    private static final String FIELD_ID = "id";
+
     private static final String FIELD_DESCRICAO = "descricao";
 
     private static final String FIELD_PESSOA = "pessoa";
@@ -25,9 +26,9 @@ public class LoteSpec {
                 criteriaBuilder.equal(root.get(FIELD_DESCRICAO), descricao);
     }
 
-    public static Specification<Lote> byPessoa(Pessoa pessoa) {
+    public static Specification<Lote> byPessoaId(Integer pessoaId) {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get(FIELD_PESSOA), pessoa);
+                criteriaBuilder.equal(root.get(FIELD_PESSOA).get(FIELD_ID), pessoaId);
     }
 
     public static Specification<Lote> byAtivo() {
