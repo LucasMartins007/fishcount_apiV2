@@ -85,6 +85,7 @@ public class TanqueServiceImpl
             tanque.setEspecie(especie);
         }
         tanque.setAtivo(true);
+        tanque.setQtdUltimaAnalise(tanque.getQtdePeixe());
         tanque.setStatusAnalise(EnumStatusAnalise.ANALISE_NAO_REALIZADA);
         tanque.setDataProximaAnalise(DateUtil.getDate());
         tanque.setDataUltimaAnalise(DateUtil.getDate());
