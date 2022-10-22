@@ -93,7 +93,7 @@ public class AnaliseServiceImpl
         final Analise analise = prepararAnaliseConcluida(managedAnalise, tanque, temperatura);
         analise.setDataAnalise(managedAnalise.getDataAnalise());
         analise.setTanque(tanque);
-        analise.setQtdePeixe(tanque.getQtdePeixe());
+        analise.setQtdePeixe(qtdePeixes);
 
         return analise;
     }
