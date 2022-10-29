@@ -115,6 +115,7 @@ public class AnaliseServiceImpl
             analise.setDataAnalise(DateUtil.getDate());
             analise.setTanque(tanque);
             analise.setTemperaturaAgua(temperatura);
+            analise.setQtdePeixe(tanque.getQtdePeixe());
 
             return prepararAnaliseConcluida(analise, tanque, temperatura);
         }
