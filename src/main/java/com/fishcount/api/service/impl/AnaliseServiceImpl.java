@@ -139,7 +139,10 @@ public class AnaliseServiceImpl
         final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoUnitario(), tanque.getQtdePeixe(), tanque.getUnidadePeso());
         analise.setPesoMedioTanque(pesoVivoMedio);
 
-        final ConfiguracaoArracoamento configuracaoArracoamento = configuracaoArracoamentoRepository.findByPeso(tanque.getPesoUnitario());
+        ConfiguracaoArracoamento configuracaoArracoamento = configuracaoArracoamentoRepository.findByPeso(tanque.getPesoUnitario());
+        if (Utils.isEmpty(configuracaoArracoamento)) {
+            configuracaoArracoamento = configuracaoArracoamentoRepository.findByPeso(BigDecimal.valueOf(30L));
+        }
         analise.setFrequenciaAlimentacaoDiaria(configuracaoArracoamento.getFrequenciaDia());
         analise.setTipoRacao(configuracaoArracoamento.getParametroTipoRacao().getDescricao());
 
