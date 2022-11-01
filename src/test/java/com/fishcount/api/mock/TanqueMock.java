@@ -1,6 +1,5 @@
 package com.fishcount.api.mock;
 
-import com.fishcount.api.mock.generic.IMock;
 import com.fishcount.common.model.entity.Tanque;
 import com.fishcount.common.model.enums.EnumStatusAnalise;
 import com.fishcount.common.model.enums.EnumUnidadePeso;
