@@ -70,6 +70,7 @@ public class AnaliseServiceImpl
         tanque.setStatusAnalise(analise.getStatusAnalise());
         tanque.setPesoUnitario(pesoUnitario);
         tanque.setUnidadePeso(unidadePeso);
+        tanque.setQtdUltimaAnalise(analise.getQtdePeixe());
 
         tanqueRepository.save(tanque);
     }
@@ -93,6 +94,7 @@ public class AnaliseServiceImpl
         analise.setDataAnalise(managedAnalise.getDataAnalise());
         analise.setTanque(tanque);
         analise.setQtdePeixe(qtdePeixes);
+
         return analise;
     }
 
@@ -113,6 +115,7 @@ public class AnaliseServiceImpl
             analise.setDataAnalise(DateUtil.getDate());
             analise.setTanque(tanque);
             analise.setTemperaturaAgua(temperatura);
+            analise.setQtdePeixe(tanque.getQtdePeixe());
 
             return prepararAnaliseConcluida(analise, tanque, temperatura);
         }
@@ -137,7 +140,10 @@ public class AnaliseServiceImpl
         final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoUnitario(), tanque.getQtdePeixe(), tanque.getUnidadePeso());
         analise.setPesoMedioTanque(pesoVivoMedio);
 
-        final ConfiguracaoArracoamento configuracaoArracoamento = configuracaoArracoamentoRepository.findByPeso(tanque.getPesoUnitario());
+        ConfiguracaoArracoamento configuracaoArracoamento = configuracaoArracoamentoRepository.findByPeso(tanque.getPesoUnitario());
+        if (Utils.isEmpty(configuracaoArracoamento)) {
+            configuracaoArracoamento = configuracaoArracoamentoRepository.findByPeso(BigDecimal.valueOf(30L));
+        }
         analise.setFrequenciaAlimentacaoDiaria(configuracaoArracoamento.getFrequenciaDia());
         analise.setTipoRacao(configuracaoArracoamento.getParametroTipoRacao().getDescricao());
 

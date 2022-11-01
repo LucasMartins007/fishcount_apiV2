@@ -4,7 +4,6 @@ import com.fishcount.api.repository.custom.CustomEmailRepository;
 import com.fishcount.api.repository.dao.RepositoryImpl;
 import com.fishcount.api.repository.spec.EmailSpec;
 import com.fishcount.common.model.entity.Email;
-import com.fishcount.common.model.entity.Pessoa;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,11 +25,11 @@ public class EmailRepositoryImpl extends RepositoryImpl<Email, Integer> implemen
     }
 
     @Override
-    public List<Email> findAllByPessoa(Pessoa pessoa) {
+    public List<Email> findAllByPessoa(Integer pessoaId) {
         return getSpecRepository()
                 .findAll(
                         EmailSpec.emailAtivo()
-                        .and(EmailSpec.emailFromPessoa(pessoa))
+                        .and(EmailSpec.emailFromPessoa(pessoaId))
                 );
     }
 

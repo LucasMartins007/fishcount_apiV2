@@ -39,6 +39,8 @@ public class AnaliseDTO implements AbstractDTO<Integer> {
 
     private Integer frequenciaAlimentacaoDiaria;
 
+    private Integer qtdePeixe;
+
     private EnumStatusAnalise statusAnalise;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")

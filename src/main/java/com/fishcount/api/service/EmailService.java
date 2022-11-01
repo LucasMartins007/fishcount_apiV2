@@ -14,17 +14,15 @@ import java.util.List;
  */
 public interface EmailService extends IAbstractService<Email, Integer, EmailDTO> {
 
-    Email incluir(Integer pessoaId, Email email);
+    Email incluir(Pessoa pessoa, Email email);
 
-    void editar(Integer pessoaId, Email email);
+    void editar(Integer id, Email email);
     
-    void inativar(Integer pessoaId, Integer idEmail);
+    void inativar(Integer pessoaId, Integer emailId);
     
     List<Email> listar(Integer pessoaId);
     
     Email findByEmail(Email email);
-
-    void onPrepareInsert(Integer idPessoa, Email email);
 
     void onPrepareUpdate(Integer id, Email email);
 

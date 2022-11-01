@@ -3,6 +3,7 @@ package com.fishcount.api.controller;
 import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.EmailControllerImpl;
 import com.fishcount.api.service.EmailService;
+import com.fishcount.api.service.PessoaService;
 import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.pattern.constants.OperationsPath;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,9 @@ class EmailControllerImplTest extends AbstractMockController {
 
     @Mock
     private EmailService emailService;
+
+    @Mock
+    private PessoaService pessoaService;
 
     private EmailDTO emailDTO;
 
