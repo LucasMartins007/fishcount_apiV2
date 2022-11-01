@@ -3,6 +3,7 @@ package com.fishcount.api.controller;
 import com.fishcount.api.controller.generic.AbstractMockController;
 import com.fishcount.api.controller.impl.LoteControllerImpl;
 import com.fishcount.api.service.LoteService;
+import com.fishcount.api.service.PessoaService;
 import com.fishcount.common.model.dto.LoteDTO;
 import com.fishcount.common.model.pattern.constants.OperationsPath;
 import org.junit.jupiter.api.Assertions;
@@ -30,6 +31,9 @@ class LoteControllerImplTest extends AbstractMockController {
 
     @Mock
     private LoteService loteService;
+
+    @Mock
+    private PessoaService pessoaService;
 
     private LoteDTO loteDTO;
 

@@ -2,11 +2,11 @@ package com.fishcount.api.service.impl;
 
 import com.fishcount.api.repository.LoteRepository;
 import com.fishcount.api.service.LoteService;
-import com.fishcount.api.service.PessoaService;
 import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.LoteValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
+import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.dto.LoteDTO;
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.model.entity.Pessoa;
@@ -32,8 +32,8 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     private final LoteRepository  loteRepository;
 
     @Override
-    public Lote incluir(Integer pessoaId, Lote lote) {
-        onPrepareInsertOrUpdate(pessoaId, null, lote);
+    public Lote incluir(Pessoa pessoa, Lote lote) {
+        onPrepareInsertOrUpdate(pessoa, null, lote);
 
         loteValidator.validateInsertOrUpdate(lote);
 
@@ -41,8 +41,8 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     }
 
     @Override
-    public void editar(Integer pessoaId, Integer loteId, Lote lote) {
-        onPrepareInsertOrUpdate(pessoaId, loteId, lote);
+    public void editar(Pessoa pessoa, Integer loteId, Lote lote) {
+        onPrepareInsertOrUpdate(pessoa, loteId, lote);
 
         loteValidator.validateInsertOrUpdate(lote);
 
@@ -71,24 +71,25 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
     }
 
     @Override
-    public void onPrepareInsertOrUpdate(Integer pessoaId, Integer loteId, Lote lote) {
+    public void onPrepareInsertOrUpdate(Pessoa pessoa, Integer loteId, Lote lote) {
         if (Utils.isNotEmpty(loteId)) {
-            final Lote managedLote = findAndValidate(loteId);
+            final Lote managedLote = loteRepository
+                    .findById(loteId)
+                    .orElseThrow(() -> new FcRuntimeException(EnumFcInfraException.ENTITY_NOT_FOUND, Lote.class.getSimpleName(), loteId));
+
             lote.setTanques(managedLote.getTanques());
             lote.setDataInclusao(managedLote.getDataInclusao());
         }
 
-        Pessoa pessoa = getService(PessoaService.class).findAndValidate(pessoaId);
         lote.setDescricao(lote.getDescricao().toLowerCase());
         lote.setPessoa(pessoa);
         lote.setAtivo(true);
     }
 
     @Override
-    public void inativar(Integer pessoaId, Integer loteId) {
-        final Lote lote = findAndValidate(loteId);
+    public void inativar(Integer pessoaId, Lote lote) {
         if (!Utils.equals(lote.getPessoa().getId(), pessoaId)) {
-            throw new FcRuntimeException(EnumFcDomainException.LOTE_NAO_PERTENCE_PESSOA, loteId, pessoaId);
+            throw new FcRuntimeException(EnumFcDomainException.LOTE_NAO_PERTENCE_PESSOA, lote.getPessoa().getId(), pessoaId);
         }
         lote.setAtivo(false);
         lote.setDataAtualizacao(DateUtil.getDate());
@@ -104,7 +105,7 @@ public class LoteServiceImpl extends AbstractServiceImpl<Lote, Integer, LoteDTO>
                     loteValidator.validateInsertOrUpdate(lote);
 
                     if (Utils.isNotEmpty(pessoa.getId())) {
-                        onPrepareInsertOrUpdate(pessoa.getId(), null, lote);
+                        onPrepareInsertOrUpdate(pessoa, null, lote);
                     }
                 });
     }
