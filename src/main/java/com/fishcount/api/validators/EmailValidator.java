@@ -12,12 +12,14 @@ import com.fishcount.common.utils.ListUtil;
 import com.fishcount.common.utils.StringUtil;
 import com.fishcount.common.utils.Utils;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
  * @author lucas
  */
 @Component
+@RequiredArgsConstructor
 public class EmailValidator extends AbstractValidatorImpl<Email> {
 
     @Override
@@ -45,11 +47,11 @@ public class EmailValidator extends AbstractValidatorImpl<Email> {
     }
 
     private void validateDuplicidadeEmail(Email email) {
-        OptionalUtil.ofNullable(getService(EmailService.class).findByEmail(email))
-                .filter(e -> Utils.isNotEmpty(email.getId()) && !email.getDescricao().equals(e.getDescricao()))
-                .ifPresent(e -> {
-                    throw new FcRuntimeException(EnumFcDomainException.EMAIL_DUPLICADO, email.getDescricao());
-                });
+        final Email managedEmail = getService(EmailService.class).findByEmail(email);
+
+        if (Utils.isEmpty(email.getId()) && Utils.isNotEmpty(managedEmail) || (Utils.isNotEmpty(email.getId()) && Utils.isNotEmpty(managedEmail))) {
+            throw new FcRuntimeException(EnumFcDomainException.EMAIL_DUPLICADO, email.getDescricao());
+        }
     }
 
     private void validarEmail(Email email) {

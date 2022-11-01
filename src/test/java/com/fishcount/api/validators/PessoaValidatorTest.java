@@ -2,7 +2,7 @@ package com.fishcount.api.validators;
 
 import com.fishcount.api.mock.PessoaMock;
 import com.fishcount.api.repository.PessoaRepository;
-import com.fishcount.api.service.gerencianet.pix.generic.AbstractMock;
+import com.fishcount.api.service.generic.AbstractMock;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.entity.Pessoa;
