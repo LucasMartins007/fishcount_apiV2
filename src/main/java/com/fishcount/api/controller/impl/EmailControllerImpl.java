@@ -2,8 +2,10 @@ package com.fishcount.api.controller.impl;
 
 import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.EmailService;
+import com.fishcount.api.service.PessoaService;
 import com.fishcount.common.model.dto.EmailDTO;
 import com.fishcount.common.model.entity.Email;
+import com.fishcount.common.model.entity.Pessoa;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,11 +17,14 @@ public class EmailControllerImpl extends AbstractController<EmailService> implem
 
     private final EmailService emailService;
 
+    private final PessoaService pessoaService;
+
     @Override
     public EmailDTO incluir(Integer pessoaId, EmailDTO emailDTO) {
         final Email email = converterDTOParaEntity(emailDTO, Email.class);
-        
-        return converterEntityParaDTO(emailService.incluir(pessoaId, email), EmailDTO.class);
+        final Pessoa pessoa = pessoaService.findAndValidate(pessoaId);
+
+        return converterEntityParaDTO(emailService.incluir(pessoa, email), EmailDTO.class);
     }
 
     @Override

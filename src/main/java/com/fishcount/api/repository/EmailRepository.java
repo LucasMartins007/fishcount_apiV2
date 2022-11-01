@@ -2,7 +2,6 @@ package com.fishcount.api.repository;
 
 import com.fishcount.api.repository.custom.CustomEmailRepository;
 import com.fishcount.common.model.entity.Email;
-import com.fishcount.common.model.entity.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -20,6 +19,6 @@ public interface EmailRepository extends JpaRepository<Email, Integer>, JpaSpeci
     Email findAtivoByDescricao(String descricao);
 
     @Override
-    List<Email> findAllByPessoa(Pessoa pessoa);
+    List<Email> findAllByPessoa(Integer pessoaId);
     
 }

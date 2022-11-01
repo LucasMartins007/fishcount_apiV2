@@ -53,7 +53,6 @@ public class ClientTokenPixImpl implements ClientTokenPix {
 
     private RequestEntity<?> getRequestTokenConfiguration() {
         try {
-
             final URI urlAccessToken = new URI(urlToken);
 
             final String clientCredentials = HttpConstants.CLIENT_CREDENTALS;

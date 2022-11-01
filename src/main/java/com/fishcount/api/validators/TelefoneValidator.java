@@ -13,6 +13,8 @@ import com.fishcount.common.utils.Utils;
 import com.fishcount.common.utils.optional.OptionalUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
+
 /**
  *
  * @author lucas
@@ -52,7 +54,7 @@ public class TelefoneValidator extends AbstractValidatorImpl<Telefone> {
 
     public void validateFormatoTelefone(Telefone telefone) {
         final String descricao = telefone.getDescricao();
-        ValidateEntity.validateRegex(descricao, "^\\+[1-9]{2} \\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", Telefone.class.getSimpleName());
+        ValidateEntity.validateRegex(descricao, "^\\+[1-9]{2} \\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", Telefone.class.getSimpleName().toLowerCase(Locale.ROOT));
     }
 
     private void validateDuplicidade(Telefone telefone) {
