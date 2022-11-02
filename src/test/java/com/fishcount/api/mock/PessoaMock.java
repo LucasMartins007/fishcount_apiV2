@@ -7,6 +7,8 @@ import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.utils.DateUtil;
 import com.fishcount.common.utils.ListUtil;
 
+import java.util.Collections;
+
 public class PessoaMock {
 
     private static final String CPF = "000.000.000-00";
@@ -30,6 +32,8 @@ public class PessoaMock {
 
         final Usuario usuario = UsuarioMock.criarMock(pessoa);
         pessoa.setUsuario(usuario);
+
+        pessoa.setLotes(Collections.singletonList(LoteMock.criarMock(pessoa)));
 
         return pessoa;
     }
