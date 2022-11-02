@@ -9,6 +9,7 @@ import com.fishcount.api.validators.EspecieValidator;
 import com.fishcount.api.validators.TanqueValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
+import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.dto.TanqueDTO;
 import com.fishcount.common.model.entity.Especie;
 import com.fishcount.common.model.entity.Lote;
@@ -34,13 +35,17 @@ public class TanqueServiceImpl
 
     private final TanqueRepository tanqueRepository;
 
+    private final LoteService loteService;
+
+    private final EspecieService especieService;
+
     @Override
     public Tanque incluir(Integer loteId, Tanque tanque) {
         onPrepareInsert(loteId, tanque);
 
         tanqueValidator.validateInsert(tanque);
 
-        return getRepository().save(tanque);
+        return tanqueRepository.save(tanque);
     }
 
     @Override
@@ -49,39 +54,40 @@ public class TanqueServiceImpl
 
         tanqueValidator.validateInsertOrUpdate(tanque);
 
-        getRepository().save(tanque);
+        tanqueRepository.save(tanque);
     }
 
     @Override
     public List<Tanque> listarFromPessoaAndLote(Integer pessoaId, Integer loteId, String orderBy) {
         if (Utils.isNotEmpty(orderBy)) {
-            return getRepository(TanqueRepository.class).findAllByPessoaAndLoteOrderBy(pessoaId, loteId, orderBy);
+            return tanqueRepository.findAllByPessoaAndLoteOrderBy(pessoaId, loteId, orderBy);
         }
-        return getRepository(TanqueRepository.class).findAllByPessoaAndLote(pessoaId, loteId);
+        return tanqueRepository.findAllByPessoaAndLote(pessoaId, loteId);
     }
 
     @Override
     public Tanque encontrarPorId(Integer pessoaId, Integer loteId, Integer tanqueId) {
-        return getRepository(TanqueRepository.class).findByPessoaAndLoteAndId(pessoaId, loteId, tanqueId);
+        return tanqueRepository.findByPessoaAndLoteAndId(pessoaId, loteId, tanqueId);
     }
 
     @Override
     public void inativarTanque(Integer pessoaId, Integer loteId, Integer tanqueId) {
-        final Tanque tanque = getRepository(TanqueRepository.class).findByPessoaAndLoteAndId(pessoaId, loteId, tanqueId);
+        final Tanque tanque = tanqueRepository.findByPessoaAndLoteAndId(pessoaId, loteId, tanqueId);
         OptionalUtil.ofNullable(tanque)
                 .peekIfPresent(managedTanque -> {
                     managedTanque.setAtivo(false);
-                    getRepository().save(managedTanque);
+                    managedTanque.setDataAtualizacao(DateUtil.getDate());
+                    tanqueRepository.save(managedTanque);
                 })
                 .ifAbsentThrow(() -> new FcRuntimeException(EnumFcDomainException.TANQUE_NAO_ENCONTRADO, tanqueId));
     }
 
     private void onPrepareInsert(Integer loteId, Tanque tanque) {
-        final Lote lote = getService(LoteService.class).findAndValidate(loteId);
+        final Lote lote = loteService.findAndValidate(loteId);
         tanque.setLote(lote);
 
         if (Utils.isNotEmpty(tanque.getEspecie())) {
-            final Especie especie = getService(EspecieService.class).findAndValidate(tanque.getEspecie().getId());
+            final Especie especie = especieService.findAndValidate(tanque.getEspecie().getId());
             tanque.setEspecie(especie);
         }
         tanque.setAtivo(true);
@@ -93,7 +99,7 @@ public class TanqueServiceImpl
     }
 
     private void onPrepareUpdate(Integer loteId, Integer tanqueId, Tanque tanque) {
-        final Lote lote = getService(LoteService.class).findAndValidate(loteId);
+        final Lote lote = loteService.findAndValidate(loteId);
         tanque.setLote(lote);
 
         final Tanque managedTanque = findAndValidate(tanqueId);
@@ -104,10 +110,16 @@ public class TanqueServiceImpl
         tanque.setAnalises(managedTanque.getAnalises());
         tanque.setDataAtualizacao(DateUtil.getDate());
         tanque.setDataProximaAnalise(managedTanque.getDataProximaAnalise());
-        tanque.setDataAtualizacao(managedTanque.getDataAtualizacao());
         tanque.setDataUltimaAnalise(managedTanque.getDataUltimaAnalise());
         tanque.setDataUltimoTratamento(managedTanque.getDataUltimoTratamento());
         tanque.setId(managedTanque.getId());
+    }
+
+    @Override
+    public Tanque findAndValidate(Integer tanqueId) {
+        return tanqueRepository
+                .findById(tanqueId)
+                .orElseThrow(() -> new FcRuntimeException(EnumFcInfraException.ENTITY_NOT_FOUND, Tanque.class.getSimpleName(), tanqueId));
     }
 
 }

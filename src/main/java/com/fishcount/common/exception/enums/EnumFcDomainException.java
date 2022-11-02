@@ -54,7 +54,7 @@ public enum EnumFcDomainException implements IFcException {
 
     CONFIGURACAO_TEMPERATURA_NAO_VALIDADA("A configuração de cálculo para a temperatura {0} não existe."),
 
-    TANQUE_NAO_ENCONTRADO("O tanque {0} não existe ou não é do usuário logado, por favor, tente novamente! "),
+    TANQUE_NAO_ENCONTRADO("O tanque {0} não existe ou não é do usuário logado, por favor, tente novamente!"),
     PESSOA_NAO_ENCONTRADA_POR_CPF("O cpf {0} não pertence a nenhuma pessoa cadastrada no sistema. "),
     ANALISE_NAO_INICIADA("A analise {0} já esta concluída ou não foi ainda preparada para receber os dados do sonar."),
 
