@@ -27,6 +27,8 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
 
     private final UsuarioValidator usuarioValidator;
 
+    private final UsuarioRepository usuarioRepository;
+
     private final PasswordEncoder passwordEnconder;
 
     private final EmailService emailService;
@@ -37,7 +39,7 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
 
         onPrepareInsert(usuario);
 
-        return getRepository().save(usuario);
+        return usuarioRepository.save(usuario);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
 
     @Override
     public Usuario findByEmail(String email) {
-        return OptionalUtil.ofFallible(() -> getRepository(UsuarioRepository.class).findByEmailPrincipal(email))
+        return OptionalUtil.ofFallibleNullable(() -> usuarioRepository.findByEmailPrincipal(email))
                 .orElseThrow(() -> new FcRuntimeException(EnumFcDomainException.USUARIO_NAO_ENCONTRADO, email));
     }
 
