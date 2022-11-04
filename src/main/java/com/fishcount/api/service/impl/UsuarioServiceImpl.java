@@ -7,6 +7,7 @@ import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.UsuarioValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
+import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.dto.UsuarioDTO;
 import com.fishcount.common.model.entity.Email;
 import com.fishcount.common.model.entity.Pessoa;
@@ -27,6 +28,8 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
 
     private final UsuarioValidator usuarioValidator;
 
+    private final UsuarioRepository usuarioRepository;
+
     private final PasswordEncoder passwordEnconder;
 
     private final EmailService emailService;
@@ -37,7 +40,7 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
 
         onPrepareInsert(usuario);
 
-        return getRepository().save(usuario);
+        return usuarioRepository.save(usuario);
     }
 
     @Override
@@ -63,12 +66,14 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
 
     @Override
     public Usuario encontrarPorId(Integer id) {
-        return findAndValidate(id);
+        return usuarioRepository
+                .findById(id)
+                .orElseThrow(() -> new FcRuntimeException(EnumFcInfraException.ENTITY_NOT_FOUND, Usuario.class.getSimpleName(), id));
     }
 
     @Override
     public Usuario findByEmail(String email) {
-        return OptionalUtil.ofFallible(() -> getRepository(UsuarioRepository.class).findByEmailPrincipal(email))
+        return OptionalUtil.ofFallibleNullable(() -> usuarioRepository.findByEmailPrincipal(email))
                 .orElseThrow(() -> new FcRuntimeException(EnumFcDomainException.USUARIO_NAO_ENCONTRADO, email));
     }
 

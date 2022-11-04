@@ -4,8 +4,10 @@ package com.fishcount.api.controller.impl;
 import com.fishcount.api.controller.LoteController;
 import com.fishcount.api.controller.pattern.AbstractController;
 import com.fishcount.api.service.LoteService;
+import com.fishcount.api.service.PessoaService;
 import com.fishcount.common.model.dto.LoteDTO;
 import com.fishcount.common.model.entity.Lote;
+import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.utils.ListUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,11 +24,14 @@ public class LoteControllerImpl extends AbstractController<LoteService> implemen
 
     private final LoteService loteService;
 
+    private final PessoaService pessoaService;
+
     @Override
     public LoteDTO incluir(Integer pessoaId, LoteDTO loteDTO) {
         Lote lote = converterDTOParaEntity(loteDTO, Lote.class);
 
-        return converterEntityParaDTO(loteService.incluir(pessoaId, lote), LoteDTO.class);
+        final Pessoa pessoa = pessoaService.findAndValidate(pessoaId);
+        return converterEntityParaDTO(loteService.incluir(pessoa, lote), LoteDTO.class);
     }
 
     @Override
@@ -48,12 +53,14 @@ public class LoteControllerImpl extends AbstractController<LoteService> implemen
     public void atualizar(Integer pessoaId, Integer loteId, LoteDTO loteDTO) {
         Lote lote = converterDTOParaEntity(loteDTO, Lote.class);
 
-        loteService.editar(pessoaId, loteId, lote);
+        final Pessoa pessoa = pessoaService.findAndValidate(pessoaId);
+        loteService.editar(pessoa, loteId, lote);
     }
 
     @Override
     public void inativar(Integer pessoaId, Integer loteId) {
-        loteService.inativar(pessoaId, loteId);
+        final Lote lote = loteService.findAndValidate(loteId);
+        loteService.inativar(pessoaId, lote);
     }
 
 }

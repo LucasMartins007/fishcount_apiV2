@@ -35,8 +35,6 @@ public class PessoaServiceImpl
 
     private final TelefoneService telefoneService;
 
-    private final LoteService loteService;
-
     private final ControleEmailService controleEmailService;
 
     private final PessoaRepository pessoaRepository;
@@ -83,7 +81,6 @@ public class PessoaServiceImpl
         pessoaValidator.validateUpdate(pessoa);
         emailService.validarEmails(pessoa);
         telefoneService.validarTelefones(pessoa);
-        loteService.validarLotes(pessoa);
     }
 
     @Override
