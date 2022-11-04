@@ -12,6 +12,7 @@ public class UsuarioMock {
         usuario.setNome(pessoa.getNome());
         usuario.setSenha(pessoa.getSenha());
         usuario.setEmail(ListUtil.first(pessoa.getEmails()).getDescricao());
+        usuario.setAtivo(true);
 
         return usuario;
     }

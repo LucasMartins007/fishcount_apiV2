@@ -7,6 +7,7 @@ import com.fishcount.api.service.pattern.AbstractServiceImpl;
 import com.fishcount.api.validators.UsuarioValidator;
 import com.fishcount.common.exception.FcRuntimeException;
 import com.fishcount.common.exception.enums.EnumFcDomainException;
+import com.fishcount.common.exception.enums.EnumFcInfraException;
 import com.fishcount.common.model.dto.UsuarioDTO;
 import com.fishcount.common.model.entity.Email;
 import com.fishcount.common.model.entity.Pessoa;
@@ -65,7 +66,9 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario, Integer, Us
 
     @Override
     public Usuario encontrarPorId(Integer id) {
-        return findAndValidate(id);
+        return usuarioRepository
+                .findById(id)
+                .orElseThrow(() -> new FcRuntimeException(EnumFcInfraException.ENTITY_NOT_FOUND, Usuario.class.getSimpleName(), id));
     }
 
     @Override
