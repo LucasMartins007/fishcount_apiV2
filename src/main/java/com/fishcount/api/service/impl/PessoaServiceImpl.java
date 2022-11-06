@@ -104,7 +104,7 @@ public class PessoaServiceImpl
     public void adicionarPessoaFisica(Integer pessoaId, String cpf) {
         CpfUtil.validate(cpf);
 
-        final Pessoa pessoaByCpf = encontrarPessoaByCpf(cpf);
+        final Pessoa pessoaByCpf = pessoaRepository.findByCpf(cpf);
         if (Utils.isNotEmpty(pessoaByCpf)) {
             throw new FcRuntimeException(EnumFcDomainException.CPF_DUPLICADO, cpf);
         }
