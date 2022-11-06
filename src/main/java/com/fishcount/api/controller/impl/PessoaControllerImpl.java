@@ -32,6 +32,11 @@ public class PessoaControllerImpl
     }
 
     @Override
+    public void adicionarPessoaFisica(Integer pessoaId, String cpf) {
+        pessoaService.adicionarPessoaFisica(pessoaId, cpf);
+    }
+
+    @Override
     public void atualizar(Integer id, PessoaDTO pessoaDTO) {
         pessoaService.atualizar(id, converterDTOParaEntity(pessoaDTO, Pessoa.class));
     }

@@ -42,4 +42,10 @@ public interface PessoaController {
     void atualizar(@ApiParam("${controller.pessoa.id}") @PathVariable(OperationsParam.ID) Integer id,
                    @RequestBody PessoaDTO pessoaDTO);
 
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${controller.pessoa.atualizar.operation}", notes = "${controller.pessoa.atualizar.description}")
+    void adicionarPessoaFisica(@RequestParam(name = "pessoaId") Integer pessoaId,
+                               @RequestParam(name = "cpf") String cpf);
+
 }

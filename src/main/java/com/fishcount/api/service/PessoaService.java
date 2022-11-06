@@ -16,4 +16,7 @@ public interface PessoaService extends IAbstractService<Pessoa, Integer, PessoaD
     Pessoa encontrarPessoaByUsuario(Usuario usuario);
 
     Pessoa encontrarPessoaByCpf(String cpf);
+
+    void adicionarPessoaFisica(Integer pessoaId, String cpf);
+
 }

@@ -11,7 +11,7 @@ public enum EnumFcDomainException implements IFcException {
     USUARIO_NAO_ENCONTRADO("Usuário com o email {0} não foi encontrado."),
     CREDENCIAIS_INVALIDAS("Email ou senha incorretos, por favor, tente novamente."),
 
-    CPF_DUPLICADO("Esse cpf já existe, verifique o seu login e tente novamente."),
+    CPF_DUPLICADO("Cpf {0} já esta cadastrado no sistema, verifique o seu login e tente novamente."),
 
     CPF_INVALIDO("O cpf {0} é inválido, tente novamente"),
     
