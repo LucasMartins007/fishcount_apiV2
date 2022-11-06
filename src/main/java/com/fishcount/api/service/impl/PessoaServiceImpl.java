@@ -102,6 +102,7 @@ public class PessoaServiceImpl
 
     @Override
     public void adicionarPessoaFisica(Integer pessoaId, String cpf) {
+        cpf = NumericUtil.somenteNumero(cpf);
         CpfUtil.validate(cpf);
 
         final Pessoa pessoaByCpf = pessoaRepository.findByCpf(cpf);
@@ -109,7 +110,7 @@ public class PessoaServiceImpl
             throw new FcRuntimeException(EnumFcDomainException.CPF_DUPLICADO, cpf);
         }
         final Pessoa managedPessoa = findAndValidate(pessoaId);
-        managedPessoa.setCpf(NumericUtil.somenteNumero(cpf));
+        managedPessoa.setCpf(cpf);
         managedPessoa.setDataAtualizacao(DateUtil.getDate());
 
         pessoaRepository.save(managedPessoa);
