@@ -15,4 +15,6 @@ public interface PlanoService extends IAbstractService<Plano, Integer, PlanoDTO>
     List<Plano> listarPlanos();
 
     Plano incluir(Plano plano);
+
+    void enviarEmailContato(Integer planoId, Integer pessoaId);
 }

@@ -44,4 +44,9 @@ public interface PlanoController {
     @ApiOperation(value = "${controller.plano.encontrar.operation}", notes = "${controller.plano.encontrar.description}")
     PlanoDTO encontrar(@ApiParam("${controller.plano.id}") @PathVariable(OperationsParam.ID) Integer planoId);
 
+    @PutMapping(OperationsPath.ID)
+    @ResponseStatus(HttpStatus.OK)
+    void enviarEmailContrato(@ApiParam("${controller.plano.id}") @PathVariable(OperationsParam.ID) Integer planoId,
+                             @RequestParam(name = "pessoaId") Integer pessoaId);
+
 }
