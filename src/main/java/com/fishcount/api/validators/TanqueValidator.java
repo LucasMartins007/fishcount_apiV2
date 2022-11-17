@@ -5,21 +5,24 @@ import com.fishcount.api.validators.pattern.AbstractValidatorImpl;
 import com.fishcount.api.validators.pattern.ValidateEntity;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
 import com.fishcount.common.model.entity.Tanque;
+import com.fishcount.common.model.enums.EnumUnidadePeso;
+import com.fishcount.common.utils.BigDecimalUtil;
+import com.fishcount.common.utils.StringUtil;
+import com.fishcount.common.utils.Utils;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
 /**
- *
  * @author lucas
  */
 @Component
-public class TanqueValidator extends AbstractValidatorImpl<Tanque>{
+public class TanqueValidator extends AbstractValidatorImpl<Tanque> {
 
     @Override
     public void validateRequiredFields(Tanque tanque) {
         ValidateMandatoryFields validate = new ValidateMandatoryFields();
-        
+
         validate.add(tanque.getLote(), "Lote");
         validate.add(tanque.getDescricao(), "Descrição");
         validate.add(tanque.getEspecie(), "Espécie");
@@ -46,9 +49,17 @@ public class TanqueValidator extends AbstractValidatorImpl<Tanque>{
 
     @Override
     public void validateSizeFields(Tanque tanque) {
-        ValidateEntity.validateLessThan(tanque.getPesoUnitario().doubleValue(), 500.0, "Peso unitário", tanque.getUnidadePeso().getValue());
-        ValidateEntity.validateGreaterThan(tanque.getPesoUnitario().doubleValue(), 10.0, "Peso unitário", tanque.getUnidadePeso().getValue());
+        final BigDecimal pesoUnitario = converterKilosEmGramas(tanque);
 
-        ValidateEntity.validateLessThan(tanque.getQtdePeixe(), 5000, "Quantidade de peixes");
+        ValidateEntity.validateLessThan(pesoUnitario.doubleValue(), 700.0, "Peso unitário", StringUtil.capitalize(tanque.getUnidadePeso().getValue()));
+        ValidateEntity.validateGreaterThan(pesoUnitario.doubleValue(), 10.0, "Peso unitário", StringUtil.capitalize(tanque.getUnidadePeso().getValue()));
+
+        ValidateEntity.validateLessThan(tanque.getQtdePeixe(), 10000, "Quantidade de peixes");
+    }
+
+    private static BigDecimal converterKilosEmGramas(Tanque tanque) {
+        return Utils.equals(tanque.getUnidadePeso(), EnumUnidadePeso.KILO)
+                ? BigDecimal.valueOf(1000).multiply(tanque.getPesoUnitario())
+                : tanque.getPesoUnitario();
     }
 }

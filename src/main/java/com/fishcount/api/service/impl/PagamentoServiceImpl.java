@@ -80,7 +80,7 @@ public class PagamentoServiceImpl extends AbstractServiceImpl<Pagamento, Integer
         pagamento.setDataVencimento(DateUtil.add(Calendar.MONTH, plano.getQtdeParcela()));
         pagamento.setStatusPagamento(EnumStatusPagamento.ANALISE);
         pagamento.setSaldo(BigDecimalUtil.truncBig(BigDecimal.ZERO, 1));
-        pagamento.setValor(plano.getValorMinimo());
+        pagamento.setValor(plano.getValorMaximo());
         pagamento.setQtdeParcelas(plano.getQtdeParcela()== null ? pagamento.getQtdeParcelas() : plano.getQtdeParcela());
 
         pagamentoValidator.validateInsert(pagamento);
