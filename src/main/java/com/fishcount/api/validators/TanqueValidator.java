@@ -2,9 +2,12 @@
 package com.fishcount.api.validators;
 
 import com.fishcount.api.validators.pattern.AbstractValidatorImpl;
+import com.fishcount.api.validators.pattern.ValidateEntity;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
 import com.fishcount.common.model.entity.Tanque;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
 
 /**
  *
@@ -32,10 +35,20 @@ public class TanqueValidator extends AbstractValidatorImpl<Tanque>{
     @Override
     public void validateInsert(Tanque tanque) {
         validateRequiredFields(tanque);
+        validateSizeFields(tanque);
     }
 
     @Override
     public void validateInsertOrUpdate(Tanque tanque) {
         validateRequiredFields(tanque);
+        validateSizeFields(tanque);
+    }
+
+    @Override
+    public void validateSizeFields(Tanque tanque) {
+        ValidateEntity.validateLessThan(tanque.getPesoUnitario().doubleValue(), 500.0, "Peso unitário.");
+        ValidateEntity.validateGreaterThan(tanque.getPesoUnitario().doubleValue(), 10.0, "Peso unitário");
+
+        ValidateEntity.validateLessThan(tanque.getQtdePeixe(), 5000, "Quantidade de peixes.");
     }
 }
