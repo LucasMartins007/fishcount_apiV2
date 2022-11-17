@@ -17,7 +17,7 @@ public enum EnumFcDomainException implements IFcException {
     
     CAMPOS_OBRIGATORIOS("Os seguintes campos são de preenchimento obrigatório:"),
     CAMPO_MAIOR_QUE("O campo {0} deve conter um valor maior que {1} {2}."),
-    CAMPO_MENOR_QUE("O campo {0} deve conter um valor menor que {1} {2}."),
+    CAMPO_MENOR_QUE("O campo {0} deve conter um valor menor que {1}."),
     CAMPO_ENTRE("O campo {0} deve conter um valor entre {1} e {2}."),
     CAMPO_MAIOR_OU_IGUAL_QUE("O campo {0} deve conter um valor maior ou igual a {1} {2}."),
     CAMPO_MENOR_OU_IGUAL_QUE("O campo {0} deve conter um valor menor ou igual a {1} {2}."),
