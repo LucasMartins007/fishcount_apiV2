@@ -14,7 +14,7 @@ database-config:
     port: 5432
     name: fishcount
     username: postgres
-    password: admin
+    password:
 
 hibernate-config:
   dev:
