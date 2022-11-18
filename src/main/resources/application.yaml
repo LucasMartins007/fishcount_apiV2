@@ -10,7 +10,7 @@ api:
 
 database-config:
   dev:
-    server: 54.174.236.221
+    server: localhost
     port: 5432
     name: fishcount
     username: postgres
