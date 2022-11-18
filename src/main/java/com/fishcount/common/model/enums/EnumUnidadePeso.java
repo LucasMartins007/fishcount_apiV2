@@ -14,13 +14,15 @@ import javax.persistence.Converter;
 @RequiredArgsConstructor
 public enum EnumUnidadePeso implements IEnum<Integer> {
 
-    KILO(1,"KG"),
-    GRAMA(2,"GR"),
+    KILO(1,"KG", "quilos"),
+    GRAMA(2,"GR", "gramas"),
     ;
 
     private final Integer key;
 
     private final String value;
+
+    private final String descricao;
 
     @Converter
     public static class EnumConverter extends AbstractEnumConverter<EnumUnidadePeso, Integer> {

@@ -4,6 +4,8 @@ package com.fishcount.api.validators;
 import com.fishcount.api.validators.pattern.AbstractValidatorImpl;
 import com.fishcount.api.validators.pattern.ValidateEntity;
 import com.fishcount.api.validators.pattern.ValidateMandatoryFields;
+import com.fishcount.common.exception.FcRuntimeException;
+import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.entity.Tanque;
 import com.fishcount.common.model.enums.EnumUnidadePeso;
 import com.fishcount.common.utils.BigDecimalUtil;
@@ -51,11 +53,17 @@ public class TanqueValidator extends AbstractValidatorImpl<Tanque> {
     @Override
     public void validateSizeFields(Tanque tanque) {
         final BigDecimal pesoUnitario = converterKilosEmGramas(tanque);
+        final Integer qtdePeixe = tanque.getQtdePeixe();
 
-        ValidateEntity.validateLessThan(pesoUnitario.doubleValue(), 700.0, "Peso unitário", StringUtils.capitalize(tanque.getUnidadePeso().getValue()));
-        ValidateEntity.validateGreaterThan(pesoUnitario.doubleValue(), 10.0, "Peso unitário", StringUtils.capitalize(tanque.getUnidadePeso().getValue()));
-
-        ValidateEntity.validateLessThan(tanque.getQtdePeixe(), 10000, "Quantidade de peixes");
+        if (pesoUnitario != null && pesoUnitario.doubleValue() >= 700.0) {
+            throw new FcRuntimeException(EnumFcDomainException.PESO_UNITARIO_ACIMA_LIMITE, pesoUnitario, StringUtils.capitalize(tanque.getUnidadePeso().getDescricao()));
+        }
+        if (pesoUnitario != null && pesoUnitario.doubleValue() <= 10.0) {
+            throw new FcRuntimeException(EnumFcDomainException.PESO_UNITARIO_ABAIXO_LIMITE, pesoUnitario, StringUtils.capitalize(tanque.getUnidadePeso().getDescricao()));
+        }
+        if (qtdePeixe != null && qtdePeixe.doubleValue() >= 10000.0) {
+            throw new FcRuntimeException(EnumFcDomainException.QTDE_PEIXES_ACIMA_LIMITE, qtdePeixe);
+        }
     }
 
     private static BigDecimal converterKilosEmGramas(Tanque tanque) {
