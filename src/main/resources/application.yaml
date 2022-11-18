@@ -10,11 +10,11 @@ api:
 
 database-config:
   dev:
-    server: localhost
+    server: 54.174.236.221
     port: 5432
     name: fishcount
     username: postgres
-    password:
+    password: admin
 
 hibernate-config:
   dev:
