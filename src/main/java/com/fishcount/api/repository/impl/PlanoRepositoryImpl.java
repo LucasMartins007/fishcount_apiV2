@@ -14,6 +14,6 @@ public class PlanoRepositoryImpl extends RepositoryImpl<Plano, Integer> implemen
     @Override
     public List<Plano> findAllAtivos() {
         return getSpecRepository()
-                .findAll(PlanoSpec.byAtivoTrue().and(PlanoSpec.orderBy(true, "descricao")));
+                .findAll(PlanoSpec.byAtivoTrue().and(PlanoSpec.orderBy(false, "descricao")));
     }
 }

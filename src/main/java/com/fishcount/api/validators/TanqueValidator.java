@@ -9,6 +9,7 @@ import com.fishcount.common.model.enums.EnumUnidadePeso;
 import com.fishcount.common.utils.BigDecimalUtil;
 import com.fishcount.common.utils.StringUtil;
 import com.fishcount.common.utils.Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -51,8 +52,8 @@ public class TanqueValidator extends AbstractValidatorImpl<Tanque> {
     public void validateSizeFields(Tanque tanque) {
         final BigDecimal pesoUnitario = converterKilosEmGramas(tanque);
 
-        ValidateEntity.validateLessThan(pesoUnitario.doubleValue(), 700.0, "Peso unitário", StringUtil.capitalize(tanque.getUnidadePeso().getValue()));
-        ValidateEntity.validateGreaterThan(pesoUnitario.doubleValue(), 10.0, "Peso unitário", StringUtil.capitalize(tanque.getUnidadePeso().getValue()));
+        ValidateEntity.validateLessThan(pesoUnitario.doubleValue(), 700.0, "Peso unitário", StringUtils.capitalize(tanque.getUnidadePeso().getValue()));
+        ValidateEntity.validateGreaterThan(pesoUnitario.doubleValue(), 10.0, "Peso unitário", StringUtils.capitalize(tanque.getUnidadePeso().getValue()));
 
         ValidateEntity.validateLessThan(tanque.getQtdePeixe(), 10000, "Quantidade de peixes");
     }
