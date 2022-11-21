@@ -18,6 +18,8 @@ public enum EnumTipoEnvioEmail implements IEnum<Integer> {
     CONFIRMACAO_EMAIL(3, "Confirmação de email", true, false),
 
     EXCECAO_SISTEMA(4, "Exceção no sistema", true, true),
+
+    CONTATO_PLANOS(5, "Contato para negociação", true, true),
     ;
 
     private final Integer key;

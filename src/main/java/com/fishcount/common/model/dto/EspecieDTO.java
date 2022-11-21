@@ -31,8 +31,6 @@ public class EspecieDTO implements AbstractDTO<Integer> {
 
     private EnumUnidadeTamanho unidadeTamanho;
 
-    private TaxaCrescimentoDTO taxaCrescimento;
-
     private Integer qtdeMediaRacao;
 
     private EnumUnidadePeso unidadePesoRacao;

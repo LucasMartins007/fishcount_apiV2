@@ -11,16 +11,16 @@ public enum EnumFcDomainException implements IFcException {
     USUARIO_NAO_ENCONTRADO("Usuário com o email {0} não foi encontrado."),
     CREDENCIAIS_INVALIDAS("Email ou senha incorretos, por favor, tente novamente."),
 
-    CPF_DUPLICADO("Esse cpf já existe, verifique o seu login e tente novamente."),
+    CPF_DUPLICADO("Cpf {0} já esta cadastrado no sistema, verifique o seu login e tente novamente."),
 
     CPF_INVALIDO("O cpf {0} é inválido, tente novamente"),
     
     CAMPOS_OBRIGATORIOS("Os seguintes campos são de preenchimento obrigatório:"),
-    CAMPO_MAIOR_QUE("O campo {0} deve conter um valor maior que {1}."),
+    CAMPO_MAIOR_QUE("O campo {0} deve conter um valor maior que {1} {2}."),
     CAMPO_MENOR_QUE("O campo {0} deve conter um valor menor que {1}."),
     CAMPO_ENTRE("O campo {0} deve conter um valor entre {1} e {2}."),
-    CAMPO_MAIOR_OU_IGUAL_QUE("O campo {0} deve conter um valor maior ou igual a {1}."),
-    CAMPO_MENOR_OU_IGUAL_QUE("O campo {0} deve conter um valor menor ou igual a {1}."),
+    CAMPO_MAIOR_OU_IGUAL_QUE("O campo {0} deve conter um valor maior ou igual a {1} {2}."),
+    CAMPO_MENOR_OU_IGUAL_QUE("O campo {0} deve conter um valor menor ou igual a {1} {2}."),
     CAMPO_MENOR_IGUAL_ZERO("O campo {0} deve conter um valor maior que zero."),
     CAMPO_MINIMO_CARACTERS("O campo {0} deve conter no mínimo {1} caracteres."),
     CAMPO_MAXIMO_CARACTERS("O campo {0} deve conter no máximo {1} caracteres."),
@@ -60,7 +60,15 @@ public enum EnumFcDomainException implements IFcException {
 
     ANALISE_AGUARDANDO_JA_EXISTE("O tanque {0} já está esperando uma análise do sonar, finalize a análise requisitada, para iniciar outra."),
 
-        ;
+    PESO_UNITARIO_ACIMA_LIMITE("O peso unitário {0} {1} que foi inserido ultrapassa o peso unitário permitido de 700 gramas."),
+
+    PESO_UNITARIO_ABAIXO_LIMITE("O peso unitário {0} {1} que foi inserido esta abaixo do peso unitário permitido de 10 gramas."),
+
+    QTDE_PEIXES_ACIMA_LIMITE("A quantidade de peixes {0}, ultrapassa o limite de 10.000 peixes por tanque."),
+
+    TEMPERATURA_AGUA_NAO_PERMITIDA("A temperatura do tanque não pode ser maior que 30 graus ou menor que 18 graus, verifique o dispositivo de medida."),
+
+    ;
     
     private final String message;
 

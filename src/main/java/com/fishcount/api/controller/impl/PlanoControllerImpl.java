@@ -35,4 +35,9 @@ public class PlanoControllerImpl
         return converterEntityParaDTO(planoService.findAndValidate(planoId), PlanoDTO.class);
     }
 
+    @Override
+    public void enviarEmailContrato(Integer planoId, Integer pessoaId) {
+        planoService.enviarEmailContato(planoId, pessoaId);
+    }
+
 }

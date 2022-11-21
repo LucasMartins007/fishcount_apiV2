@@ -162,7 +162,7 @@ class PessoaValidatorTest extends AbstractMock {
                 () -> pessoaValidator.validateUpdate(pessoaMock))
                 .getMessage();
 
-        assertEquals(EnumFcDomainException.CPF_DUPLICADO.getMessage(), message);
+        assertEquals(getException(EnumFcDomainException.CPF_DUPLICADO, pessoaMock.getCpf()), message);
     }
 
     @Test

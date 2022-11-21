@@ -36,9 +36,21 @@ public class ValidateEntity {
         }
     }
 
+    public static <N extends Number> void validateLessThan(N number, N min, String name, String arg) {
+        if (number != null && number.doubleValue() >= min.doubleValue()) {
+            throw new FcRuntimeException(EnumFcDomainException.CAMPO_MENOR_QUE, name, min, arg);
+        }
+    }
+
     public static <N extends Number> void validateLessThanOrEqual(N number, N min, String name) {
         if (number != null && number.doubleValue() > min.doubleValue()) {
             throw new FcRuntimeException(EnumFcDomainException.CAMPO_MENOR_OU_IGUAL_QUE, name, min);
+        }
+    }
+
+    public static <N extends Number> void validateLessThanOrEqual(N number, N min, String name, String arg) {
+        if (number != null && number.doubleValue() > min.doubleValue()) {
+            throw new FcRuntimeException(EnumFcDomainException.CAMPO_MENOR_OU_IGUAL_QUE, name, min, arg);
         }
     }
 
@@ -48,9 +60,21 @@ public class ValidateEntity {
         }
     }
 
+    public static <N extends Number> void validateGreaterThan(N number, N min, String name, String arg) {
+        if (number != null && number.doubleValue() <= min.doubleValue()) {
+            throw new FcRuntimeException(EnumFcDomainException.CAMPO_MAIOR_QUE, name, min, arg);
+        }
+    }
+
     public static <N extends Number> void validateGreaterThanOrEqual(N number, N min, String name) {
         if (number != null && number.doubleValue() < min.doubleValue()) {
             throw new FcRuntimeException(EnumFcDomainException.CAMPO_MAIOR_OU_IGUAL_QUE, name, min);
+        }
+    }
+
+    public static <N extends Number> void validateGreaterThanOrEqual(N number, N min, String name, String arg) {
+        if (number != null && number.doubleValue() < min.doubleValue()) {
+            throw new FcRuntimeException(EnumFcDomainException.CAMPO_MAIOR_OU_IGUAL_QUE, name, min, arg);
         }
     }
 

@@ -12,9 +12,7 @@ import com.fishcount.common.model.entity.Pessoa;
 import com.fishcount.common.model.entity.Telefone;
 import com.fishcount.common.model.entity.Usuario;
 import com.fishcount.common.model.enums.EnumTipoEnvioEmail;
-import com.fishcount.common.utils.ListUtil;
-import com.fishcount.common.utils.NumericUtil;
-import com.fishcount.common.utils.Utils;
+import com.fishcount.common.utils.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -100,6 +98,22 @@ public class PessoaServiceImpl
             throw new FcRuntimeException(EnumFcDomainException.PESSOA_NAO_ENCONTRADA_POR_CPF, cpf);
         }
         return pessoa;
+    }
+
+    @Override
+    public void adicionarPessoaFisica(Integer pessoaId, String cpf) {
+        cpf = NumericUtil.somenteNumero(cpf);
+        CpfUtil.validate(cpf);
+
+        final Pessoa pessoaByCpf = pessoaRepository.findByCpf(cpf);
+        if (Utils.isNotEmpty(pessoaByCpf)) {
+            throw new FcRuntimeException(EnumFcDomainException.CPF_DUPLICADO, cpf);
+        }
+        final Pessoa managedPessoa = findAndValidate(pessoaId);
+        managedPessoa.setCpf(cpf);
+        managedPessoa.setDataAtualizacao(DateUtil.getDate());
+
+        pessoaRepository.save(managedPessoa);
     }
 
     private void retirarCamposInativos(Pessoa pessoa) {

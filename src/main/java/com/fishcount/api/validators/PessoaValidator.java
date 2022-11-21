@@ -59,7 +59,7 @@ public class PessoaValidator extends AbstractValidatorImpl<Pessoa> {
                 .ifPresent(cpf ->
                         OptionalUtil.ofFallibleNullable(() -> pessoaRepository.findByCpf(cpf))
                                 .filter(managedPessoa -> !Utils.equals(managedPessoa.getId(), pessoa.getId()))
-                                .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.CPF_DUPLICADO))
+                                .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.CPF_DUPLICADO, cpf))
                 );
     }
 
