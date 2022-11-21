@@ -51,19 +51,20 @@ public class ControleEmailServiceImpl extends AbstractServiceImpl<ControleEmail,
     public void enviarEmail(Pessoa pessoa, EnumTipoEnvioEmail tipoEnvioEmail, boolean isSuporte) {
         final DadosEmail dadosEmail = gerarDadosEmail(pessoa, tipoEnvioEmail, isSuporte);
 
-        if (environment.getActiveProfiles()[0].equals("dev")) {
-            registrarEnvioEmail(dadosEmail);
-            return;
-        }
-
         try {
             JavaMailSender mailSender = emailBean.getMailSender();
+
+            String emailPrincipal = ListUtil.stream(pessoa.getEmails())
+                    .filter(EnumTipoEmail::isPrincipal)
+                    .map(Email::getDescricao)
+                    .findFirst()
+                    .orElse(emailSuporte);
 
             MimeMessage mail = mailSender.createMimeMessage();
 
             MimeMessageHelper helper = new MimeMessageHelper(mail);
             helper.setFrom(from);
-            helper.setTo(emailSuporte);
+            helper.setTo(emailPrincipal);
             helper.setSubject(dadosEmail.getAssunto());
             helper.setText(dadosEmail.getCorpoEmail(), true);
 
