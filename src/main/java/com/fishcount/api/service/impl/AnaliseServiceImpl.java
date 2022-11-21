@@ -26,6 +26,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.fishcount.api.validators.AnaliseValidator.*;
+
 @Service
 @RequiredArgsConstructor
 public class AnaliseServiceImpl
@@ -45,6 +47,8 @@ public class AnaliseServiceImpl
     @Override
     public Analise requisitarInicioAnalise(Integer tanqueId, BigDecimal pesoAtual, EnumUnidadePeso unidadePeso, BigDecimal temperatura) {
         final Tanque tanque = tanqueService.findAndValidate(tanqueId);
+        validarTemperatura(temperatura);
+        validarPesoMaximoEMinimo(pesoAtual, unidadePeso);
 
         final Analise analise = gerarAnalise(tanque, temperatura);
 
@@ -56,6 +60,8 @@ public class AnaliseServiceImpl
     @Override
     public Analise simularAnaliseConcluida(Integer tanqueId, Integer analiseId, Integer qtdePeixes, BigDecimal temperatura) {
         final Tanque tanque = tanqueService.findAndValidate(tanqueId);
+        validarTemperatura(temperatura);
+        validarQuantidadePeixes(qtdePeixes);
 
         final Analise analise = simularAnalise(tanque, analiseId, qtdePeixes, temperatura);
 
@@ -193,4 +199,6 @@ public class AnaliseServiceImpl
         final BigDecimal pesoPeixeQuilo = BigDecimalUtil.divide(pesoPeixe, BigDecimal.valueOf(1000), 2);
         return BigDecimalUtil.truncBig(pesoPeixeQuilo.multiply(BigDecimal.valueOf(qtdePeixes)), 2);
     }
+
+
 }

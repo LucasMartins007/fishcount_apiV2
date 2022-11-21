@@ -61,8 +61,14 @@ public enum EnumFcDomainException implements IFcException {
     ANALISE_AGUARDANDO_JA_EXISTE("O tanque {0} já está esperando uma análise do sonar, finalize a análise requisitada, para iniciar outra."),
 
     PESO_UNITARIO_ACIMA_LIMITE("O peso unitário {0} {1} que foi inserido ultrapassa o peso unitário permitido de 700 gramas."),
+
     PESO_UNITARIO_ABAIXO_LIMITE("O peso unitário {0} {1} que foi inserido esta abaixo do peso unitário permitido de 10 gramas."),
-    QTDE_PEIXES_ACIMA_LIMITE("A quantidade de peixes {0}, ultrapassa o limite de 10.000 peixes por tanque.");
+
+    QTDE_PEIXES_ACIMA_LIMITE("A quantidade de peixes {0}, ultrapassa o limite de 10.000 peixes por tanque."),
+
+    TEMPERATURA_AGUA_NAO_PERMITIDA("A temperatura do tanque não pode ser maior que 30 graus ou menor que 18 graus, verifique o dispositivo de medida."),
+
+    ;
     
     private final String message;
 
