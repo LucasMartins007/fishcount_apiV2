@@ -46,13 +46,13 @@ public class AnaliseServiceImpl
 
     @Override
     public Analise requisitarInicioAnalise(Integer tanqueId, BigDecimal pesoAtual, EnumUnidadePeso unidadePeso, BigDecimal temperatura) {
-        final Tanque tanque = tanqueService.findAndValidate(tanqueId);
+        final Tanque managedTanque = tanqueService.findAndValidate(tanqueId);
         validarTemperatura(temperatura);
         validarPesoMaximoEMinimo(pesoAtual, unidadePeso);
 
-        final Analise analise = gerarAnalise(tanque, temperatura);
+        final Analise analise = gerarAnalise(managedTanque, temperatura);
 
-        atualizarDadosTanque(pesoAtual, unidadePeso, tanque, analise);
+        atualizarDadosTanque(pesoAtual, unidadePeso, managedTanque, analise);
 
         return analiseRepository.save(analise);
     }
@@ -74,8 +74,8 @@ public class AnaliseServiceImpl
         tanque.setDataUltimaAnalise(DateUtil.getDate());
         tanque.setDataAtualizacao(DateUtil.getDate());
         tanque.setStatusAnalise(analise.getStatusAnalise());
-        tanque.setPesoUnitario(pesoUnitario);
-        tanque.setUnidadePeso(unidadePeso);
+        tanque.setPesoUnitario(Utils.isNotEmpty(pesoUnitario) ? pesoUnitario : tanque.getPesoUnitario());
+        tanque.setUnidadePeso(Utils.isNotEmpty(unidadePeso) ? unidadePeso : tanque.getUnidadePeso());
         tanque.setQtdUltimaAnalise(analise.getQtdePeixe());
 
         tanqueRepository.save(tanque);
@@ -96,7 +96,7 @@ public class AnaliseServiceImpl
         if (Utils.isEmpty(managedAnalise)) {
             throw new FcRuntimeException(EnumFcDomainException.ANALISE_NAO_INICIADA, analiseId);
         }
-        final Analise analise = prepararAnaliseConcluida(managedAnalise, tanque, temperatura);
+        final Analise analise = prepararAnaliseConcluida(managedAnalise, tanque, temperatura, qtdePeixes);
         analise.setDataAnalise(managedAnalise.getDataAnalise());
         analise.setTanque(tanque);
         analise.setQtdePeixe(qtdePeixes);
@@ -123,7 +123,7 @@ public class AnaliseServiceImpl
             analise.setTemperaturaAgua(temperatura);
             analise.setQtdePeixe(tanque.getQtdePeixe());
 
-            return prepararAnaliseConcluida(analise, tanque, temperatura);
+            return prepararAnaliseConcluida(analise, tanque, temperatura, tanque.getQtdePeixe());
         }
         return prepararAnaliseSonar(tanque, managedAnalise);
     }
@@ -142,8 +142,8 @@ public class AnaliseServiceImpl
         return analise;
     }
 
-    private Analise prepararAnaliseConcluida(Analise analise, Tanque tanque, BigDecimal temperatura) {
-        final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoUnitario(), tanque.getQtdePeixe(), tanque.getUnidadePeso());
+    private Analise prepararAnaliseConcluida(Analise analise, Tanque tanque, BigDecimal temperatura, Integer qtdePeixe) {
+        final BigDecimal pesoVivoMedio = calcularPesoMedioPeixesTotal(tanque.getPesoUnitario(), qtdePeixe, tanque.getUnidadePeso());
         analise.setPesoMedioTanque(pesoVivoMedio);
 
         ConfiguracaoArracoamento configuracaoArracoamento = configuracaoArracoamentoRepository.findByPeso(tanque.getPesoUnitario());

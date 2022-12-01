@@ -8,6 +8,7 @@ import com.fishcount.common.exception.enums.EnumFcDomainException;
 import com.fishcount.common.model.entity.Lote;
 import com.fishcount.common.utils.Utils;
 import com.fishcount.common.utils.optional.OptionalUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +16,10 @@ import org.springframework.stereotype.Component;
  * @author lucas
  */
 @Component
+@RequiredArgsConstructor
 public class LoteValidator extends AbstractValidatorImpl<Lote> {
+
+    private final LoteRepository loteRepository;
 
     @Override
     public void validateRequiredFields(Lote lote) {
@@ -34,11 +38,11 @@ public class LoteValidator extends AbstractValidatorImpl<Lote> {
 
     public void validateDuplicidadeLote(Lote lote) {
         if (Utils.isEmpty(lote.getId())) {
-            OptionalUtil.ofNullable(getRepository(LoteRepository.class).findAtivoByDescricao(lote.getDescricao()))
+            OptionalUtil.ofNullable(loteRepository.findAtivoByDescricao(lote.getDescricao()))
                     .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.LOTE_DUPLICADO, lote.getDescricao()));
             return;
         }
-        OptionalUtil.ofNullable(getRepository(LoteRepository.class).findAtivoByDescricao(lote.getDescricao()))
+        OptionalUtil.ofNullable(loteRepository.findAtivoByDescricao(lote.getDescricao()))
                 .filter(managedLote -> !managedLote.getId().equals(lote.getId()))
                 .ifPresentThrow(() -> new FcRuntimeException(EnumFcDomainException.LOTE_DUPLICADO, lote.getDescricao()));
     }
